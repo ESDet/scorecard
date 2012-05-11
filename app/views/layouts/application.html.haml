@@ -1,0 +1,43 @@
+!!!
+%html
+  %head
+    %title #{defined?(@subtitle) ? "#{@subtitle} -" : ''} STARTER #{Rails.env != 'production' ? "(#{Rails.env})" : ""}
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=#{android? ? 'yes' : 'no'}"}/
+    = render :partial => 'shared/fb_meta'
+    = csrf_meta_tag
+    
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/960.css', :media => 'screen and (min-width: 960px)'}
+    = stylesheet_link_tag 'bootstrap.min.css'
+    = stylesheet_link_tag '/leaflet/leaflet.css', :media => 'all'
+    = stylesheet_link_tag  '/wax/theme/controls.css', :media => 'all'
+    - if Rails.env == 'development'
+      %link{:rel => "stylesheet/less", :type => "text/css", :href => "/stylesheets/style.less", :media => 'all'}
+      = javascript_include_tag 'less-1.2.0.min.js'
+    - else
+      = stylesheet_link_tag 'style.css', :media => 'all'
+    :erb
+      <!--[if lte IE 8]><link rel="stylesheet" href="/leaflet/leaflet.ie.css" /><![endif]-->
+    = javascript_include_tag 'jquery-1.7.1.min.js'
+
+  %body
+    = yield
+  
+
+  = javascript_include_tag '/leaflet/leaflet.js', '/wax/dist/wax.leaf.js'
+  = javascript_include_tag 'application.js', '/paraffin/paraffin.js', '/paraffin/paraffin.gps.js'
+  - if AppConfig.typekit_key
+    = javascript_include_tag "http://use.typekit.com/#{AppConfig.typekit_key}.js"
+    :javascript
+      try{Typekit.load();}catch(e){}
+  - if AppConfig.analytics_key
+    :javascript
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '#{AppConfig.analytics_key}']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();

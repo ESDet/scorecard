@@ -1,0 +1,18 @@
+common:
+  typekit_key: 
+  analytics_key:
+
+development:
+  analytics_key:
+  fb_app_id: 
+  fb_secret: 
+ 
+staging:
+  analytics_key: 
+  fb_app_id: 
+  fb_secret: 
+  
+production:
+  analytics_key: 
+  fb_app_id: 
+  fb_secret: 

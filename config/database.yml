@@ -1,0 +1,36 @@
+local: &local
+  adapter: mysql2spatial
+  pool: 5
+  timeout: 5000
+  username: root
+  password: 
+  host: localhost
+  encoding: utf8
+
+dreamhost: &dreamhost
+  adapter: mysql2spatial
+  pool: 5
+  timeout: 5000
+  username: loveland_rails
+  password: huju5Azafu
+  host: db.lemonary.com
+  encoding: utf8
+
+
+development:
+  <<: *local
+  database: STARTER_local
+  
+test:
+  <<: *local
+  database: STARTER_test
+  
+staging:
+  <<: *dreamhost
+  database: STARTER_stage
+
+production:
+  <<: *dreamhost
+  database: STARTER_prod
+
+
