@@ -4,7 +4,7 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-module STARTER
+module ESD
   class Application < Rails::Application
 
     # Custom directories with classes and modules you want to be autoloadable.

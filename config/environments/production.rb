@@ -1,4 +1,4 @@
-STARTER::Application.configure do
+ESD::Application.configure do
 
   config.cache_classes = true
   config.consider_all_requests_local       = false
@@ -15,10 +15,10 @@ STARTER::Application.configure do
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => "STARTER.makeloveland.com" }
+  config.action_mailer.default_url_options = { :host => "esd.makeloveland.com" }
 
   config.middleware.use ExceptionNotifier,
-    :email_prefix => "[STARTER production] ",
+    :email_prefix => "[ESD production] ",
     :sender_address => %{"Exception Notifier" <info@makeloveland.com>},
     :exception_recipients => %w{larry@makeloveland.com}
 

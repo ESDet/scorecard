@@ -2,13 +2,14 @@ cloudmade_key: 194e5888480d4f9499b2f2099a793dbe
 cloudmade_style: 998
 
 layers:
-  sample:
+  schools:
     template: "{{address}}"
     style_handler: "function(e) {  }"
     style:
-      color: '#0ad'
-      weight: 1
-      fillOpacity: 0.1
-    names:
-      proaddress: Address
-    
+      radius: 10
+      fillColor: '#228866'
+      color: "#000"
+      weight: 2
+      opacity: 1
+      fillOpacity: 1
+

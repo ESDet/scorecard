@@ -19,18 +19,18 @@ dreamhost: &dreamhost
 
 development:
   <<: *local
-  database: STARTER_local
+  database: esd_local
   
 test:
   <<: *local
-  database: STARTER_test
+  database: esd_test
   
 staging:
   <<: *dreamhost
-  database: STARTER_stage
+  database: esd_stage
 
 production:
   <<: *dreamhost
-  database: STARTER_prod
+  database: esd_prod
 
 
