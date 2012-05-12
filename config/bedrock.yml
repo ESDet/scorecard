@@ -3,7 +3,7 @@ cloudmade_style: 998
 
 layers:
   schools:
-    template: "{{address}}"
+    template: "{{schname2}}<br/>{{address}}"
     style_handler: "function(e) {  }"
     style:
       radius: 10
