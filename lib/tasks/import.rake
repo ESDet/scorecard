@@ -11,6 +11,7 @@ namespace :import do
       'Percentage'  => :float,
     }
     
+    conn.add_column(table_name, 'centroid', :point)
     sheets.each do |ws|
       num_rows = ws.num_rows
       num_cols = ws.num_cols
@@ -27,6 +28,7 @@ namespace :import do
         end
       end
     end
+    
   end
 
   def get_data(sheets)
@@ -54,6 +56,7 @@ namespace :import do
   
   
   
+  
   desc "Create school table schema from spreadsheet"
   task :sample => :environment do |t, args|
     session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
@@ -63,6 +66,17 @@ namespace :import do
     get_data(sheets)
     puts "Done"
   end
+  
+  desc "Make fake locations"
+  task :geocode => :environment do |t, args|
+    points = Skool.select('OGR_FID, centroid').collect { |g| g.centroid }.shuffle
+    puts "Got points, updating schools.."
+    School.all.each_with_index do |s,i|
+      puts s.name
+      s.update_attribute(:centroid, points[i])
+    end
+  end
+  
   
 end  
 

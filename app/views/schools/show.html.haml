@@ -1,0 +1,8 @@
+.container_12
+  .grid_12
+    %br/
+    %br/
+    %h1= @school.name
+    
+    #wrapper{:style => 'height: 300px;'}
+      = render :partial => 'shared/map', :object => @map
