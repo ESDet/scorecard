@@ -3,7 +3,7 @@ cloudmade_style: 998
 
 layers:
   schools:
-    template: "{{schname2}}<br/>{{address}}"
+    template: "<a href='/schools/{{OGR_FID}}'>{{schname2}}</a><br/>{{address}}"
     style:
       radius: 10
       fillColor: '#22aa66'
@@ -20,4 +20,9 @@ layers:
       weight: 2
       opacity: 1
       fillOpacity: 1
-
+  districts:
+    style:
+      color: '#909'
+      weight: 4
+      fillOpacity: 0
+  
