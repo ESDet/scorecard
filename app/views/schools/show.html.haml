@@ -1,8 +1,141 @@
 .container_12
-  .grid_12
+  .grid_8
     %br/
     %br/
     %h1= @school.name
     
-    #wrapper{:style => 'height: 300px;'}
-      = render :partial => 'shared/map', :object => @map
+    .subhead
+      Grades #{@school.AUTHORIZED_GRADES_2011} &middot; #{@school.HEADCOUNT_ALL_FALL_2011.to_i} students &middot; #{@school.SCHOOL_TYPE_2011}
+      %br/
+      #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
+      
+    %p
+      %b School Mission:
+      = @school.SCHOOL_MISSION
+      
+  .grid_4
+    %br/
+    #wrapper{:style => 'height: 200px;'}
+      = render :partial => 'shared/map', :object => @map    
+    %br/
+    %br/
+    
+    
+.container_12
+  .grid_3
+    %h3 Overall School Rating: ?
+  .grid_3
+    Top-to-bottom school ranking: 58 out of 70
+  .grid_3
+    School Site Visit: 10 out of 20
+  .grid_3
+    5 Essentials Survey: #{@school.SCORE_OVERALL_5E_2012} out of 100
+    
+%br/
+%br/
+ 
+- if true or  @high
+  .container_12
+    .grid_6
+      %h3 How Is This School Doing Academically?
+      %p Following are percentages of grade 11 and 12 students scoring proficient and advanced on the Michigan Merit Examination:
+      
+      %b Spring 2011
+      %div Reading: #{@school.PCT_PROF_ALLSTUD_11_R_MME_2011}% (Trend: #{@school.TREND_PCT_ALLSTUD_11_R_MME_2007_2011})
+      %div Writing: #{@school.PCT_PROF_ALLSTUD_11_W_MME_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_11_W_MME_2007_2011})
+      %div Math:    #{@school.PCT_PROF_ALLSTUD_11_M_MME_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_11_M_MME_2007_2011}) 
+      %div Science: #{@school.PCT_PROF_ALLSTUD_11_S_MME_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2007_2011}) 
+      %div Social Studies: #{@school.PCT_PROF_ALLSTUD_11_X_MME_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_11_X_MME_2007_2011})
+      
+    .grid_6
+      %h3 How Well Does This School Prepare Students for College?
+      %b Average ACT Score for admission, 2010-11
+      .grid_3.alpha
+        University of Michigan: 26.0
+        %br/
+        Michigan State University: 24.0
+      .grid_3.omega
+        Wayne State University: 23.3
+        %br/
+        Wayne Cty Community College: 22.2
+        
+      %div
+        %b School Average ACT Score, 2010-11
+      %div All Students: #{@school.AVG_ALLSTUD_ALLSUB_ACT_2011} (Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2007_2011})
+      %b Graduation Rate, 2011
+      %div All Students: #{@school.PCT_ALLSTUD_12_GRAD_4YR_2011} (Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011})
+      
+      %b College Enrollment and Performance:
+      %div Of every 10 students who started 9th grade...
+      %div #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009} graduated on time
+      %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009} enrolled in college
+      %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009} finished a year of college
+      
+            
+- else
+  .container_12
+    .grid_12  
+      %h3 How Is This School Doing Academically?
+      %p Following are the percentages of grade 6 students performing at or above grade level on the Michigan Education Assessment Program:
+    .grid_6
+      %h4 Reading, 2010-11
+      All students: #{@school.PCT_PROF_ALLSTUD_05_R_MEAP_2011}%
+      (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_05_R_MEAP_2007_2011})
+      %br/
+      Female: #{@school.PCT_PROF_FEMALE_05_R_MEAP_2011}%
+      %br/
+      Male: #{@school.PCT_PROF_MALE_05_R_MEAP_2011}%
+      %br/
+      Low Income: #{@school.PCT_PROF_LOWINCOME_05_R_MEAP_2011}%
+      %br/
+      Special Education: #{@school.PCT_PROF_SPED_05_R_MEAP_2011}%
+      %br/
+    .grid_6
+      %h4 Math, 2010-11
+      All students: #{@school.PCT_PROF_ALLSTUD_05_M_MEAP_2011}%
+      (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_05_M_MEAP_2007_2011})
+      %br/
+      Female: #{@school.PCT_PROF_FEMALE_05_M_MEAP_2011}%
+      %br/
+      Male: #{@school.PCT_PROF_MALE_05_M_MEAP_2011}%
+      %br/
+      Low Income: #{@school.PCT_PROF_LOWINCOME_05_M_MEAP_2011}%
+      %br/
+      Special Education: #{@school.PCT_PROF_SPED_05_M_MEAP_2011}%
+      %br/
+
+    
+%br/
+%br/    
+
+.container_12
+  .grid_4
+    %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
+    %br/
+    %b Phone:
+    = @school.SCHOOL_PHONE
+    %br/
+    %b Fax:
+    = @school.SCHOOL_FAX
+    %br/
+    %b Hours:
+    = @school.SCHOOL_HOURS_AM_PM
+    %br/
+    %b Principal:
+    = @school.PRINCIPAL_FIRST
+    = @school.PRINCIPAL_LAST
+    
+  .grid_4
+    %b Nearest bus stop:
+    = @school.NEAREST_BUS_STOP
+    %br/
+    %b Bus routes within 0.5mi:
+    = @school.BUS_ROUTES
+    %br/
+    
+  .grid_4
+    %b Admission requirements and deadlines:
+    = @school.ADMISSIONS
+    
+%br/
+%br/

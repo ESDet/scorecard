@@ -6,6 +6,8 @@ class SchoolsController < ApplicationController
   
   def show
     @school = School.find params[:id]
+    @subtitle = @school.SCHOOL_NAME_2011
+    @high = @school.AUTHORIZED_GRADES_2011 == '9-12'
     
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,

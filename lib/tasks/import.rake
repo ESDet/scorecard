@@ -6,7 +6,7 @@ namespace :import do
     begin; conn.drop_table table_name; rescue; end
     conn.create_table table_name
     types = {
-      'Text'        => :string,
+      'Text'        => :text,
       'Double'      => :double,
       'Percentage'  => :float,
     }
@@ -19,6 +19,7 @@ namespace :import do
       (1..num_cols).each do |c|
         key = ws[2, c]
         ty = types[ws[5, c]] || 'Text'
+        next if ty.blank?
         puts "Key #{key} is #{ty.to_s}"
         begin
           conn.add_column(table_name, key, ty, {})
@@ -62,7 +63,7 @@ namespace :import do
     session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
     sheets = session.spreadsheet_by_key("0Al6LPbGeSiAJdG15aHU5cnI0Sy1obF94LXc5UEZOV2c").worksheets
 
-    #get_schema(sheets)
+    get_schema(sheets)
     get_data(sheets)
     puts "Done"
   end
