@@ -159,7 +159,7 @@
     %p Students may have learning disabilities, struggle with their behavior, or face challenges outside of school that affect their academic performance. This school provides the following programs to help students overcome such challenges:
     - programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
     .grid_3.alpha
-      - programs[0..programs.length/2].each do |i|
+      - programs[0...programs.length/2].each do |i|
         = i
         %br/
     .grid_3.omega
