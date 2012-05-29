@@ -71,7 +71,6 @@
       %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009} enrolled in college
       %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009} finished a year of college
       
-            
 - else
   .container_12
     .grid_12  
@@ -104,6 +103,69 @@
       Special Education: #{@school.PCT_PROF_SPED_05_M_MEAP_2011}%
       %br/
 
+    
+%br/
+%br/    
+
+.container_12
+  .grid_6
+    %h3 Is This School Organized for Improvement?
+    %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
+    %b Overall score: #{@school.SCORE_OVERALL_5E_2012}
+    %div= @school.SCORE_DESCRIPTION_5E_2012
+    %div Response rate: #{@school.TCH_RESPONSE_5E_2012}% teachers, #{@school.STUD_RESPONSE_5E_2012} students
+    %div Effective leaders:       #{@school.SCORE_LDR_5E_2012}
+    %div Collaborative teachers:  #{@school.SCORE_TCH_5E_2012}
+    %div Involved families:       #{@school.SCORE_FAM_5E_2012}
+    %div Supportive environment:  #{@school.SCORE_ENV_5E_2012}
+    %div Ambitious instruction:   #{@school.SCORE_INS_5E_2012}
+    
+  .grid_6
+    %h3 What Is This School's Environment Like?
+    %p Parents and community members visited this school unannounced to observe the learning environment and school culture. This is what they saw:
+    %h4 Physical Environment
+    %div There are procedures in place to ensure school safety and security. #{@school.SAFETY_PROCEDURES_SITEVISIT_2012}
+    %div Physical facilities are well maintained and in good repair. #{@school.FACILITY_CONDITION_SITEVISIT_2012}
+    - if false
+      %div The school appears to be located in a safe neighborhood.#{@school.SAFE_NBHD_SITEVISIT_2012}
+      %div Information about college is clearly displayed. #{@school.SAFETY_PROCEDURES_SITEVISIT_2012}
+      %div Information about careers and technical training is clearly displayed. #{@school.CAREER_TRAINING_INFO_SITEVISIT_2012}
+    %h4 Information for Parents
+    %div The school calendar lists activities and programs and is available to staff, students, parents, and the community. #{@school.CALENDAR_SITEVISIT_2012}
+    %h4 Learning Environment &amp; Interpersonal Relationships
+    %div Students appear to be following the school's code of conduct. #{@school.STUD_BEHAVE_SITEVISIT_2012}
+    %div Displays of academic progress are obvious in hallways and classrooms. #{@school.STUDENT_RECOGNITION_SITEVISIT_2012}
+    - if false
+      Support services are available to students.
+      Students appear to be happy and friendly
+    %div Teachers appear to have positive relationships with the students. #{@school.TCH_STUD_RELATE_SITEVISIT_2012}
+
+%br/
+%br/
+
+.container_12
+  .grid_6
+    %h3 How Does This School Support Well-Rounded Development?
+    %p Extracurricular activities help students explore their interests and apply what they learn in school to the real world. Examples of these activities at this school include:
+    %h4 Arts and Culture
+    = raw ('A'..'H').collect { |i| @school["#{i}_ART_CULTURE_ACTIVITIES_2012"] }.reject { |i| i.blank? }.join(' &middot; ')
+    %h4 Wellness and Fitness
+    = raw ('A'..'H').collect { |i| @school["#{i}_WELLNESS_FITNESS_ACTIVITIES_2012"] }.reject { |i| i.blank? }.join(' &middot; ')
+    %h4 Academic
+    = raw ('A'..'H').collect { |i| @school["#{i}_ACADEMIC_ACTIVITES_2012"] }.reject { |i| i.blank? }.join(' &middot; ')
+    
+  .grid_6
+    %h3 How Does This School Help Students Overcome Challenges to Learning?
+    %p Students may have learning disabilities, struggle with their behavior, or face challenges outside of school that affect their academic performance. This school provides the following programs to help students overcome such challenges:
+    - programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
+    .grid_3.alpha
+      - programs[0..programs.length/2].each do |i|
+        = i
+        %br/
+    .grid_3.omega
+      - programs[programs.length/2..-1].each do |i|
+        = i
+        %br/
     
 %br/
 %br/    
