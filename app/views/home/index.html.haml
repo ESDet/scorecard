@@ -1,2 +1,11 @@
-#wrapper
-  = render :partial => 'shared/map', :object => @map
+.container_12
+  .grid_12
+    %br/
+    %br/
+    %h1 Excellent Schools Detroit Report Card  
+    
+    %h2= link_to 'See Map', map_path
+
+    - @schools.each do |s|
+      = link_to s.name, s
+      %br/    

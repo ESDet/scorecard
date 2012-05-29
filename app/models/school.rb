@@ -1,6 +1,7 @@
 class School < ActiveRecord::Base
-  set_primary_key 'OGR_FID'
   require 'bedrock/acts_as_feature'
-  acts_as_feature :geometry => 'centroid', :fields => [:OGR_FID, :schname2, :address]
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011]
+  
+  def name; self['SCHOOL_NAME_2011']; end
   
 end
