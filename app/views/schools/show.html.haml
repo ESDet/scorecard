@@ -20,19 +20,53 @@
     %br/
     %br/
     
-    
 .container_12
-  .grid_3
-    %h3 Overall School Rating: ?
-  .grid_3
-    Top-to-bottom school ranking: 58 out of 70
-  .grid_3
-    School Site Visit: 10 out of 20
-  .grid_3
-    5 Essentials Survey: #{@school.SCORE_OVERALL_5E_2012} out of 100
+  .grid_4
+    %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
+    %br/
+    %b Phone:
+    = @school.SCHOOL_PHONE
+    %br/
+    %b Fax:
+    = @school.SCHOOL_FAX
+    %br/
+    %b Hours:
+    = @school.SCHOOL_HOURS_AM_PM
+    %br/
+    %b Principal:
+    = @school.PRINCIPAL_FIRST
+    = @school.PRINCIPAL_LAST
+    
+  .grid_4
+    %b Nearest bus stop:
+    = @school.NEAREST_BUS_STOP
+    %br/
+    %b Bus routes within 0.5mi:
+    = @school.BUS_ROUTES
+    %br/
+    
+  .grid_4
+    %h4 Demographics    
+    %div Black #{@school.PCT_BLACK_FALL_2011}%
+    %div Latino #{@school.PCT_LATINO_FALL_2011}%
+    %div White #{@school.PCT_WHITE_FALL_2011}%
+    %div Asian #{@school.PCT_ASIAN_FALL_2011}%
+    %div Other #{@school.PCT_OTHER_FALL_2011}%
     
 %br/
 %br/
+
+- if false
+  .container_12
+    .grid_3
+      %h3 Overall School Rating: ?
+    .grid_3
+      Top-to-bottom school ranking: 58 out of 70
+    .grid_3
+      School Site Visit: 10 out of 20
+    .grid_3
+      5 Essentials Survey: #{@school.SCORE_OVERALL_5E_2012} out of 100
+
  
 - if @high
   .container_12
@@ -166,38 +200,13 @@
       - programs[programs.length/2..-1].each do |i|
         = i
         %br/
+    %h3 What Are the School’s Admission Requirements and Deadlines?
+    %p= @school.ADMISSIONS
+
     
 %br/
 %br/    
 
-.container_12
-  .grid_4
-    %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
-    %br/
-    %b Phone:
-    = @school.SCHOOL_PHONE
-    %br/
-    %b Fax:
-    = @school.SCHOOL_FAX
-    %br/
-    %b Hours:
-    = @school.SCHOOL_HOURS_AM_PM
-    %br/
-    %b Principal:
-    = @school.PRINCIPAL_FIRST
-    = @school.PRINCIPAL_LAST
-    
-  .grid_4
-    %b Nearest bus stop:
-    = @school.NEAREST_BUS_STOP
-    %br/
-    %b Bus routes within 0.5mi:
-    = @school.BUS_ROUTES
-    %br/
-    
-  .grid_4
-    %b Admission requirements and deadlines:
-    = @school.ADMISSIONS
-    
+
 %br/
 %br/
