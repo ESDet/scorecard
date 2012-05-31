@@ -146,6 +146,20 @@
   .grid_6
     %h3 What Is This School's Environment Like?
     %p Parents and community members visited this school unannounced to observe the learning environment and school culture. This is what they saw:
+    
+    %table.sitevisit_key
+      %tr{:style => 'height: 20px;'}
+        %td.color1
+        %td.color2
+        %td.color3
+        %td.color4
+        %td.color5
+      %tr
+        %td Strongly disagree
+        %td Disagree
+        %td Neither agree nor disagree
+        %td Agree
+        %td Strongly agree
 
     %h4 Physical Environment
     = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:env] }
