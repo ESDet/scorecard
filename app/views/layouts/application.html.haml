@@ -19,6 +19,8 @@
       = stylesheet_link_tag 'style.css', :media => 'all'
     :erb
       <!--[if lte IE 8]><link rel="stylesheet" href="/leaflet/leaflet.ie.css" /><![endif]-->
+      <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/javascripts/excanvas.js"></script><![endif]-->      
+    = stylesheet_link_tag 'jquery.jqplot.min.css'
     = javascript_include_tag 'jquery-1.7.1.min.js'
 
   %body
@@ -26,7 +28,13 @@
   
 
   = javascript_include_tag '/leaflet/leaflet-src.js', '/wax/dist/wax.leaf.js'
-  = javascript_include_tag 'application.js', '/paraffin/paraffin.js', '/paraffin/paraffin.gps.js', 'd3.v2.js', 'raphael.min.js'
+  = javascript_include_tag 'application.js', '/paraffin/paraffin.js', '/paraffin/paraffin.gps.js'
+  - if false
+    = javascript_include_tag 'd3.v2.js'
+    = javascript_include_tag 'raphael-min.js', 'g.raphael-min.js', 'g.pie-min.js', 'g.bar-min.js'
+  
+  = javascript_include_tag 'jquery.jqplot.js', 'plugins/jqplot.pieRenderer.min.js', 'plugins/jqplot.barRenderer.min.js', 'plugins/jqplot.categoryAxisRenderer.min.js', 'plugins/jqplot.pointLabels.min.js'
+  
   - if AppConfig.typekit_key
     = javascript_include_tag "http://use.typekit.com/#{AppConfig.typekit_key}.js"
     :javascript
