@@ -1,0 +1,10 @@
+.grid_3.alpha
+  - mid = (items.length/2).ceil
+  - items[0...mid].each do |i|
+    = i
+    %br/
+  
+.grid_3.omega
+  - items[mid..-1].each do |i|
+    = i
+    %br/
