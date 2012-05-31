@@ -204,10 +204,8 @@
   var dem_data = #{@demographics.to_json};
   
   // Highschool academics
-  var high  = #{@high.to_json};
-  var sch   = #{@high_ac[:school].to_json};
-  var mi    = #{@high_ac[:state].to_json};
-  var ticks = #{@high_ac[:ticks].to_json};
+  var high    = #{@high.to_json};
+  var high_ac = #{@high_ac.to_json};
 
   // Elementary school academics - reading
   var elem_ac = #{@elem_academics.to_json};
@@ -234,7 +232,7 @@
 
     if(high) {
       // High school academics  
-      var hs_academics_plot = jQuery.jqplot ('academics', [mi, sch], 
+      var hs_academics_plot = jQuery.jqplot ('academics', [high_ac.state, high_ac.school],
         { 
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
@@ -252,7 +250,7 @@
           axes: {
             yaxis: {
               renderer: $.jqplot.CategoryAxisRenderer,
-              ticks: ticks,
+              ticks: high_ac.ticks,
               showTickMarks: false
             },
             xaxis: { min: 0, max: 100, pad: 1.05, numberTicks: 5 }
