@@ -148,18 +148,13 @@
     %p Parents and community members visited this school unannounced to observe the learning environment and school culture. This is what they saw:
 
     %h4 Physical Environment
-    %div The school exterior makes a good first impression. #{@school.SCHOOL_EXTERIOR_SITEVISIT_2012}
-    %div There are procedures in place to ensure school safety and security. #{@school.SAFETY_PROCEDURES_SITEVISIT_2012}
-    %div Physical facilities are well maintained and in good repair. #{@school.FACILITY_CONDITION_SITEVISIT_2012}
+    = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:env] }
 
     %h4 Culture of Academic Achievement
-    %div Student progress and achievement is recognized. #{@school.STUDENT_RECOGNITION_SITEVISIT_2012}
+    = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:culture] }
 
     %h4 Community and Relationships
-    %div The school has a clear mission or vision statement. #{@school.CLEAR_MISSION_SITEVISIT_2012}
-    %div Teachers appear to have positive relationships with the students. #{@school.TCH_STUD_RELATE_SITEVISIT_2012}
-    %div Students appear to be following the school's code of conduct. #{@school.STUD_BEHAVE_SITEVISIT_2012}
-    %div The school calendar lists activities and programs and is available to staff, students, parents, and the community. #{@school.CALENDAR_SITEVISIT_2012}
+    = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:community] }
 
 %br/
 %br/
