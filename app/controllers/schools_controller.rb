@@ -25,6 +25,13 @@ class SchoolsController < ApplicationController
     ethnicities = [ 'BLACK', 'LATINO', 'WHITE', 'ASIAN', 'OTHER' ]
     @demographics = ethnicities.collect { |e| [ "#{e.capitalize} " + @school["PCT_#{e}_FALL_2011"].to_i.to_s + "%", @school["PCT_#{e}_FALL_2011"] ] }
 
+    @elements = [
+      [ 'Effective leaders', 'Principals and teachers implement a shared vision for success.', @school.SCORE_LDR_5E_2012 ],
+      [ 'Collaborative teachers', "Teachers collaborate to promote professional growth.", @school.SCORE_TCH_5E_2012 ],
+      [ "Involved families", "The entire staff builds external relationships.", @school.SCORE_FAM_5E_2012 ],
+      [ "Supportive environment", "The school is safe, demanding, and supportive.", @school.SCORE_ENV_5E_2012 ],
+      [ 'Ambitious instruction', "Classes are engaging and challenging.", @school.SCORE_INS_5E_2012 ],
+    ]
 
     @sitevisit = {
       :env => [

@@ -15,8 +15,7 @@
       = @school.SCHOOL_MISSION
       
   .grid_4
-    %br/
-    #wrapper{:style => 'height: 200px;'}
+    #wrapper{:style => 'height: 200px; margin-top: 4em;'}
       = render :partial => 'shared/map', :object => @map    
     %br/
     %br/
@@ -134,21 +133,18 @@
   .grid_6
     %h3 Is This School Organized for Improvement?
     %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
-    %b Overall score: #{@school.SCORE_OVERALL_5E_2012}
-    %div= @school.SCORE_DESCRIPTION_5E_2012
-    %div Response rate: #{@school.TCH_RESPONSE_5E_2012}% teachers, #{@school.STUD_RESPONSE_5E_2012} students
-    %div Effective leaders:       #{@school.SCORE_LDR_5E_2012}
-    %div Collaborative teachers:  #{@school.SCORE_TCH_5E_2012}
-    %div Involved families:       #{@school.SCORE_FAM_5E_2012}
-    %div Supportive environment:  #{@school.SCORE_ENV_5E_2012}
-    %div Ambitious instruction:   #{@school.SCORE_INS_5E_2012}
+    .centered
+      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012}
+      %b= @school.SCORE_DESCRIPTION_5E_2012
+      %div Response rate: #{@school.TCH_RESPONSE_5E_2012.to_i}% teachers, #{@school.STUD_RESPONSE_5E_2012.to_i}% students
+    = render :partial => 'shared/5e', :collection => @elements, :as => :element
     
   .grid_6
     %h3 What Is This School's Environment Like?
     %p Parents and community members visited this school unannounced to observe the learning environment and school culture. This is what they saw:
     
     %table.sitevisit_key
-      %tr{:style => 'height: 20px;'}
+      %tr{:style => 'height: 25px;'}
         %td.color1
         %td.color2
         %td.color3
