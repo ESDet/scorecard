@@ -11,7 +11,7 @@
       
     %br/
     %p
-      %b School Mission:
+      %h4{:style => 'display: inline;'} School Mission:
       = @school.SCHOOL_MISSION
       
   .grid_4
@@ -65,7 +65,7 @@
 
 
  
-- if @high
+- if @school.high?
   .container_12
     .grid_6
       %h3 How Is This School Doing Academically?
@@ -97,7 +97,7 @@
       %div #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009} graduated on time
       %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009} enrolled in college
       %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009} finished a year of college
-      
+
 - else
   .container_12
     .grid_12  
@@ -121,9 +121,13 @@
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
-      %p 3rd grade reading is an early indicator if students are on track for graduation:
-      %b Reading, 2010-11
-      %div All Students: #{@school.PCT_PROF_ALLSTUD_03_R_MEAP_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})
+      - if @school.elementary?
+        %p 3rd grade reading is an early indicator if students are on track for graduation:
+        %b Reading, 2010-11
+        %div All Students: #{@school.PCT_PROF_ALLSTUD_03_R_MEAP_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})
+      - elsif @school.middle?
+        %h3 Percentage of 8th Graders meeting state standards in algebra
+        %p 8th grade proficiency in algebra is an early indicator if students are on track for graduation
       
     
 %br/
@@ -133,8 +137,8 @@
   .grid_6
     %h3 Is This School Organized for Improvement?
     %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
-    .centered
-      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012}
+    .overall
+      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.to_i}
       %b= @school.SCORE_DESCRIPTION_5E_2012
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.to_i}% teachers, #{@school.STUD_RESPONSE_5E_2012.to_i}% students
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
@@ -204,10 +208,13 @@
   var dem_data = #{@demographics.to_json};
   
   // Highschool academics
-  var high    = #{@high.to_json};
+  var high    = #{@school.high?.to_json};
   var high_ac = #{@high_ac.to_json};
 
-  // Elementary school academics - reading
+
+  // Elementary school academics - reading/math
+  var elementary = #{@school.elementary?.to_json};
+  var middle = #{@school.middle?.to_json};
   var elem_ac = #{@elem_academics.to_json};
   
 

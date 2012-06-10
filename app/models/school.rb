@@ -4,4 +4,8 @@ class School < ActiveRecord::Base
   
   def name; self['SCHOOL_NAME_2011']; end
   
+  def elementary?; self.id % 3 == 0; end
+  def middle?;     self.id % 3 == 1; end
+  def high?;       self.id % 3 == 2; end
+  
 end
