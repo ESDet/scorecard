@@ -1,5 +1,6 @@
 @unit: 14px;
 @blue: #000060;
+@light: #eef;
 
 body { padding: 0; background-color: white; color: black; }
 html, body { height: 100%; }
@@ -12,6 +13,8 @@ html, body { height: 100%; }
 .hide { display: none; }
 .inline { display: inline-block; }
 .rounded { padding: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
+.ib { display: inline-block; float: none; }
+
 h4 { color: @blue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 
 #wrapper { height: 100%; position: relative; }
@@ -22,7 +25,7 @@ h4 { color: @blue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 #key .item { text-wrap: none; white-space: nowrap; margin-right: 1em; }
 .leaflet-control-layers-base input,
 .leaflet-control-layers-overlays input { display: inline; }
-.overall { background-color: #ddf; padding: 1em; text-align: center; margin: 1em 0;}
+.overall { background-color: @light; padding: 1em; text-align: center; margin: 1em 0;}
 .barchart { width: 100%; height: 250px; }
 
 .square { width: 18px; height: 18px; float: right; }
@@ -34,8 +37,10 @@ h4 { color: @blue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 .sitevisit_key { width: 100%; margin: 1em 0;
   td { width: 92px; text-align: center; font-size: 0.9em; }
 }
-.ib { display: inline-block; float: none; }
 
+.summary { 
+  background-color: @light; 
+}
 .elements_score {
   height: 50px; margin: 3px 0; background-image: url(/images/5e_scale.png); background-repeat: no-repeat; background-position: right top;
   .bar { position: absolute; left: 67px;  height: 10px; top: 10px; background-color: @blue; }

@@ -1,4 +1,4 @@
-.container_12
+.container_12.summary
   .grid_8
     %br/
     %br/
@@ -20,7 +20,7 @@
     %br/
     %br/
     
-.container_12
+.container_12.summary
   .grid_4
     %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
     %br/
@@ -223,7 +223,7 @@
     // Demographics pie chart
     var dem_plot = jQuery.jqplot ('dems', [dem_data], 
       { 
-        grid: { background: '#ffffff', drawBorder: false, shadow: false }, 
+        grid: { background: '#eef', drawBorder: false, shadow: false }, 
         seriesDefaults: {
           renderer: jQuery.jqplot.PieRenderer, 
           shadow: false,
@@ -233,7 +233,7 @@
             padding: 0
           }
         }, 
-        legend: { show:true, location: 'e', border: '0px', fontSize: '13px' }
+        legend: { show:true, location: 'e', border: '0px', fontSize: '13px', background: '#eef' }
       }
     );     
 
