@@ -2,6 +2,12 @@ class SchoolsController < ApplicationController
 
   def index
     @schools = School.all
+    respond_to do |format|
+      format.html { }
+      format.json do
+        render :json => Bedrock::to_feature_collection(@schools)
+      end
+    end
   end
   
   def show

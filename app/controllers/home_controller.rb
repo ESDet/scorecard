@@ -6,15 +6,16 @@ class HomeController < ApplicationController
   
   
   def map
-    @schools = School.all
-    @districts = District.all
+    #@schools = School.all
+    #@districts = District.all
     
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
-      :elements => @schools)
-    @district_o = Bedrock::Overlay.from_config('districts',
-      :ty => :geojson,
-      :elements => @districts)
+     #:elements => @schools)
+      :url      => schools_path(:format => :json))
+    #@district_o = Bedrock::Overlay.from_config('districts',
+    #  :ty => :geojson,
+    #  :elements => @districts)
     @map = Bedrock::Map.new({
       #:extent         => Bedrock::city_extents(:detroit),
       :base_layers    => ['street'],

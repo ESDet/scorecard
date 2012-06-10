@@ -1,21 +1,27 @@
 .container_12
-  .grid_12
-    %br/
-    %br/
+  .grid_12{:style => 'padding: 2em 0 1em 0;'}
     %h1 Excellent Schools Detroit Report Card  
+    %br/
     
-    %h2= link_to 'See Map', map_path
-
-
-    %br/
+.container_12
+  .grid_8
     = form_tag '/search', { :method => :post, :class => 'form-search' } do
-      = text_field_tag :q
-      = submit_tag 'Go', :class => 'btn btn-primary'
+      = text_field_tag :q, nil, :style => 'width: 320px;'
+      = submit_tag 'Search', :class => 'btn btn-primary'
     %br/
-  
-    - @schools.each do |s|
-      = link_to s.name, s
-      %br/    
+  .grid_4
+    %h2= link_to 'See Map', map_path
+ 
+.container_12
+  .grid_12
+    %h2 Browse Schools 
+    %br/
+.container_12
+  - @schools.each_slice(@schools.size / 3 + 3) do |col|
+    .grid_4
+      - col.each do |s|
+        = link_to s.name, s
+        %br/    
 
 :javascript
   $(document).ready(function() {
