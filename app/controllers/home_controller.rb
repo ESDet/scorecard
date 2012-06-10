@@ -27,4 +27,14 @@ class HomeController < ApplicationController
     })
   end
   
+  def search
+    @q = params[:q]
+    redirect_to root_path and return if @q.blank?
+    
+    exact = School.find_by_SCHOOL_NAME_2011(@q)
+    redirect_to exact and return if exact
+    
+    redirect_to root_path, :notice => "Search isn't done yet, sorry!"
+  end
+  
 end

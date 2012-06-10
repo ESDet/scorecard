@@ -6,6 +6,19 @@
     
     %h2= link_to 'See Map', map_path
 
+
+    %br/
+    = form_tag '/search', { :method => :post, :class => 'form-search' } do
+      = text_field_tag :q
+      = submit_tag 'Go', :class => 'btn btn-primary'
+    %br/
+  
     - @schools.each do |s|
       = link_to s.name, s
       %br/    
+
+:javascript
+  $(document).ready(function() {
+    var school_names = #{@schools.collect { |s| s.name }.to_json};
+    $('input#q').typeahead({ source: school_names });
+  });
