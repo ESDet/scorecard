@@ -25,6 +25,7 @@ class HomeController < ApplicationController
       :min_zoom => 11,
       :max_zoom => 18,
       :zoom => 12,
+      :layer_control => false,
     })
   end
   

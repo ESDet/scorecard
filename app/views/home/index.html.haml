@@ -14,6 +14,7 @@
  
 .container_12
   .grid_12
+    %a{:name => 'schools'}
     %h2 Browse Schools 
     %br/
 .container_12
@@ -22,6 +23,10 @@
       - col.each do |s|
         = link_to s.name, s
         %br/    
+
+.clear_floats
+%br/
+%br/
 
 :javascript
   $(document).ready(function() {

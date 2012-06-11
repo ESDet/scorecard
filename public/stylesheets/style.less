@@ -1,6 +1,13 @@
-@unit: 14px;
-@blue: #000060;
 @light: #eef;
+
+@dblue:   #004270;
+@orange:  #f79421;
+@lblue:   #85d5e3;
+@yellow:  #ffcc4e;
+@lgreen:  #8dc63f;
+@red:     #953734;
+@greyish: #556677;
+
 
 body { padding: 0; background-color: white; color: black; }
 html, body { height: 100%; }
@@ -15,9 +22,17 @@ html, body { height: 100%; }
 .rounded { padding: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
 .ib { display: inline-block; float: none; }
 
-h4 { color: @blue; text-transform: uppercase; margin: 0.5em 0 0 0; }
+h1, h2, h3, h4 { }
+h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 
-#wrapper { height: 100%; position: relative; }
+nav {
+  background-color: @greyish; padding: 0.5em 0; font-weight: bold; color: white;
+  a { color: white; margin-left: 3em; }
+  a:hover { color: @lblue; }
+}
+
+@unit: 14px;
+#wrapper { height: 100%; position: relative; border: 1px solid @dblue; }
 #map {  width: 100%; height: 100%; }
 #key { padding: 10px 10px 12px 10px; position: absolute; left: 0px; bottom: 0px; width: 700px; max-width: 100%; background-color: white; background-color: rgba(255,255,255,0.8); z-index: 100; }
 #key .square { width: @unit; height: @unit; margin-right: 3px; display: inline-block; border: 1px solid #333;  
@@ -43,7 +58,7 @@ h4 { color: @blue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 }
 .elements_score {
   height: 50px; margin: 3px 0; background-image: url(/images/5e_scale.png); background-repeat: no-repeat; background-position: right top;
-  .bar { position: absolute; left: 67px;  height: 10px; top: 10px; background-color: @blue; }
+  .bar { position: absolute; left: 67px;  height: 10px; top: 10px; background-color: @dblue; }
 }
 .circled {
   -webkit-border-radius: 999px; -moz-border-radius: 999px; border-radius: 999px; behavior: url(PIE.htc);
@@ -51,7 +66,7 @@ h4 { color: @blue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   height: 16px;
   font-size: 14px; font-weight: bold;
   padding: 8px; text-align: center;
-  background-color: @blue; color: white;
+  background-color: @dblue; color: white;
   margin-bottom: 10px; 
 }
 

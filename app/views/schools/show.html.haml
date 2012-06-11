@@ -21,7 +21,7 @@
     %br/
     
 .container_12.summary
-  .grid_4
+  .grid_3
     %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
     %br/
     %b Phone:
@@ -37,7 +37,7 @@
     = @school.PRINCIPAL_FIRST
     = @school.PRINCIPAL_LAST
     
-  .grid_4
+  .grid_3
     %b Nearest bus stop:
     = @school.NEAREST_BUS_STOP
     %br/
@@ -45,9 +45,16 @@
     = @school.BUS_ROUTES
     %br/
     
-  .grid_4
-    %h4 Demographics
+  .grid_3
     #dems{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
+    
+  .grid_3
+    XX% free and reduced-price lunch
+    %br/
+    XX% special education
+    %br/
+    XX% English language learners
+    %br/
     
 %br/
 %br/
@@ -64,6 +71,8 @@
       5 Essentials Survey: #{@school.SCORE_OVERALL_5E_2012} out of 100
 
 
+%br/
+%br/
  
 - if @school.high?
   .container_12
@@ -126,7 +135,8 @@
         %b Reading, 2010-11
         %div All Students: #{@school.PCT_PROF_ALLSTUD_03_R_MEAP_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})
       - elsif @school.middle?
-        %h3 Percentage of 8th Graders meeting state standards in algebra
+        = image_tag 'coming_2013.png', :class => 'float_left', :style => 'margin-right: 10px;'
+        %h4 Percentage of 8th Graders meeting state standards in algebra
         %p 8th grade proficiency in algebra is an early indicator if students are on track for graduation
       
     

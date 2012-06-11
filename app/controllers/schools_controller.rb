@@ -17,14 +17,20 @@ class SchoolsController < ApplicationController
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
       :elements => [@school])
+    @det_o = Bedrock::Overlay.from_config('districts',
+      :ty => :geojson,
+      :elements => [District.find(580)]
+    )
     @map = Bedrock::Map.new({
       :base_layers    => ['street'],
-      :layers         => [ @school_o ],
+      :layers         => [ @det_o, @school_o ],
       :layer_control  => true,
-      :center => { :lon => @school.centroid.x, :lat => @school.centroid.y },
-      :min_zoom => 12,
+      #:center => { :lon => @school.centroid.x, :lat => @school.centroid.y },
+      :min_zoom => 10,
       :max_zoom => 18,
-      :zoom => 12,
+      #:zoom => 12,
+      :extent => Bedrock::city_extents(:detroit),
+      :layer_control => false,
     })
 
     ethnicities = [ 'BLACK', 'LATINO', 'WHITE', 'ASIAN', 'OTHER' ]

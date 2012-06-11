@@ -4,7 +4,7 @@ cloudmade_style: 998
 layers:
   schools:
     template: "<a href='/schools/{{id}}'>{{SCHOOL_NAME_2011}}</a><br/>{{SCHOOL_STREET_ADDRESS_2011}}"
-    #style_handler: "function(e) { e.layer.options.fillColor = { 1: '#22aa66', 0: '#446699' }[e.properties.dps]; }"   
+    style_handler: "function(e) { e.layer.options.fillColor = { 0: '#8DC63F', 1: '#F79421', 2: '#004270' }[e.properties.level]; }"
     style:
       radius: 10
       fillColor: '#22aa66'
@@ -23,7 +23,7 @@ layers:
       fillOpacity: 1
   districts:
     style:
-      color: '#909'
+      color: '#004270'
       weight: 4
       fillOpacity: 0
   

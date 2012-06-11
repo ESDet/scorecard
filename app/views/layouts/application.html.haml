@@ -24,6 +24,15 @@
     = javascript_include_tag 'jquery-1.7.1.min.js'
 
   %body
+    %nav
+      .container_12
+        .grid_4
+          ESD Report Card 2012
+        .grid_8{:style => 'text-align: right;'}
+          = link_to 'Home', root_path
+          = link_to 'Map', map_path
+          = link_to 'Schools', root_path(:anchor => 'schools')
+      
     = yield
   
 
