@@ -3,12 +3,6 @@
     %h1 Excellent Schools Detroit Report Card  
     %br/
  
-.container_12
-  - @schools.each_slice(@schools.size / 3 + 3) do |col|
-    .grid_4
-      - col.each do |s|
-        = link_to s.name, s
-        %br/    
 
 .clear_floats
 %br/
