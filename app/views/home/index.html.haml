@@ -2,21 +2,7 @@
   .grid_12{:style => 'padding: 2em 0 1em 0;'}
     %h1 Excellent Schools Detroit Report Card  
     %br/
-    
-.container_12
-  .grid_8
-    = form_tag '/search', { :method => :post, :class => 'form-search' } do
-      = text_field_tag :q, nil, :style => 'width: 320px;'
-      = submit_tag 'Search', :class => 'btn btn-primary'
-    %br/
-  .grid_4
-    %h2= link_to 'See Map', map_path
  
-.container_12
-  .grid_12
-    %a{:name => 'schools'}
-    %h2 Browse Schools 
-    %br/
 .container_12
   - @schools.each_slice(@schools.size / 3 + 3) do |col|
     .grid_4
@@ -28,8 +14,3 @@
 %br/
 %br/
 
-:javascript
-  $(document).ready(function() {
-    var school_names = #{@schools.collect { |s| s.name }.to_json};
-    $('input#q').typeahead({ source: school_names });
-  });

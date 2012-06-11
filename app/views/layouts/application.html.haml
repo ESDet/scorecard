@@ -26,12 +26,19 @@
   %body
     %nav
       .container_12
-        .grid_4
-          ESD Report Card 2012
-        .grid_8{:style => 'text-align: right;'}
+        .grid_3
+          .title ESD Report Card 2012
+        .grid_9{:style => 'text-align: right;'}
           = link_to 'Home', root_path
           = link_to 'Map', map_path
-          = link_to 'Schools', root_path(:anchor => 'schools')
+          = form_tag '/search', { :method => :post, :class => 'form-search', :style => 'display: inline-block; margin-left: 2em; margin-bottom: 0;' } do
+            = text_field_tag :q, nil, :style => 'width: 200px;'
+            = submit_tag 'Search', :class => 'btn'
+          :javascript
+            $(document).ready(function() {
+              var school_names = #{School.select('id, SCHOOL_NAME_2011').collect { |s| s.name }.to_json};
+              $('input#q').typeahead({ source: school_names });
+            });
       
     = yield
   
