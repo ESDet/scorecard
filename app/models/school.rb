@@ -1,6 +1,6 @@
 class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
-  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011], :add_properties => :my_properties
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2011, :AUTHORIZED_GRADES_2011], :add_properties => :my_properties
   
   def name; self['SCHOOL_NAME_2011']; end
   
