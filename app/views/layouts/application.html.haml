@@ -33,7 +33,7 @@
           = link_to 'Schools', schools_path
           = link_to 'Map', map_path
           = form_tag '/search', { :method => :post, :class => 'form-search', :style => 'display: inline-block; margin-left: 2em; margin-bottom: 0;' } do
-            = text_field_tag :q, nil, :style => 'width: 200px;'
+            = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'
             = submit_tag 'Search', :class => 'btn'
           :javascript
             $(document).ready(function() {

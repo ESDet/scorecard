@@ -1,7 +1,20 @@
 class SchoolsController < ApplicationController
 
   def index
-    @schools = School.all
+    if params[:zip]
+      @zip = params[:zip].to_i
+      @schools = School.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{@zip}"]).order('SCHOOL_NAME_2011')
+      @title = "Schools in #{@zip}"
+    elsif params[:filter]
+      filter = params[:filter]
+      redirect_to schools_path and return unless ['elementary', 'middle', 'high'].include? filter
+      @schools = School.send(filter)
+      @title = "#{filter.capitalize} Schools"
+    else
+      @schools = School.order('SCHOOL_NAME_2011')
+      @title = "All Schools"
+    end
+    
     respond_to do |format|
       format.html { }
       format.json do
@@ -102,6 +115,15 @@ class SchoolsController < ApplicationController
       format.html { }
       #format.pdf { render :layout => false }
     end
+  end
+  
+  def increment
+    if params[:by] == 1
+      s = School.first(:conditions => ["OGR_FID > ?", params[:id].to_i]) || School.first
+    elsif params[:by] == -1
+      s = School.first(:conditions => ["OGR_FID < ?", params[:id].to_i]) || School.last
+    end
+    redirect_to (s || schools_path)
   end
   
 end

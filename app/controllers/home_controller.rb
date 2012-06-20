@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
 
   def index
-    @schools = School.order('SCHOOL_NAME_2011')
   end
   
   
@@ -31,13 +30,21 @@ class HomeController < ApplicationController
   end
   
   def search
-    @q = params[:q]
-    redirect_to root_path and return if @q.blank?
     
-    exact = School.find_by_SCHOOL_NAME_2011(@q)
-    redirect_to exact and return if exact
+    if params[:zip]
+      @zip = params[:zip]
+      redirect_to schools_path(:zip => @zip)
+      
+    elsif params[:q]
+      @q = params[:q]
+      exact = School.find_by_SCHOOL_NAME_2011(@q)
+      redirect_to exact and return if exact
+      redirect_to root_path, :notice => "Search isn't done yet, sorry!"
+      
+    else
+      redirect_to root_path and return
+    end
     
-    redirect_to root_path, :notice => "Search isn't done yet, sorry!"
   end
   
 end

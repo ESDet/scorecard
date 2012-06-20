@@ -14,6 +14,9 @@
       %h4{:style => 'display: inline;'} School Mission:
       = @school.SCHOOL_MISSION
       
+    %h3 #{link_to raw('&laquo; Previous'), previous_path(@school.id)} / #{link_to raw('Next &raquo;'), next_path(@school.id)}
+      
+      
   .grid_4
     #wrapper{:style => 'height: 200px; margin-top: 4em;'}
       = render :partial => 'shared/map', :object => @map    
