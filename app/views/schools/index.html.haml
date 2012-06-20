@@ -4,13 +4,13 @@
     %h1= @title
     
     %br/
-    .btn-group.float_left
+    .btn-group.float_left{:style => 'margin-right: 1em;'}
       = link_to 'All',        schools_path, :class => 'btn'
       = link_to 'Elementary', schools_path(:filter => 'elementary'), :class => 'btn'
       = link_to 'Middle',     schools_path(:filter => 'middle'), :class => 'btn'
       = link_to 'High',       schools_path(:filter => 'high'), :class => 'btn'
       
-    = form_tag '/search', { :method => :post, :class => 'form-search', :style => 'display: inline-block; margin-left: 2em; margin-bottom: 0;' } do
+    = form_tag '/search', { :method => :post, :class => 'form-search search' } do
       = text_field_tag :zip, @zip, :style => 'width: 100px;', :placeholder => 'By zip code'
       = submit_tag 'Go', :class => 'btn'
     

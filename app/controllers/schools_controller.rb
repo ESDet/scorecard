@@ -3,7 +3,7 @@ class SchoolsController < ApplicationController
   def index
     if params[:zip]
       @zip = params[:zip].to_i
-      @schools = School.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{@zip}"]).order('SCHOOL_NAME_2011')
+      @schools = School.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{@zip}"])
       @title = "Schools in #{@zip}"
     elsif params[:filter]
       filter = params[:filter]
@@ -11,9 +11,10 @@ class SchoolsController < ApplicationController
       @schools = School.send(filter)
       @title = "#{filter.capitalize} Schools"
     else
-      @schools = School.order('SCHOOL_NAME_2011')
+      @schools = School
       @title = "All Schools"
     end
+    @schools = @schools.order('SCHOOL_NAME_2011')
     
     respond_to do |format|
       format.html { }
