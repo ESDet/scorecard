@@ -1,7 +1,7 @@
 .grid_3.alpha{:style => 'margin-bottom: 1em;'}
-  - mid = (items.length/2).ceil
+  - mid = (items.length/2).floor
   %ul
-    - items[0...mid].each do |i|
+    - items[0..mid].each do |i|
       %li= i
   
 .grid_3.omega{:style => 'margin-bottom: 1em;'}

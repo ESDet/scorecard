@@ -120,9 +120,9 @@ class SchoolsController < ApplicationController
   
   def increment
     if params[:by] == 1
-      s = School.first(:conditions => ["OGR_FID > ?", params[:id].to_i]) || School.first
+      s = School.first(:conditions => ["id > ?", params[:id].to_i]) || School.first
     elsif params[:by] == -1
-      s = School.first(:conditions => ["OGR_FID < ?", params[:id].to_i]) || School.last
+      s = School.first(:conditions => ["id < ?", params[:id].to_i]) || School.last
     end
     redirect_to (s || schools_path)
   end

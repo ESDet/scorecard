@@ -1,6 +1,6 @@
 namespace :import do
 
-  def get_schema(sheets)
+  def get_schema(ws)
     table_name = 'schools'
     conn = ActiveRecord::Base.connection
     begin; conn.drop_table table_name; rescue; end
@@ -12,44 +12,44 @@ namespace :import do
     }
     
     conn.add_column(table_name, 'centroid', :point)
-    sheets.each do |ws|
-      num_rows = ws.num_rows
-      num_cols = ws.num_cols
-      puts "Found #{num_rows} rows, #{num_cols} columns"
-      (1..num_cols).each do |c|
-        key = ws[2, c]
-        ty = types[ws[5, c]] || 'Text'
-        next if ty.blank?
-        puts "Key #{key} is #{ty.to_s}"
-        begin
-          conn.add_column(table_name, key, ty, {})
-        rescue => e
-          puts e.inspect
-          puts e.backtrace
-        end
+    
+    num_rows = ws.num_rows
+    num_cols = ws.num_cols
+    puts "Found #{num_rows} rows, #{num_cols} columns"
+    (2..num_rows).each do |r|
+      key = ws[r, 5]
+      ty = types[ws[r, 10] || 'Text']
+      next if key.blank? or ty.blank?
+      puts "Key #{key} is #{ty.to_s}"
+      begin
+        conn.add_column(table_name, key, ty, {})
+      rescue => e
+        puts e.inspect
+        puts e.backtrace
       end
     end
-    
   end
 
   def get_data(sheets)
+    column_names = School.column_names
     sheets.each_with_index do |ws,i|
       puts "DOING SHEET #{i}"
       num_rows = ws.num_rows
       num_cols = ws.num_cols
-      key_row = ws.rows[1]
-      ws.rows[6..num_rows].each do |row|
-        puts "#{row[2]}"
+      key_row = ws.rows[0]
+      ws.rows[1..num_rows].each do |row|
+        puts "#{row[4]}"
         h = {}
         (0...num_cols).each do |x|
           key = key_row[x]
           next if key.blank?
           val = row[x]
+          val = nil if val.blank? or val == 'N/A' or val == '*'
           #puts "   #{key} = #{val}"
           h[key] = val
-          id = val if key == School.primary_key
         end
-        s = School.find_or_create_by_id(h['SCHOOL_BCODE'])
+        h.slice! *column_names
+        s = School.find_or_create_by_BCODE_TEMPLATE(h['BCODE_TEMPLATE'])
         s.update_attributes(h)
       end
     end
@@ -59,17 +59,29 @@ namespace :import do
   
   
   desc "Create school table schema from spreadsheet"
-  task :sample => :environment do |t, args|
+  task :schools => :environment do |t, args|
     session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
-    sheets = session.spreadsheet_by_key("0Al6LPbGeSiAJdG15aHU5cnI0Sy1obF94LXc5UEZOV2c").worksheets
+    sample_key = "0Al6LPbGeSiAJdG15aHU5cnI0Sy1obF94LXc5UEZOV2c"
+    real_key = '0Al6LPbGeSiAJdEl1Y1N6a0tuQUp6WV9RQkpMWUEzTXc'
+    sheets = session.spreadsheet_by_key(real_key).worksheets
 
-    get_schema(sheets)
-    get_data(sheets)
+    #get_schema(sheets.first)
+    get_data(sheets[3..3])
     puts "Done"
   end
   
-  desc "Make fake locations"
+  desc "Get real locations"
   task :geocode => :environment do |t, args|
+    School.find_each do |s|
+      puts s.name
+      s.save
+      #s.update_attribute(:centroid, points[i])
+    end
+  end
+
+
+  desc "Make fake locations"
+  task :fake_geocode => :environment do |t, args|
     points = Skool.select('OGR_FID, centroid').collect { |g| g.centroid }.shuffle
     puts "Got points, updating schools.."
     School.all.each_with_index do |s,i|

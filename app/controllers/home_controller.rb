@@ -13,13 +13,13 @@ class HomeController < ApplicationController
      #:elements => @schools)
       :url      => schools_path(:format => :json),
       :mouseover => true)
-    #@district_o = Bedrock::Overlay.from_config('districts',
-    #  :ty => :geojson,
-    #  :elements => @districts)
+    @district_o = Bedrock::Overlay.from_config('districts',
+      :ty => :geojson,
+      :elements => [District.find(580)])
     @map = Bedrock::Map.new({
       #:extent         => Bedrock::city_extents(:detroit),
       :base_layers    => ['street'],
-      :layers         => [ @school_o ],
+      :layers         => [ @district_o, @school_o ],
       :layer_control  => true,
       :center => { :lon => -83.09577941894531, :lat => 42.364885996366525 },
       :min_zoom => 11,

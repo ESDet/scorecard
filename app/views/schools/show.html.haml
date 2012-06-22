@@ -25,38 +25,42 @@
     
 .container_12.summary
   .grid_3
-    %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
-    %br/
+    - unless @school.SCHOOL_WEBSITE.blank?
+      %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
+      %br/
     %b Phone:
-    = @school.SCHOOL_PHONE
+    = @school.SCHOOL_PHONE || 'Unknown'
     %br/
-    %b Fax:
-    = @school.SCHOOL_FAX
-    %br/
+    - unless @school.SCHOOL_FAX.blank?
+      %b Fax:
+      = @school.SCHOOL_FAX
+      %br/
     %b Hours:
-    = @school.SCHOOL_HOURS_AM_PM
+    = @school.SCHOOL_HOURS_AM_PM || 'Unknown'
     %br/
     %b Principal:
     = @school.PRINCIPAL_FIRST
     = @school.PRINCIPAL_LAST
     
   .grid_3
-    %b Nearest bus stop:
-    = @school.NEAREST_BUS_STOP
-    %br/
-    %b Bus routes within 0.5mi:
-    = @school.BUS_ROUTES
-    %br/
+    - unless @school.NEAREST_BUS_STOP.blank?
+      %b Nearest bus stop:
+      = @school.NEAREST_BUS_STOP
+      %br/
+    - unless @school.BUS_ROUTES.blank?
+      %b Bus routes within 0.5mi:
+      = @school.BUS_ROUTES
+      %br/
     
   .grid_3
     #dems{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
     
   .grid_3
-    XX% free and reduced-price lunch
+    #{@school.PCT_FRL_FALL_2011.to_i}% free and reduced-price lunch
     %br/
-    XX% special education
+    #{@school.PCT_SPED_FALL_2011.to_i}% special education
     %br/
-    XX% English language learners
+    #{@school.PCT_ELL_FALL_2011.to_i}% English language learners
     %br/
     
 %br/
@@ -104,9 +108,9 @@
       
       %b College Enrollment and Performance:
       %div Of every 10 students who started 9th grade...
-      %div #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009} graduated on time
-      %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009} enrolled in college
-      %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009} finished a year of college
+      %div #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
+      %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
+      %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
 
 - else
   .container_12
@@ -149,7 +153,7 @@
     %h3 Is This School Organized for Improvement?
     %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
     .overall
-      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.to_i}
+      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %b= @school.SCORE_DESCRIPTION_5E_2012
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.to_i}% teachers, #{@school.STUD_RESPONSE_5E_2012.to_i}% students
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
@@ -207,8 +211,9 @@
     - programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
     = render :partial => 'shared/two_cols', :locals => { :items => programs }
     %br/
-    %h3 What Are the School's Admission Requirements and Deadlines?
-    %p= @school.ADMISSIONS
+    - unless @school.ADMISSIONS.blank?
+      %h3 What Are the School's Admission Requirements and Deadlines?
+      %p= @school.ADMISSIONS
 
     
 %br/
