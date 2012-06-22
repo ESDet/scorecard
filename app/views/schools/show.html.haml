@@ -10,9 +10,10 @@
       #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
       
     %br/
-    %p
-      %h4{:style => 'display: inline;'} School Mission:
-      = @school.SCHOOL_MISSION
+    - unless @school.SCHOOL_MISSION.blank?
+      %p
+        %h4{:style => 'display: inline;'} School Mission:
+        = @school.SCHOOL_MISSION
       
     %h3 #{link_to raw('&laquo; Previous'), previous_path(@school.id)} / #{link_to raw('Next &raquo;'), next_path(@school.id)}
       
@@ -24,7 +25,7 @@
     %br/
     
 .container_12.summary
-  .grid_3
+  .grid_3{:style => 'overflow: hidden;'}
     - unless @school.SCHOOL_WEBSITE.blank?
       %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
       %br/
