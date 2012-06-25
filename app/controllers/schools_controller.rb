@@ -83,7 +83,7 @@ class SchoolsController < ApplicationController
       :state => school,
       :ticks => [
         "Social Studies (#{@school.TREND_PCT_PROF_ALLSTUD_11_X_MME_2007_2011})",
-        "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2007_2011}",
+        "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2007_2011})",
         "Math (#{@school.TREND_PCT_PROF_ALLSTUD_11_M_MME_2007_2011})",
         "Writing (#{@school.TREND_PCT_PROF_ALLSTUD_11_W_MME_2007_2011})",
         "Reading (#{@school.TREND_PCT_ALLSTUD_11_R_MME_2007_2011})"
@@ -98,17 +98,18 @@ class SchoolsController < ApplicationController
       ['LOWINCOME', 'Low Income'],
       ['SPED',      'Special Education'],
     ].reverse
-    reading_school = cats.collect { |k,name| @school["PCT_PROF_#{k}_05_R_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.to_i, index+1] }
-    reading_state = reading_school
-    math_school = cats.collect { |k,name| @school["PCT_PROF_#{k}_05_M_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.to_i, index+1] }
+    reading_school = cats.collect { |k,name| @school["PCT_PROF_#{k}_ALL_R_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
+    reading_state  = cats.collect { |k,name| @school["PCT_PROF_MI_#{k}_ALL_R_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
+    math_school    = cats.collect { |k,name| @school["PCT_PROF_#{k}_ALL_M_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
+    math_state     = cats.collect { |k,name| @school["PCT_PROF_MI_#{k}_ALL_M_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
     @elem_academics = {
       :reading => {
         :school => reading_school,
-        :state => reading_school
+        :state => reading_state
       },
       :math => {
         :school => math_school,
-        :state => math_school
+        :state => math_state
       },
       :ticks => cats.collect { |cat| cat[1] }
     }
@@ -122,7 +123,7 @@ class SchoolsController < ApplicationController
     if params[:by] == 1
       s = School.first(:conditions => ["id > ?", params[:id].to_i]) || School.first
     elsif params[:by] == -1
-      s = School.first(:conditions => ["id < ?", params[:id].to_i]) || School.last
+      s = School.last(:conditions => ["id < ?", params[:id].to_i]) || School.last
     end
     redirect_to (s || schools_path)
   end

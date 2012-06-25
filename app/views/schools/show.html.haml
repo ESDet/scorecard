@@ -39,9 +39,10 @@
     %b Hours:
     = @school.SCHOOL_HOURS_AM_PM || 'Unknown'
     %br/
-    %b Principal:
-    = @school.PRINCIPAL_FIRST
-    = @school.PRINCIPAL_LAST
+    - unless @school.PRINCIPAL_FIRST.blank? and @school.PRINCIPAL_LAST.blank?
+      %b Principal:
+      = @school.PRINCIPAL_FIRST
+      = @school.PRINCIPAL_LAST
     
   .grid_3
     - unless @school.NEAREST_BUS_STOP.blank?
@@ -57,12 +58,15 @@
     #dems{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
     
   .grid_3
-    #{@school.PCT_FRL_FALL_2011.to_i}% free and reduced-price lunch
-    %br/
-    #{@school.PCT_SPED_FALL_2011.to_i}% special education
-    %br/
-    #{@school.PCT_ELL_FALL_2011.to_i}% English language learners
-    %br/
+    - unless @school.PCT_FRL_FALL_2011.nil? 
+      #{@school.PCT_FRL_FALL_2011.to_i}% free and reduced-price lunch
+      %br/
+    - unless @school.PCT_SPED_FALL_2011.nil? 
+      #{@school.PCT_SPED_FALL_2011.to_i}% special education
+      %br/
+    - unless @school.PCT_ELL_FALL_2011.nil? 
+      #{@school.PCT_ELL_FALL_2011.to_i}% English language learners
+      %br/
     
 %br/
 %br/
@@ -196,11 +200,11 @@
     %h4 Arts and Culture
     - arts = ('A'..'H').collect { |i| @school["#{i}_ART_CULTURE_ACTIVITIES_2012"] }.reject { |i| i.blank? }
     = render :partial => 'shared/two_cols', :locals => { :items => arts }
-    %br/
+    %br.clear_floats/
     %h4 Wellness and Fitness
     - wellness = ('A'..'H').collect { |i| @school["#{i}_WELLNESS_FITNESS_ACTIVITIES_2012"] }.reject { |i| i.blank? }
     = render :partial => 'shared/two_cols', :locals => { :items => wellness }
-    %br/
+    %br.clear_floats/
     %h4 Academic
     - academic = ('A'..'H').collect { |i| @school["#{i}_ACADEMIC_ACTIVITES_2012"] }.reject { |i| i.blank? }
     = render :partial => 'shared/two_cols', :locals => { :items => academic }
