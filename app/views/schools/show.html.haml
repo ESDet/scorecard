@@ -109,7 +109,7 @@
         %b School Average ACT Score, 2010-11
       %div All Students: #{@school.AVG_ALLSTUD_ALLSUB_ACT_2011} (Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2007_2011})
       %b Graduation Rate, 2011
-      %div All Students: #{@school.PCT_ALLSTUD_12_GRAD_4YR_2011} (Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011})
+      %div All Students: #{@school.PCT_ALLSTUD_12_GRAD_4YR_2011.to_i}% (Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011})
       
       %b College Enrollment and Performance:
       %div Of every 10 students who started 9th grade...
@@ -197,24 +197,28 @@
   .grid_6
     %h3 How Does This School Support Well-Rounded Development?
     %p Extracurricular activities help students explore their interests and apply what they learn in school to the real world. Examples of these activities at this school include:
-    %h4 Arts and Culture
     - arts = ('A'..'H').collect { |i| @school["#{i}_ART_CULTURE_ACTIVITIES_2012"] }.reject { |i| i.blank? }
-    = render :partial => 'shared/two_cols', :locals => { :items => arts }
-    %br.clear_floats/
-    %h4 Wellness and Fitness
+    - unless arts.nil? or arts.empty?
+      %h4 Arts and Culture
+      = render :partial => 'shared/two_cols', :locals => { :items => arts }
+      %br.clear_floats/
     - wellness = ('A'..'H').collect { |i| @school["#{i}_WELLNESS_FITNESS_ACTIVITIES_2012"] }.reject { |i| i.blank? }
-    = render :partial => 'shared/two_cols', :locals => { :items => wellness }
-    %br.clear_floats/
-    %h4 Academic
+    - unless wellness.nil? or wellness.empty?
+      %h4 Wellness and Fitness
+      = render :partial => 'shared/two_cols', :locals => { :items => wellness }
+      %br.clear_floats/
     - academic = ('A'..'H').collect { |i| @school["#{i}_ACADEMIC_ACTIVITES_2012"] }.reject { |i| i.blank? }
-    = render :partial => 'shared/two_cols', :locals => { :items => academic }
+    - unless academic.nil? or academic.empty?
+      %h4 Academic
+      = render :partial => 'shared/two_cols', :locals => { :items => academic }
     
     
   .grid_6
     %h3 How Does This School Help Students Overcome Challenges to Learning?
     %p Students may have learning disabilities, struggle with their behavior, or face challenges outside of school that affect their academic performance. This school provides the following programs to help students overcome such challenges:
     - programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
-    = render :partial => 'shared/two_cols', :locals => { :items => programs }
+    - unless programs.nil? or programs.empty?
+      = render :partial => 'shared/two_cols', :locals => { :items => programs }
     %br/
     - unless @school.ADMISSIONS.blank?
       %h3 What Are the School's Admission Requirements and Deadlines?

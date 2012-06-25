@@ -45,6 +45,7 @@ namespace :import do
           next if key.blank?
           val = row[x]
           val = nil if val.blank? or val == 'N/A' or val == '*'
+          # TODO:  val == '< 5%'
           #puts "   #{key} = #{val}"
           h[key] = val
         end
