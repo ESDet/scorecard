@@ -37,8 +37,10 @@ namespace :import do
       num_rows = ws.num_rows
       num_cols = ws.num_cols
       key_row = ws.rows[0]
+      #name_col = key_row.index 'SCHOOL_NAME_2011'
+      name_col = 2
       ws.rows[1..num_rows].each do |row|
-        puts "#{row[4]}"
+        puts row[name_col]
         h = {}
         (0...num_cols).each do |x|
           key = key_row[x]
@@ -50,8 +52,9 @@ namespace :import do
           h[key] = val
         end
         h.slice! *column_names
-        s = School.find_or_create_by_BCODE_TEMPLATE(h['BCODE_TEMPLATE'])
-        s.update_attributes(h)
+        #s = School.find_or_create_by_BCODE_TEMPLATE(h['BCODE_TEMPLATE'])
+        #s.update_attributes(h)
+        s = School.create(h)
       end
     end
   end  
@@ -63,10 +66,11 @@ namespace :import do
   task :schools => :environment do |t, args|
     session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
     sample_key = "0Al6LPbGeSiAJdG15aHU5cnI0Sy1obF94LXc5UEZOV2c"
-    real_key = '0Al6LPbGeSiAJdEl1Y1N6a0tuQUp6WV9RQkpMWUEzTXc'
+    #real_key = '0Al6LPbGeSiAJdEl1Y1N6a0tuQUp6WV9RQkpMWUEzTXc' # 22nd
+    real_key  = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c' # 25th
     sheets = session.spreadsheet_by_key(real_key).worksheets
 
-    #get_schema(sheets.first)
+    get_schema(sheets.first)
     get_data(sheets[3..3])
     puts "Done"
   end

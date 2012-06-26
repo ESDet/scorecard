@@ -10,10 +10,10 @@
       #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
       
     %br/
-    - unless @school.SCHOOL_MISSION.blank?
+    - unless @school.SCHOOL_MISSION_LONG.blank?
       %p
         %h4{:style => 'display: inline;'} School Mission:
-        = @school.SCHOOL_MISSION
+        = @school.SCHOOL_MISSION_LONG
       
     %h3 #{link_to raw('&laquo; Previous'), previous_path(@school.id)} / #{link_to raw('Next &raquo;'), next_path(@school.id)}
       
@@ -220,9 +220,9 @@
     - unless programs.nil? or programs.empty?
       = render :partial => 'shared/two_cols', :locals => { :items => programs }
     %br/
-    - unless @school.ADMISSIONS.blank?
+    - unless @school.ADMISSIONS_LONG.blank?
       %h3 What Are the School's Admission Requirements and Deadlines?
-      %p= @school.ADMISSIONS
+      %p= @school.ADMISSIONS_LONG
 
     
 %br/
