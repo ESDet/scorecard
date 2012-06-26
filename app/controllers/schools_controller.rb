@@ -77,10 +77,16 @@ class SchoolsController < ApplicationController
 
     # R, W, M, S, X
     cats = ['R', 'W', 'M', 'S', 'X'].reverse
-    school = cats.collect { |i| @school["PCT_PROF_ALLSTUD_11_#{i}_MME_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.to_i, index+1] }
+    
+    munge = Proc.new { |school, arr, field|
+      arr.collect { |i| school[field.gsub('#{i}', i)] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
+    }
+    
+    school = munge.call(@school, cats, 'PCT_PROF_ALLSTUD_11_#{i}_MME_2011')
+    state = munge.call(@school, cats, 'PCT_PROF_MI_ALLSTUD_11_#{i}_MME_2011')
     @high_ac = {
       :school => school,
-      :state => school,
+      :state => state,
       :ticks => [
         "Social Studies (#{@school.TREND_PCT_PROF_ALLSTUD_11_X_MME_2007_2011})",
         "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2007_2011})",
@@ -98,10 +104,10 @@ class SchoolsController < ApplicationController
       ['LOWINCOME', 'Low Income'],
       ['SPED',      'Special Education'],
     ].reverse
-    reading_school = cats.collect { |k,name| @school["PCT_PROF_#{k}_ALL_R_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
-    reading_state  = cats.collect { |k,name| @school["PCT_PROF_MI_#{k}_ALL_R_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
-    math_school    = cats.collect { |k,name| @school["PCT_PROF_#{k}_ALL_M_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
-    math_state     = cats.collect { |k,name| @school["PCT_PROF_MI_#{k}_ALL_M_MEAP_2011"] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
+    reading_school = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_R_MEAP_2011')
+    reading_state  = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_R_MEAP_2011')
+    math_school    = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_M_MEAP_2011')
+    math_state     = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_M_MEAP_2011')
     @elem_academics = {
       :reading => {
         :school => reading_school,
