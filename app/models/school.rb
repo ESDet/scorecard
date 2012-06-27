@@ -19,12 +19,14 @@ class School < ActiveRecord::Base
 
 
   GRADES = {
+    :p2         => ['P2'],
     :elementary => ['ES', 'K8'],
     :middle     => ['MS', 'K8'],
     :high       => ['HS'],
     :k8         => ['K8'],
   }
   
+  scope :p2,         where(:TEMPLATE => GRADES[:p2])
   scope :elementary, where(:TEMPLATE => GRADES[:elementary])
   scope :middle,     where(:TEMPLATE => GRADES[:middle])
   scope :high,       where(:TEMPLATE => GRADES[:high])

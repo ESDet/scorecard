@@ -133,18 +133,18 @@
             - unless @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
               %li #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
 
-- else
+- elsif @school.elementary? or @school.middle?
   .container_12
     .grid_12  
       %h3 How Is This School Doing Academically?
       %p Following are the percentages of grade 6 students performing at or above grade level on the Michigan Education Assessment Program:
     .grid_6
       %h4 Reading, Fall 2011
-      #reading.barchart{:style => "height: #{60*@r_cats.size}px;"}
+      #reading.barchart{:style => "height: #{40+50*@r_cats.size}px;"}
       
     .grid_6
       %h4 Math, Fall 2011
-      #math.barchart{:style => "height: #{60*@m_cats.size}px;"}
+      #math.barchart{:style => "height: #{40+50*@m_cats.size}px;"}
       
   %br/
   %br/
