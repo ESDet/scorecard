@@ -106,7 +106,8 @@
       %div All Students: #{@school.PCT_ALLSTUD_12_GRAD_4YR_2011.andand.to_i || 'N/A'}% (Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011 || 'N/A'})
       
       %br/
-      %b Average ACT Score for admission, 2010-11
+      .grid_6.alpha.omega
+        %b Average ACT Score for admission, 2010-11
       .grid_3.alpha
         University of Michigan: 26.0
         %br/
@@ -117,19 +118,20 @@
         Wayne Cty Community College: 22.2
         %br/
         %br/
-
-      %b College Enrollment and Performance, Class of 2009:
-      - if @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil? and @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil? and @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
-        %div No data are available for this school.
-      - else
-        %div Of every 10 students who started 9th grade...
-        %ul
-          - unless @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil?
-            %li #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
-          - unless @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil?
-            %li #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
-          - unless @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
-            %li #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
+  
+      .grid_6.alpha.omega
+        %b College Enrollment and Performance, Class of 2009:
+        - if @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil? and @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil? and @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
+          %div No data are available for this school.
+        - else
+          %div Of every 10 students who started 9th grade...
+          %ul
+            - unless @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil?
+              %li #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
+            - unless @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil?
+              %li #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
+            - unless @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
+              %li #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
 
 - else
   .container_12
