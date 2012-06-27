@@ -106,7 +106,7 @@ class SchoolsController < ApplicationController
     
     # Elementary school 
     cats = [
-      ['ALLSTUD',   'All students'],
+      ['ALLSTUD',   'All'],
       ['FEMALE',    'Female'],
       ['MALE',      'Male'],
       ['LOWINCOME', 'Low Income'],
@@ -123,13 +123,13 @@ class SchoolsController < ApplicationController
     
     third_school = munge.call(@school, ['R'], 'PCT_PROF_ALLSTUD_03_#{i}_MEAP_2011')
     third_state = munge.call(@school, ['R'], 'PCT_PROF_MI_ALLSTUD_03_#{i}_MEAP_2011')
-    third_ticks = ["3rd Grade Reading"]
+    third_ticks = ["Proficiency"]
     third_ticks[0] += " (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})" unless @school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011.nil?
     
     reading_ticks = @r_cats.collect { |cat| cat[1] }
-    reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})"
+    reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})" unless reading_ticks.empty?
     math_ticks = @m_cats.collect { |cat| cat[1] }
-    math_ticks[math_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011})"
+    math_ticks[math_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011})" unless math_ticks.empty?
     
     @elem_academics = {
       :reading => {

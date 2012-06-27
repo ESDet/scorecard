@@ -1,7 +1,27 @@
-.container_12
-  .grid_12{:style => 'padding: 2em 0 1em 0;'}
-    %h1 Excellent Schools Detroit Report Card  
-    %br/
+.summary
+  .container_12
+    .grid_8{:style => 'padding: 4em 0 1em 0;'}
+      %h1 Excellent Schools Detroit Report Card  
+      %br/
+      %br/
+      
+      %h2 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempor justo eros. Curabitur magna libero, dictum sed scelerisque eget, lacinia id tortor. Nunc non semper eros. Quisque scelerisque condimentum turpis, vel aliquam nisi rutrum adipiscing. Integer venenatis libero at neque viverra cursus porta elit malesuada.
+      %br/
+      %br/
+
+      .centered
+        %h3
+          = link_to 'Elementary', schools_path(:filter => 'elementary')
+          &middot;
+          = link_to 'Middle', schools_path(:filter => 'middle')
+          &middot;
+          = link_to 'High Schools', schools_path(:filter => 'high')
+    
+    .grid_4{:style => 'text-align: center; padding: 4em 0;'}
+      = image_tag 'cover.png'
+      
+  .container_12
+    .grid_12{:style => 'text-align: center;'}
  
 
 .clear_floats

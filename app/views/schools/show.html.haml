@@ -310,6 +310,9 @@
       var plots = ['reading', 'math', 'third'];
       for(var i in plots) {
         var name = plots[i];
+        if(elem_ac[name].school.length == 0) {
+          continue;
+        }
         var elem_academics_plot = jQuery.jqplot (name, [elem_ac[name].state, elem_ac[name].school], 
           { 
             seriesDefaults: {
