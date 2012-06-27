@@ -75,6 +75,12 @@ class SchoolsController < ApplicationController
       ]
     }
 
+    @activities = {
+      :arts => ('A'..'H').collect { |i| @school["#{i}_ART_CULTURE_ACTIVITIES_2012"] }.reject { |i| i.blank? },
+      :wellness => ('A'..'H').collect { |i| @school["#{i}_WELLNESS_FITNESS_ACTIVITIES_2012"] }.reject { |i| i.blank? },
+      :academic => ('A'..'H').collect { |i| @school["#{i}_ACADEMIC_ACTIVITES_2012"] }.reject { |i| i.blank? }
+    }
+
     # R, W, M, S, X
     cats = ['R', 'W', 'M', 'S', 'X'].reverse
     
@@ -92,7 +98,7 @@ class SchoolsController < ApplicationController
         "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2007_2011})",
         "Math (#{@school.TREND_PCT_PROF_ALLSTUD_11_M_MME_2007_2011})",
         "Writing (#{@school.TREND_PCT_PROF_ALLSTUD_11_W_MME_2007_2011})",
-        "Reading (#{@school.TREND_PCT_ALLSTUD_11_R_MME_2007_2011})"
+        "Reading (#{@school.TREND_PCT_PROF_ALLSTUD_11_R_MME_2007_2011})"
       ]
     }
     
@@ -108,16 +114,31 @@ class SchoolsController < ApplicationController
     reading_state  = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_R_MEAP_2011')
     math_school    = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_M_MEAP_2011')
     math_state     = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_M_MEAP_2011')
+    
+    third_school = munge.call(@school, ['R'], 'PCT_PROF_ALLSTUD_03_#{i}_MEAP_2011')
+    third_state = munge.call(@school, ['R'], 'PCT_PROF_MI_ALLSTUD_03_#{i}_MEAP_2011')
+    
+    reading_ticks = cats.collect { |cat| cat[1] }
+    reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})"
+    math_ticks = cats.collect { |cat| cat[1] }
+    math_ticks[math_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011})"
+    
     @elem_academics = {
       :reading => {
         :school => reading_school,
-        :state => reading_state
+        :state => reading_state,
+        :ticks => reading_ticks
       },
       :math => {
         :school => math_school,
-        :state => math_state
+        :state => math_state,
+        :ticks => math_ticks
       },
-      :ticks => cats.collect { |cat| cat[1] }
+      :third => {
+        :school => third_school,
+        :state => third_state,
+        :ticks => ["3rd Grade Reading (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})"]
+      },
     }
     respond_to do |format|
       format.html { }

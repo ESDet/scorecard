@@ -38,7 +38,7 @@ namespace :import do
       num_cols = ws.num_cols
       key_row = ws.rows[0]
       #name_col = key_row.index 'SCHOOL_NAME_2011'
-      name_col = 2
+      name_col = 4
       ws.rows[1..num_rows].each do |row|
         puts row[name_col]
         h = {}
@@ -47,14 +47,14 @@ namespace :import do
           next if key.blank?
           val = row[x]
           val = nil if val.blank? or val == 'N/A' or val == '*'
-          # TODO:  val == '< 5%'
+          val = -5 if val == '< 5%'
           #puts "   #{key} = #{val}"
           h[key] = val
         end
         h.slice! *column_names
-        #s = School.find_or_create_by_BCODE_TEMPLATE(h['BCODE_TEMPLATE'])
-        #s.update_attributes(h)
-        s = School.create(h)
+        s = School.find_or_create_by_BCODE_TEMPLATE(h['BCODE_TEMPLATE'])
+        s.update_attributes(h)
+        #s = School.create(h)
       end
     end
   end  
@@ -63,25 +63,21 @@ namespace :import do
   
   
   desc "Create school table schema from spreadsheet"
-  task :schools => :environment do |t, args|
+  task :schema => :environment do |t, args|
     session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
-    sample_key = "0Al6LPbGeSiAJdG15aHU5cnI0Sy1obF94LXc5UEZOV2c"
-    #real_key = '0Al6LPbGeSiAJdEl1Y1N6a0tuQUp6WV9RQkpMWUEzTXc' # 22nd
     real_key  = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c' # 25th
     sheets = session.spreadsheet_by_key(real_key).worksheets
-
     get_schema(sheets.first)
-    get_data(sheets[3..3])
     puts "Done"
   end
-  
-  desc "Get real locations"
-  task :geocode => :environment do |t, args|
-    School.find_each do |s|
-      puts s.name
-      s.save
-      #s.update_attribute(:centroid, points[i])
-    end
+
+  desc "Pull data from sheet, but don't redo schema"
+  task :data => :environment do |t, args|
+    session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
+    real_key  = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c' # 25th
+    sheets = session.spreadsheet_by_key(real_key).worksheets
+    get_data(sheets[3..3])
+    puts "Done"
   end
 
 

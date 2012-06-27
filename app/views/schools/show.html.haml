@@ -1,72 +1,73 @@
-.container_12.summary
-  .grid_8
-    %br/
-    %br/
-    %h1= @school.name
-    
-    %h3
-      Grades #{@school.AUTHORIZED_GRADES_2011} &middot; #{@school.HEADCOUNT_ALL_FALL_2011.to_i} students &middot; #{@school.SCHOOL_TYPE_2011}
+.summary
+  .container_12
+    .grid_8
       %br/
-      #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
+      %br/
+      %h1= @school.name
       
-    %br/
-    - unless @school.SCHOOL_MISSION_LONG.blank?
-      %p
-        %h4{:style => 'display: inline;'} School Mission:
-        = @school.SCHOOL_MISSION_LONG
+      %h3
+        Grades #{@school.AUTHORIZED_GRADES_2011} &middot; #{@school.HEADCOUNT_ALL_FALL_2011.to_i} students &middot; #{@school.SCHOOL_TYPE_2011}
+        %br/
+        #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
+        
+      %br/
+      - unless @school.SCHOOL_MISSION_LONG.blank?
+        %p
+          %h4{:style => 'display: inline;'} School Mission:
+          = @school.SCHOOL_MISSION_LONG
+        
+      %h3 #{link_to raw('&laquo; Previous'), previous_path(@school.id)} / #{link_to raw('Next &raquo;'), next_path(@school.id)}
+        
+        
+    .grid_4
+      #wrapper{:style => 'height: 200px; margin-top: 4em;'}
+        = render :partial => 'shared/map', :object => @map    
+      %br/
+      %br/
+    
+  .container_12
+    .grid_3{:style => 'overflow: hidden;'}
+      - unless @school.SCHOOL_WEBSITE.blank?
+        %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
+        %br/
+      %b Phone:
+      = @school.SCHOOL_PHONE || 'Unknown'
+      %br/
+      - unless @school.SCHOOL_FAX.blank?
+        %b Fax:
+        = @school.SCHOOL_FAX
+        %br/
+      %b Hours:
+      = @school.SCHOOL_HOURS_AM_PM || 'Unknown'
+      %br/
+      - unless @school.PRINCIPAL_FIRST.blank? and @school.PRINCIPAL_LAST.blank?
+        %b Principal:
+        = @school.PRINCIPAL_FIRST
+        = @school.PRINCIPAL_LAST
       
-    %h3 #{link_to raw('&laquo; Previous'), previous_path(@school.id)} / #{link_to raw('Next &raquo;'), next_path(@school.id)}
+    .grid_3
+      - unless @school.NEAREST_BUS_STOP.blank?
+        %b Nearest bus stop:
+        = @school.NEAREST_BUS_STOP
+        %br/
+      - unless @school.BUS_ROUTES.blank?
+        %b Bus routes within 0.5mi:
+        = @school.BUS_ROUTES
+        %br/
       
+    .grid_3
+      #dems{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
       
-  .grid_4
-    #wrapper{:style => 'height: 200px; margin-top: 4em;'}
-      = render :partial => 'shared/map', :object => @map    
-    %br/
-    %br/
-    
-.container_12.summary
-  .grid_3{:style => 'overflow: hidden;'}
-    - unless @school.SCHOOL_WEBSITE.blank?
-      %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
-      %br/
-    %b Phone:
-    = @school.SCHOOL_PHONE || 'Unknown'
-    %br/
-    - unless @school.SCHOOL_FAX.blank?
-      %b Fax:
-      = @school.SCHOOL_FAX
-      %br/
-    %b Hours:
-    = @school.SCHOOL_HOURS_AM_PM || 'Unknown'
-    %br/
-    - unless @school.PRINCIPAL_FIRST.blank? and @school.PRINCIPAL_LAST.blank?
-      %b Principal:
-      = @school.PRINCIPAL_FIRST
-      = @school.PRINCIPAL_LAST
-    
-  .grid_3
-    - unless @school.NEAREST_BUS_STOP.blank?
-      %b Nearest bus stop:
-      = @school.NEAREST_BUS_STOP
-      %br/
-    - unless @school.BUS_ROUTES.blank?
-      %b Bus routes within 0.5mi:
-      = @school.BUS_ROUTES
-      %br/
-    
-  .grid_3
-    #dems{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
-    
-  .grid_3
-    - unless @school.PCT_FRL_FALL_2011.nil? 
-      #{@school.PCT_FRL_FALL_2011.to_i}% free and reduced-price lunch
-      %br/
-    - unless @school.PCT_SPED_FALL_2011.nil? 
-      #{@school.PCT_SPED_FALL_2011.to_i}% special education
-      %br/
-    - unless @school.PCT_ELL_FALL_2011.nil? 
-      #{@school.PCT_ELL_FALL_2011.to_i}% English language learners
-      %br/
+    .grid_3
+      - unless @school.PCT_FRL_FALL_2011.nil? 
+        #{@school.PCT_FRL_FALL_2011.andand.to_i || 'N/A'}% free and reduced-price lunch
+        %br/
+      - unless @school.PCT_SPED_FALL_2011.nil? 
+        #{@school.PCT_SPED_FALL_2011.andand.to_i || 'N/A'}% special education
+        %br/
+      - unless @school.PCT_ELL_FALL_2011.nil? 
+        #{@school.PCT_ELL_FALL_2011.andand.to_i || 'N/A'}% English language learners
+        %br/
     
 %br/
 %br/
@@ -95,6 +96,13 @@
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
+        
+      %b School Average ACT Score, 2010-11
+      %div All Students: #{@school.AVG_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A'} (Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2007_2011 || 'N/A'})
+      %b Graduation Rate, 2011
+      %div All Students: #{@school.PCT_ALLSTUD_12_GRAD_4YR_2011.andand.to_i || 'N/A'}% (Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011 || 'N/A'})
+      
+      %br/
       %b Average ACT Score for admission, 2010-11
       .grid_3.alpha
         University of Michigan: 26.0
@@ -104,18 +112,20 @@
         Wayne State University: 23.3
         %br/
         Wayne Cty Community College: 22.2
-        
-      %div
-        %b School Average ACT Score, 2010-11
-      %div All Students: #{@school.AVG_ALLSTUD_ALLSUB_ACT_2011} (Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2007_2011})
-      %b Graduation Rate, 2011
-      %div All Students: #{@school.PCT_ALLSTUD_12_GRAD_4YR_2011.to_i}% (Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011})
-      
-      %b College Enrollment and Performance:
-      %div Of every 10 students who started 9th grade...
-      %div #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
-      %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
-      %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
+        %br/
+        %br/
+
+      %b College Enrollment and Performance, Class of 2009:
+      - if @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil? and @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil? and @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
+        %div No data are available for this school.
+      - else
+        %div Of every 10 students who started 9th grade...
+        - unless @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil?
+          %div #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
+        - unless @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil?
+          %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
+        - unless @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
+          %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
 
 - else
   .container_12
@@ -123,11 +133,11 @@
       %h3 How Is This School Doing Academically?
       %p Following are the percentages of grade 6 students performing at or above grade level on the Michigan Education Assessment Program:
     .grid_6
-      %h4 Reading, 2010-11
+      %h4 Reading, Fall 2011
       #reading.barchart
       
     .grid_6
-      %h4 Math, 2010-11
+      %h4 Math, Fall 2011
       #math.barchart
       
   %br/
@@ -136,14 +146,14 @@
   .container_12
     .grid_6
       %h3 Student Performance Growth
+      = image_tag 'coming_2013.png', :class => 'float_left', :style => 'margin-right: 10px;'
       %p This year, we can only report if students state standards or not. In the future, we how much students progress. Every student should progress one entire grade level each year. But sometimes, students progress a lot and they still are not meeting state standards because they started the year so far behind. We think it is important to show which schools are helping students progress, even if their students are not yet meeting standards.
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
       - if @school.elementary?
         %p 3rd grade reading is an early indicator if students are on track for graduation:
-        %b Reading, 2010-11
-        %div All Students: #{@school.PCT_PROF_ALLSTUD_03_R_MEAP_2011}% (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})
+        #third.barchart{:style => 'height: 100px;'}
       - elsif @school.middle?
         = image_tag 'coming_2013.png', :class => 'float_left', :style => 'margin-right: 10px;'
         %h4 Percentage of 8th Graders meeting state standards in algebra
@@ -160,7 +170,7 @@
     .overall
       %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %b= @school.SCORE_DESCRIPTION_5E_2012
-      %div Response rate: #{@school.TCH_RESPONSE_5E_2012.to_i}% teachers, #{@school.STUD_RESPONSE_5E_2012.to_i}% students
+      %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
     
   .grid_6
@@ -195,22 +205,20 @@
 
 .container_12
   .grid_6
-    %h3 How Does This School Support Well-Rounded Development?
-    %p Extracurricular activities help students explore their interests and apply what they learn in school to the real world. Examples of these activities at this school include:
-    - arts = ('A'..'H').collect { |i| @school["#{i}_ART_CULTURE_ACTIVITIES_2012"] }.reject { |i| i.blank? }
-    - unless arts.nil? or arts.empty?
-      %h4 Arts and Culture
-      = render :partial => 'shared/two_cols', :locals => { :items => arts }
-      %br.clear_floats/
-    - wellness = ('A'..'H').collect { |i| @school["#{i}_WELLNESS_FITNESS_ACTIVITIES_2012"] }.reject { |i| i.blank? }
-    - unless wellness.nil? or wellness.empty?
-      %h4 Wellness and Fitness
-      = render :partial => 'shared/two_cols', :locals => { :items => wellness }
-      %br.clear_floats/
-    - academic = ('A'..'H').collect { |i| @school["#{i}_ACADEMIC_ACTIVITES_2012"] }.reject { |i| i.blank? }
-    - unless academic.nil? or academic.empty?
-      %h4 Academic
-      = render :partial => 'shared/two_cols', :locals => { :items => academic }
+    - unless @activities[:arts].empty? and @activities[:wellness].empty? and @activities[:academic].empty?
+      %h3 How Does This School Support Well-Rounded Development?
+      %p Extracurricular activities help students explore their interests and apply what they learn in school to the real world. Examples of these activities at this school include:
+      - unless @activities[:arts].empty?
+        %h4 Arts and Culture
+        = render :partial => 'shared/two_cols', :locals => { :items => @activities[:arts] }
+        %br.clear_floats/
+      - unless @activities[:wellness].empty?
+        %h4 Wellness and Fitness
+        = render :partial => 'shared/two_cols', :locals => { :items => @activities[:wellness] }
+        %br.clear_floats/
+      - unless @activities[:academic].empty?
+        %h4 Academic
+        = render :partial => 'shared/two_cols', :locals => { :items =>  @activities[:academic] }
     
     
   .grid_6
@@ -219,7 +227,7 @@
     - programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
     - unless programs.nil? or programs.empty?
       = render :partial => 'shared/two_cols', :locals => { :items => programs }
-    %br/
+      %br.clear_floats/      
     - unless @school.ADMISSIONS_LONG.blank?
       %h3 What Are the School's Admission Requirements and Deadlines?
       %p= @school.ADMISSIONS_LONG
@@ -292,7 +300,7 @@
       
     } else {
       // Elementary school academics - reading 
-      var plots = ['reading', 'math'];
+      var plots = ['reading', 'math', 'third'];
       for(var i in plots) {
         var name = plots[i];
         var elem_academics_plot = jQuery.jqplot (name, [elem_ac[name].state, elem_ac[name].school], 
@@ -313,7 +321,7 @@
             axes: {
               yaxis: {
                 renderer: $.jqplot.CategoryAxisRenderer,
-                ticks: elem_ac.ticks,
+                ticks: elem_ac[name].ticks,
                 showTickMarks: false
               },
               xaxis: { min: 0, max: 100, pad: 1.05, numberTicks: 5 }
