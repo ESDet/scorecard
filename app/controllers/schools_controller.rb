@@ -110,21 +110,25 @@ class SchoolsController < ApplicationController
       ['FEMALE',    'Female'],
       ['MALE',      'Male'],
       ['LOWINCOME', 'Low Income'],
-      ['SPED',      'Special Education'],
+      ['SPED', 'Special Education']
     ].reverse
-    reading_school = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_R_MEAP_2011')
-    reading_state  = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_R_MEAP_2011')
-    math_school    = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_M_MEAP_2011')
-    math_state     = munge.call(@school, cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_M_MEAP_2011')
+    
+    @r_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_R_MEAP_2011"].nil? }
+    @m_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_M_MEAP_2011"].nil? }
+    
+    reading_school = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_R_MEAP_2011')
+    reading_state  = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_R_MEAP_2011')
+    math_school    = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_M_MEAP_2011')
+    math_state     = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_M_MEAP_2011')
     
     third_school = munge.call(@school, ['R'], 'PCT_PROF_ALLSTUD_03_#{i}_MEAP_2011')
     third_state = munge.call(@school, ['R'], 'PCT_PROF_MI_ALLSTUD_03_#{i}_MEAP_2011')
     third_ticks = ["3rd Grade Reading"]
     third_ticks[0] += " (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})" unless @school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011.nil?
     
-    reading_ticks = cats.collect { |cat| cat[1] }
+    reading_ticks = @r_cats.collect { |cat| cat[1] }
     reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})"
-    math_ticks = cats.collect { |cat| cat[1] }
+    math_ticks = @m_cats.collect { |cat| cat[1] }
     math_ticks[math_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011})"
     
     @elem_academics = {
