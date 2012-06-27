@@ -22,9 +22,13 @@ html, body { height: 100%; }
 .rounded { padding: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
 .ib { display: inline-block; float: none; }
 
-h1, h2, h3, h4 { }
+h1, h2, h3, h4 { font-family: serif; }
 h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 
+.wf-loading {
+  h1, h2, h3, h4 { visibility: hidden; }
+}
+  
 #nav {
   background-color: @greyish; padding: 8px 0; font-weight: bold; color: white; font-size: 1.2em;
   .title { margin-top: 5px; }

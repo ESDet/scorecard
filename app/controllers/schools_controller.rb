@@ -80,6 +80,7 @@ class SchoolsController < ApplicationController
       :wellness => ('A'..'H').collect { |i| @school["#{i}_WELLNESS_FITNESS_ACTIVITIES_2012"] }.reject { |i| i.blank? },
       :academic => ('A'..'H').collect { |i| @school["#{i}_ACADEMIC_ACTIVITES_2012"] }.reject { |i| i.blank? }
     }
+    @programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
 
     # R, W, M, S, X
     cats = ['R', 'W', 'M', 'S', 'X'].reverse

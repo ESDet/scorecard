@@ -229,12 +229,12 @@
     
     
   .grid_6
-    %h3 How Does This School Help Students Overcome Challenges to Learning?
-    %p Students may have learning disabilities, struggle with their behavior, or face challenges outside of school that affect their academic performance. This school provides the following programs to help students overcome such challenges:
-    - programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
-    - unless programs.nil? or programs.empty?
-      = render :partial => 'shared/two_cols', :locals => { :items => programs }
+    - unless @programs.empty?
+      %h3 How Does This School Help Students Overcome Challenges to Learning?
+      %p Students may have learning disabilities, struggle with their behavior, or face challenges outside of school that affect their academic performance. This school provides the following programs to help students overcome such challenges:
+      = render :partial => 'shared/two_cols', :locals => { :items => @programs }
       %br.clear_floats/      
+      
     - unless @school.ADMISSIONS_LONG.blank?
       %h3 What Are the School's Admission Requirements and Deadlines?
       %p= @school.ADMISSIONS_LONG
