@@ -89,10 +89,13 @@
   .container_12
     .grid_6
       %h3 How Is This School Doing Academically?
-      %p Following are percentages of grade 11 and 12 students scoring proficient and advanced on the Michigan Merit Examination:
       
-      %b Spring 2011
-      #academics.barchart
+      - if @high_ac[:empty]
+        %p We have no data on this school's Michigan Merit Examination results.
+      - else
+        %p Following are percentages of grade 11 and 12 students scoring proficient and advanced on the Michigan Merit Examination:
+        %b Spring 2011
+        #academics.barchart
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
@@ -120,12 +123,13 @@
         %div No data are available for this school.
       - else
         %div Of every 10 students who started 9th grade...
-        - unless @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil?
-          %div #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
-        - unless @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil?
-          %div #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
-        - unless @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
-          %div #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
+        %ul
+          - unless @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil?
+            %li #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
+          - unless @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil?
+            %li #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
+          - unless @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
+            %li #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
 
 - else
   .container_12
@@ -153,7 +157,10 @@
       %h3 How Well Does This School Prepare Students for College?
       - if @school.elementary?
         %p 3rd grade reading is an early indicator if students are on track for graduation:
-        #third.barchart{:style => 'height: 100px;'}
+        - if @school.PCT_PROF_ALLSTUD_03_R_MEAP_2011.nil?
+          %div We have no data about this school's 3rd grade reading level.
+        - else
+          #third.barchart{:style => 'height: 100px;'}
       - elsif @school.middle?
         = image_tag 'coming_2013.png', :class => 'float_left', :style => 'margin-right: 10px;'
         %h4 Percentage of 8th Graders meeting state standards in algebra

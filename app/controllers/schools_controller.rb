@@ -91,6 +91,7 @@ class SchoolsController < ApplicationController
     school = munge.call(@school, cats, 'PCT_PROF_ALLSTUD_11_#{i}_MME_2011')
     state = munge.call(@school, cats, 'PCT_PROF_MI_ALLSTUD_11_#{i}_MME_2011')
     @high_ac = {
+      :empty => school.reject { |s| s[0].nil? }.empty?,
       :school => school,
       :state => state,
       :ticks => [
@@ -117,6 +118,8 @@ class SchoolsController < ApplicationController
     
     third_school = munge.call(@school, ['R'], 'PCT_PROF_ALLSTUD_03_#{i}_MEAP_2011')
     third_state = munge.call(@school, ['R'], 'PCT_PROF_MI_ALLSTUD_03_#{i}_MEAP_2011')
+    third_ticks = ["3rd Grade Reading"]
+    third_ticks[0] += " (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})" unless @school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011.nil?
     
     reading_ticks = cats.collect { |cat| cat[1] }
     reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})"
@@ -137,7 +140,7 @@ class SchoolsController < ApplicationController
       :third => {
         :school => third_school,
         :state => third_state,
-        :ticks => ["3rd Grade Reading (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})"]
+        :ticks => third_ticks
       },
     }
     respond_to do |format|
