@@ -70,18 +70,6 @@
         %br/
     
 %br/
-%br/
-
-- if false
-  .container_12
-    .grid_3
-      %h3 Overall School Rating: ?
-    .grid_3
-      Top-to-bottom school ranking: 58 out of 70
-    .grid_3
-      School Site Visit: 10 out of 20
-    .grid_3
-      5 Essentials Survey: #{@school.SCORE_OVERALL_5E_2012} out of 100
 
 %br/
  
@@ -124,14 +112,35 @@
         - if @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil? and @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil? and @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
           %div No data are available for this school.
         - else
-          %div Of every 10 students who started 9th grade...
-          %ul
-            - unless @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil?
-              %li #{@school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.to_i} graduated on time
-            - unless @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil?
-              %li #{@school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.to_i} enrolled in college
-            - unless @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
-              %li #{@school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.to_i} finished a year of college
+          %table.enrollment
+            %thead
+              %tr
+                %th 
+                  %b Of every 10 students who started 9th grade...
+                %th
+                  .score= @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.andand.round(1) || 'N/A'
+                  Graduated from this school on time
+                    
+                %th
+                  .score= @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.andand.round(1) || 'N/A'
+                  Enrolled in college
+                %th
+                  .score= @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.andand.round(1) || 'N/A'
+                  Finished a year of college
+            %tbody
+              %tr
+                %td
+                  - 10.times do
+                    = image_tag 'icons/student.png'
+                %td
+                  - @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.round(0).to_i.times do
+                    = image_tag 'icons/student.png'
+                %td
+                  - @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.round(0).to_i.times do
+                    = image_tag 'icons/student.png'
+                %td
+                  - @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.round(0).to_i.times do
+                    = image_tag 'icons/student.png'
 
 - elsif @school.elementary? or @school.middle?
   .container_12
@@ -177,10 +186,24 @@
     %h3 Is This School Organized for Improvement?
     %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
     .overall
-      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %b= @school.SCORE_DESCRIPTION_5E_2012
+      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
+    %table.sitevisit_key.clear_floats
+      %tr{:style => 'height: 25px;'}
+        %td.color1
+        %td.color2
+        %td.color3
+        %td.color4
+        %td.color5
+      %tr
+        %td Not yet organized
+        %td Partially organized
+        %td Moderately organized
+        %td Organized
+        %td Well organized
+    
     
   .grid_6
     %h3 What Is This School's Environment Like?
@@ -200,14 +223,21 @@
         %td Agree
         %td Strongly agree
 
-    %h4 Physical Environment
-    = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:env] }
+    .section
+      = image_tag 'icons/environment.png'
+      %h4 Physical Environment
+      = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:env] }
 
-    %h4 Culture of Academic Achievement
-    = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:culture] }
+    .section
+      = image_tag 'icons/academic.png'
+      %h4 Culture of Academic Achievement
+      = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:culture] }
+    .clear_floats
 
-    %h4 Community and Relationships
-    = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:community] }
+    .section
+      = image_tag 'icons/community.png'
+      %h4 Community and Relationships
+      = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:community] }
 
 %br/
 %br/
@@ -218,16 +248,22 @@
       %h3 How Does This School Support Well-Rounded Development?
       %p Extracurricular activities help students explore their interests and apply what they learn in school to the real world. Examples of these activities at this school include:
       - unless @activities[:arts].empty?
-        %h4 Arts and Culture
-        = render :partial => 'shared/two_cols', :locals => { :items => @activities[:arts] }
+        .section
+          = image_tag 'icons/arts.png'
+          %h4 Arts and Culture
+          = render :partial => 'shared/two_cols', :locals => { :items => @activities[:arts] }
         %br.clear_floats/
       - unless @activities[:wellness].empty?
-        %h4 Wellness and Fitness
-        = render :partial => 'shared/two_cols', :locals => { :items => @activities[:wellness] }
-        %br.clear_floats/
+        .section
+          = image_tag 'icons/wellness.png'
+          %h4 Wellness and Fitness
+          = render :partial => 'shared/two_cols', :locals => { :items => @activities[:wellness] }
+          %br.clear_floats/
       - unless @activities[:academic].empty?
-        %h4 Academic
-        = render :partial => 'shared/two_cols', :locals => { :items =>  @activities[:academic] }
+        .section
+          = image_tag 'icons/academic.png'
+          %h4 Academic
+          = render :partial => 'shared/two_cols', :locals => { :items =>  @activities[:academic] }
     
     
   .grid_6
@@ -312,7 +348,7 @@
       var plots = ['reading', 'math', 'third'];
       for(var i in plots) {
         var name = plots[i];
-        if(elem_ac[name].school.length == 0) {
+        if(elem_ac[name].school.length == 0 || $('#' + name).length == 0) {
           continue;
         }
         var elem_academics_plot = jQuery.jqplot (name, [elem_ac[name].state, elem_ac[name].school], 

@@ -1,11 +1,12 @@
-.grid_3.alpha{:style => 'margin-bottom: 1em;'}
-  - mid = (items.length/2).floor
-  %ul
-    - items[0..mid].each do |i|
-      %li= i
-  
-.grid_3.omega{:style => 'margin-bottom: 1em;'}
-  %ul
-    - items[mid+1..-1].each do |i|
-      %li= i
+%table{:style => 'width: 100%;'}
+  %tr
+    %td{:style => 'width: 50%; vertical-align: top;'}
+      %ul
+        - mid = (items.length/2).ceil
+        - items[0...mid].each do |i|
+          %li= i
+    %td{:style => 'width: 50%; vertical-align: top;'}
+      %ul
+        - items[mid+1..-1].each do |i|
+          %li= i
 
