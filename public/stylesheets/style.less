@@ -84,9 +84,11 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 }
 
 table.enrollment {
-  .score { padding: 5px; background-color: @dblue; color: white; font-weight: bold; margin-bottom: 10px; }
-  th, td { width: 25%; vertical-align: top; text-align: center; }
-  th { font-size: 1.1em; font-weight: normal; padding-top: 10px; }
+  .score { margin: 0 8px 8px 8px; padding: 5px; background-color: @dblue; color: white; font-weight: bold; margin-bottom: 10px; }
+  th, td { width: 25%; vertical-align: top; border-left: 2px solid @orange; } 
+  td { text-align: left; padding: 5px 8px; }
+  th { font-size: 1.1em; font-weight: normal; padding-top: 10px; text-align: center; }
+  td:first-child, th:first-child { border-left: none; }
   img { width: 40px; height: auto; }
 }
 
