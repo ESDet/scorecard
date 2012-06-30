@@ -11,13 +11,18 @@
         #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
         
       %br/
+      .subtle= "Now Showing: #{current_search}"
+      = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
+      = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
+      = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
+
+      %br/
+      %br/
       - unless @school.SCHOOL_MISSION_LONG.blank?
         %p
           %h4{:style => 'display: inline;'} School Mission:
           = @school.SCHOOL_MISSION_LONG
-        
-      %h3 #{link_to raw('&laquo; Previous'), previous_path(@school.id)} / #{link_to raw('Next &raquo;'), next_path(@school.id)}
-        
+                
         
     .grid_4
       #wrapper{:style => 'height: 200px; margin-top: 4em;'}
@@ -286,6 +291,13 @@
       %p= @school.ADMISSIONS_LONG
 
     
+.container_12
+  .grid_12{:style => 'padding: 4em 0;'}
+    .subtle= "Now Showing: #{current_search}"
+    = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
+    = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
+    = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
+
 %br/
 %br/    
 

@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
   def index
+    session[:filter] = session[:loc] = nil
   end
   
   
@@ -11,7 +12,7 @@ class HomeController < ApplicationController
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
      #:elements => @schools)
-      :url      => schools_path(:format => :json),
+      :url      => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc]),
       :mouseover => true)
     @district_o = Bedrock::Overlay.from_config('districts',
       :ty => :geojson,

@@ -1,21 +1,13 @@
 class SchoolsController < ApplicationController
 
   def index
-    @schools = School
-    filter = params[:filter]
-    if filter and ['elementary', 'middle', 'high'].include? filter
-      @schools = School.send(filter)
-      @title = "#{filter.capitalize} Schools"
-    else
-      @title = "Schools"
-    end
-    if !params[:loc].blank?
-      @zip = params[:loc].to_i
-      @schools = @schools.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{@zip}"])
-      @title += " in #{@zip}"
-    end
-    @schools = @schools.order('SCHOOL_NAME_2011')
+    filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil    
+    session[:filter] = filter
+    session[:loc] = params[:loc]
     
+    @title = current_search    
+    @schools = scope_from_filters(filter, params[:loc]).order('SCHOOL_NAME_2011')
+
     respond_to do |format|
       format.html { }
       format.json do
@@ -192,12 +184,22 @@ class SchoolsController < ApplicationController
   end
   
   def increment
+    s = scope_from_filters(session[:filter], session[:loc])
     if params[:by] == 1
-      s = School.first(:conditions => ["id > ?", params[:id].to_i]) || School.first
+      s = s.first(:conditions => ["id > ?", params[:id].to_i]) || s.first
     elsif params[:by] == -1
-      s = School.last(:conditions => ["id < ?", params[:id].to_i]) || School.last
+      s = s.last(:conditions => ["id < ?", params[:id].to_i]) || s.last
     end
     redirect_to (s || schools_path)
+  end
+  
+  private
+  
+  def scope_from_filters(filter, loc)
+    logger.info "scope from filters: #{filter}, #{loc}"
+    schools = filter.nil? ? School : School.send(filter)
+    schools = schools.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{loc}"]) unless loc.blank?
+    return schools
   end
   
 end

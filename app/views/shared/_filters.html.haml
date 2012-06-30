@@ -7,7 +7,7 @@
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
   = text_field_tag :loc, params[:loc], :style => 'width: 150px;', :placeholder => 'Location (zip code)'
-  = submit_tag 'Find Schools', :class => 'btn'
+  = submit_tag 'Find Schools', :class => 'btn btn-primary'
   = link_to 'Start Over', schools_path, :class => 'btn'
 
 
@@ -32,7 +32,7 @@
   function updateControls()
   {
     $('a.btn').removeClass('active');
-    $('a.btn.' + args.filter).addClass('active');
+    $('a[class~=' + args.filter + ']').addClass('active');
   }
   
   function updateForm()

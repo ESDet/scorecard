@@ -30,7 +30,7 @@
       .container_12
         .grid_12.menu
           = link_to 'Home', root_path, :class => current_page?(root_path) ? 'active' : ''
-          = link_to 'Schools', schools_path, :class => current_page?(schools_path) ? 'active' : ''
+          = link_to 'Schools', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => current_page?(schools_path) ? 'active' : ''
           = link_to 'Map', map_path, :class => current_page?(map_path) ? 'active' : ''
           = form_tag '/search', { :method => :post, :class => 'form-search search' } do
             = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'
