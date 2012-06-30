@@ -8,6 +8,7 @@
   = hidden_field_tag :filter, params[:filter]
   = text_field_tag :loc, params[:loc], :style => 'width: 150px;', :placeholder => 'Location (zip code)'
   = submit_tag 'Find Schools', :class => 'btn'
+  = link_to 'Start Over', schools_path, :class => 'btn'
 
 
 :javascript
@@ -19,7 +20,7 @@
     }
     updateControls();
     
-    $('a.btn').click(function(e) {
+    $('.btn-group a.btn').click(function(e) {
       args.filter = $(this).attr('class').replace('btn ', '');
       updateForm();
       updateControls();
