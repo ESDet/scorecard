@@ -31,11 +31,7 @@ class HomeController < ApplicationController
   
   def search
     
-    if params[:zip]
-      @zip = params[:zip]
-      redirect_to schools_path(:zip => @zip)
-      
-    elsif params[:q]
+    if params[:q]
       @q = params[:q]
       exact = School.find_by_SCHOOL_NAME_2011(@q)
       redirect_to exact and return if exact

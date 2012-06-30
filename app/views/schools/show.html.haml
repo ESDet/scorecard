@@ -380,7 +380,7 @@
               ticks: high_act.ticks,
               showTickMarks: false
             },
-            xaxis: { min: 0, max: 32, pad: 1.05, numberTicks: 5 }
+            xaxis: { min: 0, max: 36, pad: 1.05, numberTicks: 5 }
           }  
         }
       );
@@ -436,8 +436,8 @@
             }, 
             grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
             series: [
-              { label:'State', pointLabels: { show: true, labels: elem_ac[name].school.labels }  },
-              { label:'School', pointLabels: { show: true, labels: elem_ac[name].state.labels }  }
+              { label:'State', pointLabels: { show: true, labels: elem_ac[name].state.labels }  },
+              { label:'School', pointLabels: { show: true, labels: elem_ac[name].school.labels }  }
             ],
             legend: { show:true, location: 'e', border: '0px', fontSize: '13px' },
             axes: {

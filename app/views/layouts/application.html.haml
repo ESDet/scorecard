@@ -14,24 +14,24 @@
     = stylesheet_link_tag  '/wax/theme/controls.css', :media => 'all'
     - if Rails.env == 'development'
       %link{:rel => "stylesheet/less", :type => "text/css", :href => "/stylesheets/style.less", :media => 'all'}
+      %link{:rel => "stylesheet/less", :type => "text/css", :href => "/stylesheets/print.less", :media => 'print'}
       = javascript_include_tag 'less-1.2.0.min.js'
     - else
       = stylesheet_link_tag 'style.css', :media => 'all'
+      = stylesheet_link_tag 'print.css', :media => 'print'
     :erb
       <!--[if lte IE 8]><link rel="stylesheet" href="/leaflet/leaflet.ie.css" /><![endif]-->
       <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/javascripts/excanvas.js"></script><![endif]-->      
     = stylesheet_link_tag 'jquery.jqplot.min.css'
-    = javascript_include_tag 'jquery-1.7.1.min.js'
+    = javascript_include_tag 'jquery-1.7.1.min.js', 'jquery.ba-bbq.min.js'
 
   %body
     #nav
       .container_12
-        .grid_3
-          .title ESD Report Card 2012
-        .grid_9.menu
-          = link_to 'Home', root_path
-          = link_to 'Schools', schools_path
-          = link_to 'Map', map_path
+        .grid_12.menu
+          = link_to 'Home', root_path, :class => current_page?(root_path) ? 'active' : ''
+          = link_to 'Schools', schools_path, :class => current_page?(schools_path) ? 'active' : ''
+          = link_to 'Map', map_path, :class => current_page?(map_path) ? 'active' : ''
           = form_tag '/search', { :method => :post, :class => 'form-search search' } do
             = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'
             = submit_tag 'Search', :class => 'btn'

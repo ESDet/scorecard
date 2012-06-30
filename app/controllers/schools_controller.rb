@@ -1,18 +1,18 @@
 class SchoolsController < ApplicationController
 
   def index
-    if params[:zip]
-      @zip = params[:zip].to_i
-      @schools = School.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{@zip}"])
-      @title = "Schools in #{@zip}"
-    elsif params[:filter]
-      filter = params[:filter]
-      redirect_to schools_path and return unless ['elementary', 'middle', 'high'].include? filter
+    @schools = School
+    filter = params[:filter]
+    if filter and ['elementary', 'middle', 'high'].include? filter
       @schools = School.send(filter)
       @title = "#{filter.capitalize} Schools"
     else
-      @schools = School
-      @title = "All Schools"
+      @title = "Schools"
+    end
+    if !params[:loc].blank?
+      @zip = params[:loc].to_i
+      @schools = @schools.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{@zip}"])
+      @title += " in #{@zip}"
     end
     @schools = @schools.order('SCHOOL_NAME_2011')
     

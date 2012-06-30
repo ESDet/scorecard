@@ -9,13 +9,7 @@
       %br/
       %br/
 
-      .centered
-        %h3
-          = link_to 'Elementary', schools_path(:filter => 'elementary')
-          &middot;
-          = link_to 'Middle', schools_path(:filter => 'middle')
-          &middot;
-          = link_to 'High Schools', schools_path(:filter => 'high')
+      = render :partial => 'shared/filters'
     
     .grid_4{:style => 'text-align: center; padding: 4em 0;'}
       = image_tag 'cover.png'

@@ -1,0 +1,42 @@
+.btn-group.float_left{:style => 'margin-right: 1em;'}
+  = link_to 'All',        '#', :class => "btn all"
+  = link_to 'Elementary', '#', :class => "btn elementary"
+  = link_to 'Middle',     '#', :class => "btn middle"
+  = link_to 'High',       '#', :class => "btn high"
+  
+%form.form-search.search{:method => :get, :action => schools_path}
+  = hidden_field_tag :filter, params[:filter]
+  = text_field_tag :loc, params[:loc], :style => 'width: 150px;', :placeholder => 'Location (zip code)'
+  = submit_tag 'Find Schools', :class => 'btn'
+
+
+:javascript
+  var args;
+  $(document).ready(function() {
+    args = $.deparam.querystring();
+    if(!args.filter) {
+      args.filter = 'all';
+    }
+    updateControls();
+    
+    $('a.btn').click(function(e) {
+      args.filter = $(this).attr('class').replace('btn ', '');
+      updateForm();
+      updateControls();
+      e.stopPropagation();
+      return false;
+    });    
+  });
+  
+  function updateControls()
+  {
+    $('a.btn').removeClass('active');
+    $('a.btn.' + args.filter).addClass('active');
+  }
+  
+  function updateForm()
+  {
+    $('input#filter').val(args.filter);
+    $('input#loc').val(args.loc);
+  }
+  
