@@ -81,7 +81,10 @@
       - if @high_ac[:empty]
         %p We have no data on this school's Michigan Merit Examination results.
       - else
-        %p Following are percentages of grade 11 and 12 students scoring proficient and advanced on the Michigan Merit Examination:
+        %p
+          Following are percentages of
+          %b 11th and 12th graders
+          meeting and exceeding state standards on the Michigan Merit Examination (MME):
         %b Spring 2011
         #academics.barchart
       
@@ -89,21 +92,25 @@
       %h3 How Well Does This School Prepare Students for College?
         
       %b School Average ACT Score, 2010-11
-      %div All Students: #{@school.AVG_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A'} (Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2007_2011 || 'N/A'})
+      #act.barchart{:style => 'height: 90px;'}
       %b Graduation Rate, 2011
-      %div All Students: #{@school.PCT_ALLSTUD_12_GRAD_4YR_2011.andand.to_i || 'N/A'}% (Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011 || 'N/A'})
+      #grad.barchart{:style => 'height: 90px;'}
       
       %br/
       .grid_6.alpha.omega
         %b Average ACT Score for admission, 2010-11
       .grid_3.alpha
-        University of Michigan: 26.0
+        University of Michigan:
+        %b 31
         %br/
-        Michigan State University: 24.0
+        Michigan State University:
+        %b 26
       .grid_3.omega
-        Wayne State University: 23.3
+        Wayne State University:
+        %b 21
         %br/
-        Wayne Cty Community College: 22.2
+        Wayne Cty Community College:
+        %b 22.2
         %br/
         %br/
   
@@ -190,6 +197,7 @@
       %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
+    %br.clear_floats/
     %table.sitevisit_key.clear_floats
       %tr{:style => 'height: 25px;'}
         %td.color1
@@ -288,6 +296,8 @@
   // Highschool academics
   var high    = #{@school.high?.to_json};
   var high_ac = #{@high_ac.to_json};
+  var high_act = #{@high_act.to_json};
+  var high_grad = #{@high_grad.to_json};
 
 
   // Elementary school academics - reading/math
@@ -315,9 +325,9 @@
       }
     );     
 
-    if(high) {
+    if(high && $('#academics').length > 0) {
       // High school academics  
-      var hs_academics_plot = jQuery.jqplot ('academics', [high_ac.state, high_ac.school],
+      var hs_academics_plot = jQuery.jqplot ('academics', [high_ac.state.scores, high_ac.school.scores],
         { 
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
@@ -330,7 +340,10 @@
             }
           }, 
           grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
-          series: [ { label:'State' }, { label:'School' } ],              
+          series: [
+            { label:'State', pointLabels: { show: true, labels: high_ac.state.labels } },
+            { label:'School', pointLabels: { show: true, labels: high_ac.school.labels } }
+          ],              
           legend: { show:true, location: 'e', border: '0px', fontSize: '13px' },
           axes: {
             yaxis: {
@@ -341,7 +354,65 @@
             xaxis: { min: 0, max: 100, pad: 1.05, numberTicks: 5 }
           }  
         }
-      );  
+      );
+      
+      var hs_act_plot = jQuery.jqplot ('act', [high_act.state, high_act.school],
+        { 
+          seriesDefaults: {
+            renderer: jQuery.jqplot.BarRenderer, 
+            shadow: false,
+            pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+            rendererOptions: {
+              barDirection: 'horizontal',
+              barWidth: 16,
+              barPadding: 3
+            }
+          }, 
+          grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
+          series: [
+            { label:'State' },
+            { label:'School' }
+          ],              
+          legend: { show:true, location: 'e', border: '0px', fontSize: '13px' },
+          axes: {
+            yaxis: {
+              renderer: $.jqplot.CategoryAxisRenderer,
+              ticks: high_act.ticks,
+              showTickMarks: false
+            },
+            xaxis: { min: 0, max: 32, pad: 1.05, numberTicks: 5 }
+          }  
+        }
+      );
+      var hs_grad_plot = jQuery.jqplot ('grad', [high_grad.state, high_grad.school],
+        { 
+          seriesDefaults: {
+            renderer: jQuery.jqplot.BarRenderer, 
+            shadow: false,
+            pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+            rendererOptions: {
+              barDirection: 'horizontal',
+              barWidth: 16,
+              barPadding: 3
+            }
+          }, 
+          grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
+          series: [
+            { label:'State' },
+            { label:'School' }
+          ],              
+          legend: { show:true, location: 'e', border: '0px', fontSize: '13px' },
+          axes: {
+            yaxis: {
+              renderer: $.jqplot.CategoryAxisRenderer,
+              ticks: high_grad.ticks,
+              showTickMarks: false
+            },
+            xaxis: { min: 0, max: 100, pad: 1.05, numberTicks: 5 }
+          }  
+        }
+      );      
+
       
     } else {
       // Elementary school academics - reading 
@@ -351,7 +422,7 @@
         if(elem_ac[name].school.length == 0 || $('#' + name).length == 0) {
           continue;
         }
-        var elem_academics_plot = jQuery.jqplot (name, [elem_ac[name].state, elem_ac[name].school], 
+        var elem_academics_plot = jQuery.jqplot (name, [elem_ac[name].state.scores, elem_ac[name].school.scores], 
           { 
             seriesDefaults: {
               renderer: jQuery.jqplot.BarRenderer, 
@@ -364,7 +435,10 @@
               }
             }, 
             grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
-            series: [ { label:'State' }, { label:'School' } ],              
+            series: [
+              { label:'State', pointLabels: { show: true, labels: elem_ac[name].school.labels }  },
+              { label:'School', pointLabels: { show: true, labels: elem_ac[name].state.labels }  }
+            ],
             legend: { show:true, location: 'e', border: '0px', fontSize: '13px' },
             axes: {
               yaxis: {

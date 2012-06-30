@@ -82,6 +82,8 @@ class SchoolsController < ApplicationController
     }
     @programs = ('A'..'M').collect { |i| @school["#{i}_PROGRAMS_LEARNING_2012"] }.reject { |i| i.blank? }
 
+    # High school
+    # ==============
     # R, W, M, S, X
     cats = ['R', 'W', 'M', 'S', 'X'].reverse
     
@@ -89,12 +91,18 @@ class SchoolsController < ApplicationController
       arr.collect { |i| school[field.gsub('#{i}', i)] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
     }
     
-    school = munge.call(@school, cats, 'PCT_PROF_ALLSTUD_11_#{i}_MME_2011')
-    state = munge.call(@school, cats, 'PCT_PROF_MI_ALLSTUD_11_#{i}_MME_2011')
+    high_school = munge.call(@school, cats, 'PCT_PROF_ALLSTUD_11_#{i}_MME_2011')
+    high_state = munge.call(@school, cats, 'PCT_PROF_MI_ALLSTUD_11_#{i}_MME_2011')
     @high_ac = {
-      :empty => school.reject { |s| s[0].nil? }.empty?,
-      :school => school,
-      :state => state,
+      :empty => high_school.reject { |s| s[0].nil? }.empty?,
+      :school => {
+        :scores => high_school,
+        :labels => high_school.collect { |s| "#{s[0]}%" },
+      },
+      :state => {
+        :scores => high_state,
+        :labels => high_state.collect { |s| "#{s[0]}%" },
+      },
       :ticks => [
         "Social Studies (#{@school.TREND_PCT_PROF_ALLSTUD_11_X_MME_2007_2011})",
         "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2007_2011})",
@@ -102,6 +110,17 @@ class SchoolsController < ApplicationController
         "Writing (#{@school.TREND_PCT_PROF_ALLSTUD_11_W_MME_2007_2011})",
         "Reading (#{@school.TREND_PCT_PROF_ALLSTUD_11_R_MME_2007_2011})"
       ]
+    }
+    
+    @high_act = {
+      :school => [ [@school.AVG_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A' , 1 ] ],
+      :state => [ [@school.AVG_MI_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A', 1] ],
+      :ticks => [ "Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2007_2011 || 'N/A'}" ],
+    }
+    @high_grad = {
+      :school => [ [@school.PCT_ALLSTUD_12_GRAD_4YR_2011.andand.round(0) || 'N/A' , 1 ] ],
+      :state => [ [@school.PCT_MI_ALLSTUD_12_GRAD_4YR_2011.andand.round(0) || 'N/A', 1] ],
+      :ticks => [ "Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011 || 'N/A'}" ],
     }
     
     # Elementary school 
@@ -133,19 +152,37 @@ class SchoolsController < ApplicationController
     
     @elem_academics = {
       :reading => {
-        :school => reading_school,
-        :state => reading_state,
-        :ticks => reading_ticks
+        :school => {
+          :scores => reading_school,
+          :labels => reading_school.collect { |s| "#{s[0]}%" }
+        },
+        :state => {
+          :scores => reading_state,
+          :labels => reading_state.collect  { |s| "#{s[0]}%" }        
+        },
+        :ticks => reading_ticks,
       },
       :math => {
-        :school => math_school,
-        :state => math_state,
-        :ticks => math_ticks
+        :school => {
+          :scores => math_school,
+          :labels => math_school.collect { |s| "#{s[0]}%" },
+        },
+        :state => {
+          :scores => math_state,
+          :labels => math_state.collect  { |s| "#{s[0]}%" },
+        },
+        :ticks => math_ticks,
       },
       :third => {
-        :school => third_school,
-        :state => third_state,
-        :ticks => third_ticks
+        :school => {
+          :scores => third_school,
+          :labels => third_school.collect  { |s| "#{s[0]}%" },
+        },
+        :state => {
+          :scores => third_state,
+          :labels => third_state.collect { |s| "#{s[0]}%" },
+        },
+        :ticks => third_ticks,
       },
     }
     respond_to do |format|
