@@ -29,9 +29,16 @@
     #nav
       .container_12
         .grid_12.menu
-          = link_to 'Home', root_path, :class => current_page?(root_path) ? 'active' : ''
-          = link_to 'Schools', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => current_page?(schools_path) ? 'active' : ''
-          = link_to 'Map', map_path, :class => current_page?(map_path) ? 'active' : ''
+          %a{:class => current_page?(root_path) ? 'active' : '', :href => root_path}
+            %i.icon-home.icon-white
+            Home
+          %a{:class => current_page?(schools_path) ? 'active' : '', :href => schools_path}
+            %i.icon-list.icon-white
+            Schools
+          %a{:class => current_page?(map_path) ? 'active' : '', :href => map_path}
+            %i.icon-map-marker.icon-white
+            Map
+
           = form_tag '/search', { :method => :post, :class => 'form-search search' } do
             = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'
             = submit_tag 'Search', :class => 'btn'
