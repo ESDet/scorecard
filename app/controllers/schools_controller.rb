@@ -197,7 +197,7 @@ class SchoolsController < ApplicationController
   
   def scope_from_filters(filter, loc)
     logger.info "scope from filters: #{filter}, #{loc}"
-    schools = filter.nil? ? School : School.send(filter)
+    schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
     schools = schools.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{loc}"]) unless loc.blank?
     return schools
   end

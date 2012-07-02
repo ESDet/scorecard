@@ -11,10 +11,11 @@
         #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
         
       %br/
-      .subtle= "Now Showing: #{current_search}"
-      = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
-      = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
-      = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
+      .noprint
+        .subtle= "Now Showing: #{current_search}"
+        = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
+        = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
+        = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
       %br/
       %br/
@@ -291,7 +292,7 @@
       %p= @school.ADMISSIONS_LONG
 
     
-.container_12
+.container_12.noprint
   .grid_12{:style => 'padding: 4em 0;'}
     .subtle= "Now Showing: #{current_search}"
     = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
@@ -317,6 +318,17 @@
   var middle = #{@school.middle?.to_json};
   var elem_ac = #{@elem_academics.to_json};
   
+  var colors = {
+    light:  '#eef',
+    dblue:  '#004270',
+    orange: '#f79421',
+    lblue:  '#85d5e3',
+    yellow: '#ffcc4e',
+    lgreen: '#8dc63f',
+    red:    '#953734',
+    greyish:'#556677'
+  };
+
 
   $(document).ready(function() {
   
@@ -324,6 +336,7 @@
     var dem_plot = jQuery.jqplot ('dems', [dem_data], 
       { 
         grid: { background: '#eef', drawBorder: false, shadow: false }, 
+        seriesColors: [ colors.lgreen, colors.dblue, colors.orange, colors.red, colors.yellow ],
         seriesDefaults: {
           renderer: jQuery.jqplot.PieRenderer, 
           shadow: false,
@@ -341,6 +354,7 @@
       // High school academics  
       var hs_academics_plot = jQuery.jqplot ('academics', [high_ac.state.scores, high_ac.school.scores],
         { 
+          seriesColors: [ colors.lblue, colors.orange ],
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
             shadow: false,
@@ -370,6 +384,7 @@
       
       var hs_act_plot = jQuery.jqplot ('act', [high_act.state, high_act.school],
         { 
+          seriesColors: [ colors.light, colors.orange ],
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
             shadow: false,
@@ -398,6 +413,7 @@
       );
       var hs_grad_plot = jQuery.jqplot ('grad', [high_grad.state, high_grad.school],
         { 
+          seriesColors: [ colors.light, colors.orange ],
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
             shadow: false,
@@ -436,6 +452,7 @@
         }
         var elem_academics_plot = jQuery.jqplot (name, [elem_ac[name].state.scores, elem_ac[name].school.scores], 
           { 
+            seriesColors: [ colors.light, colors.orange ],
             seriesDefaults: {
               renderer: jQuery.jqplot.BarRenderer, 
               shadow: false,
