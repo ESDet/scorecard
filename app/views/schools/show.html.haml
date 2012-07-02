@@ -158,6 +158,8 @@
 - elsif @school.elementary? or @school.middle?
   .container_12
     .grid_12  
+      - if false
+        %i.help.icon-question-sign.float_right{'data-content' => 'Insert details here'}
       %h3 How Is This School Doing Academically?
       %p Following are the percentages of grade 6 students performing at or above grade level on the Michigan Education Assessment Program:
     .grid_6
@@ -331,6 +333,11 @@
 
 
   $(document).ready(function() {
+  
+    $('.help').popover({
+      placement: 'left',
+      title: "What's This?"
+    });
   
     // Demographics pie chart
     var dem_plot = jQuery.jqplot ('dems', [dem_data], 
