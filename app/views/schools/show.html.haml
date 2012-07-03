@@ -68,6 +68,7 @@
           = a
           %br/
       #dems.noprint{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
+      .clear_floats
       
     .grid_3
       - unless @school.PCT_FRL_FALL_2011.nil? 
@@ -103,11 +104,17 @@
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
-        
+      
       %b School Average ACT Score, 2010-11
-      #act.barchart{:style => 'height: 90px;'}
+      - if @school.AVG_ALLSTUD_ALLSUB_ACT_2011.nil?
+        %div No data available for this score.
+      - else
+        #act.barchart{:style => 'height: 90px;'}
       %b Graduation Rate, 2011
-      #grad.barchart{:style => 'height: 90px;'}
+      - if @school.PCT_ALLSTUD_12_GRAD_4YR_2011.nil?
+        %div No data available for this score.
+      - else
+        #grad.barchart{:style => 'height: 90px;'}
       
       %br/
       .grid_6.alpha.omega
