@@ -17,7 +17,10 @@ class SchoolsController < ApplicationController
   end
   
   def show
-    @school = School.find params[:id]
+    
+    @school = School.find_by_slug(params[:id]) || School.find(params[:id])
+    redirect_to root_path and return if @school.nil?
+    
     @subtitle = @school.SCHOOL_NAME_2011
         
     @school_o = Bedrock::Overlay.from_config('schools',
@@ -190,7 +193,7 @@ class SchoolsController < ApplicationController
     elsif params[:by] == -1
       s = s.last(:conditions => ["id < ?", params[:id].to_i]) || s.last
     end
-    redirect_to (s || schools_path)
+    redirect_to (s.nil? ? schools_path : school_path(s.slug))
   end
   
   private

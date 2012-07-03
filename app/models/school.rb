@@ -1,10 +1,15 @@
 class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
   require 'bedrock/acts_as_geocoded'
-  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2011, :AUTHORIZED_GRADES_2011, :TEMPLATE]
+  
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2011, :AUTHORIZED_GRADES_2011, :TEMPLATE, :slug]
   acts_as_geocoded :address => :SCHOOL_STREET_ADDRESS_2011, :point => :centroid, :sleep => 0.15
   
   def name; self['SCHOOL_NAME_TEMPLATE_2011'].gsub('_', ' '); end
+  
+  require 'mogrify'
+  include Mogrify
+  before_save :set_slug
   
 
   def self.square_array(arr)
@@ -36,5 +41,10 @@ class School < ActiveRecord::Base
   def middle?;      GRADES[:middle].include?      self.TEMPLATE; end
   def high?;        GRADES[:high].include?        self.TEMPLATE; end
   def k8?;          GRADES[:k8].include?          self.TEMPLATE; end  
+  
+  
+  def set_slug
+    self.slug = transliterate(self.name)
+  end
       
 end

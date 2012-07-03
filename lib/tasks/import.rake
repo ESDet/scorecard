@@ -12,6 +12,7 @@ namespace :import do
     }
     
     conn.add_column(table_name, 'centroid', :point)
+    conn.add_column(table_name, 'slug', :string)
     
     num_rows = ws.num_rows
     num_cols = ws.num_cols
