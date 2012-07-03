@@ -2,4 +2,5 @@
   - items.each do |label, score|
     %div{:style => 'margin: 2px 0;'}
       .square{:class => score.nil? ? "na" : "color#{score.to_i}"}
+        .printonly= score.to_i
       = label

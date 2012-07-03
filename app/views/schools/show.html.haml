@@ -62,7 +62,12 @@
         %br/
       
     .grid_3
-      #dems{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
+      .printonly
+        %h3 Demographics
+        - @demographics.each do |a,b|
+          = a
+          %br/
+      #dems.noprint{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
       
     .grid_3
       - unless @school.PCT_FRL_FALL_2011.nil? 
@@ -80,7 +85,7 @@
 %br/
  
 - if @school.high?
-  .container_12
+  .container_12.clear_floats
     .grid_6
       %h3 How Is This School Doing Academically?
       
@@ -158,7 +163,7 @@
                     = image_tag 'icons/student.png'
 
 - elsif @school.elementary? or @school.middle?
-  .container_12
+  .container_12.clear_floats
     .grid_12  
       - if false
         %i.help.icon-question-sign.float_right{'data-content' => 'Insert details here'}
@@ -212,7 +217,7 @@
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
     %br.clear_floats/
-    %table.sitevisit_key.clear_floats
+    %table.sitevisit_key.clear_floats.noprint
       %tr{:style => 'height: 25px;'}
         %td.color1
         %td.color2
@@ -234,10 +239,15 @@
     %table.sitevisit_key
       %tr{:style => 'height: 25px;'}
         %td.color1
+          .printonly 1
         %td.color2
+          .printonly 2
         %td.color3
+          .printonly 3
         %td.color4
+          .printonly 4
         %td.color5
+          .printonly 5
       %tr
         %td Strongly disagree
         %td Disagree

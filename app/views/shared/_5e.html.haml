@@ -2,8 +2,8 @@
   .grid_3.alpha{:style => 'height: 50px; margin: 3px 0;'}
     %h4= element[0]
     %div= element[1]
-  .grid_3.omega
-    .noprint.elements_score{:style => 'position: relative; width: 220px;'}
+    .printonly{:style => 'margin-bottom: 1em;'} Score: #{element[2].to_i}%
+  .grid_3.omega.noprint
+    .elements_score{:style => 'position: relative; width: 220px;'}
       .bar{:style => "right: #{125-(1.25*element[2]).to_i}px;"}
       .circled.ib{:style => "position: absolute; right: #{125-(1.25*element[2]).to_i}px;"}= element[2].to_i
-    .printonly Score: #{element[2].to_i}%
