@@ -81,13 +81,13 @@ namespace :import do
   end
 
 
-  desc "Make fake locations"
-  task :fake_geocode => :environment do |t, args|
-    points = Skool.select('OGR_FID, centroid').collect { |g| g.centroid }.shuffle
-    puts "Got points, updating schools.."
-    School.all.each_with_index do |s,i|
+  desc "Locate unlocated schools"
+  task :geocode => :environment do |t, args|
+    schools = School.where('AsText(centroid) = "POINT(0 0)"')
+    schools.each do |s|
       puts s.name
-      s.update_attribute(:centroid, points[i])
+      s.centroid = nil
+      s.save
     end
   end
   

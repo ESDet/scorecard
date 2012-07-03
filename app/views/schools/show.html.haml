@@ -93,6 +93,8 @@
           meeting and exceeding state standards on the Michigan Merit Examination (MME):
         %b Spring 2011
         #academics.barchart
+          - if false
+            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2011).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
@@ -164,11 +166,15 @@
       %p Following are the percentages of grade 6 students performing at or above grade level on the Michigan Education Assessment Program:
     .grid_6
       %h4 Reading, Fall 2011
-      #reading.barchart{:style => "height: #{40+50*@r_cats.size}px;"}
+      #reading.barchart{:style => "height: #{40+50*@r_cats.size}px; position: relative;"}
+        - if false
+          .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2011).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011
       
     .grid_6
       %h4 Math, Fall 2011
       #math.barchart{:style => "height: #{40+50*@m_cats.size}px;"}
+        - if false
+          .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_M_MEAP_2011).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011
       
   %br/
   %br/
