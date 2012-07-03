@@ -6,7 +6,7 @@
   
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
-  = text_field_tag :loc, params[:loc], :style => 'width: 150px;', :placeholder => 'Location (zip code)'
+  = text_field_tag :loc, params[:loc], :style => 'width: 150px;', :placeholder => 'Zip code'
   = submit_tag 'Find Schools', :class => 'btn btn-primary'
   = link_to 'Start Over', schools_path, :class => 'btn'
 
