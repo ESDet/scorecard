@@ -2,7 +2,7 @@ class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
   require 'bedrock/acts_as_geocoded'
   
-  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2011, :AUTHORIZED_GRADES_2011, :TEMPLATE, :slug]
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2011, :AUTHORIZED_GRADES_2011, :TEMPLATE, :slug], :add_properties => :my_properties
   acts_as_geocoded :address => :SCHOOL_STREET_ADDRESS_2011, :point => :centroid, :sleep => 0.15
   
   def name; self['SCHOOL_NAME_TEMPLATE_2011'].gsub('_', ' '); end
@@ -42,6 +42,14 @@ class School < ActiveRecord::Base
   def high?;        GRADES[:high].include?        self.TEMPLATE; end
   def k8?;          GRADES[:k8].include?          self.TEMPLATE; end  
   
+  def my_properties
+    result = {
+      :name => self.name
+    }
+    others = School.where(['SCHOOL_STREET_ADDRESS_2011 = ? and id <> ?', self.SCHOOL_STREET_ADDRESS_2011, self.id]).select('id, SCHOOL_NAME_TEMPLATE_2011, SCHOOL_STREET_ADDRESS_2011, AUTHORIZED_GRADES_2011, TEMPLATE, slug')
+    result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.AUTHORIZED_GRADES_2011 } } unless others.empty?
+    return result
+  end
   
   def set_slug
     self.slug = transliterate(self.name)
