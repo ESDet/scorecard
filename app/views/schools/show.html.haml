@@ -97,16 +97,16 @@
           Following are percentages of
           %b 11th and 12th graders
           meeting and exceeding state standards on the Michigan Merit Examination (MME):
-        %b Spring 2011
+        %b Spring 2012
         #academics.barchart
           - if false
-            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2011).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011
+            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2012).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2008_2012
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
       
-      %b School Average ACT Score, 2010-11
-      - if @school.AVG_ALLSTUD_ALLSUB_ACT_2011.nil?
+      %b School Average ACT Score, 2011-12
+      - if @school.AVG_ALLSTUD_ALLSUB_ACT_2012.nil?
         %div No data available for this score.
       - else
         #act.barchart{:style => 'height: 90px;'}

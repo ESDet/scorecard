@@ -5,7 +5,7 @@ class School < ActiveRecord::Base
   acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2011, :AUTHORIZED_GRADES_2011, :TEMPLATE, :slug], :add_properties => :my_properties
   acts_as_geocoded :address => :SCHOOL_STREET_ADDRESS_2011, :point => :centroid, :sleep => 0.15
   
-  def name; self['SCHOOL_NAME_TEMPLATE_2011'].gsub('_', ' '); end
+  def name; self['SCHOOL_NAME_TEMPLATE_2011'].andand.gsub('_', ' '); end
   
   require 'mogrify'
   include Mogrify
@@ -52,7 +52,7 @@ class School < ActiveRecord::Base
   end
   
   def set_slug
-    self.slug = transliterate(self.name)
+    self.slug = transliterate(self.name || '')
   end
       
 end

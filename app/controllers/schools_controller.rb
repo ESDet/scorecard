@@ -86,8 +86,8 @@ class SchoolsController < ApplicationController
       arr.collect { |i| school[field.gsub('#{i}', i)] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
     }
     
-    high_school = munge.call(@school, cats, 'PCT_PROF_ALLSTUD_11_#{i}_MME_2011')
-    high_state = munge.call(@school, cats, 'PCT_PROF_MI_ALLSTUD_11_#{i}_MME_2011')
+    high_school = munge.call(@school, cats, 'PCT_PROF_ALLSTUD_11_#{i}_MME_2012')
+    high_state = munge.call(@school, cats, 'PCT_PROF_MI_ALLSTUD_11_#{i}_MME_2012')
     @high_ac = {
       :empty => high_school.reject { |s| s[0].nil? }.empty?,
       :school => {
@@ -99,18 +99,18 @@ class SchoolsController < ApplicationController
         :labels => high_state.collect { |s| "#{s[0]}%" },
       },
       :ticks => [
-        "Social Studies (#{@school.TREND_PCT_PROF_ALLSTUD_11_X_MME_2007_2011})",
-        "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2007_2011})",
-        "Math (#{@school.TREND_PCT_PROF_ALLSTUD_11_M_MME_2007_2011})",
-        "Writing (#{@school.TREND_PCT_PROF_ALLSTUD_11_W_MME_2007_2011})",
-        "Reading (#{@school.TREND_PCT_PROF_ALLSTUD_11_R_MME_2007_2011})"
+        "Social Studies (#{@school.TREND_PCT_PROF_ALLSTUD_11_X_MME_2008_2012})",
+        "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2008_2012})",
+        "Math (#{@school.TREND_PCT_PROF_ALLSTUD_11_M_MME_2008_2012})",
+        "Writing (#{@school.TREND_PCT_PROF_ALLSTUD_11_W_MME_2008_2012})",
+        "Reading (#{@school.TREND_PCT_PROF_ALLSTUD_11_R_MME_2008_2012})"
       ]
     }
     
     @high_act = {
       :school => [ [@school.AVG_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A' , 1 ] ],
       :state => [ [@school.AVG_MI_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A', 1] ],
-      :ticks => [ "Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2007_2011 || 'N/A'}" ],
+      :ticks => [ "Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2008_2012 || 'N/A'}" ],
     }
     @high_grad = {
       :school => [ [@school.PCT_ALLSTUD_12_GRAD_4YR_2011.andand.round(0) || 'N/A' , 1 ] ],
