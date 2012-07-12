@@ -108,8 +108,8 @@ class SchoolsController < ApplicationController
     }
     
     @high_act = {
-      :school => [ [@school.AVG_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A' , 1 ] ],
-      :state => [ [@school.AVG_MI_ALLSTUD_ALLSUB_ACT_2011.andand.round(1) || 'N/A', 1] ],
+      :school => [ [@school.AVG_ALLSTUD_ALLSUB_ACT_2012.andand.round(1) || 'N/A' , 1 ] ],
+      :state => [ [@school.AVG_MI_ALLSTUD_ALLSUB_ACT_2012.andand.round(1) || 'N/A', 1] ],
       :ticks => [ "Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2008_2012 || 'N/A'}" ],
     }
     @high_grad = {
