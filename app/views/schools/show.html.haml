@@ -90,6 +90,7 @@
     .grid_6
       %h3 How Is This School Doing Academically?
       
+      = render :partial => 'shared/tip', :object => @tips["MME"]
       - if @high_ac[:empty]
         %p We have no data on this school's Michigan Merit Examination results.
       - else
@@ -105,11 +106,13 @@
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
       
+      = render :partial => 'shared/tip', :object => @tips["ACT"]
       %b School Average ACT Score, 2011-12
       - if @school.AVG_ALLSTUD_ALLSUB_ACT_2012.nil?
         %div No data available for this score.
       - else
         #act.barchart{:style => 'height: 90px;'}
+      = render :partial => 'shared/tip', :object => @tips["Graduation Rate"]
       %b Graduation Rate, 2011
       - if @school.PCT_ALLSTUD_12_GRAD_4YR_2011.nil?
         %div No data available for this score.
@@ -135,6 +138,7 @@
         %br/
   
       .grid_6.alpha.omega
+        = render :partial => 'shared/tip', :object => @tips["College Enrollment and Performance"]
         %b College Enrollment and Performance, Class of 2009:
         - if @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil? and @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil? and @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
           %div No data are available for this school.
@@ -172,9 +176,9 @@
 - elsif @school.elementary? or @school.middle?
   .container_12.clear_floats
     .grid_12  
-      - if false
-        %i.help.icon-question-sign.float_right{'data-content' => 'Insert details here'}
+      = render :partial => 'shared/tip', :object => @tips["How Is This School Doing Academically?"]
       %h3 How Is This School Doing Academically?
+      = render :partial => 'shared/tip', :object => @tips["Michigan Education Assessment Program"]
       %p Following are the percentages of grade 6 students performing at or above grade level on the Michigan Education Assessment Program:
     .grid_6
       %h4 Reading, Fall 2011
@@ -195,7 +199,7 @@
     .grid_6
       %h3 Student Performance Growth
       = image_tag 'coming_2013.png', :class => 'float_left', :style => 'margin-right: 10px;'
-      %p This year, we can only report if students state standards or not. In the future, we how much students progress. Every student should progress one entire grade level each year. But sometimes, students progress a lot and they still are not meeting state standards because they started the year so far behind. We think it is important to show which schools are helping students progress, even if their students are not yet meeting standards.
+      %p This year, we can only report if students state standards or not. In the future, we will measure how much students progress. Every student should progress one entire grade level each year. But sometimes, students progress a lot and they still are not meeting state standards because they started the year so far behind. We think it is important to show which schools are helping students progress, even if their students are not yet meeting standards.
       
     .grid_6
       %h3 How Well Does This School Prepare Students for College?
@@ -216,10 +220,12 @@
 
 .container_12
   .grid_6
+    = render :partial => 'shared/tip', :object => @tips["Is This School Organized for Improvement?"]
     %h3 Is This School Organized for Improvement?
     %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
     .overall
-      %b= @school.SCORE_DESCRIPTION_5E_2012
+      %h2= @school.SCORE_DESCRIPTION_5E_2012
+      = render :partial => 'shared/tip', :object => @tips["Overall score"]
       %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
@@ -240,6 +246,7 @@
     
     
   .grid_6
+    = render :partial => 'shared/tip', :object => @tips["What Is This School's Environment Like?"]
     %h3 What Is This School's Environment Like?
     %p Parents and community members visited this school unannounced to observe the learning environment and school culture. This is what they saw:
     
@@ -284,6 +291,7 @@
 .container_12
   .grid_6
     - unless @activities[:arts].empty? and @activities[:wellness].empty? and @activities[:academic].empty?
+      = render :partial => 'shared/tip', :object => @tips["How Does This School Support Well-Rounded Development?"]
       %h3 How Does This School Support Well-Rounded Development?
       %p Extracurricular activities help students explore their interests and apply what they learn in school to the real world. Examples of these activities at this school include:
       - unless @activities[:arts].empty?
@@ -307,12 +315,14 @@
     
   .grid_6
     - unless @programs.empty?
+      = render :partial => 'shared/tip', :object => @tips["How Does This School Help Students Overcome Challenges to Learning?"]
       %h3 How Does This School Help Students Overcome Challenges to Learning?
       %p Students may have learning disabilities, struggle with their behavior, or face challenges outside of school that affect their academic performance. This school provides the following programs to help students overcome such challenges:
       = render :partial => 'shared/two_cols', :locals => { :items => @programs }
       %br.clear_floats/      
       
     - unless @school.ADMISSIONS_LONG.blank?
+      = render :partial => 'shared/tip', :object => @tips["What Are the School's Admission Requirements and Deadlines?"]
       %h3 What Are the School's Admission Requirements and Deadlines?
       %p= @school.ADMISSIONS_LONG
 
@@ -359,7 +369,7 @@
   
     $('.help').popover({
       placement: 'left',
-      title: "What's This?"
+      delay: { show: 0, hide: 2000 }
     });
   
     // Demographics pie chart
@@ -400,14 +410,14 @@
             { label:'State', pointLabels: { show: true, labels: high_ac.state.labels } },
             { label:'School', pointLabels: { show: true, labels: high_ac.school.labels } }
           ],              
-          legend: { show:true, location: 'e', border: '0px', fontSize: '13px' },
+          legend: { show:true, location: 'e', border: '0px', fontSize: '13px', marginRight: '0px' },
           axes: {
             yaxis: {
               renderer: $.jqplot.CategoryAxisRenderer,
               ticks: high_ac.ticks,
               showTickMarks: false
             },
-            xaxis: { min: 0, max: 100, pad: 1.05, numberTicks: 5 }
+            xaxis: { min: 0, max: 120, padMin: 1.05, padMax: 1.05, numberTicks: 7 }
           }  
         }
       );
@@ -437,7 +447,7 @@
               ticks: high_act.ticks,
               showTickMarks: false
             },
-            xaxis: { min: 0, max: 36, pad: 1.05, numberTicks: 5 }
+            xaxis: { min: 0, max: 42, pad: 1.05, numberTicks: 8 }
           }  
         }
       );
@@ -466,7 +476,7 @@
               ticks: high_grad.ticks,
               showTickMarks: false
             },
-            xaxis: { min: 0, max: 100, pad: 1.05, numberTicks: 5 }
+            xaxis: { min: 0, max: 120, pad: 1.05, numberTicks: 7 }
           }  
         }
       );      
@@ -505,7 +515,7 @@
                 ticks: elem_ac[name].ticks,
                 showTickMarks: false
               },
-              xaxis: { min: 0, max: 100, pad: 1.05, numberTicks: 5 }
+              xaxis: { min: 0, max: 120, pad: 1.05, numberTicks: 7 }
             }  
           }
         );  

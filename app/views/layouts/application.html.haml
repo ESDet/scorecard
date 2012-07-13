@@ -49,6 +49,15 @@
             });
       
     = yield
+
+    .footer
+      .container_12
+        .grid_4.centered.prefix_2
+          = link_to image_tag('/images/logo.png', :style => 'height: 100px; width: auto;'), 'http://excellentschoolsdetroit.org'
+        .grid_4.centered.suffix_2
+          = link_to image_tag('/images/loveland.png', :style => 'height: 80px; width: auto;'), 'http://makeloveland.com'
+          %br/
+          Built by #{link_to 'LOVELAND Technologies', 'http://makeloveland.com'}
   
 
   = javascript_include_tag '/leaflet/leaflet-src.js', '/wax/dist/wax.leaf.js'

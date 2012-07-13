@@ -1,4 +1,7 @@
 namespace :import do
+  user = "inchbot@makeloveland.com"
+  pass = "jNbu2&4M"
+  ss_key = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c' # 25th
 
   def get_schema(ws)
     table_name = 'schools'
@@ -65,18 +68,16 @@ namespace :import do
   
   desc "Create school table schema from spreadsheet"
   task :schema => :environment do |t, args|
-    session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
-    real_key  = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c' # 25th
-    sheets = session.spreadsheet_by_key(real_key).worksheets
+    session = GoogleDrive.login(user, pass)
+    sheets = session.spreadsheet_by_key(ss_key).worksheets
     get_schema(sheets.first)
     puts "Done"
   end
 
   desc "Pull data from sheet, but don't redo schema"
   task :data => :environment do |t, args|
-    session = GoogleDrive.login("inchbot@makeloveland.com", "jNbu2&4M")
-    real_key  = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c' # 25th
-    sheets = session.spreadsheet_by_key(real_key).worksheets
+    session = GoogleDrive.login(user, pass)
+    sheets = session.spreadsheet_by_key(ss_key).worksheets
     get_data(sheets[3..3])
     puts "Done"
   end
@@ -89,6 +90,22 @@ namespace :import do
       puts s.name
       s.centroid = nil
       s.save
+    end
+  end
+  
+  desc "Load up tips from data_source_exp"
+  task :tips => :environment do |t, args|
+    session = GoogleDrive.login(user, pass)
+    sheets = session.spreadsheet_by_key(ss_key).worksheets
+    ws = sheets[4]
+    num_rows = ws.num_rows
+    num_cols = ws.num_cols
+    Tip.delete_all
+    ws.rows[1..num_rows].each do |row|
+      puts row[0]
+      puts row[1]
+      puts "-----"
+      Tip.create(:name => row[0], :body => row[1])
     end
   end
   

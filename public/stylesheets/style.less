@@ -23,6 +23,7 @@ html, body { height: 100%; }
 .ib { display: inline-block; float: none; }
 .subtle { color: @dblue; }
 .printonly { display: none; }
+.popover-inner { width: 380px; }
 
 h1, h2, h3, h4 { font-family: serif; }
 h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
@@ -67,9 +68,10 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   td { width: 92px; text-align: center; font-size: 0.9em; }
 }
 
-.summary { 
+.summary, .footer { 
   background-color: @light; background-image: url(/images/noise_light.png);
 }
+.footer { padding: 3em 0; }
 .elements_score {
   height: 50px; margin: 3px 0; background-image: url(/images/5e_scale.png); background-repeat: no-repeat; background-position: right top;
   .bar { position: absolute; left: 67px;  height: 10px; top: 10px; background-color: @dblue; }
@@ -133,6 +135,7 @@ table.enrollment {
     .menu a { margin: 0.5em 2em 0.5em 0; }
     .search { margin: 0.5em 0; display: block; }
   }
+  .popover-inner { max-width: 280px; }
 }
 
 

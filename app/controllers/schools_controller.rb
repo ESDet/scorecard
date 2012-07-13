@@ -44,6 +44,8 @@ class SchoolsController < ApplicationController
 
     ethnicities = [ 'BLACK', 'LATINO', 'WHITE', 'ASIAN', 'OTHER' ]
     @demographics = ethnicities.collect { |e| [ "#{e.capitalize} " + @school["PCT_#{e}_FALL_2011"].to_i.to_s + "%", @school["PCT_#{e}_FALL_2011"] ] }
+    
+    @tips = Hash[*(Tip.all.collect { |t| [t.name, t] }.flatten)]
 
     @elements = [
       [ 'Effective leaders', 'Principals and teachers implement a shared vision for success.', @school.SCORE_LDR_5E_2012 ],
@@ -141,9 +143,9 @@ class SchoolsController < ApplicationController
     third_ticks[0] += " (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})" unless @school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011.nil?
     
     reading_ticks = @r_cats.collect { |cat| cat[1] }
-    reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})" unless reading_ticks.empty?
+    reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})" unless reading_ticks.empty? or @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011.blank?
     math_ticks = @m_cats.collect { |cat| cat[1] }
-    math_ticks[math_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011})" unless math_ticks.empty?
+    math_ticks[math_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011})" unless math_ticks.empty? or @school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011.blank?
     
     @elem_academics = {
       :reading => {
