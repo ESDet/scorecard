@@ -29,6 +29,10 @@
       #wrapper{:style => 'height: 200px; margin-top: 4em;'}
         = render :partial => 'shared/map', :object => @map    
       %br/
+      .float_right
+        %a.btn{:href => 'javascript:print();return false;'}
+          %i.icon-print
+          Print
       %br/
     
   .container_12
@@ -79,7 +83,7 @@
       - unless @school.PCT_ELL_FALL_2011.nil? 
         #{@school.PCT_ELL_FALL_2011.andand.to_i || 'N/A'}% English language learners
         %br/
-    
+
 %br/
 
 %br/
