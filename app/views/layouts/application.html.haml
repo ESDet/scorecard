@@ -8,7 +8,7 @@
     = render :partial => 'shared/fb_meta'
     = csrf_meta_tag
     
-    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/960.css', :media => 'screen and (min-width: 960px)'}
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/960.css'}
     = stylesheet_link_tag 'bootstrap.min.css'
     = stylesheet_link_tag '/leaflet/leaflet.css', :media => 'all'
     = stylesheet_link_tag  '/wax/theme/controls.css', :media => 'all'
@@ -50,7 +50,7 @@
       
     = yield
 
-    .footer
+    .footer.noprint
       .container_12
         .grid_4.centered.prefix_2
           = link_to image_tag('/images/logo.png', :style => 'height: 100px; width: auto;'), 'http://excellentschoolsdetroit.org'
