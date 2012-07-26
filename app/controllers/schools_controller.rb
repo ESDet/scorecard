@@ -18,8 +18,13 @@ class SchoolsController < ApplicationController
   
   def show
     
-    @school = School.find_by_slug(params[:id]) || School.find(params[:id])
-    redirect_to root_path and return if @school.nil?
+    begin
+      @school = School.find_by_slug(params[:id]) || School.find(params[:id])
+      redirect_to root_path and return if @school.nil?
+    rescue
+      render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
+      redirect_to root_path and return
+    end
     
     @subtitle = @school.SCHOOL_NAME_2011
         
