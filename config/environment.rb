@@ -12,7 +12,6 @@ ActionMailer::Base.smtp_settings = {
 }
 
 Miley.setup do |s|
-  s.host = '127.0.0.1'
   s.appname = 'esd'
 end
 

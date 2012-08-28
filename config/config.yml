@@ -1,5 +1,6 @@
 common:
   typekit_key: rak2ush
+  cache_key: 1
   analytics_key:
 
 development:

@@ -4,7 +4,8 @@ cloudmade_style: 998
 layers:
   schools:
     template: "<a href='/schools/{{slug}}'>{{name}}</a><br/>{{SCHOOL_STREET_ADDRESS_2011}}<br/>Grades {{AUTHORIZED_GRADES_2011}}<br/>{{#others}}<br/><a href='/schools/{{slug}}'>{{name}}</a><br/>Grades {{grades}}<br/>{{/others}}"
-    style_handler: "function(e) { e.layer.options.fillColor = { 'P2': '#8DC63F', 'ES': '#8DC63F', 'K8': '#8DC63F', 'MS': '#F79421', 'HS': '#004270' }[e.properties.TEMPLATE]; }"
+    style_handler: "function(e) { return { fillColor: { 'P2': '#8DC63F', 'ES': '#8DC63F', 'K8': '#8DC63F', 'MS': '#F79421', 'HS': '#004270' }[e.properties.TEMPLATE] }; }"
+    geometry_type: point
     style:
       radius: 10
       fillColor: '#22aa66'

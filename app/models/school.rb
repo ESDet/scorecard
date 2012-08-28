@@ -4,6 +4,8 @@ class School < ActiveRecord::Base
   
   acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2011, :AUTHORIZED_GRADES_2011, :TEMPLATE, :slug], :add_properties => :my_properties
   acts_as_geocoded :address => :SCHOOL_STREET_ADDRESS_2011, :point => :centroid, :sleep => 0.15
+  utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
+  set_rgeo_factory_for_column(:centroid, utm_factory)
   
   def name; self['SCHOOL_NAME_TEMPLATE_2011'].andand.gsub('_', ' '); end
   

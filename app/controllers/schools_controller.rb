@@ -1,5 +1,8 @@
 class SchoolsController < ApplicationController
 
+  caches_action :index, :if => proc { request.format.json? }, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
+
+  
   def index
     filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil    
     session[:filter] = filter
@@ -11,7 +14,7 @@ class SchoolsController < ApplicationController
     respond_to do |format|
       format.html { }
       format.json do
-        render :json => Bedrock::to_feature_collection(@schools)
+        render :json => Bedrock::to_feature_collection(@schools.reject { |s| s.centroid.nil? })
       end
     end
   end
