@@ -15,7 +15,7 @@ ESD::Application.configure do
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
 
-  config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), { :namespace => 'ddf_production', :expires_in => 1.hour, :compress => true }
+  config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), { :namespace => 'ddf_production', :expires_in => 3600, :compress => true }
 
   config.action_mailer.default_url_options = { :host => "scorecard.excellentschoolsdetroit.org" }
 
