@@ -22,7 +22,7 @@ lime: &lime
   timeout: 5000
   username: rails
   password: huju5Azafu
-  host: localhost
+  host: lime_private
 
 development:
   <<: *local
@@ -37,7 +37,7 @@ staging:
   database: esd_stage
 
 production:
-  <<: *dreamhost
+  <<: *lime
   database: esd_prod
 
 

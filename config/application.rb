@@ -1,7 +1,5 @@
 require File.expand_path('../boot', __FILE__)
 
-ENV['RAILS_ENV'] = 'staging'
-
 require 'rails/all'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
