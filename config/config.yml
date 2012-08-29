@@ -14,6 +14,6 @@ staging:
   fb_secret: 
   
 production:
-  analytics_key: 
+  analytics_key: UA-34426035-1
   fb_app_id: 
   fb_secret: 
