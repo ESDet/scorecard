@@ -27,8 +27,15 @@
         
     .grid_4
       #wrapper{:style => 'height: 200px; margin-top: 4em;'}
-        = render :partial => 'shared/map', :object => @map    
+        = render :partial => 'shared/map', :object => @map
       %br/
+      - unless @school.PDF_FILE_NAME.blank?
+        .float_right
+          %a.btn{:href => "/pdfs/#{@school.PDF_FILE_NAME}", :target => '_blank'}
+            %i.icon-download-alt
+            Download PDF
+        %br/
+        %br/
     
   .container_12
     .grid_3{:style => 'overflow: hidden;'}
@@ -224,6 +231,8 @@
       = render :partial => 'shared/tip', :object => @tips["Overall score"]
       %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
+      - unless @school.RESULTS_LINK_5E.blank?
+        %div= link_to "View the full report for this school", @school.RESULTS_LINK_5E, :target => '_blank'
     = render :partial => 'shared/5e', :collection => @elements, :as => :element
     %br.clear_floats/
     %table.sitevisit_key.clear_floats.noprint
