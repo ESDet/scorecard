@@ -19,5 +19,4 @@ gem 'prawn'
 gem 'google_drive'
 
 gem 'statsd-ruby', '~> 0.4.0', :git => 'git://github.com/jeremy/statsd-ruby', :require => 'statsd'
-gem 'miley', :path => 'vendor/gems/miley'
 

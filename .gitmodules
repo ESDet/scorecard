@@ -1,3 +1,6 @@
 [submodule "public/paraffin"]
 	path = public/paraffin
 	url = https://github.com/loveland/paraffin.git
+[submodule "vendor/gems/bedrock"]
+	path = vendor/gems/bedrock
+	url = https://github.com/loveland/bedrock.git
