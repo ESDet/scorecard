@@ -8,22 +8,20 @@
     = render :partial => 'shared/fb_meta'
     = csrf_meta_tag
     
-    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/960.css'}
-    = stylesheet_link_tag 'bootstrap.min.css'
-    = stylesheet_link_tag '/leaflet/leaflet.css', :media => 'all'
-    = stylesheet_link_tag  '/wax/theme/controls.css', :media => 'all'
     - if Rails.env == 'development'
+      = include_javascripts :common, :mapping
+      = include_stylesheets :common
       %link{:rel => "stylesheet/less", :type => "text/css", :href => "/stylesheets/style.less", :media => 'all'}
       %link{:rel => "stylesheet/less", :type => "text/css", :href => "/stylesheets/print.less", :media => 'print'}
       = javascript_include_tag 'less-1.2.0.min.js'
     - else
+      = javascript_include_tag '/assets/common.js', '/assets/mapping.js'
+      = stylesheet_link_tag '/assets/common.css', :media => 'all'
       = stylesheet_link_tag 'style.css', :media => 'all'
       = stylesheet_link_tag 'print.css', :media => 'print'
     :erb
       <!--[if lte IE 8]><link rel="stylesheet" href="/leaflet/leaflet.ie.css" /><![endif]-->
       <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/javascripts/excanvas.js"></script><![endif]-->      
-    = stylesheet_link_tag 'jquery.jqplot.min.css'
-    = javascript_include_tag 'jquery-1.7.1.min.js', 'jquery.ba-bbq.min.js', 'jquery.placeholder.min.js'
 
   %body
     #nav
@@ -64,14 +62,6 @@
       window.usabilla_live = lightningjs.require("usabilla_live", "//w.usabilla.com/7dd70daa29ba.js");
       /*{/literal}*/
 
-  = javascript_include_tag '/leaflet/leaflet-src.js', '/wax/dist/wax.leaf.js'
-  = javascript_include_tag 'application.js', '/paraffin/paraffin.js', '/paraffin/paraffin.gps.js'
-  - if false
-    = javascript_include_tag 'd3.v2.js'
-    = javascript_include_tag 'raphael-min.js', 'g.raphael-min.js', 'g.pie-min.js', 'g.bar-min.js'
-
-  = javascript_include_tag 'underscore-min.js', 'jquery.jqplot.js', 'plugins/jqplot.pieRenderer.min.js', 'plugins/jqplot.barRenderer.min.js', 'plugins/jqplot.categoryAxisRenderer.min.js', 'plugins/jqplot.pointLabels.min.js', 'bootstrap-typeahead.js', 'bootstrap-tooltip.js', 'bootstrap-popover.js'
-  
   - if AppConfig.typekit_key
     = javascript_include_tag "http://use.typekit.com/#{AppConfig.typekit_key}.js"
     :javascript
