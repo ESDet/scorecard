@@ -1,0 +1,3 @@
+[submodule "public/paraffin"]
+	path = public/paraffin
+	url = https://github.com/loveland/paraffin.git
