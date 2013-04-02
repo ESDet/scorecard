@@ -11,9 +11,5 @@ ActionMailer::Base.smtp_settings = {
   :enable_starttls_auto => true
 }
 
-Miley.setup do |s|
-  s.appname = 'esd'
-end
-
 # Initialize the rails application
 ESD::Application.initialize!
