@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rake'
 gem 'rack', '1.2.1'
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.9'
 gem 'mysql2', '< 0.3'
 gem 'andand'
 gem 'awesome_print'
@@ -19,5 +19,5 @@ gem 'jammit'
 gem 'prawn'
 gem 'google_drive'
 
-gem 'statsd-ruby', '~> 0.4.0', :git => 'git://github.com/jeremy/statsd-ruby', :require => 'statsd'
+#gem 'statsd-ruby', '~> 0.4.0', :git => 'git://github.com/jeremy/statsd-ruby', :require => 'statsd'
 

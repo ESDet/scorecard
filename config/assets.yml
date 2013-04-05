@@ -27,7 +27,6 @@ javascripts:
     - public/paraffin/lib/jquery.xdomainrequest.js
     - public/paraffin/lib/spin.min.js
     - public/paraffin/paraffin.js
-    - public/paraffin/paraffin.gps.js
     - public/application.js
     
 stylesheets:
@@ -36,6 +35,6 @@ stylesheets:
     - public/stylesheets/960.css
     - public/stylesheets/jquery.jqplot.min.css
     - public/stylesheets/jquery.minicolors.css
-    - public/leaflet/leaflet.css
-    - public/leaflet/leaflet.draw.css
+    - public/paraffin/lib/leaflet/leaflet.css
+    - public/paraffin/lib/leaflet/leaflet.draw.css
 
