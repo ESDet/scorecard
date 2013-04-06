@@ -6,6 +6,7 @@
       %h1
         = @school.name
         - if @school.closed?
+          %br/
           (Closed #{@school.CLOSE_DATE})
       
       %h3
@@ -370,7 +371,7 @@
   
   var colors = {
     light:  '#eef',
-    lightgrey: '#eee',
+    lightgrey: '#e8e8e8',
     dblue:  '#004270',
     orange: '#f79421',
     lblue:  '#85d5e3',
