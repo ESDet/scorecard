@@ -1,4 +1,4 @@
-.summary
+.summary{:class => @school.closed? ? 'closed' : ''}
   .container_12
     .grid_8
       %br/
@@ -353,6 +353,7 @@
 
 :javascript
   // Demographics pie chart
+  var klosed = #{@school.closed?.to_json};
   var dem_data = #{@demographics.to_json};
   
   // Highschool academics
@@ -369,6 +370,7 @@
   
   var colors = {
     light:  '#eef',
+    lightgrey: '#eee',
     dblue:  '#004270',
     orange: '#f79421',
     lblue:  '#85d5e3',
@@ -387,9 +389,10 @@
     });
   
     // Demographics pie chart
+    var bg = klosed ? colors.lightgrey : colors.light;
     var dem_plot = jQuery.jqplot ('dems', [dem_data], 
       { 
-        grid: { background: '#eef', drawBorder: false, shadow: false }, 
+        grid: { background: bg, drawBorder: false, shadow: false }, 
         seriesColors: [ colors.lgreen, colors.dblue, colors.orange, colors.red, colors.yellow ],
         seriesDefaults: {
           renderer: jQuery.jqplot.PieRenderer, 
@@ -400,7 +403,7 @@
             padding: 0
           }
         }, 
-        legend: { show:true, location: 'e', border: '0px', fontSize: '13px', background: '#eef' }
+        legend: { show:true, location: 'e', border: '0px', fontSize: '13px', background: bg }
       }
     );     
 

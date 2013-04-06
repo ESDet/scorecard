@@ -1,4 +1,5 @@
 @light: #eef;
+@lightgrey: #eee;
 
 @dblue:   #004270;
 @orange:  #f79421;
@@ -70,6 +71,7 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 
 .summary, .footer { 
   background-color: @light; background-image: url(/images/noise_light.png);
+  &.closed { background-color: @lightgrey; }  
 }
 .footer { padding: 3em 0; }
 .elements_score {
