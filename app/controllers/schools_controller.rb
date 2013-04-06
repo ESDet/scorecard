@@ -51,7 +51,7 @@ class SchoolsController < ApplicationController
     })
 
     ethnicities = [ 'BLACK', 'LATINO', 'WHITE', 'ASIAN', 'OTHER' ]
-    @demographics = ethnicities.collect { |e| [ "#{e.capitalize} " + @school["PCT_#{e}_FALL_2011"].to_i.to_s + "%", @school["PCT_#{e}_FALL_2011"] ] }
+    @demographics = ethnicities.collect { |e| [ "#{e.capitalize} " + @school["PCT_#{e}_FALL_2012"].to_i.to_s + "%", @school["PCT_#{e}_FALL_2012"] ] }
     
     @tips = Hash[*(Tip.all.collect { |t| [t.name, t] }.flatten)]
 
@@ -123,8 +123,8 @@ class SchoolsController < ApplicationController
       :ticks => [ "Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2008_2012 || 'N/A'}" ],
     }
     @high_grad = {
-      :school => [ [@school.PCT_ALLSTUD_12_GRAD_4YR_2011.andand.round(0) || 'N/A' , 1 ] ],
-      :state => [ [@school.PCT_MI_ALLSTUD_12_GRAD_4YR_2011.andand.round(0) || 'N/A', 1] ],
+      :school => [ [@school.PCT_ALLSTUD_12_GRAD_4YR_2012.andand.round(0) || 'N/A' , 1 ] ],
+      :state => [ [@school.PCT_MI_ALLSTUD_12_GRAD_4YR_2012.andand.round(0) || 'N/A', 1] ],
       :ticks => [ "Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011 || 'N/A'}" ],
     }
     
@@ -137,16 +137,16 @@ class SchoolsController < ApplicationController
       ['SPED', 'Special Education']
     ].reverse
     
-    @r_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_R_MEAP_2011"].nil? }
-    @m_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_M_MEAP_2011"].nil? }
+    @r_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_R_MEAP_2012"].nil? }
+    @m_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_M_MEAP_2012"].nil? }
     
-    reading_school = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_R_MEAP_2011')
-    reading_state  = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_R_MEAP_2011')
-    math_school    = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_M_MEAP_2011')
-    math_state     = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_M_MEAP_2011')
+    reading_school = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_R_MEAP_2012')
+    reading_state  = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_R_MEAP_2012')
+    math_school    = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_M_MEAP_2012')
+    math_state     = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_M_MEAP_2012')
     
-    third_school = munge.call(@school, ['R'], 'PCT_PROF_ALLSTUD_03_#{i}_MEAP_2011')
-    third_state = munge.call(@school, ['R'], 'PCT_PROF_MI_ALLSTUD_03_#{i}_MEAP_2011')
+    third_school = munge.call(@school, ['R'], 'PCT_PROF_ALLSTUD_03_#{i}_MEAP_2012')
+    third_state = munge.call(@school, ['R'], 'PCT_PROF_MI_ALLSTUD_03_#{i}_MEAP_2012')
     third_ticks = ["Proficiency"]
     third_ticks[0] += " (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})" unless @school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011.nil?
     
@@ -190,6 +190,7 @@ class SchoolsController < ApplicationController
         :ticks => third_ticks,
       },
     }
+    #logger.ap @elem_academics
     respond_to do |format|
       format.html { }
       #format.pdf { render :layout => false }
@@ -211,7 +212,7 @@ class SchoolsController < ApplicationController
   def scope_from_filters(filter, loc)
     logger.info "scope from filters: #{filter}, #{loc}"
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
-    schools = schools.where(['SCHOOL_CITY_STATE_ZIP_2011 like ?', "%#{loc}"]) unless loc.blank?
+    schools = schools.where(['SCHOOL_CITY_STATE_ZIP_2012 like ?', "%#{loc}"]) unless loc.blank?
     return schools
   end
   

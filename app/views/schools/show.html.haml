@@ -3,12 +3,15 @@
     .grid_8
       %br/
       %br/
-      %h1= @school.name
+      %h1
+        = @school.name
+        - if @school.closed?
+          (Closed #{@school.CLOSE_DATE})
       
       %h3
-        Grades #{@school.AUTHORIZED_GRADES_2011} &middot; #{@school.HEADCOUNT_ALL_FALL_2011.to_i} students &middot; #{@school.SCHOOL_TYPE_2011}
+        Grades #{@school.AUTHORIZED_GRADES_2012} &middot; #{@school.HEADCOUNT_ALL_FALL_2012.to_i} students &middot; #{@school.SCHOOL_TYPE_2012}
         %br/
-        #{@school.SCHOOL_STREET_ADDRESS_2011} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2011} 
+        #{@school.SCHOOL_STREET_ADDRESS_2012} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2012} 
         
       %br/
       .noprint
@@ -76,8 +79,8 @@
       .clear_floats
       
     .grid_3
-      - unless @school.PCT_FRL_FALL_2011.nil? 
-        #{@school.PCT_FRL_FALL_2011.andand.to_i || 'N/A'}% free and reduced-price lunch
+      - unless @school.PCT_FRL_FALL_2012.nil? 
+        #{@school.PCT_FRL_FALL_2012.andand.to_i || 'N/A'}% free and reduced-price lunch
         %br/
       - unless @school.PCT_SPED_FALL_2011.nil? 
         #{@school.PCT_SPED_FALL_2011.andand.to_i || 'N/A'}% special education
@@ -118,8 +121,8 @@
       - else
         #act.barchart{:style => 'height: 90px;'}
       = render :partial => 'shared/tip', :object => @tips["Graduation Rate"]
-      %b Graduation Rate, 2011
-      - if @school.PCT_ALLSTUD_12_GRAD_4YR_2011.nil?
+      %b Graduation Rate, 2012
+      - if @school.PCT_ALLSTUD_12_GRAD_4YR_2012.nil?
         %div No data available for this score.
       - else
         #grad.barchart{:style => 'height: 90px;'}
@@ -184,16 +187,22 @@
       = render :partial => 'shared/tip', :object => @tips["Michigan Education Assessment Program"]
       %p Following are the percentages of all students performing at or above grade level on the Michigan Education Assessment Program:
     .grid_6
-      %h4 Reading, Fall 2011
-      #reading.barchart{:style => "height: #{40+50*@r_cats.size}px; position: relative;"}
-        - if false
-          .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2011).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011
+      %h4 Reading, Fall 2012
+      - if @elem_academics[:reading][:school][:scores].blank?
+        We have no data to report for this school.
+      - else
+        #reading.barchart{:style => "height: #{40+50*@r_cats.size}px; position: relative;"}
+          - if false
+            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2012).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011
       
     .grid_6
-      %h4 Math, Fall 2011
-      #math.barchart{:style => "height: #{40+50*@m_cats.size}px;"}
-        - if false
-          .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_M_MEAP_2011).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011
+      %h4 Math, Fall 2012
+      - if @elem_academics[:math][:school][:scores].blank?
+        We have no data to report for this school.
+      - else
+        #math.barchart{:style => "height: #{40+50*@m_cats.size}px;"}
+          - if false
+            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_M_MEAP_2012).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011
       
   %br/
   %br/
@@ -208,7 +217,7 @@
       %h3 How Well Does This School Prepare Students for College?
       - if @school.elementary?
         %p 3rd grade reading is an early indicator if students are on track for graduation:
-        - if @school.PCT_PROF_ALLSTUD_03_R_MEAP_2011.nil?
+        - if @school.PCT_PROF_ALLSTUD_03_R_MEAP_2012.nil?
           %div We have no data about this school's 3rd grade reading level.
         - else
           #third.barchart{:style => 'height: 100px;'}
