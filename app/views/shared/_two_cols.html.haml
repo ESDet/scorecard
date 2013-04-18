@@ -2,11 +2,11 @@
   %tr
     %td{:style => 'width: 50%; vertical-align: top;'}
       %ul
-        - mid = (items.length/2).ceil
-        - items[0...mid].each do |i|
+        - num_in_first = (items.length/2.0).ceil
+        - items[0...num_in_first].each do |i|
           %li= i
     %td{:style => 'width: 50%; vertical-align: top;'}
       %ul
-        - items[mid+1..-1].each do |i|
+        - items[num_in_first..-1].each do |i|
           %li= i
 
