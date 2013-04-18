@@ -33,11 +33,26 @@ class School < ActiveRecord::Base
     :k8         => ['K8'],
   }
   
-  scope :p2,         where(:TEMPLATE => GRADES[:p2])
-  scope :elementary, where(:TEMPLATE => GRADES[:elementary])
-  scope :middle,     where(:TEMPLATE => GRADES[:middle])
-  scope :high,       where(:TEMPLATE => GRADES[:high])
-  scope :k8,         where(:TEMPLATE => GRADES[:k8]) 
+  TYPES = {
+    :charter          => 'Charter',
+    :dps              => 'DPS',
+    :dps_charter      => 'DPS Charter',
+    :dps_rising       => 'DPS Detroit Rising',
+    :dps_traditional  => 'DPS Traditional',
+    :eaa              => 'EAA',
+    :eaa_charter      => 'EAA Charter',
+    :independent      => 'Independent',
+    :parochial        => 'Parochial',
+    :traditional      => 'Traditional public',
+  }
+  
+  GRADES.each do |k,v|
+    scope k,         where(:TEMPLATE => v)
+  end
+  
+  TYPES.each do |k,v|
+    scope k,         where(:SCHOOL_TYPE_2012 => v)
+  end
   
   def elementary?;  GRADES[:elementary].include?  self.TEMPLATE; end
   def middle?;      GRADES[:middle].include?      self.TEMPLATE; end

@@ -1,11 +1,13 @@
-.btn-group.float_left{:style => 'margin-right: 1em;'}
+.btn-group.grades.float_left{:style => 'margin-right: 1em;'}
   = link_to 'All',        '#', :class => "btn all"
   = link_to 'Elementary', '#', :class => "btn elementary"
   = link_to 'Middle',     '#', :class => "btn middle"
   = link_to 'High',       '#', :class => "btn high"
   
+  
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
+  = select_tag :type, options_for_select(school_type_options)
   = text_field_tag :loc, params[:loc], :style => 'width: 150px;', :placeholder => 'Zip code'
   = submit_tag 'Find Schools', :class => 'btn btn-primary'
   = link_to 'Start Over', schools_path, :class => 'btn'
@@ -18,21 +20,30 @@
     if(!args.filter) {
       args.filter = 'all';
     }
+    if(!args.type) {
+      args.type = 'all';
+    }
+
     updateControls();
     
-    $('.btn-group a.btn').click(function(e) {
+    $('.grades a.btn').click(function(e) {
       args.filter = $(this).attr('class').replace('btn ', '');
       updateForm();
       updateControls();
       e.stopPropagation();
       return false;
-    });    
+    });
+    $('select#type').change(function(e) {
+      args.type = $(this).val();
+      return false;
+    });
   });
   
   function updateControls()
   {
     $('a.btn').removeClass('active');
     $('a[class~=' + args.filter + ']').addClass('active');
+    $('select#type').val(args.type);
   }
   
   function updateForm()

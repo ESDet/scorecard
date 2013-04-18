@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
      #:elements => @schools)
-      :url      => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc]),
+      :url      => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc], :type => session[:type]),
       :mouseover => true)
     @district_o = Bedrock::Overlay.from_config('districts',
       :ty => :geojson,

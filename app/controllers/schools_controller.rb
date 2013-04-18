@@ -4,12 +4,14 @@ class SchoolsController < ApplicationController
 
   
   def index
-    filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil    
-    session[:filter] = filter
-    session[:loc] = params[:loc]
+    filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
+    type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
+    session[:filter]  = filter
+    session[:type]    = type
+    session[:loc]     = params[:loc]
     
     @title = current_search    
-    @schools = scope_from_filters(filter, params[:loc]).order('SCHOOL_NAME_2011')
+    @schools = scope_from_filters(filter, type, params[:loc]).order('SCHOOL_NAME_2011')
 
     respond_to do |format|
       format.html { }
@@ -198,7 +200,7 @@ class SchoolsController < ApplicationController
   end
   
   def increment
-    s = scope_from_filters(session[:filter], session[:loc])
+    s = scope_from_filters(session[:filter], session[:type], session[:loc])
     if params[:by] == 1
       s = s.first(:conditions => ["id > ?", params[:id].to_i]) || s.first
     elsif params[:by] == -1
@@ -209,9 +211,10 @@ class SchoolsController < ApplicationController
   
   private
   
-  def scope_from_filters(filter, loc)
-    logger.info "scope from filters: #{filter}, #{loc}"
+  def scope_from_filters(filter, type, loc)
+    logger.info "scope from filters: #{filter}, #{type}, #{loc}"
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
+    schools = schools.send(type) if type
     schools = schools.where(['SCHOOL_CITY_STATE_ZIP_2012 like ?', "%#{loc}"]) unless loc.blank?
     return schools
   end
