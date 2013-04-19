@@ -171,53 +171,25 @@ $(document).ready(function() {
   
   
   // Historical trends
-  
-  if(high) {
-    // Two lines
-  } else {
-    // Three lines
-  }
-  
-  var cosPoints = [];
-  for (var i=0; i<2*Math.PI; i+=0.4){ 
-    cosPoints.push([i, Math.cos(i)]); 
-  }
-    
-  var sinPoints = []; 
-  for (var i=0; i<2*Math.PI; i+=0.4){ 
-     sinPoints.push([i, 2*Math.sin(i-.8)]); 
-  }
-    
-  var powPoints1 = []; 
-  for (var i=0; i<2*Math.PI; i+=0.4) { 
-      powPoints1.push([i, 2.5 + Math.pow(i/4, 2)]); 
-  }
-    
-  var powPoints2 = []; 
-  for (var i=0; i<2*Math.PI; i+=0.4) { 
-      powPoints2.push([i, -2.5 - Math.pow(i/4, 2)]); 
-  } 
- 
-  var plot3 = $.jqplot('historical', history, //[cosPoints, sinPoints, powPoints1, powPoints2], 
+  var history_plot = $.jqplot('historical', history,
     { 
-      title: null, 
-      // Series options are specified as an array of objects, one object
-      // for each series.
+      legend: { show:true, location: 'nw', fontSize: '13px', background: '#fff' },
+      // Series options are specified as an array of objects, one object for each series.
       series:[ 
           {
-            // Change our line width and use a diamond shaped marker.
-            lineWidth:2, 
-            markerOptions: { style:'dimaond' }
+            label: history_labels[0],
+            color: colors.red,
+            lineWidth:3,
           }, 
           { 
-            // Use (open) circlular markers.
-            markerOptions: { style:"circle" }
+            label: history_labels[1],
+            color: colors.dblue,
+            lineWidth: 3,
           }, 
           {
-            // Use a thicker, 5 pixel line and 10 pixel
-            // filled square markers.
-            lineWidth:5, 
-            markerOptions: { style:"filledSquare", size:10 }
+            label: history_labels[2],
+            color: colors.lgreen,
+            lineWidth:3,
           }
       ]
     }

@@ -199,13 +199,13 @@ class SchoolsController < ApplicationController
         series = (2007..2012).collect { |year| [year, @school[m + year.to_s]] }.reject { |x| x[1].nil? }
         @history << series
       end
-      # Ave. ACT score from 2007 - 2012
-      # 4-Year Graduation rate from 2007 - 2011
+      @history_labels = ['Avg ACT Score', '4-Year Graduation Rate', '']
     else
       ['PCT_PROF_ALLSTUD_ALL_R_MEAP_', 'PCT_PROF_ALLSTUD_ALL_M_MEAP_', 'PCT_PROF_ALLSTUD_03_R_MEAP_'].each do |m|
         series = (2007..2012).collect { |year| [year, @school[m + year.to_s]] }.reject { |x| x[1].nil? }
         @history << series 
       end
+      @history_labels = ['All Students MEAP Proficiency (Reading)', 'All Students MEAP Proficiency (Math)', '3rd Grade Reading Proficiency']
     end
     
     respond_to do |format|
