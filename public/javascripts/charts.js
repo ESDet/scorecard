@@ -171,29 +171,38 @@ $(document).ready(function() {
   
   
   // Historical trends
-  var history_plot = $.jqplot('historical', history,
+  var history_series = [ 
+    {
+      label: history_labels[0],
+      color: colors.red,
+      lineWidth:3
+    }, 
     { 
-      legend: { show:true, location: 'nw', fontSize: '13px', background: '#fff' },
-      // Series options are specified as an array of objects, one object for each series.
-      series:[ 
-          {
-            label: history_labels[0],
-            color: colors.red,
-            lineWidth:3,
-          }, 
-          { 
-            label: history_labels[1],
-            color: colors.dblue,
-            lineWidth: 3,
-          }, 
-          {
-            label: history_labels[2],
-            color: colors.lgreen,
-            lineWidth:3,
-          }
-      ]
+      label: history_labels[1],
+      color: colors.dblue,
+      lineWidth: 3
+    }, 
+    {
+      label: history_labels[2],
+      color: colors.lgreen,
+      lineWidth:3
     }
-  );
+  ];
+  while(history.length > 0 && history[0].length == 0) {
+    history.shift();
+    history_series.shift();
+  }
+  if(history.length > 0) {
+    var history_plot = $.jqplot('historical', history,
+      { 
+        legend: { show:true, location: 'nw', fontSize: '13px', background: '#fff' },
+        // Series options are specified as an array of objects, one object for each series.
+        series: history_series
+      }
+    );
+  } else {
+    $('#historical').parent().hide();
+  }
       
 
 });
