@@ -195,6 +195,16 @@ $(document).ready(function() {
   if(history.length > 0) {
     var history_plot = $.jqplot('historical', history,
       { 
+        axes: {
+          xaxis: {
+            ticks: [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013],
+            tickOptions: { formatString: '%d' }
+          },
+          yaxis: {
+            ticks: [0, 20, 40, 60, 80, 100],
+            tickOptions: { formatString: '%d%%' }
+          }
+        },
         legend: { show:true, location: 'nw', fontSize: '13px', background: '#fff' },
         // Series options are specified as an array of objects, one object for each series.
         series: history_series

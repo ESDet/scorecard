@@ -1,8 +1,9 @@
 namespace :import do
   user = "inchbot@makeloveland.com"
   pass = "jNbu2&4M"
-  ss_key      = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c'  # first phase
-  ss_key_2012 = '0Apj1pa-R5UZ0dDlMNjFqVHRqX1EzbWlxVWRuV2NlWnc'  # 2013 updates with 2012 data
+  #ss_key      = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c'  # first phase
+  #ss_key_2012 = '0Apj1pa-R5UZ0dDlMNjFqVHRqX1EzbWlxVWRuV2NlWnc'  # 2013 updates with 2012 data
+  ss_key      = '0Al6LPbGeSiAJdFFDVTVpc3BDX3pYUHdBZ19qY2ZOSEE'  # 2013 combined sheet
 
   PK = 'BCODE_TEMPLATE'
   TABLE_NAME = 'schools'
@@ -25,7 +26,7 @@ namespace :import do
     num_cols = ws.num_cols
     puts "Found #{num_rows} rows, #{num_cols} columns"
     (2..num_rows).each do |r|
-      key = ws[r, 5]
+      key = ws[r, 5].squish
       ty = TYPES[ws[r, 10] || 'Text']
       next if key.blank? or ty.blank?
       puts "Key #{key} is #{ty.to_s}"
@@ -69,7 +70,7 @@ namespace :import do
       puts row[name_col]
       h = {}
       (0...num_cols).each do |x|
-        key = key_row[x]
+        key = key_row[x].squish
         next if key.blank?
         val = row[x]
         val = nil if val.blank? or val == 'N/A' or val == '*'
@@ -123,9 +124,9 @@ namespace :import do
     sheets = session.spreadsheet_by_key(ss_key).worksheets
     get_schema(sheets.first)
     
-    puts "Merging 2012 updates"
-    sheets_2012 = session.spreadsheet_by_key(ss_key_2012).worksheets
-    add_schema_2012(sheets_2012.first)
+    #puts "Merging 2012 updates"
+    #sheets_2012 = session.spreadsheet_by_key(ss_key_2012).worksheets
+    #add_schema_2012(sheets_2012.first)
     
     puts "Done"
   end
@@ -137,9 +138,9 @@ namespace :import do
     sheets = session.spreadsheet_by_key(ss_key).worksheets
     get_data(sheets[3])
     
-    puts "Merging 2012 updates"
-    sheets_2012 = session.spreadsheet_by_key(ss_key_2012).worksheets
-    add_data_2012(sheets_2012[1])
+    #puts "Merging 2012 updates"
+    #sheets_2012 = session.spreadsheet_by_key(ss_key_2012).worksheets
+    #add_data_2012(sheets_2012[1])
 
     puts "Done"
   end
