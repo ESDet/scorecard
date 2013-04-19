@@ -192,7 +192,22 @@ class SchoolsController < ApplicationController
         :ticks => third_ticks,
       },
     }
-    #logger.ap @elem_academics
+    
+    @history = [ ]
+    if @school.high?
+      ['AVG_ALLSTUD_ALLSUB_ACT_', 'PCT_ALLSTUD_12_GRAD_4YR_'].each do |m|
+        series = (2007..2012).collect { |year| [year, @school[m + year.to_s]] }.reject { |x| x[1].nil? }
+        @history << series
+      end
+      # Ave. ACT score from 2007 - 2012
+      # 4-Year Graduation rate from 2007 - 2011
+    else
+      ['PCT_PROF_ALLSTUD_ALL_R_MEAP_', 'PCT_PROF_ALLSTUD_ALL_M_MEAP_', 'PCT_PROF_ALLSTUD_03_R_MEAP_'].each do |m|
+        series = (2007..2012).collect { |year| [year, @school[m + year.to_s]] }.reject { |x| x[1].nil? }
+        @history << series 
+      end
+    end
+    
     respond_to do |format|
       format.html { }
       #format.pdf { render :layout => false }
