@@ -202,7 +202,7 @@ $(document).ready(function() {
           },
           yaxis: {
             ticks: [0, 20, 40, 60, 80, 100],
-            tickOptions: { formatString: '%d%%' }
+            tickOptions: { formatString: '%d' }
           }
         },
         legend: { show:true, location: 'nw', fontSize: '13px', background: '#fff' },
