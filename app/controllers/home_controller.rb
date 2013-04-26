@@ -10,10 +10,14 @@ class HomeController < ApplicationController
     #@districts = District.all
     
     @school_o = Bedrock::Overlay.from_config('schools',
-      :ty       => :geojson,
-     #:elements => @schools)
-      :url      => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc], :type => session[:type]),
-      :mouseover => true)
+      :ty         => :geojson,
+      :url        => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc], :type => session[:type]),
+      :mouseover  => true,
+      :key => {
+        '#8DC63F' => 'Elementary Schools',
+        '#F79421' => 'Middle Schools',
+        '#004270' => 'High Schools',
+      })
     @district_o = Bedrock::Overlay.from_config('districts',
       :ty => :geojson,
       :elements => [District.find(580)])

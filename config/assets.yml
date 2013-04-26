@@ -13,6 +13,7 @@ javascripts:
     - public/javascripts/plugins/jqplot.barRenderer.min.js
     - public/javascripts/plugins/jqplot.categoryAxisRenderer.min.js
     - public/javascripts/plugins/jqplot.pointLabels.min.js
+    - public/javascripts/plugins/jqplot.highlighter.min.js
     - public/javascripts/bootstrap-typeahead.js
     - public/javascripts/bootstrap-tooltip.js
     - public/javascripts/bootstrap-popover.js

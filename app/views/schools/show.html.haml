@@ -233,7 +233,15 @@
 .container_12
   .grid_12
     %h3 Historical Trends
-    #historical.linechart{:style => "height: 240px; position: relative;"}
+    - if @school.high?
+      .grid_6.alpha
+        %b Average ACT Score
+        #historical_act{:style => "height: 240px; position: relative;"}
+      .grid_6.omega
+        %b 4-Year Graduation Rate
+        #historical_grad{:style => "height: 240px; position: relative;"}
+    - else    
+      #historical.linechart{:style => "height: 240px; position: relative;"}
     
 %br/
 %br/
