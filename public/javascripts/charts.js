@@ -223,6 +223,7 @@ $(document).ready(function() {
     if(history[0].length > 1) {
       options.series = [history_series[0]];
       options.axes.yaxis.ticks = [0, 6, 12, 18, 24, 30, 36];
+      options.highlighter.formatString = '%d';
       var history_act = $.jqplot('historical_act', [history[0]], options);
     } else {
       $('#historical_act').parent().hide();
