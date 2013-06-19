@@ -7,15 +7,6 @@ local: &local
   host: localhost
   encoding: utf8
 
-dreamhost: &dreamhost
-  adapter: mysql2spatial
-  pool: 5
-  timeout: 5000
-  username: loveland_rails
-  password: huju5Azafu
-  host: db.lemonary.com
-  encoding: utf8
-
 lime: &lime
   adapter: mysql2spatial
   pool: 5
@@ -26,18 +17,18 @@ lime: &lime
 
 development:
   <<: *local
-  database: esd_local
+  database: esd2_local
   
 test:
   <<: *local
-  database: esd_test
+  database: esd2_test
   
 staging:
   <<: *lime
-  database: esd_stage
+  database: esd2_stage
 
 production:
   <<: *lime
-  database: esd_prod
+  database: esd2_prod
 
 

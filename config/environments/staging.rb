@@ -15,12 +15,12 @@ ESD::Application.configure do
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
 
-  config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), { :namespace => 'esd_staging', :expires_in => 3600, :compress => true }
+  config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), { :namespace => 'esd2_staging', :expires_in => 3600, :compress => true }
 
-  config.action_mailer.default_url_options = { :host => "esd.makeloveland.com" }
+  config.action_mailer.default_url_options = { :host => "esd2.makeloveland.com" }
 
   config.middleware.use ExceptionNotifier,
-    :email_prefix => "[ESD staging] ",
+    :email_prefix => "[ESD2 staging] ",
     :sender_address => %{"Exception Notifier" <info@makeloveland.com>},
     :exception_recipients => %w{larry@makeloveland.com}
 
