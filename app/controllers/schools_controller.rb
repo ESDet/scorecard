@@ -234,6 +234,7 @@ class SchoolsController < ApplicationController
     title = current_search    
     schools = scope_from_filters(filter, type, params[:loc])
     title = title.gsub('All ', '')
+    title = title.gsub('Schools', 'School') if schools.count == 1
     render :text => "There #{schools.count==1?'is':'are'} #{schools.count} #{title} in Detroit"
   end
   
