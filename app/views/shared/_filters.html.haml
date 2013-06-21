@@ -25,17 +25,27 @@
     }
 
     updateControls();
+    updateCount();
     
     $('.grades a.btn').click(function(e) {
       args.filter = $(this).attr('class').replace('btn ', '');
       updateForm();
       updateControls();
+      updateCount();
       e.stopPropagation();
       return false;
     });
     $('select#type').change(function(e) {
       args.type = $(this).val();
+      updateCount();
       return false;
+    });
+    $('input#loc').keyup(function(e) {
+      var zip = $(this).val();
+      if(zip.length == 5 || zip.length == 0) {
+        updateCount();
+      }
+      return true;
     });
   });
   
@@ -50,5 +60,30 @@
   {
     $('input#filter').val(args.filter);
     $('input#loc').val(args.loc);
+  }
+  
+  function updateCount()
+  {
+    if($('.count').length == 0) {
+      return;
+    }
+    $('.count').css('color', '#aab');
+    var filter = $('form.search #filter').val();
+    var type   = $('form.search #type').val();
+    var loc    = $('form.search #loc').val();
+    $.ajax({
+      async: true,
+      type: 'POST',
+      url: '/schools/overview',
+      data: {
+        filter: filter,
+        type: type,
+        loc: loc
+      },
+      cache: false,
+      success: function(data) {
+        $('.count').css('color', 'black').text(data);
+      }
+    });
   }
   

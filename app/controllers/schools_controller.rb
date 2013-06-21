@@ -224,6 +224,19 @@ class SchoolsController < ApplicationController
     redirect_to (s.nil? ? schools_path : school_path(s.slug))
   end
   
+  # Ajax update the count of schools matching a filter set
+  def overview
+    filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
+    type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
+    session[:filter]  = filter
+    session[:type]    = type
+    session[:loc]     = params[:loc]
+    title = current_search    
+    schools = scope_from_filters(filter, type, params[:loc])
+    title = title.gsub('All ', '')
+    render :text => "There #{schools.count==1?'is':'are'} #{schools.count} #{title} in Detroit"
+  end
+  
   private
   
   def scope_from_filters(filter, type, loc)
