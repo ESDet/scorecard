@@ -7,7 +7,7 @@ class School < ActiveRecord::Base
   utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   set_rgeo_factory_for_column(:centroid, utm_factory)
   
-  def name; self['SCHOOL_NAME_TEMPLATE_2011'].andand.gsub('_', ' '); end
+  #def name; self['name'].andand.gsub('_', ' '); end
     
   require 'mogrify'
   include Mogrify
@@ -29,11 +29,11 @@ class School < ActiveRecord::Base
 
 
   GRADES = {
-    :p2         => ['P2'],
-    :elementary => ['ES', 'K8'],
-    :middle     => ['MS', 'K8'],
-    :high       => ['HS'],
-    :k8         => ['K8'],
+    :p2         => 'pk',
+    :elementary => '1, 2, 3, 4, 5',
+    :middle     => '6, 7, 8',
+    :high       => '9, 10, 11, 12',
+    :k8         => 'KF, 1, 2, 3, 4, 5, 6, 7, 8',
   }
   
   TYPES = {
@@ -50,18 +50,18 @@ class School < ActiveRecord::Base
   }
   
   GRADES.each do |k,v|
-    scope k,         where(:TEMPLATE => v)
+    scope k,         where("grades_served like '%#{v}%'")
   end
   
   TYPES.each do |k,v|
     scope k,         where(:SCHOOL_TYPE_2012 => v)
   end
   
-  def elementary?;  GRADES[:elementary].include?  self.TEMPLATE; end
-  def middle?;      GRADES[:middle].include?      self.TEMPLATE; end
-  def high?;        GRADES[:high].include?        self.TEMPLATE; end
-  def k8?;          GRADES[:k8].include?          self.TEMPLATE; end  
-  def closed?;      !self.CLOSE_DATE.blank?;      end
+  def elementary?;  grades_served.andand.include? GRADES[:elementary]; end
+  def middle?;      grades_served.andand.include? GRADES[:middle];      end
+  def high?;        grades_served.andand.include? GRADES[:high]; end
+  def k8?;          grades_served.andand.include? GRADES[:k8]; end
+  def closed?;      false; end #!self.CLOSE_DATE.blank?;      end
   
   def my_properties
     result = {
@@ -73,7 +73,8 @@ class School < ActiveRecord::Base
   end
   
   def set_slug
-    self.slug = transliterate(self.name || '')
+    self.name ||= "School #{self.bcode}"
+    self.slug = transliterate(self.name)
   end
       
 end

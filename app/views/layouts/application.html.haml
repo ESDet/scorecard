@@ -42,7 +42,7 @@
             = submit_tag 'Search', :class => 'btn'
           :javascript
             $(document).ready(function() {
-              var school_names = #{School.select('id, SCHOOL_NAME_2011').collect { |s| s.SCHOOL_NAME_2011 }.to_json};
+              var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
               $('input#q').typeahead({ source: school_names });
             });
       

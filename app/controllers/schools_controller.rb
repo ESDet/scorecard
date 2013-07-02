@@ -13,7 +13,7 @@ class SchoolsController < ApplicationController
     session[:loc]     = params[:loc]
     
     @title = current_search    
-    @schools = scope_from_filters(filter, type, params[:loc]).order('SCHOOL_NAME_2011')
+    @schools = scope_from_filters(filter, type, params[:loc]).order('name')
 
     respond_to do |format|
       format.html { }
@@ -24,7 +24,6 @@ class SchoolsController < ApplicationController
   end
   
   def show
-    
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
       redirect_to root_path and return if @school.nil?
@@ -33,7 +32,7 @@ class SchoolsController < ApplicationController
       redirect_to root_path and return
     end
     
-    @subtitle = @school.SCHOOL_NAME_2011
+    @subtitle = @school.name
         
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
@@ -46,18 +45,17 @@ class SchoolsController < ApplicationController
       :base_layers    => ['street'],
       :layers         => [ @det_o, @school_o ],
       :layer_control  => true,
-      #:center => { :lon => @school.centroid.x, :lat => @school.centroid.y },
       :min_zoom => 10,
       :max_zoom => 18,
-      #:zoom => 12,
       :extent => Bedrock::city_extents(:detroit),
       :layer_control => false,
     })
 
     ethnicities = [ 'BLACK', 'LATINO', 'WHITE', 'ASIAN', 'OTHER' ]
     @demographics = ethnicities.collect { |e| [ "#{e.capitalize} " + @school["PCT_#{e}_FALL_2012"].to_i.to_s + "%", @school["PCT_#{e}_FALL_2012"] ] }
-    
+
     @tips = Hash[*(Tip.all.collect { |t| [t.name, t] }.flatten)]
+=begin    
 
     @elements = [
       [ 'Effective leaders', 'Principals and teachers implement a shared vision for success.', @school.SCORE_LDR_5E_2012 ],
@@ -210,6 +208,7 @@ class SchoolsController < ApplicationController
       @history_labels = ['All Students MEAP Proficiency (Reading)', 'All Students MEAP Proficiency (Math)', '3rd Grade Reading Proficiency']
     end
     
+=end
     respond_to do |format|
       format.html { }
       #format.pdf { render :layout => false }

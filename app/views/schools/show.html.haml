@@ -10,8 +10,9 @@
           (Closed #{@school.CLOSE_DATE})
       
       %h3
-        Grades #{@school.AUTHORIZED_GRADES_2012} &middot; #{@school.HEADCOUNT_ALL_FALL_2012.to_i} students &middot; #{@school.SCHOOL_TYPE_2012}
+        Grades: #{@school.grades_served || 'Unknown'}
         %br/
+      - if false
         #{@school.SCHOOL_STREET_ADDRESS_2012} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2012} 
         
       %br/
@@ -23,7 +24,7 @@
 
       %br/
       %br/
-      - unless @school.SCHOOL_MISSION_LONG.blank?
+      - unless true or @school.SCHOOL_MISSION_LONG.blank?
         %p
           %h4{:style => 'display: inline;'} School Mission:
           = @school.SCHOOL_MISSION_LONG
@@ -33,7 +34,7 @@
       #wrapper{:style => 'height: 200px; margin-top: 4em;'}
         = render :partial => 'shared/map', :object => @map
       %br/
-      - unless @school.PDF_FILE_NAME.blank?
+      - unless true or @school.PDF_FILE_NAME.blank?
         .float_right
           %a.btn{:href => "/pdfs/#{@school.PDF_FILE_NAME}", :target => '_blank'}
             %i.icon-download-alt
@@ -43,52 +44,48 @@
     
   .container_12
     .grid_3{:style => 'overflow: hidden;'}
-      - unless @school.SCHOOL_WEBSITE.blank?
+      - unless true or @school.SCHOOL_WEBSITE.blank?
         %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
         %br/
-      %b Phone:
-      = @school.SCHOOL_PHONE || 'Unknown'
-      %br/
-      - unless @school.SCHOOL_FAX.blank?
-        %b Fax:
-        = @school.SCHOOL_FAX
+      - unless @school.email.blank?
+        %b Email:
+        = @school.email
         %br/
-      %b Hours:
-      = @school.SCHOOL_HOURS_AM_PM || 'Unknown'
+      - if false
+        %b Phone:
+        = @school.SCHOOL_PHONE || 'Unknown'
+        %br/
       %br/
-      - unless @school.PRINCIPAL_FIRST.blank? and @school.PRINCIPAL_LAST.blank?
-        %b Principal:
-        = @school.PRINCIPAL_FIRST
-        = @school.PRINCIPAL_LAST
+      - unless @school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?
+        %b Contact:
+        = @school.school_contact_first_name
+        = @school.school_contact_last_name
       
     .grid_3
-      - unless @school.NEAREST_BUS_STOP.blank?
-        %b Nearest bus stop:
-        = @school.NEAREST_BUS_STOP
-        %br/
-      - unless @school.BUS_ROUTES.blank?
-        %b Bus routes within 0.5mi:
-        = @school.BUS_ROUTES
-        %br/
+      - unless @school.transportation.blank?
+        %b Transportation:
+        = @school.transportation
       
     .grid_3
-      .printonly
-        - @demographics.each do |a,b|
-          = a
+      - if false
+        .printonly
+          - @demographics.each do |a,b|
+            = a
+            %br/
+        #dems.noprint{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
+        .clear_floats
+        
+    - if false
+      .grid_3
+        - unless @school.PCT_FRL_FALL_2012.nil? 
+          #{@school.PCT_FRL_FALL_2012.andand.to_i || 'N/A'}% free and reduced-price lunch
           %br/
-      #dems.noprint{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
-      .clear_floats
-      
-    .grid_3
-      - unless @school.PCT_FRL_FALL_2012.nil? 
-        #{@school.PCT_FRL_FALL_2012.andand.to_i || 'N/A'}% free and reduced-price lunch
-        %br/
-      - unless @school.PCT_SPED_FALL_2011.nil? 
-        #{@school.PCT_SPED_FALL_2011.andand.to_i || 'N/A'}% special education
-        %br/
-      - unless @school.PCT_ELL_FALL_2011.nil? 
-        #{@school.PCT_ELL_FALL_2011.andand.to_i || 'N/A'}% English language learners
-        %br/
+        - unless @school.PCT_SPED_FALL_2011.nil? 
+          #{@school.PCT_SPED_FALL_2011.andand.to_i || 'N/A'}% special education
+          %br/
+        - unless @school.PCT_ELL_FALL_2011.nil? 
+          #{@school.PCT_ELL_FALL_2011.andand.to_i || 'N/A'}% English language learners
+          %br/
 
 %br/
 
@@ -180,7 +177,7 @@
                   - @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.round(0).to_i.times do
                     = image_tag 'icons/student.png'
 
-- elsif @school.elementary? or @school.middle?
+- elsif false and (@school.elementary? or @school.middle?)
   .container_12.clear_floats
     .grid_12  
       = render :partial => 'shared/tip', :object => @tips["How Is This School Doing Academically?"]
@@ -247,6 +244,7 @@
 %br/
 
 .container_12
+- if false
   .grid_6
     = render :partial => 'shared/tip', :object => @tips["Is This School Organized for Improvement?"]
     %h3 Is This School Organized for Improvement?
@@ -319,6 +317,7 @@
 %br/
 
 .container_12
+- if false
   .grid_6
     - unless @activities[:arts].empty? and @activities[:wellness].empty? and @activities[:academic].empty?
       = render :partial => 'shared/tip', :object => @tips["How Does This School Support Well-Rounded Development?"]

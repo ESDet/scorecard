@@ -3,7 +3,7 @@ module Mogrify
   def transliterate(str)
     # Escape str by transliterating to UTF-8 with Iconv
     #s = Iconv.iconv('ascii//ignore//translit', 'utf-8', str).to_s
-    s = str
+    s = str.clone
   
     s.downcase!
     s.gsub!(/'/, '')
