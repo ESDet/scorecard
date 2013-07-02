@@ -1,20 +1,10 @@
 namespace :import do
-  user = "inchbot@makeloveland.com"
-  pass = "jNbu2&4M"
-  #ss_key      = '0Al6LPbGeSiAJdGFySUF4ZjVvOWcxamp4TGR3NnFQM3c'  # first phase
-  #ss_key_2012 = '0Apj1pa-R5UZ0dDlMNjFqVHRqX1EzbWlxVWRuV2NlWnc'  # 2013 updates with 2012 data
-  ss_key      = '0Al6LPbGeSiAJdFFDVTVpc3BDX3pYUHdBZ19qY2ZOSEE'  # 2013 combined sheet
 
-  PK = 'BCODE_TEMPLATE'
+  PK = 'bcode'
   TABLE_NAME = 'schools'
-  TYPES = {
-    'Text'        => :text,
-    'Double'      => :double,
-    'Percentage'  => :float,
-  }
 
 
-  def get_schema(ws)
+  def get_schema
     conn = ActiveRecord::Base.connection
     begin; conn.drop_table TABLE_NAME; rescue; end
     conn.create_table TABLE_NAME
@@ -22,16 +12,10 @@ namespace :import do
     conn.add_column(TABLE_NAME, 'centroid', :point)
     conn.add_column(TABLE_NAME, 'slug', :string)
     
-    num_rows = ws.num_rows
-    num_cols = ws.num_cols
-    puts "Found #{num_rows} rows, #{num_cols} columns"
-    (2..num_rows).each do |r|
-      key = ws[r, 5].squish
-      ty = TYPES[ws[r, 10] || 'Text']
-      next if key.blank? or ty.blank?
-      puts "Key #{key} is #{ty.to_s}"
+    keys = ['bcode', 'tid', 'name']
+    keys.each do |key|
       begin
-        conn.add_column(TABLE_NAME, key, ty, {})
+        conn.add_column(TABLE_NAME, key, :string, {})
       rescue => e
         puts e.inspect
         puts e.backtrace
@@ -40,109 +24,84 @@ namespace :import do
     conn.add_index(TABLE_NAME, PK, :length => 10)
   end
   
-  def add_schema_2012(ws)
-    conn = ActiveRecord::Base.connection
-    num_rows = ws.num_rows
-    num_cols = ws.num_cols
-    puts "Found #{num_rows} rows, #{num_cols} columns"
-    (1..num_rows).each do |r|
-      key = ws[r, 1]
-      ty = TYPES[ws[r, 2] || 'Text']
-      next if key.blank? or ty.blank?
-      puts "Key #{key} is #{ty.to_s}"
-      begin
-        conn.add_column(TABLE_NAME, key, ty, {}) unless key == PK
-      rescue => e
-        puts e.inspect
-        puts e.backtrace
-      end
+  def ensure_column(key)
+    if !School.column_names.include? key
+      puts "Adding column #{key}"
+      School.connection.add_column(TABLE_NAME, key, :string, {})
     end
   end
 
-
-  def get_data(ws)
-    column_names = School.column_names
-    num_rows = ws.num_rows
-    num_cols = ws.num_cols
-    key_row = ws.rows[0]
-    name_col = 4
-    ws.rows[1..num_rows].each do |row|
-      puts row[name_col]
+  def get_profiles
+    p = Portal.new
+    field_re = /^field_(.*)$/
+    schools = p.show_vocabulary 4
+    schools.each do |s|
+      tid = s['tid']
+      name = s['name']
+      puts "Doing #{name}.."
+      profile = p.get_related tid
+      h = { 'tid' => tid, 'name' => name }
+      if profile.is_a?(Hash)
+        profile.each do |k,v|
+          m = k.match field_re
+          next unless m
+          key = m[1]
+          ensure_column key
+          next if v.empty? or v['und'].empty?
+          if v['und'].size == 1
+            val = v['und'].first.andand['value']
+          else
+            val = v['und'].collect { |i| i['value'] }.join(', ')
+          end
+          puts "  #{key} = #{val.inspect}"
+          h[key] = val
+        end
+      end
+      School.reset_column_information
+      s = School.find_or_create_by_bcode(h['bcode'])
+      s.update_attributes(h)
+    end
+  end
+  
+  def get_meap
+    p = Portal.new
+    meap = p.get_dataset 'meap_2012'
+    meap.each do |data|
       h = {}
-      (0...num_cols).each do |x|
-        key = key_row[x].squish
-        next if key.blank?
-        val = row[x]
-        val = nil if val.blank? or val == 'N/A' or val == '*'
-        val = -5 if val == '< 5%'
-        #puts "   #{key} = #{val}"
+      bcode = data['bcode']
+      data.each do |key, val|
+        puts "bcode #{data['bcode']}"
+        puts "  #{key} = #{val}"
+        ensure_column key
         h[key] = val
       end
-      h.slice! *column_names
-      s = School.find_or_create_by_BCODE_TEMPLATE(h[PK])
+      School.reset_column_information
+      s = School.find_or_create_by_bcode(bcode)
       s.update_attributes(h)
     end
   end  
   
-  
-  def add_data_2012(sheet)
-    column_names = School.column_names
-    num_rows = sheet.num_rows
-    num_cols = sheet.num_cols
-    key_row = sheet.rows[0]
-    pk_col = 0
-    sheet.rows[1..num_rows].each do |row|
-      key = row[pk_col]
-      school = School.find_by_BCODE_TEMPLATE(key)
-      if school.nil?
-        puts "Couldn't find a school with key #{key}!"
-        next
-      end
-      puts school.SCHOOL_NAME_2011
-      h = {}
-      (0...num_cols).each do |x|
-        key = key_row[x]
-        next if key.blank?
-        val = row[x]
-        val = nil if val.blank? or val == 'N/A' or val == '*'
-        val = -5 if val == '< 5%'
-        #puts "   #{key} = #{val}"
-        h[key] = val
-      end
-      h.slice! *column_names
-      school.update_attributes(h)
+  def get_esd_k8
+    p = Portal.new
+    result = p.get_dataset 'esd_k8_2013'
+    result.each do |data|
+      
     end
   end
+    
   
-  
-  
-  
-  desc "Create school table schema from spreadsheet"
+  desc "Create school table schema from feed"
   task :schema => :environment do |t, args|
-    session = GoogleDrive.login(user, pass)
-    puts "Creating schema from original sheet"
-    sheets = session.spreadsheet_by_key(ss_key).worksheets
-    get_schema(sheets.first)
-    
-    #puts "Merging 2012 updates"
-    #sheets_2012 = session.spreadsheet_by_key(ss_key_2012).worksheets
-    #add_schema_2012(sheets_2012.first)
-    
+    get_schema
     puts "Done"
   end
 
-  desc "Pull data from sheet, but don't redo schema"
+  desc "Pull data from feed, but don't redo schema"
   task :data => :environment do |t, args|
-    session = GoogleDrive.login(user, pass)
-    puts "Getting original data"
-    sheets = session.spreadsheet_by_key(ss_key).worksheets
-    get_data(sheets[3])
-    
-    #puts "Merging 2012 updates"
-    #sheets_2012 = session.spreadsheet_by_key(ss_key_2012).worksheets
-    #add_data_2012(sheets_2012[1])
-
-    puts "Done"
+    puts "Getting data..."
+    get_profiles
+    get_meap
+    puts "Done!"
   end
 
 
@@ -155,6 +114,7 @@ namespace :import do
       s.save
     end
   end
+
   
   desc "Load up tips from data_source_exp"
   task :tips => :environment do |t, args|
