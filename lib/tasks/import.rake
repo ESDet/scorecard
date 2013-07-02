@@ -56,10 +56,10 @@ namespace :import do
           puts "  #{key} = #{val.inspect}"
           h[key] = val
         end
+        School.reset_column_information
+        s = School.find_or_create_by_bcode(h['bcode'])
+        s.update_attributes(h)
       end
-      School.reset_column_information
-      s = School.find_or_create_by_bcode(h['bcode'])
-      s.update_attributes(h)
     end
   end
   
@@ -90,6 +90,14 @@ namespace :import do
     end
   end  
     
+  
+  task :all => :environment do |t, args|
+    get_schema
+    get_profiles
+    get_scores 'meap_2012'
+    get_scores 'esd_k8_2013'
+    get_scores 'esd_hs_2013'
+  end
   
   desc "Create school table schema from feed"
   task :schema => :environment do |t, args|
