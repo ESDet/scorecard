@@ -8,9 +8,12 @@ class School < ActiveRecord::Base
   set_rgeo_factory_for_column(:centroid, utm_factory)
   
   def name; self['SCHOOL_NAME_TEMPLATE_2011'].andand.gsub('_', ' '); end
-  
+    
   require 'mogrify'
   include Mogrify
+  serialize :meap_2012, OpenStruct
+  serialize :esd_k8_2013, OpenStruct
+  serialize :esd_hs_2013, OpenStruct
   before_save :set_slug
   
 

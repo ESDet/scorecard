@@ -24,10 +24,10 @@ namespace :import do
     conn.add_index(TABLE_NAME, PK, :length => 10)
   end
   
-  def ensure_column(key)
+  def ensure_column(key, ty=:string)
     if !School.column_names.include? key
       puts "Adding column #{key}"
-      School.connection.add_column(TABLE_NAME, key, :string, {})
+      School.connection.add_column(TABLE_NAME, key, ty, {})
     end
   end
 
@@ -63,31 +63,32 @@ namespace :import do
     end
   end
   
-  def get_meap
+  def get_scores(dataset)
     p = Portal.new
-    meap = p.get_dataset 'meap_2012'
-    meap.each do |data|
+    if dataset == 'meap_2012'
+      key_re = /^meap_2012_(.*)$/
+      bcode_key = 'bcode'
+    elsif dataset == 'esd_k8_2013' || dataset == 'esd_hs_2013'
+      key_re = /^(.*)$/
+      bcode_key = 'buildingcode'
+    end
+    ensure_column dataset, :text
+    scores = p.get_dataset dataset
+    scores.each do |data|
       h = {}
-      bcode = data['bcode']
+      bcode = data[bcode_key].gsub(/[^0-9]/, '')
+      puts "bcode #{bcode}"
       data.each do |key, val|
-        puts "bcode #{data['bcode']}"
-        puts "  #{key} = #{val}"
-        ensure_column key
-        h[key] = val
+        next unless m = key.match(key_re)
+        key2 = m[1]
+        puts "  #{key2} = #{val}"
+        h[key2] = val
       end
       School.reset_column_information
       s = School.find_or_create_by_bcode(bcode)
-      s.update_attributes(h)
+      s.update_attribute(dataset, OpenStruct.new(h))
     end
   end  
-  
-  def get_esd_k8
-    p = Portal.new
-    result = p.get_dataset 'esd_k8_2013'
-    result.each do |data|
-      
-    end
-  end
     
   
   desc "Create school table schema from feed"
@@ -100,10 +101,30 @@ namespace :import do
   task :data => :environment do |t, args|
     puts "Getting data..."
     get_profiles
-    get_meap
+    get_scores 'meap_2012'
+    get_scores 'esd_k8_2013'
+    get_scores 'esd_hs_2013'
     puts "Done!"
   end
 
+  task :profiles => :environment do |t, args|
+    puts "Fetching profiles"
+    get_profiles
+  end
+  task :meap => :environment do |t, args|
+    puts "Fetching MEAP"
+    get_scores('meap_2012')
+  end
+  task :k8 => :environment do |t, args|
+    puts "Fetching K8"
+    get_scores('esd_k8_2013')
+  end
+  task :hs => :environment do |t, args|
+    puts "Fetching HS"
+    get_scores('esd_hs_2013')
+  end
+  
+  
 
   desc "Locate unlocated schools"
   task :geocode => :environment do |t, args|
