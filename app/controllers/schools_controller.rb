@@ -50,6 +50,34 @@ class SchoolsController < ApplicationController
       :extent => Bedrock::city_extents(:detroit),
       :layer_control => false,
     })
+    
+    @profile_fields = {
+      "after_school_transportatio" => 'After School Transportation',
+      "ap_classes" => 'AP Classes',
+      "character_development" => 'Character Development',
+      "college_counseling" => 'College Counseling',
+      "counselor_student_ratio" => 'Counselor-to-Student Ratio',
+      "discipline_programs" => 'Discipline Programs',
+      "dual_enrollment" => 'Dual Enrollment',
+      "dual_enrollment_institutio" => 'Dual Enrollment Institution',
+      "early_child_center_relatio" => 'Early Childhood Center Relations',
+      "early_childhood_programs" => 'Early Childhood Programs',
+      "early_childhood_transition" => 'Early Childhood Transition',
+      "email" => 'Email',
+      "english_language_learners" => 'English Language Learners',
+      "family_supports" => 'Family Support',
+      #"grades_served" => 'Grades Served',
+      "in_school_programs" => 'In-School Programs',
+      "organized_sports" => 'Sports',
+      "parent_supports" => 'Parent Support',
+      #"school_contact_first_name",
+      #"school_contact_last_name",
+      "special_needs" => "Special Needs Students",
+      "special_tracks" => "Special Tracks",
+      "student_development_progra" => "Student Development Programs",
+      "student_leadership_opportu" => "Student Leadership Opportunities",
+      "transportation" => "Transportation",
+    }
 
     ethnicities = [ 'BLACK', 'LATINO', 'WHITE', 'ASIAN', 'OTHER' ]
     @demographics = ethnicities.collect { |e| [ "#{e.capitalize} " + @school["PCT_#{e}_FALL_2012"].to_i.to_s + "%", @school["PCT_#{e}_FALL_2012"] ] }

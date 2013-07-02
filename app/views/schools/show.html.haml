@@ -43,28 +43,18 @@
         %br/
     
   .container_12
-    .grid_3{:style => 'overflow: hidden;'}
-      - unless true or @school.SCHOOL_WEBSITE.blank?
-        %b= link_to @school.SCHOOL_WEBSITE, "http://#{@school.SCHOOL_WEBSITE}"
-        %br/
-      - unless @school.email.blank?
-        %b Email:
-        = @school.email
-        %br/
-      - if false
-        %b Phone:
-        = @school.SCHOOL_PHONE || 'Unknown'
-        %br/
-      %br/
+    .grid_6{:style => 'overflow: hidden;'}
       - unless @school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?
-        %b Contact:
-        = @school.school_contact_first_name
-        = @school.school_contact_last_name
+        %p
+          %b Contact:
+          = @school.school_contact_first_name
+          = @school.school_contact_last_name
+      - @profile_fields.each do |k,v|
+        - next if @school[k].blank?
+        %p
+          %b #{v}:
+          = @school[k]
       
-    .grid_3
-      - unless @school.transportation.blank?
-        %b Transportation:
-        = @school.transportation
       
     .grid_3
       - if false
@@ -228,6 +218,7 @@
 %br/
 
 .container_12
+- if false
   .grid_12
     %h3 Historical Trends
     - if @school.high?
