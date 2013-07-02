@@ -77,6 +77,30 @@
           #{@school.PCT_ELL_FALL_2011.andand.to_i || 'N/A'}% English language learners
           %br/
 
+
+.container_12.clear_floats
+  - if @school.meap_2012
+    .grid_6
+      %h2 MEAP 2012
+      - @school.meap_2012.marshal_dump.each do |k,v|
+        %b #{k}:
+        = v
+        %br/
+  - if @school.esd_k8_2013
+    .grid_6
+      %h2 ESD K8 2013
+      - @school.esd_k8_2013.marshal_dump.each do |k,v|
+        %b #{k}:
+        = v
+        %br/
+  - if @school.esd_hs_2013
+    .grid_6
+      %h2 ESD HS 2013
+      - @school.esd_hs_2013.marshal_dump.each do |k,v|
+        %b #{k}:
+        = v
+        %br/
+
 %br/
 
 %br/
