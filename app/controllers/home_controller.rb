@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
 
+  
   def index
     session[:filter] = session[:loc] = nil
   end

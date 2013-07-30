@@ -8,7 +8,7 @@ class Portal
   end
   
   def show_vocabulary(vid)
-    o = fetch 'taxonomy_vocabulary/getTree.json/', { vid: vid }, :post
+    o = fetch 'taxonomy_vocabulary/getTree.json/', { vid: vid, load_entities: 1 }, :post
   end
   
   def get_related(tid)

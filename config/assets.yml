@@ -31,8 +31,8 @@ javascripts:
     
 stylesheets:
   common:
-    - public/stylesheets/bootstrap.min.css
     - public/stylesheets/960.css
+    - public/stylesheets/theme.css
     - public/stylesheets/jquery.jqplot.min.css
     - public/paraffin/lib/leaflet/leaflet.css
     - public/paraffin/lib/leaflet/leaflet.draw.css

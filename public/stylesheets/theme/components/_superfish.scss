@@ -1,0 +1,139 @@
+
+#block-system-main-menu {
+  /*** ESSENTIAL STYLES ***/
+  .sf-menu, .sf-menu * {
+    margin:			0;
+    padding:		0;
+    list-style:		none;
+  }
+  .sf-menu {
+    line-height:	1.0;
+  }
+  .sf-menu ul {
+    position:		absolute;
+    top:			-999em;
+    width:			12em; /* left offset of submenus need to match (see below) */
+  }
+  .sf-menu ul li {
+    width:			100%;
+  }
+  .sf-menu li:hover {
+    visibility:		inherit; /* fixes IE7 'sticky bug' */
+  }
+  .sf-menu li {
+    float:			left;
+    position:		relative;
+  }
+  .sf-menu a {
+    display:		block;
+    position:		relative;
+  }
+  .sf-menu li:hover ul,
+  .sf-menu li.sfHover ul {
+    left:			0;
+    top:			1.9em; /* match top ul list item height */
+    z-index:		99;
+    color: white;
+  }
+  ul.sf-menu li:hover li ul,
+  ul.sf-menu li.sfHover li ul {
+    top:			-999em;
+  }
+  ul.sf-menu li li:hover ul,
+  ul.sf-menu li li.sfHover ul {
+    left:			10em; /* match ul width */
+    top:			0;
+  }
+  ul.sf-menu li li:hover li ul,
+  ul.sf-menu li li.sfHover li ul {
+    top:			-999em;
+  }
+  ul.sf-menu li li li:hover ul,
+  ul.sf-menu li li li.sfHover ul {
+    left:			10em; /* match ul width */
+    top:			0;
+  }
+
+  /*** WD Default SKIN ***/
+  .sf-menu {
+    float:			left;
+    margin-bottom:	1em;
+    background-color: white;
+    width: 100%;
+  }
+  .sf-menu ul {
+    box-shadow: 2px 5px 7px $darktext;
+  }
+  .sf-menu a {
+    padding:6px 0 2px;
+    font: {
+      size: 14px;
+      family: Locator, sans-serf;
+      weight: 600;
+    }
+    text-transform: uppercase;
+    text-decoration:none;
+  }
+  .sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
+    color:			$darktext;
+    border-bottom: 5px solid $darktext;
+  }
+  .sf-menu li, .sf-menu li li,
+  .sf-menu li li.first, .sf-menu li li.last {
+    padding: 0 14px;
+    background:	white;
+  }
+  .sf-menu ul li.last {
+    padding-bottom: 5px;
+  }
+  .sf-menu li.first, .sf-menu li.first li {
+  }
+  .sf-menu li.last {
+  }
+  .sf-menu li li a {
+    text-transform: none;
+    border-bottom-width: 1px;
+  }
+  .sf-menu li li {
+  }
+  .sf-menu li li li {
+  }
+  .sf-menu li:hover, .sf-menu li.sfHover, .sf-menu a.active, .sf-menu a.active-trail,
+  .sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
+    color: $highlight;
+    outline:		0;
+  }
+  .sf-menu a.active, .sf-menu a.active-trail {
+    color: $highlight;
+    border-bottom-color: $highlight;
+  }
+  .sf-menu li a:focus, .sf-menu li a:hover, .sf-menu li a:active {
+  }
+
+  /*** arrows **/
+  .sf-menu a.sf-with-ul {
+  }
+  .sf-sub-indicator {
+    display:none;
+  }
+  a > .sf-sub-indicator {  /* give all except IE6 the correct values */
+  }
+  /* apply hovers to modern browsers */
+  a:focus > .sf-sub-indicator,
+  a:hover > .sf-sub-indicator,
+  a:active > .sf-sub-indicator,
+  li:hover > a > .sf-sub-indicator,
+  li.sfHover > a > .sf-sub-indicator {
+  }
+
+  /* point right for anchors in subs */
+  .sf-menu ul .sf-sub-indicator { background-position:  -10px 0; }
+  .sf-menu ul a > .sf-sub-indicator { background-position:  0 0; }
+  /* apply hovers to modern browsers */
+  .sf-menu ul a:focus > .sf-sub-indicator,
+  .sf-menu ul a:hover > .sf-sub-indicator,
+  .sf-menu ul a:active > .sf-sub-indicator,
+  .sf-menu ul li:hover > a > .sf-sub-indicator,
+  .sf-menu ul li.sfHover > a > .sf-sub-indicator {
+  }
+}

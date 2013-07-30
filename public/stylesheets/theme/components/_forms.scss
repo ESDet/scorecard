@@ -1,0 +1,86 @@
+
+form {
+  fieldset {
+    border: 0 none;
+    margin: 0 0 35px;
+    padding: 0;
+    legend {
+      width: 100%;
+      margin: 0 0 10px;
+      .fieldset-legend {
+        padding: 10px 0 10px;
+        width: 100%;
+        display:block;
+        border-bottom: 2px solid black;
+        font-size: 18px;
+      }
+    }
+    a.fieldset-title {
+      padding: 10px 0 0 0;
+      font-size: 14px;
+      color: $darkgrey;
+    }
+  }
+  .form-type-radio {
+    input, label {
+      display: inline-block;
+      vertical-align: top;
+    }
+    label {
+      max-width: 85%;
+      padding-top:1px;
+      vertical-align: top;
+    }
+  }
+  label {
+    color: $darkergrey;
+    font: {
+      size: 14px;
+      weight: normal;
+    }
+    .form-required {
+      color: $orange;
+    }
+  }
+  .action,
+  #edit-actions {
+    @include blackButton;
+    margin: 10px 0 0;
+  }
+  textarea.error,
+  input.error {
+    border: 2px solid $red !important;
+  }
+  textarea:disabled,
+  input:disabled {
+    background-color: $grey !important;
+  }
+  textarea,
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="text"] {
+    border: 2px solid $grey;
+    background-color: white;
+    max-width: 300px;
+  }
+  textarea:focus,
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="text"]:focus {
+    background-color: white;
+    border: 2px solid $darkgrey;
+    outline: none;
+  }
+  textarea {
+    max-width: 305px;
+  }
+  .grippie {
+    width: 305px;
+  }
+}

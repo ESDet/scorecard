@@ -1,0 +1,129 @@
+/*******************************************************************************
+ * _layout.scss
+ *
+ * Styling of the "simple" layout demonstrating the Compass grid extension Susy
+ * and building mobile first layouts.
+ ******************************************************************************/
+@import "../../utils/vars";
+
+.l-header,
+.l-content,
+.l-footer {
+  @include container; // Define these elements as the grid containers.
+  //@include susy-grid-background; // Show the columns for debugging.
+  margin-bottom: $vert-spacing-unit;
+  width: auto;
+  max-width: none;
+}
+
+#{$resp_imgs} {
+  width: 100%;
+  height: auto;
+}
+
+.media-youtube-video {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@include at-breakpoint($tab_break) {
+  #{$resp_imgs} {
+    width: 340px;
+    height: auto;
+  }
+  .l-header,
+  .l-content,
+  .l-footer {
+    @include set-container-width;
+    //@include susy-grid-background;
+    width: $tab_width; // static width
+  }
+
+  .l-topbar {
+    @include span-columns(12, 12);
+  }
+
+  .l-content-right {
+    @include span-columns(6 omega, 12);
+  }
+
+  .l-content-left {
+    @include span-columns(6, 12);
+  }
+
+  .l-footer-left {
+    @include span-columns(4, 12);
+  }
+
+  .l-footer-middle {
+    @include span-columns(4, 12);
+  }
+
+  .l-footer-right {
+    @include span-columns(4 omega, 12);
+  }
+}
+
+@include at-breakpoint($desk_break) {
+  #{$resp_imgs} {
+    width: 580px;
+    height: auto;
+  }
+  .l-header,
+  .l-content,
+  .l-footer {
+    @include set-container-width;
+    //@include susy-grid-background;
+    width: $desk_width; // static width
+  }
+
+  .l-topbar {
+    @include span-columns(16, 16);
+  }
+
+  .l-content-right {
+    @include span-columns(10 omega, 16);
+  }
+
+  .l-content-left {
+    @include span-columns(6, 16);
+  }
+
+  .l-footer-left {
+    @include span-columns(6, 16);
+  }
+
+  .l-footer-middle {
+    @include span-columns(5, 16);
+  }
+
+  .l-footer-right {
+    @include span-columns(5 omega, 16);
+  }
+
+  // maintenance mode!
+  body.maintenance-page {
+    padding-top: $vert-spacing-unit;
+    .l-header,
+    .l-content,
+    .l-footer {
+      width: 580px;
+    }
+  }
+}
+
+body.maintenance-page {
+  text-align: center;
+  h1 {
+    padding-bottom: $vert-spacing-unit;
+  }
+}

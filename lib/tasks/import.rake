@@ -28,6 +28,7 @@ namespace :import do
     if !School.column_names.include? key
       puts "Adding column #{key}"
       School.connection.add_column(TABLE_NAME, key, ty, {})
+      School.reset_column_information
     end
   end
 
@@ -39,6 +40,9 @@ namespace :import do
       tid = s['tid']
       name = s['name']
       puts "Doing #{name}.."
+
+      # TODO: field_address, field_email...      
+
       profile = p.get_related tid
       h = { 'tid' => tid, 'name' => name }
       if profile.is_a?(Hash)
@@ -56,7 +60,7 @@ namespace :import do
           puts "  #{key} = #{val.inspect}"
           h[key] = val
         end
-        School.reset_column_information
+        #School.reset_column_information
         s = School.find_or_create_by_bcode(h['bcode'])
         s.update_attributes(h)
       end
@@ -84,8 +88,9 @@ namespace :import do
         puts "  #{key2} = #{val}"
         h[key2] = val
       end
-      School.reset_column_information
-      s = School.find_or_create_by_bcode(bcode)
+      #s = School.find_or_create_by_bcode(bcode)
+      s = School.find_by_bcode(bcode)
+      next if s.nil?
       s.update_attribute(dataset, OpenStruct.new(h))
     end
   end  
