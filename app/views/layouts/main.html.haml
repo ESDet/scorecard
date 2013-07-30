@@ -1,0 +1,26 @@
+!!!
+%html
+  = render 'layouts/head'
+  
+  %body
+    %header.l-header
+    .l-content
+      %aside.l-content-left
+        .branding{:role => "banner"}
+          %a.site-logo{:href => "/", :rel => "home", :title => "Home"}
+            = image_tag 'theme/esd_LOGO.png'
+          .l-region.l-region--branding
+            %nav.block.block--menu-block.block--menu-block--1
+              .menu-block-wrapper.menu-block-1.menu-level-1
+                %ul.menu.selectnav-processed
+                  %li.first.last.expanded.active-trail.active
+                    = link_to 'Schools', schools_path
+                  %li.first.leaf.expanded.active-trail.active
+                    = link_to 'Map', map_path
+              
+      %section.l-content-right
+        .l-region.l-content-main{:role => "main"}
+          = yield
+
+        
+  = render 'layouts/footer'

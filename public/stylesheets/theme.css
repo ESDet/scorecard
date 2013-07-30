@@ -290,7 +290,7 @@ p {
     #block-boxes-school-score-es .block__content .score-right,
     #block-boxes-school-score-widget .block__content .score-right {
       padding: 0 0 0 180px;
-      background-image: url("../images/schoolscore_icon.png");
+      background-image: url("/images/theme/schoolscore_icon.png");
       background-repeat: no-repeat; }
 
   #block-boxes-did-you-know-es h2,
@@ -454,7 +454,7 @@ h1, h2, h3, h4, h5, h6 {
       display: block; }
     .l-region--branding ul.menu li > ul.menu li a {
       display: block;
-      background-image: url(../images/whiteArrowRight.png);
+      background-image: url(/images/theme/whiteArrowRight.png);
       background-repeat: no-repeat;
       background-position: 98% center;
       padding: 10px 40px 10px 10px;
@@ -483,7 +483,7 @@ h1, h2, h3, h4, h5, h6 {
   .l-region--branding .menu-block-wrapper > ul.menu > li.active-trail ul.menu {
     display: block; }
   .l-region--branding .menu-block-wrapper > ul.menu > li > a {
-    background-image: url(../images/heavyWhiteArrowRight.png);
+    background-image: url(/images/theme/heavyWhiteArrowRight.png);
     background-repeat: no-repeat;
     background-position: 98% center;
     padding: 10px 10px;
@@ -494,11 +494,11 @@ h1, h2, h3, h4, h5, h6 {
   .l-region--branding .menu-block-wrapper > ul.menu > li > a:focus {
     background-color: #f48b68; }
   .l-region--branding .menu-block-wrapper > ul.menu > li > a.active-trail {
-    background-image: url(../images/heavyBlackArrowDown.png);
+    background-image: url(/images/theme/heavyBlackArrowDown.png);
     background-repeat: no-repeat;
     background-position: 98% center; }
   .l-region--branding select {
-    background-image: url(../images/heavyWhiteArrowRight.png);
+    background-image: url(/images/theme/heavyWhiteArrowRight.png);
     background-repeat: no-repeat;
     background-position: 98% center;
     padding: 10px 10px;

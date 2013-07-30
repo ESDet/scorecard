@@ -33,6 +33,8 @@ class HomeController < ApplicationController
       :zoom => 12,
       :layer_control => false,
     })
+
+    render layout: 'noside'
   end
   
   def search

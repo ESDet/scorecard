@@ -1,17 +1,15 @@
-.container_12
-  .grid_12
-    %br/
-    %h1= @title
-    
-    %br/
-    %p.count
-    = render :partial => 'shared/filters'    
-    .clear_floats
-    %br/
+%br/
+%h1= @title
+
+%br/
+%p.count
+= render :partial => 'shared/filters'    
+.clear_floats
+%br/
     
     
 .container_12
-  - @schools.each_slice(@schools.size / 3 + 3) do |col|
+  - @schools.each_slice(@schools.size / 2 + 2) do |col|
     .grid_4
       - col.each do |s|
         = link_to s.name, school_path(s.slug)

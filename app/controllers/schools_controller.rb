@@ -24,6 +24,7 @@ class SchoolsController < ApplicationController
   end
   
   def show
+    
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
       redirect_to root_path and return if @school.nil?
@@ -238,7 +239,9 @@ class SchoolsController < ApplicationController
     
 =end
     respond_to do |format|
-      format.html { }
+      format.html do
+        render layout: 'noside'
+      end
       #format.pdf { render :layout => false }
     end
   end
