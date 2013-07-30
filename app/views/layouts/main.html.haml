@@ -17,6 +17,15 @@
                     = link_to 'Schools', schools_path
                   %li.first.leaf.expanded.active-trail.active
                     = link_to 'Map', map_path
+
+            = form_tag '/search', { :method => :post, :class => 'form-search search' } do
+              = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'
+              = submit_tag 'Search', :class => 'btn'
+            :javascript
+              $(document).ready(function() {
+                var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
+                $('input#q').typeahead({ source: school_names });
+              });
               
       %section.l-content-right
         .l-region.l-content-main{:role => "main"}

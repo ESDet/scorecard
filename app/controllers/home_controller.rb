@@ -41,7 +41,7 @@ class HomeController < ApplicationController
     
     if params[:q]
       @q = params[:q]
-      exact = School.find_by_SCHOOL_NAME_2011(@q)
+      exact = School.find_by_name(@q)
       redirect_to school_path(:id => exact.slug) and return if exact
       redirect_to root_path, :notice => "Search isn't done yet, sorry!"
       
