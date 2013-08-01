@@ -20,7 +20,7 @@ gem 'jammit'
 gem 'newrelic_rpm'
 #gem 'nokogiri', '1.4.6'
 #gem 'paperclip'
-gem 'psych'
+gem 'psych', '1.3.4'
 #gem 'prawn'
 
 

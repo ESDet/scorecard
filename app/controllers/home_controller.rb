@@ -38,7 +38,6 @@ class HomeController < ApplicationController
   end
   
   def search
-    
     if params[:q]
       @q = params[:q]
       exact = School.find_by_name(@q)
@@ -48,7 +47,6 @@ class HomeController < ApplicationController
     else
       redirect_to root_path and return
     end
-    
   end
   
 end

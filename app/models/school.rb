@@ -3,14 +3,14 @@ class School < ActiveRecord::Base
   require 'bedrock/acts_as_geocoded'
   
   acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2012, :AUTHORIZED_GRADES_2012, :TEMPLATE, :slug], :add_properties => :my_properties
-  #acts_as_geocoded :address => :SCHOOL_STREET_ADDRESS_2012, :point => :centroid, :sleep => 0.15
+  #acts_as_geocoded :address => :address, :point => :centroid, :sleep => 0.15
   utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   set_rgeo_factory_for_column(:centroid, utm_factory)
   
-  #def name; self['name'].andand.gsub('_', ' '); end
-    
   require 'mogrify'
   include Mogrify
+  serialize :basic, OpenStruct
+  serialize :profile, OpenStruct
   serialize :meap_2012, OpenStruct
   serialize :esd_k8_2013, OpenStruct
   serialize :esd_hs_2013, OpenStruct

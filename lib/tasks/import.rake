@@ -9,10 +9,8 @@ namespace :import do
     begin; conn.drop_table TABLE_NAME; rescue; end
     conn.create_table TABLE_NAME
     
-    conn.add_column(TABLE_NAME, 'centroid', :point)
-    conn.add_column(TABLE_NAME, 'slug', :string)
     
-    keys = ['bcode', 'tid', 'name']
+    keys = ['bcode', 'tid', 'name', 'address']
     keys.each do |key|
       begin
         conn.add_column(TABLE_NAME, key, :string, {})
@@ -21,11 +19,14 @@ namespace :import do
         puts e.backtrace
       end
     end
+    conn.add_column(TABLE_NAME, 'centroid', :point)
+    conn.add_column(TABLE_NAME, 'slug', :string)
     conn.add_index(TABLE_NAME, PK, :length => 10)
   end
   
   def ensure_column(key, ty=:string)
-    if !School.column_names.include? key
+    School.reset_column_information
+    if !School.column_names.include? key.to_s
       puts "Adding column #{key}"
       School.connection.add_column(TABLE_NAME, key, ty, {})
       School.reset_column_information
@@ -39,30 +40,56 @@ namespace :import do
     schools.each do |s|
       tid = s['tid']
       name = s['name']
-      puts "Doing #{name}.."
+      bcode = s['field_bcode']
+      next if bcode.empty?
+      bcode = bcode['und'].andand.first.andand['value']
+      puts "Doing #{name} (#{bcode})..."
+      next if bcode.nil?
 
-      # TODO: field_address, field_email...      
+      # First the 
+      ensure_column :basic, :text
+      basic = {}
+      ['email', 'school_scorecard_status', 'school_status', 'school_type', 'loc_email'].each do |f|
+        val = s["field_#{f}"]
+        if val.empty?
+          val = nil
+        else
+          val = val['und'].andand.first.andand['value']
+        end
+        basic[f.to_sym] = val
+      end
+      
+      basic[:address] = s['field_address']['und'].first
+      basic[:links] = s['field_links'].empty? ? nil : s['field_links']['und'].collect { |l| l['url'] }
+      address = "#{basic[:address]['thoroughfare']}\n#{basic[:address]['locality']}, #{basic[:address]['administrative_area']} #{basic[:address]['postal_code']}"
+      school = School.find_or_create_by_bcode(bcode)
+      school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :address => address }
+      if school.address_changed? and !school.basic.address['thoroughfare'].blank?
+        geo = Bedrock::Geocoder.bing_geocode({
+          :address => basic[:address]['thoroughfare'],
+          :city => basic[:address]['locality'],
+          :state => basic[:address]['administrative_area'],
+          :zip => basic[:address]['postal_code']
+        })
+        school.centroid = RGeo::Geographic.spherical_factory.point(geo.andand[:location].andand[:lon] || 0, geo.andand[:location].andand[:lat] || 0)
+      end
+      school.save
+      
 
+      # And the extended profile stuff
+      ensure_column :profile, :text
       profile = p.get_related tid
-      h = { 'tid' => tid, 'name' => name }
       if profile.is_a?(Hash)
+        h = {}
         profile.each do |k,v|
-          m = k.match field_re
-          next unless m
+          next unless (m = k.match field_re)
           key = m[1]
-          ensure_column key
           next if v.empty? or v['und'].empty?
-          if v['und'].size == 1
-            val = v['und'].first.andand['value']
-          else
-            val = v['und'].collect { |i| i['value'] }.join(', ')
-          end
+          val = (v['und'].size == 1) ? v['und'].first.andand['value'] : v['und'].collect { |i| i['value'] }.join(', ')
           puts "  #{key} = #{val.inspect}"
           h[key] = val
         end
-        #School.reset_column_information
-        s = School.find_or_create_by_bcode(h['bcode'])
-        s.update_attributes(h)
+        school.update_attribute(:profile, OpenStruct.new(h))
       end
     end
   end
@@ -77,21 +104,21 @@ namespace :import do
       bcode_key = 'buildingcode'
     end
     ensure_column dataset, :text
-    scores = p.get_dataset dataset
-    scores.each do |data|
-      h = {}
-      bcode = data[bcode_key].gsub(/[^0-9]/, '')
-      puts "bcode #{bcode}"
-      data.each do |key, val|
-        next unless m = key.match(key_re)
-        key2 = m[1]
-        puts "  #{key2} = #{val}"
-        h[key2] = val
+    
+    School.find_each do |s|
+      scores = p.get_dataset dataset, s.bcode
+      scores.each do |data|
+        h = {}
+        bcode = data[bcode_key].gsub(/[^0-9]/, '')
+        puts "bcode #{bcode}"
+        data.each do |key, val|
+          next unless m = key.match(key_re)
+          key2 = m[1]
+          puts "  #{key2} = #{val}"
+          h[key2] = val
+        end
+        s.update_attribute(dataset, OpenStruct.new(h))
       end
-      #s = School.find_or_create_by_bcode(bcode)
-      s = School.find_by_bcode(bcode)
-      next if s.nil?
-      s.update_attribute(dataset, OpenStruct.new(h))
     end
   end  
     
