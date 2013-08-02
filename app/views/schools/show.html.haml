@@ -44,7 +44,7 @@
     
   .container_12
     .grid_6{:style => 'overflow: hidden;'}
-      - unless @school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?
+      - unless true or (@school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?)
         %p
           %b Contact:
           = @school.school_contact_first_name
@@ -79,6 +79,19 @@
 
 
 .container_12.clear_floats
+  .grid_6
+    %h2 Basic Info
+    - @school.basic.marshal_dump.each do |k,v|
+      %b #{k}:
+      = v
+      %br/
+  .grid_6
+    %h2 School Profile
+    - @school.profile.marshal_dump.each do |k,v|
+      %b #{k}:
+      = v
+      %br/
+  
   - if @school.meap_2012
     .grid_6
       %h2 MEAP 2012

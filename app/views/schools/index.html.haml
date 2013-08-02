@@ -1,20 +1,21 @@
-%br/
-%h1= @title
+#outer_wrapper
+  #lefty
+    %h1= @title
 
-%br/
-%p.count
-= render :partial => 'shared/filters'    
-.clear_floats
-%br/
+    %p.count
+    = render :partial => 'shared/filters'
+    .clear_floats
+    %br/
     
-    
-.container_12
-  - @schools.each_slice(@schools.size / 2 + 2) do |col|
-    .grid_4
-      - col.each do |s|
-        = link_to s.name, school_path(s.slug)
-        %br/    
+    - @schools.each do |s|
+      = link_to s.name, school_path(s.slug)
+      %br/    
 
-.clear_floats
-%br/
-%br/
+
+  = render :partial => 'shared/map', :object => @map
+
+
+:javascript
+  $(document).ready(function(e) {
+    $('.l-footer-wrapper').hide();
+  });

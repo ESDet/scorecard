@@ -19,9 +19,10 @@ namespace :import do
         puts e.backtrace
       end
     end
-    conn.add_column(TABLE_NAME, 'centroid', :point)
-    conn.add_column(TABLE_NAME, 'slug', :string)
+    conn.add_column(TABLE_NAME, :centroid, :point)
+    conn.add_column(TABLE_NAME, :slug, :string)
     conn.add_index(TABLE_NAME, PK, :length => 10)
+    conn.add_index(TABLE_NAME, :grades_served)
   end
   
   def ensure_column(key, ty=:string)
@@ -89,7 +90,7 @@ namespace :import do
           puts "  #{key} = #{val.inspect}"
           h[key] = val
         end
-        school.update_attribute(:profile, OpenStruct.new(h))
+        school.update_attributes(:profile => OpenStruct.new(h), :grades_served => h[:grades_served])
       end
     end
   end
@@ -114,7 +115,7 @@ namespace :import do
         data.each do |key, val|
           next unless m = key.match(key_re)
           key2 = m[1]
-          puts "  #{key2} = #{val}"
+          #puts "  #{key2} = #{val}"
           h[key2] = val
         end
         s.update_attribute(dataset, OpenStruct.new(h))

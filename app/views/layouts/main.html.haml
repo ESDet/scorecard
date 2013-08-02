@@ -15,8 +15,9 @@
                 %ul.menu.selectnav-processed
                   %li.first.last.expanded.active-trail.active
                     = link_to 'Schools', schools_path
-                  %li.first.leaf.expanded.active-trail.active
-                    = link_to 'Map', map_path
+                  - if false
+                    %li.first.leaf.expanded.active-trail.active
+                      = link_to 'Map', map_path
 
             = form_tag '/search', { :method => :post, :class => 'form-search search' } do
               = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'

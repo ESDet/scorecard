@@ -7,12 +7,10 @@
   
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
-  = select_tag :type, options_for_select(school_type_options), :style => 'width: 325px;'
-  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code', :style => 'display: block; width: 315px;'
+  = select_tag :type, options_for_select(school_type_options), :style => 'width: 280px;'
+  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code', :style => 'display: block; width: 280px;'
   
-  %input.btn.btn-primary{:type => 'submit', :style => 'width: 150px;', :value => "See List"}
-  %a.btn.btn-primary{:href => map_path, :style => 'width: 150px;'}
-    See Map
+  %input.btn.btn-primary{:type => 'submit', :style => 'width: 150px;', :value => "Search"}
 
 
 :javascript

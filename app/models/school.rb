@@ -2,7 +2,7 @@ class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
   require 'bedrock/acts_as_geocoded'
   
-  acts_as_feature :geometry => 'centroid', :fields => [:id, :SCHOOL_NAME_2011, :SCHOOL_STREET_ADDRESS_2012, :AUTHORIZED_GRADES_2012, :TEMPLATE, :slug], :add_properties => :my_properties
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :grades_served, :slug], :add_properties => :my_properties
   #acts_as_geocoded :address => :address, :point => :centroid, :sleep => 0.15
   utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   set_rgeo_factory_for_column(:centroid, utm_factory)
@@ -67,8 +67,8 @@ class School < ActiveRecord::Base
     result = {
       :name => self.name
     }
-    others = School.where(['SCHOOL_STREET_ADDRESS_2012 = ? and id <> ?', self.SCHOOL_STREET_ADDRESS_2012, self.id]).select('id, SCHOOL_NAME_TEMPLATE_2011, SCHOOL_STREET_ADDRESS_2012, AUTHORIZED_GRADES_2012, TEMPLATE, slug')
-    result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.AUTHORIZED_GRADES_2012 } } unless others.empty?
+    others = School.where(['address = ? and id <> ?', self.address, self.id]).select('id, name, address, grades_served, bcode, slug')
+    result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
   end
   
