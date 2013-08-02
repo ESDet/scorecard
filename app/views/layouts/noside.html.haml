@@ -3,8 +3,11 @@
   = render 'layouts/head'
   
   %body
-    .container_12
-      .grid_12
+    #container
+      %header#nav.l-header
+        = link_to image_tag('theme/esd_LOGO.png', :class => 'logo'), '/'
+        
+      #bodywrap.l-content
         = yield
 
-  = render 'layouts/footer'
+      = render 'layouts/footer'
