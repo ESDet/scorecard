@@ -10,7 +10,7 @@ namespace :import do
     conn.create_table TABLE_NAME
     
     
-    keys = ['bcode', 'tid', 'name', 'address']
+    keys = ['bcode', 'tid', 'name', 'address', 'zip']
     keys.each do |key|
       begin
         conn.add_column(TABLE_NAME, key, :string, {})
@@ -64,7 +64,7 @@ namespace :import do
       basic[:links] = s['field_links'].empty? ? nil : s['field_links']['und'].collect { |l| l['url'] }
       address = "#{basic[:address]['thoroughfare']}\n#{basic[:address]['locality']}, #{basic[:address]['administrative_area']} #{basic[:address]['postal_code']}"
       school = School.find_or_create_by_bcode(bcode)
-      school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :address => address }
+      school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :address => address, :zip => basic[:address]['postal_code'] }
       if school.address_changed? and !school.basic.address['thoroughfare'].blank?
         geo = Bedrock::Geocoder.bing_geocode({
           :address => basic[:address]['thoroughfare'],
