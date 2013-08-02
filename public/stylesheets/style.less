@@ -8,10 +8,14 @@
 @lgreen:  #8dc63f;
 @red:     #953734;
 @greyish: #556677;
+@footerheight: 180px;
 
 
-body { padding: 0; background-color: white; color: black; background-image: url(/images/noise_white.png); }
-html, body { height: 100%; }
+html { overflow-y: scroll; height: 100%; }
+body { height: 100%; padding: 0; margin: 0; background-color: white; color: black; }
+#container { min-height:100%; position:relative; }
+#bodywrap { padding-bottom: @footerheight; }
+#footer.l-footer-wrapper { height: @footerheight; width: 100%; padding: 2em 0; position: absolute; bottom: 0px; left: 0px; }
 
 .float_right { float: right; }
 .float_left { float: left; }
@@ -25,7 +29,7 @@ html, body { height: 100%; }
 .subtle { color: @dblue; }
 .printonly { display: none; }
 .popover-inner { width: 380px; }
-
+.boxsizing { box-sizing: border-box; -webkit-box-sizing:border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; }
 
 h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 
@@ -89,7 +93,7 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   background-color: @light; background-image: url(/images/noise_light.png);
   &.closed { background-color: @lightgrey; }  
 }
-.footer { padding: 3em 0; }
+
 .elements_score {
   height: 50px; margin: 3px 0; background-image: url(/images/5e_scale.png); background-repeat: no-repeat; background-position: right top;
   .bar { position: absolute; left: 67px;  height: 10px; top: 10px; background-color: @dblue; }

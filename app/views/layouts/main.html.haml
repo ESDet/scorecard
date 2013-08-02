@@ -3,34 +3,35 @@
   = render 'layouts/head'
   
   %body
-    %header.l-header
-    .l-content
-      %aside.l-content-left
-        .branding{:role => "banner"}
-          %a.site-logo{:href => "/", :rel => "home", :title => "Home"}
-            = image_tag 'theme/esd_LOGO.png'
-          .l-region.l-region--branding
-            %nav.block.block--menu-block.block--menu-block--1
-              .menu-block-wrapper.menu-block-1.menu-level-1
-                %ul.menu.selectnav-processed
-                  %li.first.last.expanded.active-trail.active
-                    = link_to 'Schools', schools_path
-                  - if false
-                    %li.first.leaf.expanded.active-trail.active
-                      = link_to 'Map', map_path
-
-            = form_tag '/search', { :method => :post, :class => 'form-search search' } do
-              = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'
-              = submit_tag 'Search', :class => 'btn'
-            :javascript
-              $(document).ready(function() {
-                var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
-                $('input#q').typeahead({ source: school_names });
-              });
-              
-      %section.l-content-right
-        .l-region.l-content-main{:role => "main"}
-          = yield
-
-        
-  = render 'layouts/footer'
+    #container
+      %header.l-header
+      #bodywrap.l-content
+        %aside.l-content-left
+          .branding{:role => "banner"}
+            %a.site-logo{:href => "/", :rel => "home", :title => "Home"}
+              = image_tag 'theme/esd_LOGO.png'
+            .l-region.l-region--branding
+              %nav.block.block--menu-block.block--menu-block--1
+                .menu-block-wrapper.menu-block-1.menu-level-1
+                  %ul.menu.selectnav-processed
+                    %li.first.last.expanded.active-trail.active
+                      = link_to 'Schools', schools_path
+                    - if false
+                      %li.first.leaf.expanded.active-trail.active
+                        = link_to 'Map', map_path
+  
+              = form_tag '/search', { :method => :post, :class => 'form-search search' } do
+                = text_field_tag :q, nil, :style => 'width: 200px;', :placeholder => 'Search by school name'
+                = submit_tag 'Search', :class => 'btn'
+              :javascript
+                $(document).ready(function() {
+                  var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
+                  $('input#q').typeahead({ source: school_names });
+                });
+                
+        %section.l-content-right
+          .l-region.l-content-main{:role => "main"}
+            = yield
+  
+          
+      = render 'layouts/footer'
