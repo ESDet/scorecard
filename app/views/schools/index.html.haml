@@ -7,9 +7,9 @@
     .clear_floats
     %br/
     
-    - @schools.each do |s|
-      = link_to s.name, school_path(s.slug)
-      %br/    
+    %ul.list
+      - @schools.each do |s|
+        %li= link_to s.name, school_path(s.slug)
 
 
   = render :partial => 'shared/map', :object => @map
@@ -18,4 +18,30 @@
 :javascript
   $(document).ready(function(e) {
     $('.l-footer-wrapper').hide();
+    
+    $('form.search').submit(function(e) {
+      // Get ajax for da new search and update list
+      var data = {
+        filter: $('#filter', this).val(),
+        type: $('#type', this).val(),
+        loc: $('#loc', this).val()
+      };
+      $.ajax({
+        async: true,
+        type: 'GET',
+        url: '/schools.json',
+        data: data,
+        cache: false,
+        success: function(response) {
+          //ownerLayer = map.addLayer(Paraffin.GEOJSON, { object: data,
+          //  options: { style: { color: '#909', opacity: 1, weight: 3, fillOpacity: 0, fillColor: 'none' } } });
+          var template = "{{#features}}{{#properties}}<li><a href='/schools/{{slug}}'>{{name}}</a><br/>{{address}}<br/>{{grades_served}}</li>{{/properties}}{{/features}}";
+          var html = Mustache.to_html(template, response);
+          $('.list').html(html);
+        },
+        error: function(response) { }
+      });
+         
+      return false;
+    });
   });
