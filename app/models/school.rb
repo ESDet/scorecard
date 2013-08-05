@@ -88,7 +88,7 @@ class School < ActiveRecord::Base
     if self.esd_hs_2013
       # Common to all HS varieties:
       h[:status] = {
-        :letter   => esd.status_ltrgrade,
+        :letter   => esd.status_ltrgrade.blank? ? '?' : esd.status_ltrgrade,
         :total    => esd.status_pts,
         :possible => esd.status_psspts   }
       h[:progress] = {
@@ -100,25 +100,25 @@ class School < ActiveRecord::Base
         :total    => esd.culture_pts,
         :possible => esd.culture_psspts }
       h[:other] = {
-        :total    => esd.studchrs_pts + esd.fafsa_rate_pts }
+        :total    => esd.studchrs_pts.to_i + esd.fafsa_rate_pts.to_i }
 
       if cat == 'Mature'
         h[:cumulative] = {
-          :letter   => esd.mature_ltrgrade,
+          :letter   => esd.mature_ltrgrade.blank? ? '?' : esd.mature_ltrgrade,
           :total    => esd.total_pts,
           :possible => esd.total_psspts,
           :percent  => esd.mature_pct }
       
       elsif cat == 'New'
         h[:cumulative] = {
-          :letter   => esd.newschool_designation,
+          :letter   => esd.newschool_designation.blank? ? '?' : esd.newschool_designation,
           :total    => esd.total_pts,
           :possible => esd.total_psspts,
           :percent  => esd.newschool_pct }
           
       elsif cat == 'Turnaround'
         h[:cumulative] = {
-          :letter   => esd.turnaround_designation,
+          :letter   => esd.turnaround_designation.blank? ? '?' : esd.turnaround_designation,
           :total    => esd.turnaround_pts,
           :possible => esd.turnaround_psspts,
           :percent  => esd.turnaround_pct }
@@ -127,7 +127,7 @@ class School < ActiveRecord::Base
     elsif self.esd_k8_2013
       # Common to all the K8 varieties..
       h[:status] = {
-        :letter   => esd.status_ltrgrade,
+        :letter   => esd.status_ltrgrade.blank? ? '?' : esd.status_ltrgrade,
         :total    => esd.pts_status,
         :possible => esd.ptspos_status }
       h[:progress] = {
@@ -143,21 +143,21 @@ class School < ActiveRecord::Base
 
       if cat == 'Mature'
         h[:cumulative] = {
-          :letter   => esd.mature_ltrgrade,
+          :letter   => esd.mature_ltrgrade.blank? ? '?' : esd.mature_ltrgrade,
           :total    => esd.pts_earned,
           :possible => esd.pts_possible,
           :percent  => esd.mature_pct }
         
       elsif cat == 'New'
         h[:cumulative] = {
-          :letter   => esd.newschool_designation,
+          :letter   => esd.newschool_designation.blank? ? '?' : esd.newschool_designation,
           :total    => esd.pts_earned,
           :possible => esd.pts_possible,
           :percent  => esd.newschool_pct }
       
       elsif cat == 'Turnaround'
         h[:cumulative] = {
-          :letter   => esd.turnaround_designation,
+          :letter   => esd.turnaround_designation.blank? ? '?' : esd.turnaround_designation,
           :total    => esd.turnaround_pts_earned,
           :possible => esd.turnaround_pts_possible,
           :percent  => esd.turnaround_pct }
