@@ -34,19 +34,8 @@
             Download PDF
         %br/
         %br/
+
     
-  .container_12
-    .grid_6{:style => 'overflow: hidden;'}
-      - unless true or (@school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?)
-        %p
-          %b Contact:
-          = @school.school_contact_first_name
-          = @school.school_contact_last_name
-      - @profile_fields.each do |k,v|
-        - next if @school[k].blank?
-        %p
-          %b #{v}:
-          = @school[k]
       
       
     .grid_3
@@ -69,6 +58,50 @@
         - unless @school.PCT_ELL_FALL_2011.nil? 
           #{@school.PCT_ELL_FALL_2011.andand.to_i || 'N/A'}% English language learners
           %br/
+
+
+  .container_12.clear_floats
+    .grid_12.status
+      %h2 Status
+      %ul.nav.nav-tabs
+        %li.active= link_to 'Main', '#status_main', 'data-toggle' => 'tab'
+        %li= link_to 'Detail', '#status_detail', 'data-toggle' => 'tab'
+        %li= link_to 'History', '#status_history', 'data-toggle' => 'tab'
+      .tab-content
+        #status_main.tab-pane.active
+          %h2= @grades[:status][:letter]
+        #status_detail.tab-pane
+          Status details
+        #status_history.tab-pane
+          Status history...
+        
+    
+  .container_12.clear_floats
+    .grid_12.progress
+      %h2 Progress
+    
+  .container_12.clear_floats
+    .grid_12.climate
+      %h2 Climate
+    
+  .container_12.clear_floats
+    .grid_12.self_reported
+      %h2 Self-Reported
+
+
+
+  .container_12
+    .grid_6{:style => 'overflow: hidden;'}
+      - unless true or (@school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?)
+        %p
+          %b Contact:
+          = @school.school_contact_first_name
+          = @school.school_contact_last_name
+      - @profile_fields.each do |k,v|
+        - next if @school[k].blank?
+        %p
+          %b #{v}:
+          = @school[k]
 
 
 .container_12.clear_floats
