@@ -79,15 +79,47 @@
   .container_12.clear_floats
     .grid_12.progress
       %h2 Progress
+      %ul.nav.nav-tabs
+        %li.active= link_to 'Main', '#progress_main', 'data-toggle' => 'tab'
+        %li= link_to 'Detail', '#progress_detail', 'data-toggle' => 'tab'
+        %li= link_to 'History', '#progress_history', 'data-toggle' => 'tab'
+      .tab-content
+        #progress_main.tab-pane.active
+          %h2= @grades[:progress][:letter]
+        #progress_detail.tab-pane
+          progress details
+        #progress_history.tab-pane
+          progress history...
     
   .container_12.clear_floats
     .grid_12.climate
       %h2 Climate
-    
+      %ul.nav.nav-tabs
+        %li.active= link_to 'Main', '#climate_main', 'data-toggle' => 'tab'
+        %li= link_to 'Detail', '#climate_detail', 'data-toggle' => 'tab'
+        %li= link_to 'History', '#climate_history', 'data-toggle' => 'tab'
+      .tab-content
+        #climate_main.tab-pane.active
+          %h2= @grades[:climate][:letter]
+        #climate_detail.tab-pane
+          climate details
+        #climate_history.tab-pane
+          climate history...
+              
   .container_12.clear_floats
     .grid_12.self_reported
       %h2 Self-Reported
-
+      %ul.nav.nav-tabs
+        %li.active= link_to 'Main', '#self_main', 'data-toggle' => 'tab'
+        %li= link_to 'Detail', '#self_detail', 'data-toggle' => 'tab'
+        %li= link_to 'History', '#self_history', 'data-toggle' => 'tab'
+      .tab-content
+        #self_main.tab-pane.active
+          %h2 A self-reported summary
+        #self_detail.tab-pane
+          self details
+        #self_history.tab-pane
+          self history...
 
 
   .container_12
@@ -107,7 +139,7 @@
 .container_12.clear_floats
   .grid_12
     %h2 Raw Data Dumps
-    %ul.nav.nav-pills
+    %ul.nav.nav-tabs
       %li.active= link_to 'Basic Info', '#basic', 'data-toggle' => 'tab'
       %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
       - if @school.meap_2012
