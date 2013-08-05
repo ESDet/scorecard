@@ -37,7 +37,7 @@
           //  options: { style: { color: '#909', opacity: 1, weight: 3, fillOpacity: 0, fillColor: 'none' } } });
           var template = "{{#features}}{{#properties}}<li><a href='/schools/{{slug}}'>{{name}}</a><br/>{{address}}<br/>{{grades_served}}</li>{{/properties}}{{/features}}";
           var html = Mustache.to_html(template, response);
-          $('.list').html(html);
+          $('.school_list').html(html);
         },
         error: function(response) { }
       });

@@ -67,20 +67,104 @@ class School < ActiveRecord::Base
     result = {
       :name   => self.name,
       :level  => self.high? ? 'HS' : (self.middle? ? 'MS' : 'ES'),
-      :cumulative => self.overall_letter
+      :cumulative => self.grades[:cumulative][:letter]
     }
     others = School.where(['address = ? and id <> ?', self.address, self.id]).select('id, name, address, grades_served, bcode, slug')
     result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
   end
   
-  def overall_letter
-    # depends whether it's a Mature or Turnaroudn or New or What
-    if self.esd_k8_2013
+  def category
+    self.esd_k8_2013.andand.schoolcategory || self.esd_hs_2013.andand.schoolcategory
+  end
+  
+  def grades
+    esd = (self.esd_k8_2013 || self.esd_hs_2013)
+    cat = esd.andand.schoolcategory
+    
+    h = { :cumulative => {}, :status => {}, :progress => {}, :climate => {}, :other => {} }
+    return h if esd.nil?
+    
+    if self.esd_hs_2013
+      # Common to all HS varieties:
+      h[:status] = {
+        :letter   => esd.status_ltrgrade,
+        :total    => esd.status_pts,
+        :possible => esd.status_psspts   }
+      h[:progress] = {
+        :letter   => esd.progress_ltrgrade.blank? ? '?' : esd.progress_ltrgrade,
+        :total    => esd.progress_pts,
+        :possible => esd.progress_psspts }
+      h[:climate] = {
+        :letter   => esd.culture_ltrgrade.blank? ? '?' : esd.culture_ltrgrade,
+        :total    => esd.culture_pts,
+        :possible => esd.culture_psspts }
+      h[:other] = {
+        :total    => esd.studchrs_pts + esd.fafsa_rate_pts }
+
+      if cat == 'Mature'
+        h[:cumulative] = {
+          :letter   => esd.mature_ltrgrade,
+          :total    => esd.total_pts,
+          :possible => esd.total_psspts,
+          :percent  => esd.mature_pct }
       
-    elsif self.esd_hs_2013
+      elsif cat == 'New'
+        h[:cumulative] = {
+          :letter   => esd.newschool_designation,
+          :total    => esd.total_pts,
+          :possible => esd.total_psspts,
+          :percent  => esd.newschool_pct }
+          
+      elsif cat == 'Turnaround'
+        h[:cumulative] = {
+          :letter   => esd.turnaround_designation,
+          :total    => esd.turnaround_pts,
+          :possible => esd.turnaround_psspts,
+          :percent  => esd.turnaround_pct }
+      end
+      
+    elsif self.esd_k8_2013
+      # Common to all the K8 varieties..
+      h[:status] = {
+        :letter   => esd.status_ltrgrade,
+        :total    => esd.pts_status,
+        :possible => esd.ptspos_status }
+      h[:progress] = {
+        :letter   => esd.progress_ltrgrade.blank? ? '?' : esd.progress_ltrgrade,
+        :total    => esd.pts_progress,
+        :possible => esd.ptspos_progress }
+      h[:climate] = {
+        :letter   => esd.culture_ltrgrade.blank? ? '?' : esd.culture_ltrgrade,
+        :total    => esd.pts_culture,
+        :possible => esd.ptspos_culture }
+      h[:other] = {
+        :total    => esd.studchrs_pts }
+
+      if cat == 'Mature'
+        h[:cumulative] = {
+          :letter   => esd.mature_ltrgrade,
+          :total    => esd.pts_earned,
+          :possible => esd.pts_possible,
+          :percent  => esd.mature_pct }
+        
+      elsif cat == 'New'
+        h[:cumulative] = {
+          :letter   => esd.newschool_designation,
+          :total    => esd.pts_earned,
+          :possible => esd.pts_possible,
+          :percent  => esd.newschool_pct }
+      
+      elsif cat == 'Turnaround'
+        h[:cumulative] = {
+          :letter   => esd.turnaround_designation,
+          :total    => esd.turnaround_pts_earned,
+          :possible => esd.turnaround_pts_possible,
+          :percent  => esd.turnaround_pct }
+      end
     
     end
+    return h
   end
   
   def set_slug

@@ -77,6 +77,8 @@ class SchoolsController < ApplicationController
       :layer_control => false,
     })
     
+    @grades = @school.grades
+    
     @profile_fields = {
       "after_school_transportatio" => 'After School Transportation',
       "ap_classes" => 'AP Classes',

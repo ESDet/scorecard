@@ -1,36 +1,29 @@
-.summary{:class => @school.closed? ? 'closed' : ''}
+.summary
   .container_12
-    .grid_8
-      %br/
-      %br/
-      %h1
-        = @school.name
-        - if @school.closed?
-          %br/
-          (Closed #{@school.CLOSE_DATE})
-      
+    .grid_5
+      %h2= @school.name
       %h3
         Grades: #{@school.grades_served || 'Unknown'}
         %br/
       - if false
         #{@school.SCHOOL_STREET_ADDRESS_2012} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2012} 
-        
-      %br/
-      .noprint
-        .subtle= "Now Showing: #{current_search}"
-        = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
-        = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
-        = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
+       
+      - if true 
+        %br/
+        .noprint
+          .subtle= "Now Showing: #{current_search}"
+          = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
+          = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
+          = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
-      %br/
-      %br/
-      - unless true or @school.SCHOOL_MISSION_LONG.blank?
-        %p
-          %h4{:style => 'display: inline;'} School Mission:
-          = @school.SCHOOL_MISSION_LONG
+    .grid_2.centered
+      .circle_grade= @grades[:cumulative][:letter]
+      .circle_grade.sub= @grades[:status][:letter]
+      .circle_grade.sub= @grades[:progress][:letter]
+      .circle_grade.sub= @grades[:climate][:letter]
                 
         
-    .grid_4
+    .grid_5
       #wrapper{:style => 'height: 200px; margin-top: 4em;'}
         = render :partial => 'shared/map', :object => @map
       %br/
@@ -80,19 +73,18 @@
 
 .container_12.clear_floats
   .grid_12
-  
+    %h3 Raw Data Dumps
     %ul.nav.nav-pills
-        %li.active= link_to 'Basic Info', '#basic', 'data-toggle' => 'tab'
-        %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
-        - if @school.meap_2012
-          %li= link_to 'MEAP 2012', '#meap', 'data-toggle' => 'tab'
-        - if @school.esd_k8_2013
-          %li= link_to 'K8 2013', '#k8', 'data-toggle' => 'tab'
-        - if @school.esd_hs_2013
-          %li= link_to 'HS 2013', '#hs', 'data-toggle' => 'tab'
-
+      %li.active= link_to 'Basic Info', '#basic', 'data-toggle' => 'tab'
+      %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
+      - if @school.meap_2012
+        %li= link_to 'MEAP 2012', '#meap', 'data-toggle' => 'tab'
+      - if @school.esd_k8_2013
+        %li= link_to 'K8 2013', '#k8', 'data-toggle' => 'tab'
+      - if @school.esd_hs_2013
+        %li= link_to 'HS 2013', '#hs', 'data-toggle' => 'tab'
     .tab-content
-      #basic.tab-pane
+      #basic.tab-pane.active
         - @school.basic.marshal_dump.each do |k,v|
           %b #{k}:
           = v
@@ -103,17 +95,17 @@
           = v
           %br/
       #meap.tab-pane
-        - @school.meap_2012.marshal_dump.each do |k,v|
+        - @school.meap_2012.marshal_dump.andand.each do |k,v|
           %b #{k}:
           = v
           %br/
       #k8.tab-pane
-        - @school.esd_k8_2013.marshal_dump.each do |k,v|
+        - @school.esd_k8_2013.andand.marshal_dump.andand.each do |k,v|
           %b #{k}:
           = v
           %br/
       #hs.tab-pane
-        - @school.esd_hs_2013.marshal_dump.each do |k,v|
+        - @school.esd_hs_2013.andand.marshal_dump.andand.each do |k,v|
           %b #{k}:
           = v
           %br/

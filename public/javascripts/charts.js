@@ -12,7 +12,8 @@ var colors = {
 
 
 $(document).ready(function() {
-
+  return false;
+  
   $('.help').popover({
     placement: 'left',
     delay: { show: 0, hide: 2000 }
