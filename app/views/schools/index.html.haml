@@ -7,12 +7,12 @@
     .clear_floats
     %br/
     
-    %ul.list
+    %ul.school_list
       - @schools.each do |s|
-        %li= link_to s.name, school_path(s.slug)
+        = render 'item', { :school => s }
 
 
-  = render :partial => 'shared/map', :object => @map
+  = render 'shared/map', :object => @map
 
 
 :javascript

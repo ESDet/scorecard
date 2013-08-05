@@ -61,15 +61,26 @@ class School < ActiveRecord::Base
   def middle?;      grades_served.andand.include? GRADES[:middle];      end
   def high?;        grades_served.andand.include? GRADES[:high]; end
   def k8?;          grades_served.andand.include? GRADES[:k8]; end
-  def closed?;      false; end #!self.CLOSE_DATE.blank?;      end
+  def closed?;      false; end 
   
   def my_properties
     result = {
-      :name => self.name
+      :name   => self.name,
+      :level  => self.high? ? 'HS' : (self.middle? ? 'MS' : 'ES'),
+      :cumulative => self.overall_letter
     }
     others = School.where(['address = ? and id <> ?', self.address, self.id]).select('id, name, address, grades_served, bcode, slug')
     result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
+  end
+  
+  def overall_letter
+    # depends whether it's a Mature or Turnaroudn or New or What
+    if self.esd_k8_2013
+      
+    elsif self.esd_hs_2013
+    
+    end
   end
   
   def set_slug
