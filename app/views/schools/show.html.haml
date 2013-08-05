@@ -24,8 +24,8 @@
                 
         
     .grid_5
-      #wrapper{:style => 'height: 200px; margin-top: 4em;'}
-        = render :partial => 'shared/map', :object => @map
+      = render :partial => 'shared/map', :object => @map
+      
       %br/
       - unless true or @school.PDF_FILE_NAME.blank?
         .float_right
@@ -73,7 +73,7 @@
 
 .container_12.clear_floats
   .grid_12
-    %h3 Raw Data Dumps
+    %h2 Raw Data Dumps
     %ul.nav.nav-pills
       %li.active= link_to 'Basic Info', '#basic', 'data-toggle' => 'tab'
       %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
