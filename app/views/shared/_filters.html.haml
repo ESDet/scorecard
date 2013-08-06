@@ -12,7 +12,7 @@
   = hidden_field_tag :filter, params[:filter]
   - if false
     = select_tag :type, options_for_select(school_type_options), :style => 'width: 100%;'
-  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code', :style => 'display: block; width: 100%; margin-bottom: 0.5em;'
+  = text_field_tag :loc, params[:loc], :placeholder => 'Search by zip code', :style => 'display: block; width: 100%; margin-bottom: 0.5em;'
   
   .section-learn
     .l-content-right
@@ -78,7 +78,7 @@
   
   function updateCount()
   {
-    $('.count').css('color', '#aab');
+    $('.count').css('color', '#b66');
     var filter = $('form.search #filter').val();
     var type   = $('form.search #type').val();
     var loc    = $('form.search #loc').val();

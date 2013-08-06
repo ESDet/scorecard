@@ -77,12 +77,14 @@
         %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab'
       .tab-content
         #other_profile.tab-pane
-          - @profile_fields.each do |field,label|
-            - val = @school.profile.send(field)
-            - unless val.blank?
-              %p
-                %h3 #{label}:
-                = val
+          %table
+            - @profile_fields.each do |field,label|
+              - val = @school.profile.send(field)
+              - unless val.blank?
+                %tr
+                  %td
+                    %h3 #{label}:
+                  %td= val
 
         #other_demographics.tab-pane.active
           #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 40px;'}
