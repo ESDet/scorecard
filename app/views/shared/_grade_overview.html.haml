@@ -4,7 +4,7 @@
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content
         .grade_container
-          .grade= grade[:letter]
+          .grade= grade[:letter].length < 3 ? grade[:letter] : '?'
           .grade.sub3 #{grade[:total]} / #{grade[:possible]}
         .subscore_wrapper
           = render 'shared/subscores', :scores => grade[:details]

@@ -12,19 +12,20 @@
           #front-filter{:style => 'width: 350px;'}  
             = render :partial => 'shared/filters'
           .clear_floats
-          
-%h2 Top 10 Schools
-- @top.each do |s|
-  - grade = s.grades[:cumulative]
-  .block
-    .boxes-box-content
-      .grade_container
-        .grade= grade[:letter]
-        .grade.sub3 #{grade[:total]} / #{grade[:possible]}
-      .subscore_wrapper
-        %h3= link_to s.name, s
-        %div #{s.address} &middot; #{s.address2}
 
+- [['Top 10 K-8 Schools', @top_k8], ['Top 10 High Schools', @top_hs]].each do |title,data|
+  %h2= title
+  - data.each do |s|
+    - grade = s.grades[:cumulative]
+    .block.top
+      .boxes-box-content
+        .grade_container
+          .grade= grade[:letter].length < 3 ? grade[:letter] : '?'
+          .grade.sub3 #{grade[:total]} / #{grade[:possible]}
+        .subscore_wrapper
+          %h3= link_to s.name, s
+          %div #{s.address} &middot; #{s.address2}
+  %br/
 
 .clear_floats
 %br/
