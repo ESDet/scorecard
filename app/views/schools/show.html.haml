@@ -68,7 +68,6 @@
       %ul.nav.nav-tabs
         %li.active= link_to 'Main', '#status_main', 'data-toggle' => 'tab'
         %li= link_to 'Detail', '#status_detail', 'data-toggle' => 'tab'
-        %li= link_to 'History', '#status_history', 'data-toggle' => 'tab'
       .tab-content
         #status_main.tab-pane.active
           %h2 Overall Grade: #{@grades[:status][:letter]}
@@ -102,10 +101,6 @@
               Graduation Rate (2011-12):
               = e.gradrate.to_f.round(2)
               (#{e.gradrate_pts} / #{e.gradrate_psspts})
-
-            
-        #status_history.tab-pane
-          Status history...
         
     
   .container_12.clear_floats
@@ -114,14 +109,25 @@
       %ul.nav.nav-tabs
         %li.active= link_to 'Main', '#progress_main', 'data-toggle' => 'tab'
         %li= link_to 'Detail', '#progress_detail', 'data-toggle' => 'tab'
-        %li= link_to 'History', '#progress_history', 'data-toggle' => 'tab'
       .tab-content
         #progress_main.tab-pane.active
-          %h2= @grades[:progress][:letter]
+          %h2 Overall Grade: #{@grades[:progress][:letter]}
+          %h3 Points: #{@grades[:progress][:total]} / #{@grades[:progress][:possible]}
         #progress_detail.tab-pane
-          progress details
-        #progress_history.tab-pane
-          progress history...
+          - if @school.elementary?
+            - e = @school.esd_k8_2013
+            %div
+              Performance Level Change Score:
+              #{e.plc_comp.to_f.round(2)} (#{e.plc_comp_pts} / #{e.plc_comp_ptsps})
+            %div
+              NWEA/Scantron Percent Meeting Growth Target:
+              #{e.bench_comp.to_f.round(2)} (#{e.bench_comp_pts} / #{e.bench_comp_ptsps})
+          - if @school.high?
+            - e = @school.esd_hs_2013
+            %div
+              Year-over-Year ACT Composite Score Gain (2 Year Average, 2010-11 to 2011-12, 2011-12 to 2012-13):
+              #{e.act_grwth.to_f.round(2)} (#{e.act_grwth_pts} / #{e.act_grwth_psspts})
+
     
   .container_12.clear_floats
     .grid_12.climate
@@ -129,14 +135,22 @@
       %ul.nav.nav-tabs
         %li.active= link_to 'Main', '#climate_main', 'data-toggle' => 'tab'
         %li= link_to 'Detail', '#climate_detail', 'data-toggle' => 'tab'
-        %li= link_to 'History', '#climate_history', 'data-toggle' => 'tab'
       .tab-content
         #climate_main.tab-pane.active
-          %h2= @grades[:climate][:letter]
+          %h2 Overall Grade: #{@grades[:climate][:letter]}
+          %h3 Points: #{@grades[:climate][:total]} / #{@grades[:climate][:possible]}
         #climate_detail.tab-pane
-          climate details
-        #climate_history.tab-pane
-          climate history...
+          - if @school.elementary?
+            - e = @school.esd_k8_2013
+            %div
+              Site Visit Average Score: 
+              #{e.site_s} (#{e.site_s_pts} / #{e.site_s_ptsps})          
+            %div
+              Net 5Essentials Score (2012-13): 
+              #{e.net5e_1213} (#{e.net5e_1213_pts} / #{e.net5e_1213_ptsps})          
+            %div
+              5Essentials Growth Score:
+              #{e.five_e_grwth} (#{e.five_e_grwth_pts} / #{e.five_e_grwth_ptsps})
               
   .container_12.clear_floats
     .grid_12.self_reported
@@ -144,14 +158,11 @@
       %ul.nav.nav-tabs
         %li.active= link_to 'Main', '#other_main', 'data-toggle' => 'tab'
         %li= link_to 'Detail', '#other_detail', 'data-toggle' => 'tab'
-        %li= link_to 'History', '#other_history', 'data-toggle' => 'tab'
       .tab-content
         #other_main.tab-pane.active
           A other-reported summary
         #other_detail.tab-pane
           other details
-        #other_history.tab-pane
-          self history...
 
 
   .container_12
