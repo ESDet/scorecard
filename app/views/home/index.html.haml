@@ -1,11 +1,29 @@
 %h1 ESD Score Card
 %br/
-%br/
-%h2 Begin your search for an excellent school:
-%p.count
 
-#front-filter{:style => 'width: 400px;'}  
-  = render :partial => 'shared/filters'
+
+#block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget
+  %h2.block__title Find Schools
+  .block__content
+    #boxes-box-school_score_widget.boxes-box
+      .boxes-box-content
+        .score-right
+          %p.count
+          #front-filter{:style => 'width: 350px;'}  
+            = render :partial => 'shared/filters'
+          .clear_floats
+          
+%h2 Top 10 Schools
+- @top.each do |s|
+  - grade = s.grades[:cumulative]
+  .block
+    .boxes-box-content
+      .grade_container
+        .grade= grade[:letter]
+        .grade.sub3 #{grade[:total]} / #{grade[:possible]}
+      .subscore_wrapper
+        %h3= link_to s.name, s
+        %div #{s.address} &middot; #{s.address2}
 
 
 .clear_floats

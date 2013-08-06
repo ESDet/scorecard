@@ -100,7 +100,7 @@ $resp_imgs: ".l-content-right .l-content-main img[src*='/580w']";
       .score-right {
         padding: 0 0 0 180px;
         background: {
-          image: url('../images/schoolscore_icon.png');
+          image: url('/images/theme/schoolscore_icon.png');
           repeat: no-repeat;
         }
       }
@@ -160,7 +160,7 @@ $resp_imgs: ".l-content-right .l-content-main img[src*='/580w']";
     border: 0 none;
     cursor: pointer;
     background: {
-      image: url(../images/big_arrow_sprite.png);
+      image: url(/images/theme/big_arrow_sprite.png);
       repeat: no-repeat;
       position: 0 0;
     }
@@ -178,7 +178,7 @@ $resp_imgs: ".l-content-right .l-content-main img[src*='/580w']";
     width: 40px;
     height: 40px;
     background: {
-      image: url(../images/big_arrow_sprite_left.png);
+      image: url(/images/theme/big_arrow_sprite_left.png);
       repeat: no-repeat;
       position: 0 0;
     }
@@ -208,7 +208,7 @@ $resp_imgs: ".l-content-right .l-content-main img[src*='/580w']";
     height: 19px;
     cursor: pointer;
     background: {
-      image: url(../images/small_arrow_sprite.png);
+      image: url(/images/theme/small_arrow_sprite.png);
       repeat: no-repeat;
       position: -1px -1px;
     }
@@ -255,7 +255,7 @@ $resp_imgs: ".l-content-right .l-content-main img[src*='/580w']";
 }
 .icon-sprite {
   background: {
-    image: url(../images/icon_sprite.png);
+    image: url(/images/theme/icon_sprite.png);
     repeat: no-repeat;
   }
 }
@@ -281,14 +281,14 @@ $resp_imgs: ".l-content-right .l-content-main img[src*='/580w']";
 }
 @mixin rightWhiteArrowBig {
   background: {
-    image: url(../images/heavyWhiteArrowRight.png);
+    image: url(/images/theme/heavyWhiteArrowRight.png);
     repeat: no-repeat;
     position: 98% center;
   }
 }
 @mixin downBlackArrowBig {
   background: {
-    image: url(../images/heavyBlackArrowDown.png);
+    image: url(/images/theme/heavyBlackArrowDown.png);
     repeat: no-repeat;
     position: 98% center;
   }

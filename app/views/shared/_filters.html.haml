@@ -1,18 +1,18 @@
 .btn-group.grades{:style => 'margin-right: 1em; margin-bottom: 0.5em;'}
-  = link_to 'All',        '#', :class => "btn", 'data-filter' => 'all'
+  = link_to 'All',        '#', 'data-filter' => 'all'
   &middot;
-  = link_to 'Elementary', '#', :class => "btn", 'data-filter' => 'elementary'
+  = link_to 'Elementary', '#', 'data-filter' => 'elementary'
   &middot;
-  = link_to 'Middle',     '#', :class => "btn", 'data-filter' => 'middle'
+  = link_to 'Middle',     '#', 'data-filter' => 'middle'
   &middot;
-  = link_to 'High',       '#', :class => "btn", 'data-filter' => 'high'
+  = link_to 'High',       '#', 'data-filter' => 'high'
   
   
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
   - if false
     = select_tag :type, options_for_select(school_type_options), :style => 'width: 100%;'
-  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code', :style => 'display: block; width: 100%;'
+  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code', :style => 'display: block; width: 100%; margin-bottom: 0.5em;'
   
   .section-learn
     .l-content-right
@@ -40,7 +40,7 @@
       return false;
     });
     
-    $('.grades a.btn').click(function(e) {
+    $('.grades a').click(function(e) {
       args.filter = $(this).attr('data-filter');
       updateForm();
       updateControls();

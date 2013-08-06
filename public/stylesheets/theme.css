@@ -697,7 +697,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 19px;
     height: 19px;
     cursor: pointer;
-    background-image: url(../images/small_arrow_sprite.png);
+    background-image: url(/images/theme/small_arrow_sprite.png);
     background-repeat: no-repeat;
     background-position: -1px -1px; }
   #search-form #edit-basic input[type=submit]:hover,
@@ -940,7 +940,7 @@ ul.pager {
     #block-boxes-school-score-es .block__content .score-right,
     #block-boxes-school-score-widget .block__content .score-right {
       padding: 0 0 0 180px;
-      background-image: url("../images/schoolscore_icon.png");
+      background-image: url("/images/theme/schoolscore_icon.png");
       background-repeat: no-repeat; }
 
   #block-boxes-did-you-know-es h2,
@@ -1360,15 +1360,6 @@ form .grippie {
     #block-boxes-school-score-es .boxes-box-content input[type=submit],
     #block-boxes-school-score-es .boxes-box-content a,
     #block-boxes-school-score-widget .boxes-box-content input[type=submit],
-    #block-boxes-school-score-widget .boxes-box-content a {
-      display: block;
-      width: 40px;
-      height: 40px;
-      border: 0 none;
-      cursor: pointer;
-      background-image: url(../images/big_arrow_sprite.png);
-      background-repeat: no-repeat;
-      background-position: 0 0; }
     #block-boxes-school-score-es .boxes-box-content input[type=submit]:hover,
     #block-boxes-school-score-es .boxes-box-content input[type=submit]:focus,
     #block-boxes-school-score-es .boxes-box-content a:hover, #block-boxes-school-score-es .boxes-box-content a:focus,

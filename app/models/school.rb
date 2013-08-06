@@ -15,6 +15,7 @@ class School < ActiveRecord::Base
   serialize :esd_k8_2013, OpenStruct
   serialize :esd_hs_2013, OpenStruct
   before_save :set_slug
+  before_save :set_points
   
 
   def self.square_array(arr)
@@ -87,7 +88,7 @@ class School < ActiveRecord::Base
   end
   
   # For really simple sorting
-  def points 
+  def total_points 
     highs = {
       'Mature' => :total_pts,
       'New' => :total_pts,
@@ -304,10 +305,18 @@ class School < ActiveRecord::Base
     h
   end
   
-  
+  # To make link_to use slugs
+  def to_param
+    slug
+  end
+
   def set_slug
     self.name ||= "School #{self.bcode}"
     self.slug = transliterate(self.name)
+  end
+  
+  def set_points
+    self.points = self.total_points
   end
       
 end

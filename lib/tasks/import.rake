@@ -18,10 +18,11 @@ namespace :import do
         puts e.backtrace
       end
     end
+    conn.add_column(TABLE_NAME, :points, :integer)
     conn.add_column(TABLE_NAME, :centroid, :point)
     conn.add_index(TABLE_NAME, PK, :length => 10)
-    conn.add_index(TABLE_NAME, :grades_served)
     conn.add_index(TABLE_NAME, :school_type)
+    conn.add_index(TABLE_NAME, :points)
   end
   
   def ensure_column(key, ty=:string)
@@ -77,7 +78,7 @@ namespace :import do
       school = School.find_or_create_by_bcode(bcode)
       school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :school_type => types[stid],
         :address => address, :address2 => address2, :zip => addr['postal_code'] }
-      if false and school.address_changed? and !addr['thoroughfare'].blank?
+      if school.address_changed? and !addr['thoroughfare'].blank?
         geo = Bedrock::Geocoder.bing_geocode({
           :address => addr['thoroughfare'],
           :city    => addr['locality'],
