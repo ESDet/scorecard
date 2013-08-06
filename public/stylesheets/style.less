@@ -109,7 +109,11 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 #showing { padding: 10px 10px 10px 10px; position: absolute; right: 0px; top: 5px; width: 300px; max-width: 100%; background-color: white; background-color: rgba(255,255,255,0.8); z-index: 100; }
 
 .form-search {
+  input#loc { display: block; width: 100% !important; margin-bottom: 0.5em !important; }
   input, select, .btn { margin-bottom: 0.5em; }
+}
+.form-byname {
+  input[type=text] { width: 270px; max-width: 100%; }
 }
 
 ul.school_list {
@@ -238,10 +242,27 @@ table.enrollment {
     .menu a { margin: 0.5em 2em 0.5em 0; }
     .search { margin: 0.5em 0; display: block; }
   }
+  .lead { padding: 0.5em; }
+  .branding { text-align: center;
+    .site-logo img { max-width: 50%; }
+    .l-region--branding { display: none; }
+    .form-byname {
+      input[type=text] { width: 200px; max-width: 100%; }
+    }
+  }
   #outer_wrapper { top: 85px; }
   .popover-inner { max-width: 280px; }
   .nomobile { display: none; }
-  #usabilla_live_button_container { display: none; }
+  .usabilla_live_button_container { display: none; }
+  .column { padding: 0 0.5em; }
+  
+  .form-search {
+    #loc { max-width: 80% !important; }
+  }
+  #lefty, #front-filter { 
+    .l-content-right { width: 80%; }
+  }
+  #footer.l-footer-wrapper { height: auto; position: static; text-align: center; }
 }
 
 
