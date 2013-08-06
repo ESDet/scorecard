@@ -35,7 +35,35 @@ $(document).ready(function() {
       }, 
       legend: { show:true, location: 'e', border: '0px', fontSize: '13px', background: bg }
     }
-  );     
+  ); 
+  
+  var enroll_plot = jQuery.jqplot ('enroll', [enroll],
+    { 
+      title: 'Enrollment by Grade',
+      seriesDefaults: {
+        renderer: jQuery.jqplot.BarRenderer, 
+        shadow: false,
+        pointLabels: { show: true, location: 'n' },
+        rendererOptions: {
+          barDirection: 'vertical',
+          barWidth: 20,
+          barPadding: 3
+        }
+      }, 
+      grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
+      legend: { show:false },
+      axes: {
+        xaxis: {
+          renderer: $.jqplot.CategoryAxisRenderer,
+          ticks: enroll_ticks,
+        },
+        yaxis: {
+          tickOptions: { formatString: '%d' }
+        }
+      }  
+    }
+  );
+      
 
   return;
   

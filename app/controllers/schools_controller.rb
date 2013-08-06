@@ -113,9 +113,9 @@ class SchoolsController < ApplicationController
     end
     
     @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
-      num = @school.meap_2012.send("grade_#{g}_enrollment").to_i
-      [ g, num ]
+      @school.meap_2012.send("grade_#{g}_enrollment").to_i
     end
+    @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
 
     @tips = Hash[*(Tip.all.collect { |t| [t.name, t] }.flatten)]

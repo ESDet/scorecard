@@ -15,7 +15,7 @@
           = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
     .grid_2.centered
-      - if @grades[:cumulative][:letter].length < 3
+      - if @grades[:cumulative][:letter].to_s.length < 3
         .circle_grade= @grades[:cumulative][:letter]
       - else
         %p
@@ -131,7 +131,7 @@
           %h2 Overall Grade: #{@grades[:climate][:letter]}
           %h3 Points: #{@grades[:climate][:total]} / #{@grades[:climate][:possible]}
         #climate_detail.tab-pane
-          - if @school.elementary?
+          - if @school.elementary? and @school.esd_k8_2013
             - e = @school.esd_k8_2013
             %div
               Site Visit Average Score: 
@@ -142,7 +142,7 @@
             %div
               5Essentials Growth Score:
               #{e.five_e_grwth} (#{e.five_e_grwth_pts} / #{e.five_e_grwth_ptsps})
-          - elsif @school.high?
+          - elsif @school.high? and @school.esd_k8_2013
             - e = @school.esd_k8_2013
             %div
               Site Visit Average Score: 
@@ -171,7 +171,8 @@
                 = val
 
         #other_demographics.tab-pane.active
-          #dems.noprint{:style => 'width: 360px; height: 180px; margin-right: 10px;'}
+          #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 20px;'}
+          #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
 
         #other_details.tab-pane
           - e = @school.esd
@@ -523,6 +524,7 @@
   var klosed = #{@school.closed?.to_json};
   var dem_data = #{@demographics.to_json};
   var enroll = #{@enrollment.to_json};
+  var enroll_ticks = #{@enroll_ticks.to_json};
   
   // Highschool academics
   var high    = #{@school.high?.to_json};
