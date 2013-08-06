@@ -16,8 +16,11 @@
           = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
     .grid_2.centered
-      - if @grades[:cumulative][:letter].to_s.length < 3
+      - letter = @grades[:cumulative][:letter].to_s
+      - if letter.length < 3
         .grade{:title => "Cumulative Grade"}= @grades[:cumulative][:letter]
+      - elsif letter == 'Promising'
+        = image_tag '/images/icon_thumbup_outline2.png', :style => 'height: 100px; width: auto; margin-bottom: 0.5em;', :alt => 'Promising', :title => 'Promising'
       - else
         %p
           %b= raw @grades[:cumulative][:letter]
@@ -28,10 +31,8 @@
         
     .grid_5
       .minimap= render :partial => 'shared/map', :object => @map
-      %div
-        = @school.address
-        %br/
-        = @school.address2
+      %p
+        #{@school.address} &middot; #{@school.address2}
       - if copy = @category_copy[@school.esd.andand.schoolcategory]
         %p
           %b #{copy[0]}:

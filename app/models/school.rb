@@ -86,6 +86,32 @@ class School < ActiveRecord::Base
     esd = (self.esd_hs_2013 || self.esd_k8_2013)
   end
   
+  # For really simple sorting
+  def points 
+    highs = {
+      'Mature' => :total_pts,
+      'New' => :total_pts,
+      'Turnaround' => :turnaround_pts,
+      'Specialty' => :total_pts,
+    }
+    elems = {
+      'Mature' => :pts_earned,
+      'New' => :pts_earned,
+      'Turnaround' => :turnaround_pts_earned,
+    }
+      
+    if high? and self.esd_hs_2013
+      sym = highs[self.esd_hs_2013.schoolcategory]
+      return nil if sym.nil?
+      return self.esd_hs_2013.send(sym).to_i
+    elsif elementary? and self.esd_k8_2013
+      sym = elems[self.esd_k8_2013.schoolcategory]
+      return nil if sym.nil?
+      return self.esd_k8_2013.send(sym).to_i
+    end
+    return nil
+  end
+  
   def grades
     cat = esd.andand.schoolcategory
     
