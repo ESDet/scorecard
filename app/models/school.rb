@@ -84,7 +84,7 @@ class School < ActiveRecord::Base
   end
   
   def esd
-    esd = (self.esd_hs_2013 || self.esd_k8_2013)
+    self.esd_hs_2013 || self.esd_k8_2013
   end
   
   # For really simple sorting
