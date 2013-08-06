@@ -12,7 +12,6 @@ var colors = {
 
 
 $(document).ready(function() {
-  return false;
   
   $('.help').popover({
     placement: 'left',
@@ -20,7 +19,7 @@ $(document).ready(function() {
   });
 
   // Demographics pie chart
-  var bg = klosed ? colors.lightgrey : colors.light;
+  var bg = '#ffffff'; //klosed ? colors.lightgrey : colors.light;
   var dem_plot = jQuery.jqplot ('dems', [dem_data], 
     { 
       grid: { background: bg, drawBorder: false, shadow: false }, 
@@ -30,7 +29,7 @@ $(document).ready(function() {
         shadow: false,
         rendererOptions: {
           showDataLabels: false,
-          diameter: 90,
+          diameter: 140,
           padding: 0
         }
       }, 
@@ -38,6 +37,8 @@ $(document).ready(function() {
     }
   );     
 
+  return;
+  
   if(high && $('#academics').length > 0) {
     // High school academics  
     var hs_academics_plot = jQuery.jqplot ('academics', [high_ac.state.scores, high_ac.school.scores],

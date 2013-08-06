@@ -40,15 +40,6 @@
     
       
       
-    .grid_3
-      - if false
-        .printonly
-          - @demographics.each do |a,b|
-            = a
-            %br/
-        #dems.noprint{:style => 'float: left; width: 220px; height: 140px; margin-right: 10px;'}
-        .clear_floats
-        
     - if false
       .grid_3
         - unless @school.PCT_FRL_FALL_2012.nil? 
@@ -167,25 +158,31 @@
     .grid_12.self_reported
       %h2 Other
       %ul.nav.nav-tabs
-        %li.active= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
-        %li= link_to 'Details', '#other_details', 'data-toggle' => 'tab'
+        %li.active= link_to 'Demographics', '#other_demographics', 'data-toggle' => 'tab'
+        %li= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
+        %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab'
       .tab-content
-        #other_profile.tab-pane.active
+        #other_profile.tab-pane
           - @profile_fields.each do |field,label|
             - val = @school.profile.send(field)
             - unless val.blank?
               %p
-                %h4 #{label}:
+                %h3 #{label}:
                 = val
+
+        #other_demographics.tab-pane.active
+          #dems.noprint{:style => 'width: 360px; height: 180px; margin-right: 10px;'}
+
         #other_details.tab-pane
           - e = @school.esd
           %h3 Challenge Factors:
+          %div Overall Student Characteristics Points: #{e.studchrs_pts}
           %div Socio-economic Status: #{(e.econdis_pct.to_f*100).to_i}%
           %div Special Education: #{(e.sped_pct.to_f*100).to_i}%
           %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
           - if @school.high?
             %br/
-            %div FAFSA Completion Rate: #{@school.esd_hs_2013.andand.fafsa_rate_pts}
+            %div FAFSA Completion Rate: #{@school.esd_hs_2013.andand.fafsa_rate_pts || '?'}
           
 
 
@@ -203,45 +200,46 @@
           = @school[k]
 
 
-.container_12.clear_floats
-  .grid_12
-    %h2 Raw Data Dumps
-    %ul.nav.nav-tabs
-      %li.active= link_to 'Basic Info', '#basic', 'data-toggle' => 'tab'
-      %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
-      - if @school.meap_2012
-        %li= link_to 'MEAP 2012', '#meap', 'data-toggle' => 'tab'
-      - if @school.esd_k8_2013
-        %li= link_to 'K8 2013', '#k8', 'data-toggle' => 'tab'
-      - if @school.esd_hs_2013
-        %li= link_to 'HS 2013', '#hs', 'data-toggle' => 'tab'
-    .tab-content
-      #basic.tab-pane.active
-        - @school.basic.marshal_dump.each do |k,v|
-          %b #{k}:
-          = v
-          %br/
-      #profile.tab-pane
-        - @school.profile.marshal_dump.each do |k,v|
-          %b #{k}:
-          = v
-          %br/
-      #meap.tab-pane
-        - @school.meap_2012.marshal_dump.andand.each do |k,v|
-          %b #{k}:
-          = v
-          %br/
-      #k8.tab-pane
-        - @school.esd_k8_2013.andand.marshal_dump.andand.each do |k,v|
-          %b #{k}:
-          = v
-          %br/
-      #hs.tab-pane
-        - @school.esd_hs_2013.andand.marshal_dump.andand.each do |k,v|
-          %b #{k}:
-          = v
-          %br/
-
+- unless Rails.env == 'production'
+  .container_12.clear_floats
+    .grid_12
+      %h2 Raw Data Dumplings
+      %ul.nav.nav-tabs
+        %li.active= link_to 'Basic Info', '#basic', 'data-toggle' => 'tab'
+        %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
+        - if @school.meap_2012
+          %li= link_to 'MEAP 2012', '#meap', 'data-toggle' => 'tab'
+        - if @school.esd_k8_2013
+          %li= link_to 'K8 2013', '#k8', 'data-toggle' => 'tab'
+        - if @school.esd_hs_2013
+          %li= link_to 'HS 2013', '#hs', 'data-toggle' => 'tab'
+      .tab-content
+        #basic.tab-pane.active
+          - @school.basic.marshal_dump.each do |k,v|
+            %b #{k}:
+            = v
+            %br/
+        #profile.tab-pane
+          - @school.profile.marshal_dump.each do |k,v|
+            %b #{k}:
+            = v
+            %br/
+        #meap.tab-pane
+          - @school.meap_2012.marshal_dump.andand.each do |k,v|
+            %b #{k}:
+            = v
+            %br/
+        #k8.tab-pane
+          - @school.esd_k8_2013.andand.marshal_dump.andand.each do |k,v|
+            %b #{k}:
+            = v
+            %br/
+        #hs.tab-pane
+          - @school.esd_hs_2013.andand.marshal_dump.andand.each do |k,v|
+            %b #{k}:
+            = v
+            %br/
+  
 %br/
  
 - if false and @school.high?
@@ -524,6 +522,7 @@
   // Demographics pie chart
   var klosed = #{@school.closed?.to_json};
   var dem_data = #{@demographics.to_json};
+  var enroll = #{@enrollment.to_json};
   
   // Highschool academics
   var high    = #{@school.high?.to_json};

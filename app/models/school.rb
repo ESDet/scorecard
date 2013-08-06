@@ -57,7 +57,7 @@ class School < ActiveRecord::Base
     scope k,         where(:SCHOOL_TYPE_2012 => v)
   end
   
-  def elementary?;  grades_served.andand.include? GRADES[:elementary]; end
+  def elementary?;  grades_served.andand.include? GRADES[:elementary] or grades_served.andand.include? 'KF'; end
   def middle?;      grades_served.andand.include? GRADES[:middle];      end
   def high?;        grades_served.andand.include? GRADES[:high]; end
   def k8?;          grades_served.andand.include? GRADES[:k8]; end

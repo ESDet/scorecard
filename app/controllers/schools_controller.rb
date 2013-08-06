@@ -106,8 +106,17 @@ class SchoolsController < ApplicationController
       "transportation" => "Transportation",
     }
 
-    ethnicities = [ 'BLACK', 'LATINO', 'WHITE', 'ASIAN', 'OTHER' ]
-    @demographics = ethnicities.collect { |e| [ "#{e.capitalize} " + @school["PCT_#{e}_FALL_2012"].to_i.to_s + "%", @school["PCT_#{e}_FALL_2012"] ] }
+    ethnicities = %w(american_indian asian african_american hispanic hawaiian white two_or_more_races)
+    @demographics = ethnicities.collect do |e|
+      num = @school.meap_2012.send("#{e}_enrollment").to_i
+      [ "#{e.titleize}: #{num}", num]
+    end
+    
+    @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
+      num = @school.meap_2012.send("grade_#{g}_enrollment").to_i
+      [ g, num ]
+    end
+    
 
     @tips = Hash[*(Tip.all.collect { |t| [t.name, t] }.flatten)]
 =begin    
