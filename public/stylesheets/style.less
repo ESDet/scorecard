@@ -150,7 +150,7 @@ ul.school_list {
   }
 }
 .grade {
-  display: inline-block; background-color: @cyan; font-size: 70px; color: white;
+  display: block; background-color: @cyan; font-size: 70px; color: white;
   width: 130px; height: 105px;  padding: 8px; text-align: center;  margin-bottom: 10px;
   &.sub { font-size: 20px; width: 40px; height: 40px;  display: inline-block; }
   &.sub3 { font-size: 20px; width: 130px; height: 40px; display: inline-block; }
@@ -237,12 +237,13 @@ table.enrollment {
     text-align: left;
   }
   
+  h2 { margin-top: 0; }
   #nav {
-    .menu { text-align: left; }
-    .menu a { margin: 0.5em 2em 0.5em 0; }
-    .search { margin: 0.5em 0; display: block; }
+    text-align: center; margin-bottom: 0.5em;
+    .home { display: none; }
+    .search { display: none; }
   }
-  .lead { padding: 0.5em; }
+  #bodywrap { padding: 0.5em; }
   .branding { text-align: center;
     .site-logo img { max-width: 50%; }
     .l-region--branding { display: none; }
@@ -261,6 +262,30 @@ table.enrollment {
   }
   #lefty, #front-filter { 
     .l-content-right { width: 80%; }
+  }
+  .block {
+    .grade_container { position: static; }
+    .subscore_wrapper {
+      margin-left: 0; overflow: hidden;
+      table.scores {
+        max-width: 100%;
+        thead { display: none; }
+        tbody {
+          td { display: inline-block; overflow: hidden; padding: 6px 2px; }
+          td:nth-child(1) { width: auto; display: block; background-color: rgba(255, 255, 255, 0.2); padding: 6px 15px; }
+          td:nth-child(2) { padding-left: 2em; }
+          td:nth-child(2):before { content: 'Score: '; }
+          td:nth-child(3):before { content: '('; }
+          td:nth-child(3):after { content: ' points of'; }
+          td:nth-child(4):after { content: ')'; }
+          tr:nth-child(odd) { background-color: transparent; }
+        }
+      }
+    }
+  }
+  #other_profile table {
+    td { display: inline-block; overflow: hidden; }
+    td:nth-child(1) { display: block; text-align: left; padding-bottom: 0; }
   }
   #footer.l-footer-wrapper { height: auto; position: static; text-align: center; }
 }

@@ -87,7 +87,7 @@
                 %tr
                   %td
                     %h3 #{label}:
-                  %td= val
+                  %td= val == '0' ? 'No' : val
 
         #other_demographics.tab-pane.active
           #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 40px;'}
