@@ -1,0 +1,7 @@
+%table.scores
+  - scores.each do |h|
+    %tr
+      %td= h[:name]
+      %td= h[:value]
+      %td= h[:points]
+      %td= h[:possible]

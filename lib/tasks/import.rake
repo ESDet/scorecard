@@ -9,8 +9,7 @@ namespace :import do
     begin; conn.drop_table TABLE_NAME; rescue; end
     conn.create_table TABLE_NAME
     
-    
-    keys = ['bcode', 'tid', 'name', 'address', 'zip']
+    keys = [:bcode, :tid, :name, :slug, :address, :address2, :zip, :school_type]
     keys.each do |key|
       begin
         conn.add_column(TABLE_NAME, key, :string, {})
@@ -20,9 +19,9 @@ namespace :import do
       end
     end
     conn.add_column(TABLE_NAME, :centroid, :point)
-    conn.add_column(TABLE_NAME, :slug, :string)
     conn.add_index(TABLE_NAME, PK, :length => 10)
     conn.add_index(TABLE_NAME, :grades_served)
+    conn.add_index(TABLE_NAME, :school_type)
   end
   
   def ensure_column(key, ty=:string)
@@ -37,6 +36,9 @@ namespace :import do
   def get_profiles
     p = Portal.new
     field_re = /^field_(.*)$/
+    types = p.show_vocabulary 3
+    types = Hash[types.collect { |t| [t['tid'], t['name']] }]
+    puts "Types: #{types.inspect}"
     schools = p.show_vocabulary 4
     schools.each do |s|
       tid = s['tid']
@@ -47,10 +49,10 @@ namespace :import do
       puts "Doing #{name} (#{bcode})..."
       next if bcode.nil?
 
-      # First the 
+      # First the basic stuff
       ensure_column :basic, :text
       basic = {}
-      ['email', 'school_scorecard_status', 'school_status', 'school_type', 'loc_email'].each do |f|
+      ['email', 'school_scorecard_status', 'school_status', 'loc_email'].each do |f|
         val = s["field_#{f}"]
         if val.empty?
           val = nil
@@ -60,17 +62,27 @@ namespace :import do
         basic[f.to_sym] = val
       end
       
-      basic[:address] = s['field_address']['und'].first
+      stid = s['field_school_type']
+      unless stid.blank?
+        stid = stid['und'].andand.first.andand['tid']
+        puts "School_type tid: #{stid}, and types[stid] = #{types[stid]}"
+        basic['school_type'] = types[stid]
+      end
+      
+      addr = s['field_address']['und'].first
+      basic[:address] = addr
       basic[:links] = s['field_links'].empty? ? nil : s['field_links']['und'].collect { |l| l['url'] }
-      address = "#{basic[:address]['thoroughfare']}\n#{basic[:address]['locality']}, #{basic[:address]['administrative_area']} #{basic[:address]['postal_code']}"
+      address = addr['thoroughfare']
+      address2 = "#{addr['locality']}, #{addr['administrative_area']} #{addr['postal_code']}"
       school = School.find_or_create_by_bcode(bcode)
-      school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :address => address, :zip => basic[:address]['postal_code'] }
-      if school.address_changed? and !school.basic.address['thoroughfare'].blank?
+      school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :school_type => types[stid],
+        :address => address, :address2 => address2, :zip => addr['postal_code'] }
+      if false and school.address_changed? and !addr['thoroughfare'].blank?
         geo = Bedrock::Geocoder.bing_geocode({
-          :address => basic[:address]['thoroughfare'],
-          :city => basic[:address]['locality'],
-          :state => basic[:address]['administrative_area'],
-          :zip => basic[:address]['postal_code']
+          :address => addr['thoroughfare'],
+          :city    => addr['locality'],
+          :state   => addr['administrative_area'],
+          :zip     => addr['postal_code']
         })
         school.centroid = RGeo::Geographic.spherical_factory.point(geo.andand[:location].andand[:lon] || 0, geo.andand[:location].andand[:lat] || 0)
       end
@@ -90,7 +102,7 @@ namespace :import do
           puts "  #{key} = #{val.inspect}"
           h[key] = val
         end
-        school.update_attributes(:profile => OpenStruct.new(h), :grades_served => h[:grades_served])
+        school.update_attributes(:profile => OpenStruct.new(h), :grades_served => h['grades_served'])
       end
     end
   end

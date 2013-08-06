@@ -95,13 +95,19 @@ ul.school_list {
   li { list-style: none; }
 }
 
-.circle_grade {
-  display: inline-block; background-color: @cyan; font-size: 72px; color: white;
-  -webkit-border-radius: 999px; -moz-border-radius: 999px; border-radius: 999px; 
-  width: 100px; height: 100px;
-  padding: 8px; text-align: center;
-  margin-bottom: 10px;
+.grade_container {
+  float: left; margin-right: 10px; width: 130px; height: 150px;
+}
+.grade {
+  display: inline-block; background-color: @cyan; font-size: 70px; color: white;
+  width: 130px; height: 105px;  padding: 8px; text-align: center;  margin-bottom: 10px;
   &.sub { font-size: 20px; width: 40px; height: 40px;  display: inline-block; }
+  &.sub3 { font-size: 20px; width: 130px; height: 40px; display: inline-block; }
+}
+table.scores {
+  td { padding: 4px 10px; vertical-align: top; }
+  td:nth-child(1) {  width: 400px; }
+  tr:nth-child(odd) { background-color: #f8f8f8; }
 }
 
 

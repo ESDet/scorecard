@@ -4,7 +4,10 @@
       %h2= @school.name
       %h3
         Grades: #{@school.grades_served || 'Unknown'}
-        = simple_format(@school.address)
+        %div
+          = @school.address
+          %br/
+          = @school.address2
        
       - if true 
         %br/
@@ -16,13 +19,13 @@
 
     .grid_2.centered
       - if @grades[:cumulative][:letter].to_s.length < 3
-        .circle_grade{:title => "Cumulative Grade"}= @grades[:cumulative][:letter]
+        .grade{:title => "Cumulative Grade"}= @grades[:cumulative][:letter]
       - else
         %p
           %b= raw @grades[:cumulative][:letter]
-      .circle_grade.sub{:title => 'Academic Status'}= @grades[:status][:letter]
-      .circle_grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter]
-      .circle_grade.sub{:title => 'School Climate'}= @grades[:climate][:letter]
+      .grade.sub{:title => 'Academic Status'}= @grades[:status][:letter]
+      .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter]
+      .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter]
                 
         
     .grid_5
@@ -60,68 +63,15 @@
   .container_12.clear_floats
     .grid_12.status
       %h2 Academic Status
-      %ul.nav.nav-tabs
-        %li.active= link_to 'Main', '#status_main', 'data-toggle' => 'tab'
-        %li= link_to 'Detail', '#status_detail', 'data-toggle' => 'tab'
-      .tab-content
-        #status_main.tab-pane.active
-          %h2 Overall Grade: #{@grades[:status][:letter]}
-          %h3 Points: #{@grades[:status][:total]} / #{@grades[:status][:possible]}
-        #status_detail.tab-pane
-          - if @school.elementary?
-            - e = @school.esd_k8_2013
-            %div
-              Math Proficienty Rate (2-Year Avg):
-              = e.pr2_math.to_f.round(2)
-              (#{e.pr2_math_pts} / #{e.pr2_math_ptsps})
-            %div
-              ELA (Reading + Writing) Proficiency Rate (2-Year Average):
-              = e.pr2_ela.to_f.round(2)
-              (#{e.pr2_ela_pts} / #{e.pr2_ela_ptsps})
-            %div
-              Other (Science & Social Studies) Proficiency Rate (2-Year Average)
-              = e.pr2_other.to_f.round(2)
-              (#{e.pr2_other_pts} / #{e.pr2_other_ptsps})
-          - if @school.high?
-            - e = @school.esd_hs_2013
-            %div
-              ACT Composite Score (2 Year Average):
-              = e.act2_comp.to_f.round(1)
-              (#{e.act2_comp_pts} / #{e.act2_comp_psspts})
-            %div
-              ACT Percent College Ready:
-              = e.act2_pcr.to_f.round(2)
-              (#{e.act2_pcr_pts} / #{e.act2_pcr_psspts})
-            %div
-              Graduation Rate (2011-12):
-              = e.gradrate.to_f.round(2)
-              (#{e.gradrate_pts} / #{e.gradrate_psspts})
+      = render 'shared/grade_overview', :grade => @grades[:status]
+      = render 'shared/subscores', :scores => @grades[:status][:details]
         
-    
   .container_12.clear_floats
     .grid_12.progress
       %h2 Academic Progress
-      %ul.nav.nav-tabs
-        %li.active= link_to 'Main', '#progress_main', 'data-toggle' => 'tab'
-        %li= link_to 'Detail', '#progress_detail', 'data-toggle' => 'tab'
-      .tab-content
-        #progress_main.tab-pane.active
-          %h2 Overall Grade: #{@grades[:progress][:letter]}
-          %h3 Points: #{@grades[:progress][:total]} / #{@grades[:progress][:possible]}
-        #progress_detail.tab-pane
-          - if @school.elementary?
-            - e = @school.esd_k8_2013
-            %div
-              Performance Level Change Score:
-              #{e.plc_comp.to_f.round(2)} (#{e.plc_comp_pts} / #{e.plc_comp_ptsps})
-            %div
-              NWEA/Scantron Percent Meeting Growth Target:
-              #{e.bench_comp.to_f.round(2)} (#{e.bench_comp_pts} / #{e.bench_comp_ptsps})
-          - if @school.high?
-            - e = @school.esd_hs_2013
-            %div
-              Year-over-Year ACT Composite Score Gain (2 Year Average, 2010-11 to 2011-12, 2011-12 to 2012-13):
-              #{e.act_grwth.to_f.round(2)} (#{e.act_grwth_pts} / #{e.act_grwth_psspts})
+      = render 'shared/grade_overview', :grade => @grades[:progress]
+      = render 'shared/subscores', :scores => @grades[:progress][:details]
+
 
     
   .container_12.clear_floats
@@ -525,7 +475,6 @@
 
 :javascript
   // Demographics pie chart
-  var klosed = #{@school.closed?.to_json};
   var dem_data = #{@demographics.to_json};
   var enroll = #{@enrollment.to_json};
   var enroll_ticks = #{@enroll_ticks.to_json};

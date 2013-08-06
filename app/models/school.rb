@@ -2,7 +2,7 @@ class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
   require 'bedrock/acts_as_geocoded'
   
-  acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :grades_served, :slug], :add_properties => :my_properties
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :address2, :grades_served, :slug], :add_properties => :my_properties
   #acts_as_geocoded :address => :address, :point => :centroid, :sleep => 0.15
   utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   set_rgeo_factory_for_column(:centroid, utm_factory)
@@ -29,11 +29,13 @@ class School < ActiveRecord::Base
 
 
   GRADES = {
-    :p2         => 'pk',
-    :elementary => '1, 2, 3, 4, 5',
-    :middle     => '6, 7, 8',
-    :high       => '9, 10, 11, 12',
-    :k8         => 'KF, 1, 2, 3, 4, 5, 6, 7, 8',
+    :early      => 'Early childhood',
+    :k8         => 'K8',
+    :k12        => 'K12',
+    :suburban   => 'Suburban',
+    :elementary => ['Early childhood', 'K8', 'K12'],
+    :middle     => ['K8', 'K12'],
+    :high       => 'HS',
   }
   
   TYPES = {
@@ -50,18 +52,18 @@ class School < ActiveRecord::Base
   }
   
   GRADES.each do |k,v|
-    scope k,         where("grades_served like '%#{v}%'")
+    scope k,         where(:school_type => v)
   end
   
   TYPES.each do |k,v|
-    scope k,         where(:SCHOOL_TYPE_2012 => v)
+    scope k,         where(:sch => v)
   end
   
-  def elementary?;  grades_served.andand.include? GRADES[:elementary] or grades_served.andand.include? 'KF'; end
-  def middle?;      grades_served.andand.include? GRADES[:middle];      end
-  def high?;        grades_served.andand.include? GRADES[:high]; end
-  def k8?;          grades_served.andand.include? GRADES[:k8]; end
-  def closed?;      false; end 
+  def elementary?;  k8? or k12?; end
+  def middle?;      k8? or k12?; end
+  def high?;        school_type == GRADES[:high] or k12?; end
+  def k8?;          school_type == GRADES[:k8]; end
+  def k12?;         school_type == GRADES[:k12]; end
   
   def my_properties
     result = {
@@ -89,7 +91,8 @@ class School < ActiveRecord::Base
       h[:status] = {
         :letter   => esd.status_ltrgrade.blank? ? '?' : esd.status_ltrgrade,
         :total    => esd.status_pts,
-        :possible => esd.status_psspts   }
+        :possible => esd.status_psspts,
+        :details  => [] }
       h[:progress] = {
         :letter   => esd.progress_ltrgrade.blank? ? '?' : esd.progress_ltrgrade,
         :total    => esd.progress_pts,
@@ -128,7 +131,8 @@ class School < ActiveRecord::Base
       h[:status] = {
         :letter   => esd.status_ltrgrade.blank? ? '?' : esd.status_ltrgrade,
         :total    => esd.pts_status,
-        :possible => esd.ptspos_status }
+        :possible => esd.ptspos_status,
+        :details  => [] }
       h[:progress] = {
         :letter   => esd.progress_ltrgrade.blank? ? '?' : esd.progress_ltrgrade,
         :total    => esd.pts_progress,
@@ -161,10 +165,78 @@ class School < ActiveRecord::Base
           :possible => esd.turnaround_pts_possible,
           :percent  => esd.turnaround_pct }
       end
-    
+      
     end
+
+    [:status, :progress].each { |s| h[s][:details] = details(s) }
+
     return h
   end
+  
+  
+  def details(cat)
+    h = []
+    if cat == :status
+      if elementary? and e = self.esd_k8_2013
+        h += [
+          { :name     => "Math Proficienty Rate (2-Year Avg)",
+            :value    => esd.pr2_math.to_f.round(2),
+            :points   => esd.pr2_math_pts,
+            :possible => esd.pr2_math_ptsps },
+          { :name     => "ELA (Reading + Writing) Proficiency Rate (2-Year Average)",
+            :value    => esd.pr2_ela.to_f.round(2),
+            :points   => esd.pr2_ela_pts,
+            :possible => esd.pr2_ela_ptsps },
+          { :name     => "Other (Science & Social Studies) Proficiency Rate (2-Year Average)",
+            :value    => esd.pr2_other.to_f.round(2),
+            :points   => esd.pr2_other_pts,
+            :possible => esd.pr2_other_ptsps }
+        ] 
+      end
+      if high? and e = self.esd_hs_2013
+        h += [
+          { :name     => "ACT Composite Score (2 Year Average)",
+            :value    => esd.act2_comp.to_f.round(1),
+            :points   => esd.act2_comp_pts,
+            :possible => esd.act2_comp_psspts },
+          { :name     => "ACT Percent College Ready",
+            :value    => esd.act2_pcr.to_f.round(2),
+            :points   => esd.act2_pcr_pts,
+            :possible => esd.act2_pcr_psspts },
+          { :name     => "Graduation Rate (2011-12)",
+            :value    => esd.gradrate.to_f.round(2),
+            :points   => esd.gradrate_pts,
+            :possible => esd.gradrate_psspts },
+        ]
+      end
+    end
+    
+    if cat == :progress
+      if elementary? and e = @school.esd_k8_2013
+        h += [
+          { :name     => "Performance Level Change Score",
+            :value    =>  e.plc_comp.to_f.round(2),
+            :points   =>  e.plc_comp_pts,
+            :possible =>  e.plc_comp_ptsps },
+          { :name     => "NWEA/Scantron Percent Meeting Growth Target",
+            :value    =>  e.bench_comp.to_f.round(2),
+            :points   =>  e.bench_comp_pts,
+            :possible =>  e.bench_comp_ptsps }
+        ]
+      end
+              
+      if high? and e = esd_hs_2013
+        h += [
+          { :name     => "Year-over-Year ACT Composite Score Gain (2 Year Average, 2010-11 to 2011-12, 2011-12 to 2012-13)",
+            :value    => e.act_grwth.to_f.round(2),
+            :points   => e.act_grwth_pts,
+            :possible => e.act_grwth_psspts },
+        ]
+      end
+    end
+    h
+  end
+  
   
   def set_slug
     self.name ||= "School #{self.bcode}"
