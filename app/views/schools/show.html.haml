@@ -167,13 +167,18 @@
     .grid_12.self_reported
       %h2 Other Points
       %ul.nav.nav-tabs
-        %li.active= link_to 'Main', '#other_main', 'data-toggle' => 'tab'
-        %li= link_to 'Detail', '#other_detail', 'data-toggle' => 'tab'
+        %li.active= link_to 'Details', '#other_details', 'data-toggle' => 'tab'
       .tab-content
-        #other_main.tab-pane.active
-          A other-reported summary
-        #other_detail.tab-pane
-          other details
+        #other_details.tab-pane.active
+          - e = @school.esd
+          %h3 Challenge Factors:
+          %div Socio-economic Status: #{(e.econdis_pct.to_f*100).to_i}%
+          %div Special Education: #{(e.sped_pct.to_f*100).to_i}%
+          %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
+          - if @school.high?
+            %br/
+            %div FAFSA Completion Rate: #{@school.esd_hs_2013.andand.fafsa_rate_pts}
+          
 
 
   .container_12
