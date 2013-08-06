@@ -66,9 +66,15 @@ class School < ActiveRecord::Base
   def k12?;         school_type == GRADES[:k12]; end
   
   def my_properties
+    kinds = []
+    kinds << 'elementary' if elementary?
+    kinds << 'middle' if middle?
+    kinds << 'high' if high?
+    
     result = {
-      :name   => self.name,
-      :level  => self.high? ? 'HS' : (self.middle? ? 'MS' : 'ES'),
+      :name       => self.name,
+      :level      => self.high? ? 'HS' : (self.middle? ? 'MS' : 'ES'),
+      :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter]
     }
     others = School.where(['address = ? and id <> ?', self.address, self.id]).select('id, name, address, grades_served, bcode, slug')
