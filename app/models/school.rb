@@ -168,7 +168,7 @@ class School < ActiveRecord::Base
       
     end
 
-    [:status, :progress].each { |s| h[s][:details] = details(s) }
+    [:status, :progress, :climate].each { |s| h[s][:details] = details(s) }
 
     return h
   end
@@ -212,7 +212,7 @@ class School < ActiveRecord::Base
     end
     
     if cat == :progress
-      if elementary? and e = @school.esd_k8_2013
+      if elementary? and e = self.esd_k8_2013
         h += [
           { :name     => "Performance Level Change Score",
             :value    =>  e.plc_comp.to_f.round(2),
@@ -234,6 +234,41 @@ class School < ActiveRecord::Base
         ]
       end
     end
+    
+    if cat == :climate
+      if elementary? and e = self.esd_k8_2013
+          h += [
+            { :name     => "Site Visit Average Score",
+              :value    => e.site_s.to_f.round(1),
+              :points   => e.site_s_pts,
+              :possible => e.site_s_ptsps },
+            { :name     => "Net 5Essentials Score (2012-13)",
+              :value    => e.net5e_1213,
+              :points   => e.net5e_1213_pts,
+              :possible => e.net5e_1213_ptsps },
+            { :name     => "5Essentials Growth Score",
+              :value    => e.five_e_grwth,
+              :points   => e.five_e_grwth_pts,
+              :possible => e.five_e_grwth_ptsps },
+          ]
+      elsif high? and e = self.esd_hs_2013
+        h += [
+          { :name     => "Site Visit Average Score",
+            :value    => e.site_s,
+            :points   => e.site_s_pts,
+            :possible => e.site_s_psspts },
+          { :name     => "Net 5Essentials Score (2012-13)",
+            :value    => e.net5e_1213,
+            :points   => e.net5e_1213_pts,
+            :possible => e.net5e_1213_psspts },
+          { :name     => "5Essentials Growth Score",
+            :value    => e.five_e_grwth,
+            :points   => e.five_e_grwth_pts,
+            :possible => e.five_e_grwth_psspts },
+        ]
+      end
+    end
+    
     h
   end
   

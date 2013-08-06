@@ -61,53 +61,23 @@
 
 
   .container_12.clear_floats
-    .grid_12.status
+    .grid_12
       %h2 Academic Status
       = render 'shared/grade_overview', :grade => @grades[:status]
       = render 'shared/subscores', :scores => @grades[:status][:details]
         
   .container_12.clear_floats
-    .grid_12.progress
+    .grid_12
       %h2 Academic Progress
       = render 'shared/grade_overview', :grade => @grades[:progress]
       = render 'shared/subscores', :scores => @grades[:progress][:details]
-
-
     
   .container_12.clear_floats
-    .grid_12.climate
+    .grid_12
       %h2 School Climate
-      %ul.nav.nav-tabs
-        %li.active= link_to 'Main', '#climate_main', 'data-toggle' => 'tab'
-        %li= link_to 'Detail', '#climate_detail', 'data-toggle' => 'tab'
-      .tab-content
-        #climate_main.tab-pane.active
-          %h2 Overall Grade: #{@grades[:climate][:letter]}
-          %h3 Points: #{@grades[:climate][:total]} / #{@grades[:climate][:possible]}
-        #climate_detail.tab-pane
-          - if @school.elementary? and @school.esd_k8_2013
-            - e = @school.esd_k8_2013
-            %div
-              Site Visit Average Score: 
-              #{e.site_s} (#{e.site_s_pts} / #{e.site_s_ptsps})          
-            %div
-              Net 5Essentials Score (2012-13): 
-              #{e.net5e_1213} (#{e.net5e_1213_pts} / #{e.net5e_1213_ptsps})          
-            %div
-              5Essentials Growth Score:
-              #{e.five_e_grwth} (#{e.five_e_grwth_pts} / #{e.five_e_grwth_ptsps})
-          - elsif @school.high? and @school.esd_k8_2013
-            - e = @school.esd_k8_2013
-            %div
-              Site Visit Average Score: 
-              #{e.site_s.to_f.round(2)} (#{e.site_s_pts} / #{e.site_s_psspts})          
-            %div
-              Net 5Essentials Score (2012-13): 
-              #{e.net5e_1213} (#{e.net5e_1213_pts} / #{e.net5e_1213_psspts})          
-            %div
-              5Essentials Growth Score:
-              #{e.five_e_grwth} (#{e.five_e_grwth_pts} / #{e.five_e_psspts})
-              
+      = render 'shared/grade_overview', :grade => @grades[:climate]
+      = render 'shared/subscores', :scores => @grades[:climate][:details]
+      
   .container_12.clear_floats
     .grid_12.self_reported
       %h2 Other
