@@ -4,9 +4,7 @@
       %h2= @school.name
       %h3
         Grades: #{@school.grades_served || 'Unknown'}
-        %br/
-      - if false
-        #{@school.SCHOOL_STREET_ADDRESS_2012} &middot; #{@school.SCHOOL_CITY_STATE_ZIP_2012} 
+        = simple_format(@school.address)
        
       - if true 
         %br/
@@ -17,7 +15,11 @@
           = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
     .grid_2.centered
-      .circle_grade= @grades[:cumulative][:letter]
+      - if @grades[:cumulative][:letter].length < 3
+        .circle_grade= @grades[:cumulative][:letter]
+      - else
+        %p
+          %b= raw @grades[:cumulative][:letter]
       .circle_grade.sub= @grades[:status][:letter]
       .circle_grade.sub= @grades[:progress][:letter]
       .circle_grade.sub= @grades[:climate][:letter]
@@ -62,23 +64,53 @@
 
   .container_12.clear_floats
     .grid_12.status
-      %h2 Status
+      %h2 Academic Status
       %ul.nav.nav-tabs
         %li.active= link_to 'Main', '#status_main', 'data-toggle' => 'tab'
         %li= link_to 'Detail', '#status_detail', 'data-toggle' => 'tab'
         %li= link_to 'History', '#status_history', 'data-toggle' => 'tab'
       .tab-content
         #status_main.tab-pane.active
-          %h2= @grades[:status][:letter]
+          %h2 Overall Grade: #{@grades[:status][:letter]}
+          %h3 Points: #{@grades[:status][:total]} / #{@grades[:status][:possible]}
         #status_detail.tab-pane
-          Status details
+          - if @school.elementary?
+            - e = @school.esd_k8_2013
+            %div
+              Math Proficienty Rate (2-Year Avg):
+              = e.pr2_math.to_f.round(2)
+              (#{e.pr2_math_pts} / #{e.pr2_math_ptsps})
+            %div
+              ELA (Reading + Writing) Proficiency Rate (2-Year Average):
+              = e.pr2_ela.to_f.round(2)
+              (#{e.pr2_ela_pts} / #{e.pr2_ela_ptsps})
+            %div
+              Other (Science & Social Studies) Proficiency Rate (2-Year Average)
+              = e.pr2_other.to_f.round(2)
+              (#{e.pr2_other_pts} / #{e.pr2_other_ptsps})
+          - if @school.high?
+            - e = @school.esd_hs_2013
+            %div
+              ACT Composite Score (2 Year Average):
+              = e.act2_comp.to_f.round(1)
+              (#{e.act2_comp_pts} / #{e.act2_comp_psspts})
+            %div
+              ACT Percent College Ready:
+              = e.act2_pcr.to_f.round(2)
+              (#{e.act2_pcr_pts} / #{e.act2_pcr_psspts})
+            %div
+              Graduation Rate (2011-12):
+              = e.gradrate.to_f.round(2)
+              (#{e.gradrate_pts} / #{e.gradrate_psspts})
+
+            
         #status_history.tab-pane
           Status history...
         
     
   .container_12.clear_floats
     .grid_12.progress
-      %h2 Progress
+      %h2 Academic Progress
       %ul.nav.nav-tabs
         %li.active= link_to 'Main', '#progress_main', 'data-toggle' => 'tab'
         %li= link_to 'Detail', '#progress_detail', 'data-toggle' => 'tab'
@@ -93,7 +125,7 @@
     
   .container_12.clear_floats
     .grid_12.climate
-      %h2 Climate
+      %h2 School Climate
       %ul.nav.nav-tabs
         %li.active= link_to 'Main', '#climate_main', 'data-toggle' => 'tab'
         %li= link_to 'Detail', '#climate_detail', 'data-toggle' => 'tab'
@@ -108,17 +140,17 @@
               
   .container_12.clear_floats
     .grid_12.self_reported
-      %h2 Self-Reported
+      %h2 Other Points
       %ul.nav.nav-tabs
-        %li.active= link_to 'Main', '#self_main', 'data-toggle' => 'tab'
-        %li= link_to 'Detail', '#self_detail', 'data-toggle' => 'tab'
-        %li= link_to 'History', '#self_history', 'data-toggle' => 'tab'
+        %li.active= link_to 'Main', '#other_main', 'data-toggle' => 'tab'
+        %li= link_to 'Detail', '#other_detail', 'data-toggle' => 'tab'
+        %li= link_to 'History', '#other_history', 'data-toggle' => 'tab'
       .tab-content
-        #self_main.tab-pane.active
-          %h2 A self-reported summary
-        #self_detail.tab-pane
-          self details
-        #self_history.tab-pane
+        #other_main.tab-pane.active
+          A other-reported summary
+        #other_detail.tab-pane
+          other details
+        #other_history.tab-pane
           self history...
 
 

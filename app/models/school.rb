@@ -74,12 +74,11 @@ class School < ActiveRecord::Base
     return result
   end
   
-  def category
-    self.esd_k8_2013.andand.schoolcategory || self.esd_hs_2013.andand.schoolcategory
+  def esd
+    esd = (self.esd_hs_2013 || self.esd_k8_2013)
   end
   
   def grades
-    esd = (self.esd_k8_2013 || self.esd_hs_2013)
     cat = esd.andand.schoolcategory
     
     h = { :cumulative => {}, :status => {}, :progress => {}, :climate => {}, :other => {} }

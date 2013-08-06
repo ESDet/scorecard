@@ -49,7 +49,6 @@ class SchoolsController < ApplicationController
   end
   
   def show
-    
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
       redirect_to root_path and return if @school.nil?

@@ -1,6 +1,6 @@
 class Portal
 
-  BASE = 'http://v2.dev.portal.excellentschoolsdetroit.org/api/1.0/'
+  BASE = 'http://portal.excellentschoolsdetroit.org/api/1.0/'
   
   def list_vocabularies
     o = fetch 'taxonomy_vocabulary.json/'
