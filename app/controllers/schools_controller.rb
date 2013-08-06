@@ -109,16 +109,30 @@ class SchoolsController < ApplicationController
     ethnicities = %w(american_indian asian african_american hispanic hawaiian white two_or_more_races)
     @demographics = ethnicities.collect do |e|
       num = @school.meap_2012.send("#{e}_enrollment").to_i
+      num = 0 if num == 9
       [ "#{e.titleize}: #{num}", num]
     end
     
     @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
-      @school.meap_2012.send("grade_#{g}_enrollment").to_i
+      num = @school.meap_2012.send("grade_#{g}_enrollment").to_i
+      num = 0 if num == 9
     end
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
 
     @tips = Hash[*(Tip.all.collect { |t| [t.name, t] }.flatten)]
+    @category_copy = {
+      'Turnaround' => ['Fresh start school',
+        "These are schools that Michigan has identified as the lowest achieving five percent of schools in the state.
+          They are mandated to perform a rapid turnaround to improve. As part of the mandate, the school has a new operator."],
+      'New' => ['New school',
+        "This school has been open since 2009 or sooner and as a result of being new, doesn't have the cumulative information
+        needed for ESD to assign a grade."],
+      'Specialty' => ['Specialty school', 
+        "A specialty school serves students that have unique learning needs or skills.
+        Examples can include: adult education and alternative learning programs."]
+      }
+
 =begin    
 
     @elements = [

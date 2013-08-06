@@ -27,6 +27,10 @@
         
     .grid_5
       = render :partial => 'shared/map', :object => @map
+      - if copy = @category_copy[@school.esd.andand.schoolcategory]
+        %p
+          %b #{copy[0]}:
+          = copy[1]
       
       %br/
       - unless true or @school.PDF_FILE_NAME.blank?
@@ -171,7 +175,7 @@
                 = val
 
         #other_demographics.tab-pane.active
-          #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 20px;'}
+          #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 40px;'}
           #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
 
         #other_details.tab-pane
