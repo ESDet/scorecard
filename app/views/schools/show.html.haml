@@ -165,11 +165,19 @@
               
   .container_12.clear_floats
     .grid_12.self_reported
-      %h2 Other Points
+      %h2 Other
       %ul.nav.nav-tabs
-        %li.active= link_to 'Details', '#other_details', 'data-toggle' => 'tab'
+        %li.active= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
+        %li= link_to 'Details', '#other_details', 'data-toggle' => 'tab'
       .tab-content
-        #other_details.tab-pane.active
+        #other_profile.tab-pane.active
+          - @profile_fields.each do |field,label|
+            - val = @school.profile.send(field)
+            - unless val.blank?
+              %p
+                %h4 #{label}:
+                = val
+        #other_details.tab-pane
           - e = @school.esd
           %h3 Challenge Factors:
           %div Socio-economic Status: #{(e.econdis_pct.to_f*100).to_i}%
