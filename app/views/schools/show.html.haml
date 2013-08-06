@@ -151,6 +151,17 @@
             %div
               5Essentials Growth Score:
               #{e.five_e_grwth} (#{e.five_e_grwth_pts} / #{e.five_e_grwth_ptsps})
+          - elsif @school.high?
+            - e = @school.esd_k8_2013
+            %div
+              Site Visit Average Score: 
+              #{e.site_s.to_f.round(2)} (#{e.site_s_pts} / #{e.site_s_psspts})          
+            %div
+              Net 5Essentials Score (2012-13): 
+              #{e.net5e_1213} (#{e.net5e_1213_pts} / #{e.net5e_1213_psspts})          
+            %div
+              5Essentials Growth Score:
+              #{e.five_e_grwth} (#{e.five_e_grwth_pts} / #{e.five_e_psspts})
               
   .container_12.clear_floats
     .grid_12.self_reported
