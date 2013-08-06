@@ -16,13 +16,13 @@
 
     .grid_2.centered
       - if @grades[:cumulative][:letter].to_s.length < 3
-        .circle_grade= @grades[:cumulative][:letter]
+        .circle_grade{:title => "Cumulative Grade"}= @grades[:cumulative][:letter]
       - else
         %p
           %b= raw @grades[:cumulative][:letter]
-      .circle_grade.sub= @grades[:status][:letter]
-      .circle_grade.sub= @grades[:progress][:letter]
-      .circle_grade.sub= @grades[:climate][:letter]
+      .circle_grade.sub{:title => 'Academic Status'}= @grades[:status][:letter]
+      .circle_grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter]
+      .circle_grade.sub{:title => 'School Climate'}= @grades[:climate][:letter]
                 
         
     .grid_5

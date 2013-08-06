@@ -116,6 +116,7 @@ class SchoolsController < ApplicationController
     @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
       num = @school.meap_2012.send("grade_#{g}_enrollment").to_i
       num = 0 if num == 9
+      num
     end
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
