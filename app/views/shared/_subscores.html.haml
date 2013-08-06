@@ -5,7 +5,7 @@
       %th Score
       %th Pts
       %th Max
-  - scores.each do |h|
+  - scores.andand.each do |h|
     %tr
       %td= h[:name]
       %td= h[:value]
