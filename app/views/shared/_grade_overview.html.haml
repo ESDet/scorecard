@@ -7,5 +7,5 @@
           .grade= grade[:letter]
           .grade.sub3 #{grade[:total]} / #{grade[:possible]}
         .subscore_wrapper
-          = render 'shared/subscores', :scores => @grades[:status][:details]
+          = render 'shared/subscores', :scores => grade[:details]
         .clear_floats
