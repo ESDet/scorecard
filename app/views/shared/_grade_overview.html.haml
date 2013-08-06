@@ -1,3 +1,11 @@
-.grade_container
-  .grade= grade[:letter]
-  .grade.sub3 #{grade[:total]} / #{grade[:possible]}
+#block-boxes-did-you-know.block.block--boxes.block--boxes-dyk_box.block--boxes-did-you-know
+  %h2.block__title= title
+  .block__content
+    #boxes-box-school_score_widget.boxes-box
+      .boxes-box-content
+        .grade_container
+          .grade= grade[:letter]
+          .grade.sub3 #{grade[:total]} / #{grade[:possible]}
+        .subscore_wrapper
+          = render 'shared/subscores', :scores => @grades[:status][:details]
+        .clear_floats

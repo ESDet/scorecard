@@ -10,6 +10,7 @@
 @greyish: #556677;
 
 @cyan: #00aff0;
+@dgreen: #29b473;
 
 @headerheight: 80px; 
 @footerheight: 180px;
@@ -95,8 +96,21 @@ ul.school_list {
   li { list-style: none; }
 }
 
-.grade_container {
-  float: left; margin-right: 10px; width: 130px; height: 150px; margin-bottom: 2em;
+.block {
+  margin-bottom: 2em;
+  .boxes-box-content { min-height: 150px; position: relative; }
+  .grade_container {
+    position: absolute; left: 0px; top: 0px; width: 130px; height: 150px; margin-bottom: 2em;
+    .grade { background-color: #29b473; }
+  }
+  .subscore_wrapper {
+    margin-left: 150px;
+    table.scores { width: 100%; 
+      td, th { text-align: left; padding: 6px 15px; vertical-align: top;  }
+      td:nth-child(1) {  width: 450px; }
+      tbody tr:nth-child(odd) { background-color: rgba(255, 255, 255, 0.2); }
+    }
+  }
 }
 .grade {
   display: inline-block; background-color: @cyan; font-size: 70px; color: white;
@@ -104,12 +118,6 @@ ul.school_list {
   &.sub { font-size: 20px; width: 40px; height: 40px;  display: inline-block; }
   &.sub3 { font-size: 20px; width: 130px; height: 40px; display: inline-block; }
 }
-table.scores {
-  td { padding: 4px 12px; vertical-align: top; }
-  td:nth-child(1) {  width: 400px; }
-  tbody tr:nth-child(odd) { background-color: #f8f8f8; }
-}
-
 
 .square { width: 18px; height: 18px; float: right; }
 .color1 { background-color: #e94739; }
@@ -124,7 +132,7 @@ table.scores {
 
 .summary,  { 
   &.closed { background-color: @lightgrey; }  
-  #wrapper { height: 200px; }
+  #wrapper { height: 200px; border: 2px solid @dgreen; }
 }
 
 .elements_score {

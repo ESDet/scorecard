@@ -14,7 +14,9 @@
         .noprint
           .subtle= "Now Showing: #{current_search}"
           = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
-          = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
+          &middot;
+          = link_to 'Back to Search', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
+          &middot;
           = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
     .grid_2.centered
@@ -29,7 +31,7 @@
                 
         
     .grid_5
-      = render :partial => 'shared/map', :object => @map
+      .minimap= render :partial => 'shared/map', :object => @map
       - if copy = @category_copy[@school.esd.andand.schoolcategory]
         %p
           %b #{copy[0]}:
@@ -62,25 +64,12 @@
 
   .container_12.clear_floats
     .grid_12
-      %h2 Academic Status
-      = render 'shared/grade_overview', :grade => @grades[:status]
-      = render 'shared/subscores', :scores => @grades[:status][:details]
-        
-  .container_12.clear_floats
-    .grid_12
-      %h2 Academic Progress
-      = render 'shared/grade_overview', :grade => @grades[:progress]
-      = render 'shared/subscores', :scores => @grades[:progress][:details]
-    
-  .container_12.clear_floats
-    .grid_12
-      %h2 School Climate
-      = render 'shared/grade_overview', :grade => @grades[:climate]
-      = render 'shared/subscores', :scores => @grades[:climate][:details]
+      = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status'
+      = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress'
+      = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate'
       
   .container_12.clear_floats
     .grid_12.self_reported
-      %h2 Other
       %ul.nav.nav-tabs
         %li.active= link_to 'Demographics', '#other_demographics', 'data-toggle' => 'tab'
         %li= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
