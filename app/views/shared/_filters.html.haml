@@ -1,16 +1,24 @@
 .btn-group.grades{:style => 'margin-right: 1em; margin-bottom: 0.5em;'}
   = link_to 'All',        '#', :class => "btn", 'data-filter' => 'all'
+  &middot;
   = link_to 'Elementary', '#', :class => "btn", 'data-filter' => 'elementary'
+  &middot;
   = link_to 'Middle',     '#', :class => "btn", 'data-filter' => 'middle'
+  &middot;
   = link_to 'High',       '#', :class => "btn", 'data-filter' => 'high'
   
   
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
-  = select_tag :type, options_for_select(school_type_options), :style => 'width: 280px;'
-  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code', :style => 'display: block; width: 280px;'
+  - if false
+    = select_tag :type, options_for_select(school_type_options), :style => 'width: 100%;'
+  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code', :style => 'display: block; width: 100%;'
   
-  %input.btn.btn-primary{:type => 'submit', :style => 'width: 150px;', :value => "Search"}
+  .section-learn
+    .l-content-right
+      %ul.menu
+        %li
+          %a#filter-search{:href => '#'} Search
 
 
 :javascript
@@ -26,6 +34,11 @@
 
     updateControls();
     updateCount();
+    
+    $('#filter-search').click(function(e) {
+      $('.form-search').submit();
+      return false;
+    });
     
     $('.grades a.btn').click(function(e) {
       args.filter = $(this).attr('data-filter');

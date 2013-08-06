@@ -643,7 +643,7 @@ h1, h2, h3, h4, h5, h6 {
   .section-take-action .l-content-right ul.menu li a,
   .section-learn .l-content-right ul.menu li a {
     display: block;
-    background-image: url(../images/whiteArrowRight.png);
+    background-image: url(/images/theme/whiteArrowRight.png);
     background-repeat: no-repeat;
     background-position: 98% center;
     padding: 10px 40px 10px 10px;

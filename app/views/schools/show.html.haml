@@ -4,10 +4,6 @@
       %h2= @school.name
       %h3
         Grades: #{@school.grades_served || 'Unknown'}
-        %div
-          = @school.address
-          %br/
-          = @school.address2
        
       - if true 
         %br/
@@ -32,6 +28,10 @@
         
     .grid_5
       .minimap= render :partial => 'shared/map', :object => @map
+      %div
+        = @school.address
+        %br/
+        = @school.address2
       - if copy = @category_copy[@school.esd.andand.schoolcategory]
         %p
           %b #{copy[0]}:

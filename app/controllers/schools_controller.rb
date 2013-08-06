@@ -22,9 +22,9 @@ class SchoolsController < ApplicationController
           :url        => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc], :type => session[:type]),
           :mouseover  => true,
           :key => {
-            '#8DC63F' => 'Elementary Schools',
-            '#F79421' => 'Middle Schools',
-            '#004270' => 'High Schools',
+            '#29b473' => 'Elementary Schools',
+            '#f48b68' => 'Middle Schools',
+            '#00aff0' => 'High Schools',
           })
         @district_o = Bedrock::Overlay.from_config('districts',
           :ty => :geojson,
@@ -326,7 +326,7 @@ class SchoolsController < ApplicationController
     logger.info "scope from filters: #{filter}, #{type}, #{loc}"
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
     #schools = schools.send(type) if type
-    #schools = schools.where(['SCHOOL_CITY_STATE_ZIP_2012 like ?', "%#{loc}"]) unless loc.blank?
+    schools = schools.where(:zip => loc) unless loc.blank?
     return schools
   end
   

@@ -274,7 +274,7 @@ $resp_imgs: ".l-content-right .l-content-main img[src*='/580w']";
 
 @mixin rightWhiteArrow {
   background: {
-    image: url(../images/whiteArrowRight.png);
+    image: url(/images/theme/whiteArrowRight.png);
     repeat: no-repeat;
     position: 98% center;
   }
