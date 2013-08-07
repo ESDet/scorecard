@@ -79,7 +79,7 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   }
   .wrapper {
     height: 100%; position: relative; border: 1px solid @dblue; padding-left: 300px;
-    #key { left: 300px; }
+    .key { left: 300px; }
   }
 }
 #block-boxes-school-score-widget {
@@ -103,11 +103,11 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 
 
 
-#map {  width: 100%; height: 100%; }
-#key { padding: 10px; position: absolute; left: 0px; bottom: 0px; width: 700px; max-width: 100%; background-color: white; background-color: rgba(255,255,255,0.8); z-index: 100; }
-#key .square { width: @unit; height: @unit; margin-right: 3px; display: inline-block; border: 1px solid #333; float: none; 
+.map {  width: 100%; height: 100%; }
+.key { padding: 10px; position: absolute; left: 0px; bottom: 0px; width: 700px; max-width: 100%; background-color: white; background-color: rgba(255,255,255,0.8); z-index: 100; }
+.key .square { width: @unit; height: @unit; margin-right: 3px; display: inline-block; border: 1px solid #333; float: none; 
   -webkit-border-radius: @unit/2+1; -moz-border-radius: @unit/2+1; border-radius: @unit/2+1; }
-#key .item { text-wrap: none; white-space: nowrap; margin-right: 1em; }
+.key .item { text-wrap: none; white-space: nowrap; margin-right: 1em; }
 .leaflet-control-layers-base input,
 .leaflet-control-layers-overlays input { display: inline; }
 .overall { background-color: @light; padding: 1em; text-align: center; margin: 1em 0;}

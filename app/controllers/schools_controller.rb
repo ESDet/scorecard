@@ -6,7 +6,7 @@ class SchoolsController < ApplicationController
 
   
   def index
-    filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
+    filter = ['all', 'k8', 'high'].include?(params[:filter]) ? params[:filter] : nil
     type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
     session[:filter]  = filter
     session[:type]    = type
@@ -24,8 +24,7 @@ class SchoolsController < ApplicationController
           :url        => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc], :type => session[:type]),
           :mouseover  => true,
           :key => {
-            '#29b473' => 'Elementary Schools',
-            '#f48b68' => 'Middle Schools',
+            '#29b473' => 'K8 Schools',
             '#00aff0' => 'High Schools',
           })
         @district_o = Bedrock::Overlay.from_config('districts',

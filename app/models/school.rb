@@ -74,7 +74,7 @@ class School < ActiveRecord::Base
     
     result = {
       :name       => self.name,
-      :level      => self.high? ? 'HS' : (self.middle? ? 'MS' : 'ES'),
+      :level      => self.high? ? 'HS' : 'K8',
       :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter]
     }

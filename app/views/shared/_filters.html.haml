@@ -1,11 +1,9 @@
 .btn-group.grades{:style => 'margin-right: 1em; margin-bottom: 0.5em;'}
   = link_to 'All',        '#', 'data-filter' => 'all'
   &middot;
-  = link_to 'Elementary', '#', 'data-filter' => 'elementary'
+  = link_to 'K8 Schools', '#', 'data-filter' => 'k8'
   &middot;
-  = link_to 'Middle',     '#', 'data-filter' => 'middle'
-  &middot;
-  = link_to 'High',       '#', 'data-filter' => 'high'
+  = link_to 'High Schools', '#', 'data-filter' => 'high'
   
   
 %form.form-search.search{:method => :get, :action => schools_path}
