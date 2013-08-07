@@ -46,7 +46,7 @@ $(document).ready(function() {
         pointLabels: { show: true, location: 'n' },
         rendererOptions: {
           barDirection: 'vertical',
-          barWidth: 20,
+          barWidth: 18,
           barPadding: 3
         }
       }, 
