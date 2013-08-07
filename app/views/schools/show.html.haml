@@ -15,14 +15,14 @@
           &middot;
           = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
-    .grid_2.centered
+    .grid_2.centered.grades_container
       - letter = @grades[:cumulative][:letter].to_s
       - if letter.blank?
         .grade ?
       - elsif letter.length < 3
         .grade{:title => "Cumulative Grade"}= @grades[:cumulative][:letter]
       - elsif letter == 'Promising'
-        = image_tag '/images/icon_thumbup_outline2.png', :style => 'height: 100px; width: auto; margin-bottom: 0.5em;', :alt => 'Promising', :title => 'Promising'
+        = image_tag '/images/icon_thumbup_outline2.png', :alt => 'Promising', :title => 'Promising'
       - else
         %p
           %b= raw letter
@@ -31,10 +31,10 @@
       .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || '?'
                 
         
-    .grid_5
+    .grid_5.minimap_container
       .minimap= render :partial => 'shared/map', :object => @map
       %p
-        #{@school.address} &middot; #{@school.address2}
+        %a{:href => @school.gmaps_url, :target => '_blank'} #{@school.address} &middot; #{@school.address2}
       - if copy = @category_copy[@school.esd.andand.schoolcategory]
         %p
           %b #{copy[0]}:
@@ -77,7 +77,7 @@
       %ul.nav.nav-tabs
         %li.active= link_to 'Demographics', '#other_demographics', 'data-toggle' => 'tab'
         %li= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
-        %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab'
+        %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab', :class => 'nomobile'
       .tab-content
         #other_profile.tab-pane
           %table
@@ -87,13 +87,13 @@
                 %tr
                   %td
                     %h3 #{label}:
-                  %td= val == '0' ? 'No' : val
+                  %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
 
         #other_demographics.tab-pane.active
           #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 40px;'}
           #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
 
-        #other_details.tab-pane
+        #other_details.tab-pane.nomobile
           - if e = @school.esd
             %h3 Challenge Factors:
             %div Overall Student Characteristics Points: #{e.studchrs_pts}

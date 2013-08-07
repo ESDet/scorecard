@@ -23,7 +23,10 @@ html { overflow-y: scroll; height: 100%; }
 body { height: 100%; padding: 0; margin: 0; background-color: white; color: black; }
 #container { min-height:100%; position:relative; }
 #bodywrap { padding: 1em 0 @footerheight 0; }
-#footer.l-footer-wrapper { height: @footerheight; width: 100%; padding: 2em 0; position: absolute; bottom: 0px; left: 0px; }
+#footer.l-footer-wrapper {
+  height: @footerheight; width: 100%; padding: 2em 0; position: absolute; bottom: 0px; left: 0px;
+  img { height: 100px; width: auto; }
+}
 
 .float_right { float: right; }
 .float_left { float: left; }
@@ -150,7 +153,7 @@ ul.school_list {
   }
 }
 .grade {
-  display: block; background-color: @cyan; font-size: 70px; color: white;
+  display: inline-block; background-color: @cyan; font-size: 70px; color: white;
   width: 130px; height: 105px;  padding: 8px; text-align: center;  margin-bottom: 10px;
   &.sub { font-size: 20px; width: 40px; height: 40px;  display: inline-block; }
   &.sub3 { font-size: 20px; width: 130px; height: 40px; display: inline-block; }
@@ -167,9 +170,10 @@ ul.school_list {
   td { width: 92px; text-align: center; font-size: 0.9em; }
 }
 
-.summary,  { 
+.summary { 
   &.closed { background-color: @lightgrey; }  
   #wrapper { height: 200px; border: 2px solid @dgreen; }
+  .grades_container img { height: 100px; width: auto; margin-bottom: 0.5em; }
 }
 
 .elements_score {
@@ -253,7 +257,7 @@ table.enrollment {
   }
   #outer_wrapper { top: 85px; }
   .popover-inner { max-width: 280px; }
-  .nomobile { display: none; }
+  .nomobile { display: none !important; }
   .usabilla_live_button_container { display: none; }
   .column { padding: 0 0.5em; }
   
@@ -262,6 +266,11 @@ table.enrollment {
   }
   #lefty, #front-filter { 
     .l-content-right { width: 80%; }
+  }
+  .grade { display: block; }
+  .summary {
+    .minimap { display: none; }
+    .grades_container img { height: 50px; width: auto; margin: 10px 10px 0 0; }
   }
   .block {
     .grade_container { position: static; }
@@ -283,11 +292,15 @@ table.enrollment {
       }
     }
   }
+  #enroll { max-width: 100%; }
   #other_profile table {
     td { display: inline-block; overflow: hidden; }
     td:nth-child(1) { display: block; text-align: left; padding-bottom: 0; }
   }
-  #footer.l-footer-wrapper { height: auto; position: static; text-align: center; }
+  #footer.l-footer-wrapper {
+    height: auto; position: static; text-align: center;
+    img { margin: 10px; height: 60px; width: auto; }
+  }
 }
 
 

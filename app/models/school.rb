@@ -318,5 +318,12 @@ class School < ActiveRecord::Base
   def set_points
     self.points = self.total_points
   end
-      
+  
+  def gmaps_url
+    opts = {
+        :q => "#{self.address}, #{self.address2}",
+        #:q => "#{self.centroid.y}, #{self.centroid.x}",
+      }
+    "http://maps.google.com?#{opts.to_query}"
+  end
 end
