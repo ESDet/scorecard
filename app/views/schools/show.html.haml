@@ -18,17 +18,19 @@
     .grid_2.centered.grades_container
       - letter = @grades[:cumulative][:letter].to_s
       - if letter.blank?
-        .grade ?
+        .grade NG
       - elsif letter.length < 3
         .grade{:title => "Cumulative Grade"}= letter
       - elsif letter == 'Promising'
         .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
+      - elsif ['Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+        .grade{:title => 'No Grade'} NG
       - else
         %p
           %b= raw letter
-      .grade.sub{:title => 'Academic Status'}= @grades[:status][:letter] || '?'
-      .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter] || '?'
-      .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || '?'
+      .grade.sub{:title => 'Academic Status'}= @grades[:status][:letter] || 'NG'
+      .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter] || 'NG'
+      .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || 'NG'
                 
         
     .grid_5.minimap_container
@@ -102,7 +104,7 @@
           %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
           - if @school.high?
             %br/
-            %div FAFSA Completion Rate: #{(@school.esd_hs_2013.andand.fafsa_rate.to_f*100).to_i || '?'}
+            %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2013.andand.fafsa_rate.to_f*100).to_i}%" || 'NG'}
         
 
 
