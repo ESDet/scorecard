@@ -185,7 +185,9 @@ ul.school_list {
 .summary { 
   &.closed { background-color: @lightgrey; }  
   .wrapper { height: 200px; border: 2px solid @dgreen; }
-  .grades_container img { height: 100px; width: auto; margin-bottom: 0.5em; }
+  .grades_container {
+    .grade img { width: 70%; height: auto; margin-top: 3px; }
+  }
 }
 
 .elements_score {

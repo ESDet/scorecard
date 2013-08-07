@@ -20,9 +20,9 @@
       - if letter.blank?
         .grade ?
       - elsif letter.length < 3
-        .grade{:title => "Cumulative Grade"}= @grades[:cumulative][:letter]
+        .grade{:title => "Cumulative Grade"}= letter
       - elsif letter == 'Promising'
-        = image_tag '/images/icon_thumbup_outline2.png', :alt => 'Promising', :title => 'Promising'
+        .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
       - else
         %p
           %b= raw letter
