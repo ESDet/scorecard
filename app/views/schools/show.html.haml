@@ -2,45 +2,45 @@
   .container_12
     .grid_5
       %h2= @school.name
-      %h3
-        Grades: #{@school.grades_served || 'Unknown'}
+      %h3 Grades: #{@school.grades_served || 'Unknown'}
        
-      - if true 
-        %br/
-        .noprint
-          .subtle= "Now Showing: #{current_search}"
-          = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
-          &middot;
-          = link_to 'Back to Search', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
-          &middot;
-          = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
+      %br/
+      .noprint
+        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
+        &middot;
+        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
+      - if copy = @category_copy[@school.esd.andand.schoolcategory]
+        %p{:style => 'padding: 1em 1em 0 0;'}
+          %b #{copy[0]}:
+          = copy[1]
 
-    .grid_2.centered.grades_container
-      - letter = @grades[:cumulative][:letter].to_s
-      - if letter.blank?
-        .grade{:title => 'No Grade'} NG
-      - elsif letter.length < 3
-        .grade{:title => "Cumulative Grade"}= letter
-      - elsif letter == 'Promising'
-        .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
-      - elsif ['Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
-        .grade{:title => 'No Grade'} NG
-      - else
-        %p
-          %b= raw letter
-      .grade.sub{:title => 'Academic Status'}= @grades[:status][:letter] || 'NG'
-      .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter] || 'NG'
-      .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || 'NG'
+
+    .grid_3.centered
+      .blue{:style => 'max-width: 150px; text-align: center;'}
+        %h3{:style => 'margin-top: 0;'} Overall Score
+        
+      .grades_container
+        - letter = @grades[:cumulative][:letter].to_s
+        - if letter.blank?
+          .grade{:title => 'No Grade'} NG
+        - elsif letter.length < 3
+          .grade{:title => "Cumulative Grade"}= letter
+        - elsif letter == 'Promising'
+          .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
+        - elsif ['Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+          .grade{:title => 'No Grade'} NG
+        - else
+          %p
+            %b= raw letter
+        .grade.sub{:title => 'Academic Status'}= @grades[:status][:letter] || 'NG'
+        .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter] || 'NG'
+        .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || 'NG'
                 
         
-    .grid_5.minimap_container
+    .grid_4.minimap_container
       .minimap= render :partial => 'shared/map', :object => @map
       %p
         %a{:href => @school.gmaps_url, :target => '_blank'} #{@school.address} &middot; #{@school.address2}
-      - if copy = @category_copy[@school.esd.andand.schoolcategory]
-        %p
-          %b #{copy[0]}:
-          = copy[1]
       
       %br/
       - unless true or @school.PDF_FILE_NAME.blank?
@@ -51,25 +51,12 @@
         %br/
         %br/
 
-    
-      
-      
-    - if false
-      .grid_3
-        - unless @school.PCT_FRL_FALL_2012.nil? 
-          #{@school.PCT_FRL_FALL_2012.andand.to_i || 'N/A'}% free and reduced-price lunch
-          %br/
-        - unless @school.PCT_SPED_FALL_2011.nil? 
-          #{@school.PCT_SPED_FALL_2011.andand.to_i || 'N/A'}% special education
-          %br/
-        - unless @school.PCT_ELL_FALL_2011.nil? 
-          #{@school.PCT_ELL_FALL_2011.andand.to_i || 'N/A'}% English language learners
-          %br/
 
 
 - if @school.esd
   .container_12.clear_floats.profile
     .grid_12
+      %h2 Score Breakdown
       = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status', :icon => 'icon_status_white.png'
       = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress', :icon => 'icon_progress_white.png'
       = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate', :icon => 'icon_climate_white.png'

@@ -1,7 +1,7 @@
 @light: #eef;
 @lightgrey: #e8e8e8;
 
-@dblue:   #004270;
+@dblue:   #134370;
 @orange:  #f79421;
 @yellow:  #ffcc4e;
 @lgreen:  #8dc63f;
@@ -72,6 +72,7 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   .tab-pane { padding: 1em; }
 }
 
+.btn { background-color: @dblue; color: white; padding: 0.5em; }
 
 @unit: 14px;
 #outer_wrapper {
@@ -110,7 +111,7 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 }
 
 .blue {
-  h2 { background-color: @cyan; padding: 0.5em; margin-bottom: 0; color: white; }
+  h2, h3 { background-color: @cyan; padding: 0.5em; margin-bottom: 0; color: white; }
   ul {
     background-color: @lblue; padding: 0; margin: 0; padding-top: 0.5em;
     li {
@@ -186,6 +187,11 @@ ul.school_list {
   &.sub3 { font-size: 18px; width: 130px; height: 40px; display: inline-block; }
 }
 
+.summary .grades_container {
+  background-color: @lblue; padding: 10px 10px 0px 10px;  width: 150px;
+  .grade:nth-child(1) { display: block; margin: 0 auto 10px auto; }
+}
+
 .grades a { color: black; padding: 2px 5px; }
 .grades a.active { background-color: @yellow;  }
 .profile {
@@ -194,12 +200,7 @@ ul.school_list {
 
 .site-logo img { max-width: 100%; height: auto; }
 
-.square { width: 18px; height: 18px; float: right; }
-.color1 { background-color: #e94739; }
-.color2 { background-color: #f25f3c; }
-.color3 { background-color: #ffd78a; }
-.color4 { background-color: #aed485; }
-.color5 { background-color: #8cc657; }
+
 .na { background-color: @light; }
 .sitevisit_key { width: 100%; margin: 1em 0;
   td { width: 92px; text-align: center; font-size: 0.9em; }
