@@ -3,8 +3,8 @@
 %p.lead Excellent Schools Detroit reviews Detroit schools each year and produces a scorecard that measures school quality.
 
 
-#block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget
-  %h2.block__title Find Schools
+#block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-zip
+  %h2.block__title  Search for Schools by Zip Code
   .block__content
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content
@@ -15,22 +15,38 @@
             = render :partial => 'shared/filters'
         .clear_floats
 
+
+
+#block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-name
+  %h2.block__title Search for Schools by Name
+  .block__content
+    #boxes-box-school_score_widget.boxes-box
+      .boxes-box-content
+        .score-right
+          #front-filter{:style => 'width: 350px;'}  
+            = form_tag '/search', { :method => :post, :class => 'form-byname search' } do
+              = text_field_tag :q, nil, :placeholder => 'Search by school name'
+              .section-learn
+                .l-content-right
+                  %ul.menu
+                    %li
+                      %a#name-search{:href => '#'} Search
+            :javascript
+              $(document).ready(function() {
+                var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
+                $('input#q').typeahead({ source: school_names });
+                $('#name-search').click(function(e) {
+                  $('.form-byname').submit();
+                  return false;
+                });
+
+
+              });
+        .clear_floats
+
+
+
   
-%h2 Top 10 Schools
-- @top.each do |s|
-  - grade = s.grades[:cumulative]
-  .block.top
-    .boxes-box-content
-      .grade_container
-        .grade= grade[:letter].length < 3 ? grade[:letter] : '?'
-        .grade.sub3 #{grade[:total]} / #{grade[:possible]}
-      .subscore_wrapper
-        %h3= link_to s.name, s
-        %div
-          = s.address
-          - if false
-            %br/
-            = s.address2
 
 .clear_floats
 %br/

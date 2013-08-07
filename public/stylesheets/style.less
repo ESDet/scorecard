@@ -3,17 +3,18 @@
 
 @dblue:   #004270;
 @orange:  #f79421;
-@lblue:   #85d5e3;
 @yellow:  #ffcc4e;
 @lgreen:  #8dc63f;
 @red:     #953734;
 @greyish: #556677;
 
 /* These are 2013 colors */
-@orange2: #f48b68;  /* middle */
+@orange2: #f48b68;  /* k8 */
 @orange3: #f05a28; 
-@cyan: #00aff0;     /* high */
-@dgreen: #29b473;   /* elem */
+@cyan:   #00aff0;     /* high */
+@lblue:  #cff0fc;
+@mblue:  #78d5f7;
+@dgreen: #29b473; 
 
 @headerheight: 65px; 
 @footerheight: 180px;
@@ -56,7 +57,10 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   a.btn { color: white; margin-left: 2em; margin-top: 20px; background-color: @orange2; padding: 0.5em 1em; }
   a.btn:hover { background-color: @orange3; text-decoration: none; }
   .menu { text-align: right; }
-  .search { display: inline-block; margin-left: 2em; margin-bottom: 0; }
+  .search {
+    display: inline-block; margin-left: 2em; margin-bottom: 0; width: 400px; text-align: right;
+    input[type=text] { display: inline-block; max-width: 85%; }
+  }
   i { vertical-align: baseline; }
   img.logo { height: 36px; width: auto; margin-top: -5px; }
 }
@@ -86,12 +90,16 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   .score-right { min-height: 130px; }
 }
 
+.l-content-left { width: 25%; }
+.l-content-right { width: 72%; }
 #lefty, #front-filter { 
   .l-content-right { width: 100%; }
   input[type=text] { max-width: 100%; }
 }
-#front-filter {
-  #filter-search { background-color: @orange3; }
+#front-filter #filter-search, #name-search { background-color: @orange3; }
+#block-mailchimp-lists-get-email-updates .block__content {
+ a:link, a:visited, input[type=submit] { border: none;  }
+ h3 { margin: 0; }
 }
 
 #other_profile table {
@@ -101,7 +109,17 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   h3 { margin: 0; }
 }
 
-
+.blue {
+  h2 { background-color: @cyan; padding: 0.5em; margin-bottom: 0; color: white; }
+  ul {
+    background-color: @lblue; padding: 0; margin: 0; padding-top: 0.5em;
+    li {
+      padding: 0.5em; list-style: none;
+      a, a:visited { color: black; font-weight: bold; }
+    }
+    li:hover { background-color: @mblue; }
+  }
+}
 
 .map {  width: 100%; height: 100%; }
 .key { padding: 10px; position: absolute; left: 0px; bottom: 0px; width: 400px; max-width: 100%; background-color: white; background-color: rgba(255,255,255,0.8); z-index: 100; }
@@ -114,8 +132,8 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 .barchart { width: 100%; height: 250px; }
 #showing { padding: 10px 10px 10px 10px; position: absolute; right: 0px; top: 5px; width: 300px; max-width: 100%; background-color: white; background-color: rgba(255,255,255,0.8); z-index: 100; }
 
-.form-search {
-  input#loc { display: block; width: 100% !important; margin-bottom: 0.5em !important; }
+.form-search, .form-byname {
+  input[type=text] { display: block; width: 100% !important; margin-bottom: 0.5em !important; }
   input, select, .btn { margin-bottom: 0.5em; }
 }
 .form-byname {
@@ -127,6 +145,10 @@ ul.school_list {
   li { list-style: none; margin-bottom: 0.5em; }
 }
 
+#block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-name .score-right {
+  background-image: url('/images/theme/schoolbook_icon.png');
+  background-position-x: 10px; background-position-y: 10px;
+}
 
 @big: 150px;
 @med: 100px;

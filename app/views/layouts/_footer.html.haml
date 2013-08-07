@@ -1,13 +1,14 @@
 #footer.l-footer-wrapper
   .l-footer
     .container_12
-      .grid_3.centered
+      .grid_4.centered
         = link_to image_tag('/images/logo.png'), 'http://excellentschoolsdetroit.org'
-      .grid_3.centered
+      .grid_4.centered
         = link_to image_tag('/images/loveland.png'), 'http://makeloveland.com'
-      .grid_3.centered
-        = link_to image_tag('/images/workdept.png'), 'http://theworkdept.com'
-      .grid_3.centered
+      - if false
+        .grid_3.centered
+          = link_to image_tag('/images/workdept.png'), 'http://theworkdept.com'
+      .grid_4.centered
         = link_to image_tag('/images/d3.png'), 'http://datadrivendetroit.org'
 
 - if false

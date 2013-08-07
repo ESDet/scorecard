@@ -10,7 +10,7 @@
   = hidden_field_tag :filter, params[:filter]
   - if false
     = select_tag :type, options_for_select(school_type_options), :style => 'width: 100%;'
-  = text_field_tag :loc, params[:loc], :placeholder => 'Search by zip code'
+  = text_field_tag :loc, params[:loc], :placeholder => 'Enter 5 digit zip code'
   
   .section-learn
     .l-content-right

@@ -49,7 +49,7 @@
         padding: 3px 3px 3px 22px;
         margin: 0;
         background: {
-          image: url(../images/school-leader-sprite.png);
+          image: url(/images/theme/school-leader-sprite.png);
           repeat: no-repeat;
         }
         color: white;
@@ -188,7 +188,7 @@
   a {
     @include imageLink;
     background: {
-      image: url('../images/esd_ASK.png');
+      image: url('/images/theme/esd_ASK.png');
       position: -12px 0;
     }
     width: 305px;
@@ -196,7 +196,7 @@
   }
   a:hover, a:focus {
     background: {
-      image: url('../images/esd_ASK_hover.png');
+      image: url('/images/theme/esd_ASK_hover.png');
       position: -12px 0;
     }
   }
@@ -206,14 +206,14 @@
   a {
     @include imageLink;
     background: {
-      image: url('../images/esd_preguntenos.png');
+      image: url('/images/theme/esd_preguntenos.png');
     }
     width: 329px;
     height: 269px;
   }
   a:hover, a:focus {
     background: {
-      image: url('../images/esd_preguntenos_hover.png');
+      image: url('/images/theme/esd_preguntenos_hover.png');
     }
   }
 }
@@ -227,7 +227,7 @@
     margin: 0 10px 0 0;
   }
   .sprite-twitter {
-    background-image: url('../images/twitter_sprite.png');
+    background-image: url('/images/theme/twitter_sprite.png');
     width: 24px; height: 20px;
   }
   .sprite-twitter:hover {
@@ -235,7 +235,7 @@
     width: 24px; height: 20px;
   }
   .sprite-pinterest {
-    background-image: url('../images/pinterest_sprite.png');
+    background-image: url('/images/theme/pinterest_sprite.png');
     width: 19px; height: 25px;
   }
   .sprite-pinterest:hover {
@@ -243,7 +243,7 @@
     width: 19px; height: 25px;
   }
   .sprite-googleplus {
-    background-image: url('../images/googleplus_sprite.png');
+    background-image: url('/images/theme/googleplus_sprite.png');
     width: 24px; height: 24px;
   }
   .sprite-googleplus:hover {
@@ -251,7 +251,7 @@
     width: 24px; height: 24px;
   }
   .sprite-facebook {
-    background-image: url('../images/facebook_sprite.png');
+    background-image: url('/images/theme/facebook_sprite.png');
     width: 12px; height: 24px;
   }
   .sprite-facebook:hover {

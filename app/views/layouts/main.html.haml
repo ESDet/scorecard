@@ -19,18 +19,22 @@
                       %li.first.leaf.expanded.active-trail.active
                         = link_to 'Map', map_path
   
-              = form_tag '/search', { :method => :post, :class => 'form-byname search' } do
-                = text_field_tag :q, nil, :placeholder => 'Search by school name'
-                = submit_tag 'Search', :style => 'display: inline-block;'
-              :javascript
-                $(document).ready(function() {
-                  var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
-                  $('input#q').typeahead({ source: school_names });
-                });
+  
         
-          %h3
-            = link_to 'Read the media release here', 'https://www.excellentschoolsdetroit.org/en/media/making-grade-excellent-schools-detroit-scorecard-arms-parents-data-quality-school-choice'
+          #block-mailchimp-lists-get-email-updates
+            .block__content
+              %h3= link_to 'Read the media release', 'https://www.excellentschoolsdetroit.org/en/media/making-grade-excellent-schools-detroit-scorecard-arms-parents-data-quality-school-choice'
                 
+  
+          .blue
+            %h2 Top 10 Highest-Graded Schools in Detroit
+            %ul
+              - @top.each do |s|
+                - grade = s.grades[:cumulative]
+                %li= link_to s.name, s
+          
+          %br/
+
         %section.l-content-right
           .l-region.l-content-main{:role => "main"}
             = yield

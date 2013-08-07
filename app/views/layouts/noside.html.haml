@@ -9,7 +9,7 @@
         = link_to 'Home', root_path, :class => 'btn home'
         = link_to 'Schools', schools_path, :class => 'btn schools'
         = form_tag '/search', { :method => :post, :class => 'form-byname search float_right' } do
-          = text_field_tag :q, nil, :style => 'width: 350px; max-width: 100%;', :placeholder => 'Search by school name'
+          = text_field_tag :q, nil, :placeholder => 'Search by school name'
           = submit_tag '>', :style => 'display: inline-block;'
         :javascript
           $(document).ready(function() {

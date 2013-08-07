@@ -229,7 +229,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .l-region--branding ul.menu li > ul.menu > li.expanded.active-trail > a {
-  background: $lightblue url(../images/blackArrowDown.png) no-repeat 98% center !important;
+  background: $lightblue url(/images/theme/blackArrowDown.png) no-repeat 98% center !important;
 }
 
 
@@ -518,7 +518,7 @@ ul.pager {
       color: $darkgrey;
     }
     background: {
-      image: url(../images/newspaper.png);
+      image: url(/images/theme/newspaper.png);
       repeat: no-repeat;
       position: 0 0;
     }
