@@ -102,7 +102,7 @@
           %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
           - if @school.high?
             %br/
-            %div FAFSA Completion Rate: #{@school.esd_hs_2013.andand.fafsa_rate_pts || '?'}
+            %div FAFSA Completion Rate: #{(@school.esd_hs_2013.andand.fafsa_rate.to_f*100).to_i || '?'}
         
 
 
