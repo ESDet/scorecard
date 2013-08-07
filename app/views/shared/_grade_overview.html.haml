@@ -1,5 +1,8 @@
 #block-boxes-did-you-know.block.block--boxes.block--boxes-dyk_box.block--boxes-did-you-know
-  %h2.block__title= title
+  %h2.block__title
+    - if local_assigns[:icon]
+      = image_tag icon
+    = title
   .block__content
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content

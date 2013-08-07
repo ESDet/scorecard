@@ -70,9 +70,9 @@
 - if @school.esd
   .container_12.clear_floats.profile
     .grid_12
-      = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status'
-      = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress'
-      = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate'
+      = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status', :icon => 'icon_status_white.png'
+      = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress', :icon => 'icon_progress_white.png'
+      = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate', :icon => 'icon_climate_white.png'
     
 .container_12.clear_floats
   .grid_12.self_reported
