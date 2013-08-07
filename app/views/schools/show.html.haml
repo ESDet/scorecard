@@ -1,24 +1,17 @@
 .summary
   .container_12
-    .grid_5
+    .grid_12
       %h2= @school.name
-      %h3 Grades: #{@school.grades_served || 'Unknown'}
-       
-      %br/
       .noprint
         = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
-        &middot;
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
-      - if copy = @category_copy[@school.esd.andand.schoolcategory]
-        %p{:style => 'padding: 1em 1em 0 0;'}
-          %b #{copy[0]}:
-          = copy[1]
+      %h3 Grades: #{@school.grades_served || 'Unknown'}
+      %br/
 
-
-    .grid_3.centered
-      .blue{:style => 'max-width: 150px; text-align: center;'}
-        %h3{:style => 'margin-top: 0;'} Overall Score
-        
+  .container_12
+    .grid_3
+      .blue
+        %h3 Overall Score
       .grades_container
         - letter = @grades[:cumulative][:letter].to_s
         - if letter.blank?
@@ -36,8 +29,7 @@
         .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter] || 'NG'
         .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || 'NG'
                 
-        
-    .grid_4.minimap_container
+    .grid_5.minimap_container
       .minimap= render :partial => 'shared/map', :object => @map
       %p
         %a{:href => @school.gmaps_url, :target => '_blank'} #{@school.address} &middot; #{@school.address2}
@@ -50,13 +42,17 @@
             Download PDF
         %br/
         %br/
+        
+    .grid_4
+      - if copy = @category_copy[@school.esd.andand.schoolcategory]
+        %p #{copy[0]}: #{copy[1]}
 
 
 
 - if @school.esd
   .container_12.clear_floats.profile
     .grid_12
-      %h2 Score Breakdown
+      %p.lead Score Breakdown
       = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status', :icon => 'icon_status_white.png'
       = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress', :icon => 'icon_progress_white.png'
       = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate', :icon => 'icon_climate_white.png'
@@ -413,12 +409,6 @@
       %p= @school.ADMISSIONS_LONG
 
     
-.container_12.noprint
-  .grid_12{:style => 'padding: 2em 0;'}
-    .subtle= "Now Showing: #{current_search}"
-    = link_to raw('&laquo; Previous'), previous_path(@school.id), :class => 'btn'
-    = link_to 'Show List', schools_path(:filter => session[:filter], :loc => session[:loc]), :class => 'btn'
-    = link_to raw('Next &raquo;'), next_path(@school.id), :class => 'btn'
 
 %br/
 %br/
