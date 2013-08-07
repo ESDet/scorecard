@@ -272,7 +272,7 @@ class School < ActiveRecord::Base
       if elementary? and e = self.esd_k8_2013
           h += [
             { :name     => "Site Visit Average Score",
-              :value    => e.site_s.to_f.round(1),
+              :value    => e.site_s.to_f.round(2),
               :points   => e.site_s_pts,
               :possible => e.site_s_ptsps },
             { :name     => "Net 5Essentials Score (2012-13)",
@@ -287,7 +287,7 @@ class School < ActiveRecord::Base
       elsif high? and e = self.esd_hs_2013
         h += [
           { :name     => "Site Visit Average Score",
-            :value    => e.site_s,
+            :value    => e.site_s.to_f.round(2),
             :points   => e.site_s_pts,
             :possible => e.site_s_psspts },
           { :name     => "Net 5Essentials Score (2012-13)",
