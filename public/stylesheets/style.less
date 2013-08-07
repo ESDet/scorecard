@@ -2,7 +2,6 @@
 @lightgrey: #e8e8e8;
 
 @dblue:   #134370;
-@orange:  #f79421;
 @yellow:  #ffcc4e;
 @lgreen:  #8dc63f;
 @red:     #953734;
@@ -87,8 +86,11 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
     .key { left: 300px; }
   }
 }
-#block-boxes-school-score-widget {
-  .score-right { min-height: 130px; padding-top: 1em !important; }
+#block-boxes-school-score-widget .boxes-box-content {
+  .score-right {
+    min-height: 130px; padding-top: 1em !important;
+    form input[type=text] { margin: 1em 0; }
+  }
 }
 
 .l-content-left { width: 25%; }
@@ -198,11 +200,11 @@ ul.school_list {
   &.sub3 { font-size: 18px; width: 130px; height: 40px; display: inline-block; }
 }
 
-.grades a { color: black; padding: 2px 5px; }
-.grades a.active { background-color: @yellow;  }
-.profile {
-  .block { }
+.grades a {
+  font-size: 1.5em; background-color: @orange3; color: white; padding: 5px 8px;
+  &.active { background-color: black;  }
 }
+#lefty .grades a { font-size: 1em; }
 
 .site-logo img { max-width: 100%; height: auto; }
 
@@ -220,15 +222,6 @@ ul.school_list {
   }
 }
 .profile .lead { color: @dblue; }
-
-table.enrollment {
-  .score { margin: 0 8px 8px 8px; padding: 5px; background-color: @dblue; color: white; font-weight: bold; margin-bottom: 10px; }
-  th, td { width: 25%; vertical-align: top; border-left: 2px solid @orange; } 
-  td { text-align: left; padding: 5px 8px; }
-  th { font-size: 1.1em; font-weight: normal; padding-top: 10px; text-align: center; }
-  td:first-child, th:first-child { border-left: none; }
-  img { width: 40px; height: auto; }
-}
 
 
 

@@ -9,9 +9,7 @@
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content
         .score-right
-          - if false
-            %p.count
-          #front-filter{:style => 'width: 350px;'}  
+          #front-filter
             = render :partial => 'shared/filters'
         .clear_floats
 
@@ -23,7 +21,7 @@
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content
         .score-right
-          #front-filter{:style => 'width: 350px;'}  
+          #front-filter
             = form_tag '/search', { :method => :post, :class => 'form-byname search' } do
               = text_field_tag :q, nil, :placeholder => 'Search by school name'
               .section-learn
