@@ -4,3 +4,6 @@
   = school.address
   %br/
   Grades #{school.grades_served}
+  %br/
+  - unless school.grade.blank?
+    Overall: #{school.grade}

@@ -2,7 +2,7 @@ class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
   require 'bedrock/acts_as_geocoded'
   
-  acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :address2, :grades_served, :slug], :add_properties => :my_properties
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :address2, :grades_served, :slug, :grade, :points], :add_properties => :my_properties
   #acts_as_geocoded :address => :address, :point => :centroid, :sleep => 0.15
   utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   set_rgeo_factory_for_column(:centroid, utm_factory)
@@ -15,7 +15,7 @@ class School < ActiveRecord::Base
   serialize :esd_k8_2013, OpenStruct
   serialize :esd_hs_2013, OpenStruct
   before_save :set_slug
-  before_save :set_points
+  before_save :set_totals
   
 
   def self.square_array(arr)
@@ -112,6 +112,28 @@ class School < ActiveRecord::Base
     end
     return nil
   end
+  
+  def overall_grade
+    fields = {
+      'Mature'      => :mature_ltrgrade,
+      'New'         => :newschool_designation,
+      'Turnaround'  => :turnaround_designation,
+      'Specialty'   => nil,
+    }
+      
+    if high? and self.esd_hs_2013
+      sym = fields[self.esd_hs_2013.schoolcategory]
+      return nil if sym.nil?
+      return self.esd_hs_2013.send(sym)
+    elsif elementary? and self.esd_k8_2013
+      sym = fields[self.esd_k8_2013.schoolcategory]
+      return nil if sym.nil?
+      return self.esd_k8_2013.send(sym)
+    end
+    return nil
+  end
+  
+  
   
   def grades
     cat = esd.andand.schoolcategory
@@ -315,8 +337,9 @@ class School < ActiveRecord::Base
     self.slug = transliterate(self.name)
   end
   
-  def set_points
+  def set_totals
     self.points = self.total_points
+    self.grade = self.overall_grade
   end
   
   def gmaps_url
