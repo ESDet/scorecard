@@ -27,6 +27,9 @@
                   var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
                   $('input#q').typeahead({ source: school_names });
                 });
+        
+          %p
+            = link_to 'Read the media release here', 'https://www.excellentschoolsdetroit.org/en/media/making-grade-excellent-schools-detroit-scorecard-arms-parents-data-quality-school-choice'
                 
         %section.l-content-right
           .l-region.l-content-main{:role => "main"}

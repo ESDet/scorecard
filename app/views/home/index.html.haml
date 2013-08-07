@@ -1,4 +1,4 @@
-%h1 2013 Score Card
+%h1 2013 Scorecard
 
 %p.lead Excellent Schools Detroit reviews Detroit schools each year and produces a score card that measures school quality.
 
@@ -9,28 +9,31 @@
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content
         .score-right
-          %p.count
+          - if false
+            %p.count
+          - else
+            %p
+              %b There are #{School.count} schools serving Detroit kids.
           #front-filter{:style => 'width: 350px;'}  
             = render :partial => 'shared/filters'
-          .clear_floats
+        .clear_floats
 
-- [['Top 10 K-8 Schools', @top_k8], ['Top 10 High Schools', @top_hs]].each do |title,data|
-  .column
-    %h2= title
-    - data.each do |s|
-      - grade = s.grades[:cumulative]
-      .block.top
-        .boxes-box-content
-          .grade_container
-            .grade= grade[:letter].length < 3 ? grade[:letter] : '?'
-            .grade.sub3 #{grade[:total]} / #{grade[:possible]}
-          .subscore_wrapper
-            %h3= link_to s.name, s
-            %div
-              = s.address
-              - if false
-                %br/
-                = s.address2
+  
+%h2 Top 10 Schools
+- @top.each do |s|
+  - grade = s.grades[:cumulative]
+  .block.top
+    .boxes-box-content
+      .grade_container
+        .grade= grade[:letter].length < 3 ? grade[:letter] : '?'
+        .grade.sub3 #{grade[:total]} / #{grade[:possible]}
+      .subscore_wrapper
+        %h3= link_to s.name, s
+        %div
+          = s.address
+          - if false
+            %br/
+            = s.address2
 
 .clear_floats
 %br/

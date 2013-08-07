@@ -69,7 +69,6 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 }
 
 
-
 @unit: 14px;
 #outer_wrapper {
   position: absolute; top: @headerheight; bottom: 0px; left: 0px; width: 100%;
@@ -83,6 +82,10 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
     #key { left: 300px; }
   }
 }
+#block-boxes-school-score-widget {
+  .score-right { min-height: 140px; }
+}
+
 #lefty, #front-filter { 
   .l-content-right { width: 100%; }
   input[type=text] { max-width: 100%; }
@@ -136,6 +139,7 @@ ul.school_list {
     position: absolute; left: 0px; top: 0px; width: 130px; height: 150px; margin-bottom: 2em;
     .grade { background-color: #29b473; }
   }
+  h3 { margin-top: 0; }
   .subscore_wrapper {
     margin-left: 150px;
     table.scores { width: 100%; 
@@ -157,6 +161,12 @@ ul.school_list {
   width: 130px; height: 105px;  padding: 8px; text-align: center;  margin-bottom: 10px;
   &.sub { font-size: 20px; width: 40px; height: 40px;  display: inline-block; }
   &.sub3 { font-size: 20px; width: 130px; height: 40px; display: inline-block; }
+}
+
+.grades a { color: black; padding: 2px 5px; }
+.grades a.active { background-color: @yellow;  }
+.profile {
+  .block { }
 }
 
 .square { width: 18px; height: 18px; float: right; }
@@ -242,6 +252,8 @@ table.enrollment {
   }
   
   h2 { margin-top: 0; }
+  aside p { text-align: center; }
+
   #nav {
     text-align: center; margin-bottom: 0.5em;
     .home { display: none; }
@@ -261,6 +273,7 @@ table.enrollment {
   .usabilla_live_button_container { display: none; }
   .column { padding: 0 0.5em; }
   
+  
   .form-search {
     #loc { max-width: 80% !important; }
   }
@@ -272,8 +285,8 @@ table.enrollment {
     .minimap { display: none; }
     .grades_container img { height: 50px; width: auto; margin: 10px 10px 0 0; }
   }
+  .profile .block .grade_container { position: static; }
   .block {
-    .grade_container { position: static; }
     .subscore_wrapper {
       margin-left: 0; overflow: hidden;
       table.scores {

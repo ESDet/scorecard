@@ -65,59 +65,59 @@
           %br/
 
 
-  - if @school.esd
-    .container_12.clear_floats
-      .grid_12
-        = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status'
-        = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress'
-        = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate'
-      
-  .container_12.clear_floats
-    .grid_12.self_reported
-      %ul.nav.nav-tabs
-        %li.active= link_to 'Demographics', '#other_demographics', 'data-toggle' => 'tab'
-        %li= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
-        %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab', :class => 'nomobile'
-      .tab-content
-        #other_profile.tab-pane
-          %table
-            - @profile_fields.each do |field,label|
-              - val = @school.profile.send(field)
-              - unless val.blank?
-                %tr
-                  %td
-                    %h3 #{label}:
-                  %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+- if @school.esd
+  .container_12.clear_floats.profile
+    .grid_12
+      = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status'
+      = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress'
+      = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate'
+    
+.container_12.clear_floats
+  .grid_12.self_reported
+    %ul.nav.nav-tabs
+      %li.active= link_to 'Demographics', '#other_demographics', 'data-toggle' => 'tab'
+      %li= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
+      %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab', :class => 'nomobile'
+    .tab-content
+      #other_profile.tab-pane
+        %table
+          - @profile_fields.each do |field,label|
+            - val = @school.profile.send(field)
+            - unless val.blank?
+              %tr
+                %td
+                  %h3 #{label}:
+                %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
 
-        #other_demographics.tab-pane.active
-          #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 40px;'}
-          #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
+      #other_demographics.tab-pane.active
+        #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 40px;'}
+        #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
 
-        #other_details.tab-pane.nomobile
-          - if e = @school.esd
-            %h3 Challenge Factors:
-            %div Overall Student Characteristics Points: #{e.studchrs_pts}
-            %div Socio-economic Status: #{(e.econdis_pct.to_f*100).to_i}%
-            %div Special Education: #{(e.sped_pct.to_f*100).to_i}%
-            %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
-            - if @school.high?
-              %br/
-              %div FAFSA Completion Rate: #{@school.esd_hs_2013.andand.fafsa_rate_pts || '?'}
-          
+      #other_details.tab-pane.nomobile
+        - if e = @school.esd
+          %h3 Challenge Factors:
+          %div Overall Student Characteristics Points: #{e.studchrs_pts}
+          %div Socio-economic Status: #{(e.econdis_pct.to_f*100).to_i}%
+          %div Special Education: #{(e.sped_pct.to_f*100).to_i}%
+          %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
+          - if @school.high?
+            %br/
+            %div FAFSA Completion Rate: #{@school.esd_hs_2013.andand.fafsa_rate_pts || '?'}
+        
 
 
-  .container_12
-    .grid_6{:style => 'overflow: hidden;'}
-      - unless true or (@school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?)
-        %p
-          %b Contact:
-          = @school.school_contact_first_name
-          = @school.school_contact_last_name
-      - @profile_fields.each do |k,v|
-        - next if @school[k].blank?
-        %p
-          %b #{v}:
-          = @school[k]
+.container_12
+  .grid_6{:style => 'overflow: hidden;'}
+    - unless true or (@school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?)
+      %p
+        %b Contact:
+        = @school.school_contact_first_name
+        = @school.school_contact_last_name
+    - @profile_fields.each do |k,v|
+      - next if @school[k].blank?
+      %p
+        %b #{v}:
+        = @school[k]
 
 
 - unless Rails.env == 'production'
