@@ -18,7 +18,7 @@
     .grid_2.centered.grades_container
       - letter = @grades[:cumulative][:letter].to_s
       - if letter.blank?
-        .grade NG
+        .grade{:title => 'No Grade'} NG
       - elsif letter.length < 3
         .grade{:title => "Cumulative Grade"}= letter
       - elsif letter == 'Promising'
