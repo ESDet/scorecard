@@ -8,6 +8,6 @@
   - scores.andand.each do |h|
     %tr
       %td= h[:name]
-      %td= h[:value]
+      %td= (h[:value].is_a?(Float) and h[:value] <= 1.0) ? "#{(h[:value] * 100).to_i}%" : h[:value]
       %td= h[:points]
       %td= h[:possible]
