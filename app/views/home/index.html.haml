@@ -11,9 +11,6 @@
         .score-right
           - if false
             %p.count
-          - else
-            %p
-              %b There are #{School.count} schools serving Detroit kids.
           #front-filter{:style => 'width: 350px;'}  
             = render :partial => 'shared/filters'
         .clear_floats
