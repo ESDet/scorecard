@@ -1,0 +1,13 @@
+%h2 Refresh School Data
+
+- if flash[:notice]
+  .blue= flash[:notice]  
+
+%p
+  This will take a few minutes, and your browser will spin during that time (and possibly timeout). Rest assured things are happening, and please don't press the button more than once. Thanks!
+
+%h3 What do you want to refresh?
+
+= form_tag '/refresh', :method => :post do
+  = select_tag :what, options_for_select(@options, 'all')
+  = submit_tag 'Do it!'

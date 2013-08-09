@@ -7,6 +7,9 @@ ESD::Application.routes.draw do
   
   match 'next/:id' => 'schools#increment', :by => 1, :as => :next
   match 'previous/:id' => 'schools#increment', :by => -1, :as => :previous
+  
+  match 'refresh'  => 'home#refresh'
+  
   root :to => "home#index"
 
 end
