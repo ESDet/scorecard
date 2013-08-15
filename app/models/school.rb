@@ -225,13 +225,14 @@ class School < ActiveRecord::Base
       
     end
 
-    [:status, :progress, :climate].each { |s| h[s][:details] = details(s) }
+    [:status, :progress, :climate].each { |s| h[s][:summary_table] = summary_table(s) }
+    h[:status][:details] = details(:status)
 
     return h
   end
   
   
-  def details(cat)
+  def summary_table(cat)
     h = []
     if cat == :status
       if elementary? and e = self.esd_k8_2013
@@ -328,6 +329,49 @@ class School < ActiveRecord::Base
     
     h
   end
+  
+  
+  def details(tab)
+    h = {}
+    dump = meap_2012.marshal_dump
+    if k8?
+      # Bar charts with All Students % proficient for Math, Reading, Science, Social Studies
+      # (exclude fields with 0s and 9s) from MEAP 2012
+      # Math % = GRADE_3_MATH_PROFICIENT / GRADE_3_MATH_TESTED (substitute 3 for a number between 3 and 8 for all grades)
+      # Reading % = GRADE_3_READING_PROFICIENT / GRADE_3_READING_TESTED (again 3 through 8)
+      # Science % = GRADE_5_SCIENCE_PROFICIENT / GRADE_5_SCIENCE_TESTED (for grades 5 & 8)
+      [:math, :reading, :science].each do |subject|
+        h[subject] = {}
+        logger.info dump.inspect
+        grades = (3..8).select { |g| logger.info "grade_#{g}_#{subject}_tested"; dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
+        logger.info grades.inspect
+        grades.each do |g|
+          prof   = dump["grade_#{g}_#{subject}_proficient".to_sym].to_i
+          tested = dump["grade_#{g}_#{subject}_tested".to_sym].to_i
+          prof   = (prof == 9)   ? 0 : prof
+          tested = (tested == 9) ? 0 : tested
+          percent = (prof.to_f / tested.to_f)
+          h[subject][g] = percent
+        end
+      end
+    end
+    
+    if high?
+      a = {}
+      hs = esd_hs_2013.marshal_dump
+      
+      # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
+      # allsubPercentMeeting
+      # readingPercentMeeting
+      # mathPercentMeeting
+      # sciencePercentMeeting
+      # englishPercentMeeting
+      h[:act] = a
+    end
+    
+    h
+  end
+  
   
   # To make link_to use slugs
   def to_param

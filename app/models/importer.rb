@@ -117,12 +117,37 @@ class Importer
     if base == 'meap'
       key_re = /^meap_#{year}_(.*)$/
       bcode_key = 'bcode'
-    elsif base.include? 'esd'
+    elsif base.include? 'esd' or base == 'act'
       key_re = /^(.*)$/
       bcode_key = 'buildingcode'
     end
     ensure_column dataset, :text
     
+    if dataset == 'act_2013'
+      results = []
+      ofs = 0
+      begin
+        results = p.get_dataset dataset, nil, { :limit => 500, :offset => ofs }
+        ofs += 500
+        
+        results.each do |r|
+          bcode = r[bcode_key].gsub(/[^0-9]/, '')
+          if s = School.find_by_bcode(bcode)
+            puts "bcode #{bcode}"
+            h = {}
+            r.each do |key, val|
+              next unless m = key.match(key_re)
+              h[m[1]] = val
+            end
+            s.update_attribute(dataset, OpenStruct.new(h))
+          end
+        end
+      end while !results.empty?
+      return
+    end
+    
+    
+    # This was working (if slow) for the others
     School.find_each do |s|
       scores = p.get_dataset dataset, s.bcode
       scores.each do |data|

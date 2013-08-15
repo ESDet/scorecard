@@ -4,11 +4,12 @@
     - if local_assigns[:icon]
       = image_tag icon
     = title
-  %ul.nav.nav-pills
-    %li.active= link_to 'Summary', "##{key}-summary", 'data-toggle' => 'tab'
-    %li= link_to 'Details', "##{key}-details", 'data-toggle' => 'tab'
-    %li= link_to 'History', "##{key}-history", 'data-toggle' => 'tab'
-    %li= link_to 'Help', "##{key}-help", 'data-toggle' => 'tab'
+  - unless tabs.empty?
+    %ul.nav.nav-pills
+      %li.active= link_to 'Summary', "##{key}-summary", 'data-toggle' => 'tab'
+      - tabs.each do |tab|
+        - next if tab == :summary
+        %li= link_to tab.to_s.titleize, "##{key}-#{tab.to_s}", 'data-toggle' => 'tab'
   .block__content
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content.tab-content
@@ -17,8 +18,19 @@
             .grade= grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
             .grade.sub3 #{grade[:total]} / #{grade[:possible]}
           .subscore_wrapper
-            = render 'shared/subscores', :scores => grade[:details]
-        .tab-pane{id: "#{key}-details"}
-        .tab-pane{id: "#{key}-history"}
-        .tab-pane{id: "#{key}-help"}
+            = render 'shared/subscores', :scores => grade[:summary_table]
+            
+        - if tabs.include? :details
+          .tab-pane{id: "#{key}-details"}
+            - if @school.high?
+              %p For each individual subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
+            = grade[:details].inspect
+ 
+            
+        - if tabs.include? :history
+          .tab-pane{id: "#{key}-history"}
+          
+        - if tabs.include? :help
+          .tab-pane{id: "#{key}-help"}
+          
         .clear_floats

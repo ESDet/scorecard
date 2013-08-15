@@ -16,7 +16,7 @@ class Portal
     result.first
   end
   
-  # Possible views: meap_2012, esd_k8_2013, esd_hs_2013
+  # Possible views: meap_2012*, esd_k8_2013, esd_hs_2013, act_2013
   # opts = { :limit => x, :offset => y }
   def get_dataset(view, bcode=nil, opts={})
     data = bcode.nil? ? {} : { 'filters[bcode]' => bcode } 
@@ -39,6 +39,7 @@ class Portal
     query = data.blank? ? "" : "?#{data.to_query}"
     if method == :get
       headers = {}
+      puts "Getting: #{uri.path + query}"
       response = http.get(uri.path + query, headers)
     elsif method == :post
       headers = { 'Content-Type' => 'application/json' }
