@@ -110,10 +110,14 @@ class Importer
   
   def self.get_scores(dataset)
     p = Portal.new
-    if dataset == 'meap_2012'
-      key_re = /^meap_2012_(.*)$/
+    m = dataset.match(/(.+)_([0-9]+)/)
+    base = m[1]
+    year = m[2]
+    
+    if base == 'meap'
+      key_re = /^meap_#{year}_(.*)$/
       bcode_key = 'bcode'
-    elsif dataset == 'esd_k8_2013' || dataset == 'esd_hs_2013'
+    elsif base.include? 'esd'
       key_re = /^(.*)$/
       bcode_key = 'buildingcode'
     end

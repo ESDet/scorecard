@@ -66,6 +66,8 @@ class School < ActiveRecord::Base
   def k8?;          school_type == GRADES[:k8]; end
   def k12?;         school_type == GRADES[:k12]; end
   
+  def display?;     true; end
+  
   def my_properties
     kinds = []
     kinds << 'elementary' if elementary?
