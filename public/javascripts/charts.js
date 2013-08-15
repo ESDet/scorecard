@@ -76,7 +76,7 @@ $(document).ready(function() {
     if(values.length > 0) {
       var chart = jQuery.jqplot (id, [values],
         { 
-          title: labels[subject] || subject,
+          title: (labels[subject] + " by Grade") || subject,
           width: widths[subject],
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
@@ -129,7 +129,7 @@ $(document).ready(function() {
           title: "Grade " + grade,
           width: 400,
           seriesDefaults: {
-            renderer: jQuery.jqplot.BarRenderer, 
+            renderer: jQuery.jqplot.LineRenderer, 
             //color: '#00aff0',
             shadow: false,
             pointLabels: { show: true, location: 'n' },
