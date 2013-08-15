@@ -23,7 +23,7 @@ namespace :import do
     Importer.get_scores 'esd_hs_2013'
     Importer.get_scores 'meap_2012'
     Importer.get_scores 'meap_2011'
-    Importer.get_scores 'meap_2010' 
+    Importer.get_scores 'meap_2010'
     Importer.get_scores 'meap_2009'        
     puts "Done!"
   end

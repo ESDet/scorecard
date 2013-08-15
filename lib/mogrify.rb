@@ -1,20 +1,20 @@
 module Mogrify
 
-  def transliterate(str)
-    # Escape str by transliterating to UTF-8 with Iconv
-    #s = Iconv.iconv('ascii//ignore//translit', 'utf-8', str).to_s
-    s = str.clone
-  
+  def self.transliterate(str)
+    return nil if str.nil?
+    s = str.dup
     s.downcase!
     s.gsub!(/'/, '')
     s.gsub!(/[^A-Za-z0-9]+/, ' ')
     s.strip!
     s.gsub!(/\ +/, '-')
-  
     return s
   end  
   
-  private
+  def transliterate(str)
+    Mogrify::transliterate(str)
+  end
+
   
   def transliterate_file_name(str)
     logger.info "tfn gets: #{str}"

@@ -1,14 +1,24 @@
 #block-boxes-did-you-know.block.block--boxes.block--boxes-dyk_box.block--boxes-did-you-know
+  - key = Mogrify.transliterate(title)
   %h2.block__title
     - if local_assigns[:icon]
       = image_tag icon
     = title
+  %ul.nav.nav-pills
+    %li.active= link_to 'Summary', "##{key}-summary", 'data-toggle' => 'tab'
+    %li= link_to 'Details', "##{key}-details", 'data-toggle' => 'tab'
+    %li= link_to 'History', "##{key}-history", 'data-toggle' => 'tab'
+    %li= link_to 'Help', "##{key}-help", 'data-toggle' => 'tab'
   .block__content
     #boxes-box-school_score_widget.boxes-box
-      .boxes-box-content
-        .grade_container
-          .grade= grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
-          .grade.sub3 #{grade[:total]} / #{grade[:possible]}
-        .subscore_wrapper
-          = render 'shared/subscores', :scores => grade[:details]
+      .boxes-box-content.tab-content
+        .tab-pane.active{id: "#{key}-summary"}
+          .grade_container
+            .grade= grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
+            .grade.sub3 #{grade[:total]} / #{grade[:possible]}
+          .subscore_wrapper
+            = render 'shared/subscores', :scores => grade[:details]
+        .tab-pane{id: "#{key}-details"}
+        .tab-pane{id: "#{key}-history"}
+        .tab-pane{id: "#{key}-help"}
         .clear_floats
