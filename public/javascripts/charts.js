@@ -14,7 +14,7 @@ var widths = {
   math: 320,
   reading: 340,
   science: 140,
-  act: 500
+  act: 350
 };
 
 

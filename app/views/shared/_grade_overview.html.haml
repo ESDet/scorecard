@@ -23,7 +23,7 @@
         - if tabs.include? :details
           .tab-pane{id: "#{key}-details"}
             - if @school.high?
-              %p For each individual subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
+              %p For each subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
             - grade[:details].each do |k,v|
               .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='##{key}-details']" }
             
