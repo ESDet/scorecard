@@ -64,7 +64,7 @@ class School < ActiveRecord::Base
   def k8?;          school_type == GRADES[:k8]; end
   def k12?;         school_type == GRADES[:k12]; end
   
-  def display?;     true; end
+  def display?;     self.basic.scorecard_display == '1'; end
   
   def my_properties
     kinds = []
@@ -225,6 +225,7 @@ class School < ActiveRecord::Base
 
     [:status, :progress, :climate].each { |s| h[s][:summary_table] = summary_table(s) }
     h[:status][:details] = details(:status)
+    h[:status][:history] = history(:status)
 
     return h
   end
@@ -328,16 +329,12 @@ class School < ActiveRecord::Base
     h
   end
   
-  
+  # So far only Academic Status tab implemented
   def details(tab)
+    throw "Not implemented yet" unless tab == :status
     h = {}
     dump = meap_2012.marshal_dump
     if k8?
-      # Bar charts with All Students % proficient for Math, Reading, Science, Social Studies
-      # (exclude fields with 0s and 9s) from MEAP 2012
-      # Math % = GRADE_3_MATH_PROFICIENT / GRADE_3_MATH_TESTED (substitute 3 for a number between 3 and 8 for all grades)
-      # Reading % = GRADE_3_READING_PROFICIENT / GRADE_3_READING_TESTED (again 3 through 8)
-      # Science % = GRADE_5_SCIENCE_PROFICIENT / GRADE_5_SCIENCE_TESTED (for grades 5 & 8)
       [:math, :reading, :science].each do |subject|
         h[subject] = {}
         logger.info dump.inspect
@@ -370,6 +367,42 @@ class School < ActiveRecord::Base
     end
     
     h
+  end
+  
+  
+  def history(tab)
+    throw "Not implemented yet" unless tab == :status
+    dump = {
+      2012 => meap_2012.marshal_dump,
+      2011 => meap_2011.marshal_dump,
+      2010 => meap_2010.marshal_dump,
+      2009 => meap_2009.marshal_dump
+    }
+    h = {}
+    (3..9).each do |grade|
+      h[grade] = {}
+      [:reading, :math, :science].each do |subject|
+        h[grade][subject] = {}
+        dump.each do |year, dump|
+          percent = meap_percent(year, grade, subject, dump)
+          h[grade][subject][year] = percent unless percent.nil?
+        end
+      end
+    end
+    return h
+  end
+  
+  def meap_percent(year, grade, subject, dump=nil)
+    h = dump.nil? ? self.send("meap_#{year}").andand.marshal_dump : dump
+    return h if h.nil?
+    pf = "grade_#{grade}_#{subject}_proficient".to_sym
+    tf = "grade_#{grade}_#{subject}_tested".to_sym
+    prof   = dump[pf].to_i
+    tested = dump[tf].to_i
+    prof   = 0 if prof == 9
+    tested = 0 if tested == 9
+    return nil if tested == 0
+    return (100.0 * prof.to_f / tested.to_f).to_i
   end
   
   

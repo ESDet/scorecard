@@ -17,6 +17,12 @@ var widths = {
   act: 350
 };
 
+var labels = {
+  act: 'ACT Readiness',
+  math: 'Math',
+  reading: 'Reading',
+  science: 'Science',
+};
 
 $(document).ready(function() {
   
@@ -53,26 +59,30 @@ $(document).ready(function() {
     var values = _.values(grades);
     var chart = jQuery.jqplot (id, [values],
       { 
-        title: subject,
+        title: labels[subject] || subject,
         width: widths[subject],
         seriesDefaults: {
           renderer: jQuery.jqplot.BarRenderer, 
+          color: '#00aff0',
           shadow: false,
           pointLabels: { show: true, location: 'n' },
           rendererOptions: {
             barDirection: 'vertical',
-            barWidth: 30
+            barWidth: 35
           }
         }, 
-        grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
+        grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: true, shadowWidth: 3, shadowDepth: 1, shadowAlpha: 0.2 }, 
         legend: { show:false },
         axes: {
           xaxis: {
             renderer: $.jqplot.CategoryAxisRenderer,
-            ticks: ticks,
+            ticks: ticks
           },
           yaxis: {
-            tickOptions: { formatString: '%d' }
+            tickOptions: { formatString: '%d%%' },
+            min: 0,
+            max: 115,
+            ticks: [0, 25, 50, 75, 100, 115]
           }
         }  
       }

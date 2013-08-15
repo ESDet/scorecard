@@ -30,6 +30,7 @@
             
         - if tabs.include? :history
           .tab-pane{id: "#{key}-history"}
+            = grade[:history]
           
         - if tabs.include? :help
           .tab-pane{id: "#{key}-help"}
