@@ -10,6 +10,13 @@ var colors = {
   greyish:    '#556677'
 };
 
+var widths = {
+  math: 320,
+  reading: 340,
+  science: 140,
+  act: 500
+};
+
 
 $(document).ready(function() {
   
@@ -36,6 +43,47 @@ $(document).ready(function() {
       legend: { show:true, location: 'e', border: '0px', fontSize: '13px', background: bg }
     }
   ); 
+  
+  $('.graph').each(function(idx, e) {
+    var id = $(e).attr('id');
+    var subject = $(e).data('subject');
+    var grades = $(e).data('grades');
+    var tab = $(e).data('tab');
+    var ticks = _.keys(grades);
+    var values = _.values(grades);
+    var chart = jQuery.jqplot (id, [values],
+      { 
+        title: subject,
+        width: widths[subject],
+        seriesDefaults: {
+          renderer: jQuery.jqplot.BarRenderer, 
+          shadow: false,
+          pointLabels: { show: true, location: 'n' },
+          rendererOptions: {
+            barDirection: 'vertical',
+            barWidth: 30
+          }
+        }, 
+        grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
+        legend: { show:false },
+        axes: {
+          xaxis: {
+            renderer: $.jqplot.CategoryAxisRenderer,
+            ticks: ticks,
+          },
+          yaxis: {
+            tickOptions: { formatString: '%d' }
+          }
+        }  
+      }
+    );
+    
+    $(tab).on('shown', (function(ch) {
+      return function(e) {
+        ch.replot();
+      };
+    })(chart));
+  });
   
   var enroll_plot = jQuery.jqplot ('enroll', [enroll],
     { 
@@ -69,35 +117,6 @@ $(document).ready(function() {
   
   if(high && $('#academics').length > 0) {
     // High school academics  
-    var hs_academics_plot = jQuery.jqplot ('academics', [high_ac.state.scores, high_ac.school.scores],
-      { 
-        seriesColors: [ colors.lblue, colors.orange ],
-        seriesDefaults: {
-          renderer: jQuery.jqplot.BarRenderer, 
-          shadow: false,
-          pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
-          rendererOptions: {
-            barDirection: 'horizontal',
-            barWidth: 16,
-            barPadding: 3
-          }
-        }, 
-        grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
-        series: [
-          { label:'State', pointLabels: { show: true, labels: high_ac.state.labels } },
-          { label:'School', pointLabels: { show: true, labels: high_ac.school.labels } }
-        ],              
-        legend: { show:true, location: 'e', border: '0px', fontSize: '13px', marginRight: '0px' },
-        axes: {
-          yaxis: {
-            renderer: $.jqplot.CategoryAxisRenderer,
-            ticks: high_ac.ticks,
-            showTickMarks: false
-          },
-          xaxis: { min: 0, max: 120, padMin: 1.05, padMax: 1.05, numberTicks: 7 }
-        }  
-      }
-    );
     
     var hs_act_plot = jQuery.jqplot ('act', [high_act.state, high_act.school],
       { 
@@ -160,44 +179,6 @@ $(document).ready(function() {
       );      
     }
     
-  } else {
-    // Elementary school academics - reading 
-    var plots = ['reading', 'math', 'third'];
-    for(var i in plots) {
-      var name = plots[i];
-      if(elem_ac[name].school.length == 0 || $('#' + name).length == 0) {
-        continue;
-      }
-      var elem_academics_plot = jQuery.jqplot (name, [elem_ac[name].state.scores, elem_ac[name].school.scores], 
-        { 
-          seriesColors: [ colors.light, colors.orange ],
-          seriesDefaults: {
-            renderer: jQuery.jqplot.BarRenderer, 
-            shadow: false,
-            pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
-            rendererOptions: {
-              barDirection: 'horizontal',
-              barWidth: 16,
-              barPadding: 3
-            }
-          }, 
-          grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: false }, 
-          series: [
-            { label:'State', pointLabels: { show: true, labels: elem_ac[name].state.labels }  },
-            { label:'School', pointLabels: { show: true, labels: elem_ac[name].school.labels }  }
-          ],
-          legend: { show:true, location: 'e', border: '0px', fontSize: '13px' },
-          axes: {
-            yaxis: {
-              renderer: $.jqplot.CategoryAxisRenderer,
-              ticks: elem_ac[name].ticks,
-              showTickMarks: false
-            },
-            xaxis: { min: 0, max: 120, pad: 1.05, numberTicks: 7 }
-          }  
-        }
-      );  
-    }
   }
   
   

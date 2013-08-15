@@ -348,7 +348,7 @@ class School < ActiveRecord::Base
           tested = dump["grade_#{g}_#{subject}_tested".to_sym].to_i
           prof   = (prof == 9)   ? 0 : prof
           tested = (tested == 9) ? 0 : tested
-          percent = (prof.to_f / tested.to_f)
+          percent = (100.0 * prof.to_f / tested.to_f).to_i
           h[subject][g] = percent
         end
       end

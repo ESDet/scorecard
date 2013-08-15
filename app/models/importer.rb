@@ -53,7 +53,7 @@ class Importer
       # First the basic stuff
       ensure_column :basic, :text
       basic = {}
-      ['email', 'school_scorecard_status', 'school_status', 'loc_email'].each do |f|
+      ['email', 'school_scorecard_status', 'school_status', 'loc_email', 'scorecard_display', 'geo'].each do |f|
         val = s["field_#{f}"]
         if val.empty?
           val = nil
@@ -123,47 +123,47 @@ class Importer
     end
     ensure_column dataset, :text
     
-    if true or dataset == 'act_2013'
-      per = 1000
-      results = []
-      ofs = 0
-      begin
-        results = p.get_dataset dataset, nil, { :limit => per, :offset => ofs }
-        ofs += per
-        
-        results.each do |r|
-          bcode = r[bcode_key].gsub(/[^0-9]/, '')
-          if s = School.find_by_bcode(bcode)
-            puts "bcode #{bcode} - #{s.name}"
-            h = {}
-            r.each do |key, val|
-              next unless m = key.match(key_re)
-              h[m[1]] = val
-            end
-            s.update_attribute(dataset, OpenStruct.new(h))
+    per = 1000
+    results = []
+    ofs = 0
+    begin
+      results = p.get_dataset dataset, nil, { :limit => per, :offset => ofs }
+      ofs += per
+      
+      results.each do |r|
+        bcode = r[bcode_key].gsub(/[^0-9]/, '')
+        if s = School.find_by_bcode(bcode)
+          puts "bcode #{bcode} - #{s.name}"
+          h = {}
+          r.each do |key, val|
+            next unless m = key.match(key_re)
+            h[m[1]] = val
           end
+          s.update_attribute(dataset, OpenStruct.new(h))
         end
-      end while !results.empty?
-      return
-    end
+      end
+    end while !results.empty?
     
-    
-    # This was working (if slow) for the others
-    School.find_each do |s|
-      scores = p.get_dataset dataset, s.bcode
-      scores.each do |data|
-        h = {}
-        bcode = data[bcode_key].gsub(/[^0-9]/, '')
-        puts "bcode #{bcode}"
-        data.each do |key, val|
-          next unless m = key.match(key_re)
-          key2 = m[1]
-          #puts "  #{key2} = #{val}"
-          h[key2] = val
+
+    if false    
+      # This was working (if slow) for the others
+      School.find_each do |s|
+        scores = p.get_dataset dataset, s.bcode
+        scores.each do |data|
+          h = {}
+          bcode = data[bcode_key].gsub(/[^0-9]/, '')
+          puts "bcode #{bcode}"
+          data.each do |key, val|
+            next unless m = key.match(key_re)
+            key2 = m[1]
+            #puts "  #{key2} = #{val}"
+            h[key2] = val
+          end
+          s.update_attribute(dataset, OpenStruct.new(h))
         end
-        s.update_attribute(dataset, OpenStruct.new(h))
       end
     end
+    
   end  
   
 end
