@@ -18,10 +18,12 @@ var widths = {
 };
 
 var labels = {
-  act: 'ACT Readiness',
-  math: 'Math',
-  reading: 'Reading',
-  science: 'Science',
+  act:      'ACT Readiness',
+  math:     'Math',
+  reading:  'Reading',
+  english:  'English',
+  science:  'Science',
+  allsub:   'All Subjects'
 };
 
 var state_avg = {
@@ -73,10 +75,17 @@ $(document).ready(function() {
     var tab = $(e).data('tab');
     var ticks = _.keys(grades);
     var values = _.values(grades);
+    var title = labels[subject] || subject;
+    if(subject == 'reading' || subject == 'math' || subject == 'science') {
+      title += " by Grade";
+    } else if(subject == 'act') {
+      ticks = _.map(ticks, function(i) { return labels[i] || i; });
+    }
+    
     if(values.length > 0) {
       var chart = jQuery.jqplot (id, [values],
         { 
-          title: (labels[subject] + " by Grade") || subject,
+          title: title,
           width: widths[subject],
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
