@@ -9,11 +9,9 @@ class School < ActiveRecord::Base
   
   require 'mogrify'
   include Mogrify
-  serialize :basic, OpenStruct
-  serialize :profile, OpenStruct
-  serialize :meap_2012, OpenStruct
-  serialize :esd_k8_2013, OpenStruct
-  serialize :esd_hs_2013, OpenStruct
+  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_hs_2013, :act_2013].each do |k|
+    serialize k, OpenStruct
+  end
   before_save :set_slug
   before_save :set_totals
   
@@ -358,14 +356,15 @@ class School < ActiveRecord::Base
     
     if high?
       a = {}
-      hs = esd_hs_2013.marshal_dump
+      act = act_2013.marshal_dump
       
+      logger.ap act
       # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
-      # allsubPercentMeeting
-      # readingPercentMeeting
-      # mathPercentMeeting
-      # sciencePercentMeeting
-      # englishPercentMeeting
+      [:allsub, :reading, :math, :english, :science].each do |subject|
+        key = "#{subject}percentmeeting".to_sym
+        logger.info "#{key} = #{act[key]}"
+        a[subject] = act[key].to_i
+      end
       h[:act] = a
     end
     
