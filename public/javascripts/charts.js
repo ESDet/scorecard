@@ -94,6 +94,8 @@ $(document).ready(function() {
           ch.replot();
         };
       })(chart));
+    } else {
+      $('#' + id).hide();
     }
   });
   
@@ -143,6 +145,8 @@ $(document).ready(function() {
           ch.replot();
         };
       })(chart));
+    } else {
+      $('#' + id).hide();
     }
   });  
   
