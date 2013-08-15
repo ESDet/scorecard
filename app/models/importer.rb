@@ -123,17 +123,18 @@ class Importer
     end
     ensure_column dataset, :text
     
-    if dataset == 'act_2013'
+    if true or dataset == 'act_2013'
+      per = 1000
       results = []
       ofs = 0
       begin
-        results = p.get_dataset dataset, nil, { :limit => 500, :offset => ofs }
-        ofs += 500
+        results = p.get_dataset dataset, nil, { :limit => per, :offset => ofs }
+        ofs += per
         
         results.each do |r|
           bcode = r[bcode_key].gsub(/[^0-9]/, '')
           if s = School.find_by_bcode(bcode)
-            puts "bcode #{bcode}"
+            puts "bcode #{bcode} - #{s.name}"
             h = {}
             r.each do |key, val|
               next unless m = key.match(key_re)
