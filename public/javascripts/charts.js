@@ -95,6 +95,52 @@ $(document).ready(function() {
     })(chart));
   });
   
+  $('.history').each(function(idx, e) {
+    var id = $(e).attr('id');
+    var grade = $(e).data('grade');
+    var scores = $(e).data('scores'); // scores is { reading: { 2009 => 50, 2010 => 65.. }... }
+    var tab = $(e).data('tab');
+    var scores2 = _.map(scores, function(years, subj) { return _.values(years); });
+    var subjects = _.keys(scores);
+    var ticks = [2009, 2010, 2011, 2012];
+    var chart = jQuery.jqplot (id, scores2,
+      { 
+        title: "Grade " + grade,
+        width: 400,
+        seriesDefaults: {
+          renderer: jQuery.jqplot.BarRenderer, 
+          //color: '#00aff0',
+          shadow: false,
+          pointLabels: { show: true, location: 'n' },
+          rendererOptions: {
+            barDirection: 'vertical'
+          }
+        }, 
+        grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: true, shadowWidth: 3, shadowDepth: 1, shadowAlpha: 0.2 }, 
+        legend: { show: true },
+        series: _.map(subjects, function(s) { return { label: labels[s] } }),
+        axes: {
+          xaxis: {
+            renderer: $.jqplot.CategoryAxisRenderer,
+            ticks: ticks
+          },
+          yaxis: {
+            tickOptions: { formatString: '%d%%' },
+            min: 0,
+            max: 115,
+            ticks: [0, 25, 50, 75, 100, 115]
+          }
+        }  
+      }
+    );
+    
+    $(tab).on('shown', (function(ch) {
+      return function(e) {
+        ch.replot();
+      };
+    })(chart));
+  });  
+  
   var enroll_plot = jQuery.jqplot ('enroll', [enroll],
     { 
       title: 'Enrollment by Grade',

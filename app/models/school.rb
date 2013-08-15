@@ -379,7 +379,7 @@ class School < ActiveRecord::Base
       2009 => meap_2009.marshal_dump
     }
     h = {}
-    (3..9).each do |grade|
+    (3..8).each do |grade|
       h[grade] = {}
       [:reading, :math, :science].each do |subject|
         h[grade][subject] = {}
