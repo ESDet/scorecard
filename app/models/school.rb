@@ -335,7 +335,7 @@ class School < ActiveRecord::Base
     h = {}
     dump = meap_2012.marshal_dump
     if k8?
-      [:math, :reading, :science].each do |subject|
+      [:math, :reading].each do |subject|   # used to have :science
         h[subject] = {}
         logger.info dump.inspect
         grades = (3..8).select { |g| logger.info "grade_#{g}_#{subject}_tested"; dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
@@ -382,7 +382,7 @@ class School < ActiveRecord::Base
     h = {}
     (3..8).each do |grade|
       h[grade] = {}
-      [:reading, :math, :science].each do |subject|
+      [:reading, :math].each do |subject| # Used to have :science
         next if grade == 3 and subject == :math  # Bogus 100%s
         h[grade][subject] = {}
         dump.each do |year, dump|

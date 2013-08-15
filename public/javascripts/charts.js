@@ -11,10 +11,10 @@ var colors = {
 };
 
 var widths = {
-  math: 320,
-  reading: 340,
+  math: 400,
+  reading: 400,
   science: 140,
-  act: 350
+  act: 400
 };
 
 var labels = {
@@ -80,7 +80,6 @@ $(document).ready(function() {
           width: widths[subject],
           seriesDefaults: {
             renderer: jQuery.jqplot.BarRenderer, 
-            color: '#00aff0',
             shadow: false,
             pointLabels: { show: true, location: 'n' },
             rendererOptions: {
@@ -98,8 +97,8 @@ $(document).ready(function() {
             yaxis: {
               tickOptions: { formatString: '%d%%' },
               min: 0,
-              max: 115,
-              ticks: [0, 25, 50, 75, 100, 115]
+              max: 100,
+              ticks: [0, 25, 50, 75, 100]
             }
           }  
         }
@@ -149,8 +148,8 @@ $(document).ready(function() {
             yaxis: {
               tickOptions: { formatString: '%d%%' },
               min: 0,
-              max: 115,
-              ticks: [0, 25, 50, 75, 100, 115]
+              max: 100,
+              ticks: [0, 25, 50, 75, 100]
             }
           }  
         }
