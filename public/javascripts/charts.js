@@ -24,6 +24,22 @@ var labels = {
   science: 'Science',
 };
 
+var state_avg = {
+  grd4math: 0.449491684235184,
+  grd5math: 0.45725703803534,
+  grd6math: 0.40152655148032,
+  grd7Math: 0.38387487099185,
+  grd8math: 0.325276515015929,
+  grd3reading: 0.665312708657912,	
+  grd4reading: 0.680764615282857,	
+  grd5reading: 0.703891310692866,	
+  grd6reading: 0.682231246926845,	
+  grd7reading: 0.620312277199487,	
+  grd8reading: 0.657135181122106,	
+  grd5science: 0.158616942974309,	
+  grd8science: 0.158616942974309
+};
+
 $(document).ready(function() {
   
   $('.help').popover({

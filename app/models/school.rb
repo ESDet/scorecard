@@ -341,6 +341,7 @@ class School < ActiveRecord::Base
         grades = (3..8).select { |g| logger.info "grade_#{g}_#{subject}_tested"; dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
         logger.info grades.inspect
         grades.each do |g|
+          next if g == 3 and subject == :math  # Weird, it's 100% everywhere for now
           prof   = dump["grade_#{g}_#{subject}_proficient".to_sym].to_i
           tested = dump["grade_#{g}_#{subject}_tested".to_sym].to_i
           prof   = (prof == 9)   ? 0 : prof
@@ -382,6 +383,7 @@ class School < ActiveRecord::Base
     (3..8).each do |grade|
       h[grade] = {}
       [:reading, :math, :science].each do |subject|
+        next if grade == 3 and subject == :math  # Bogus 100%s
         h[grade][subject] = {}
         dump.each do |year, dump|
           percent = meap_percent(year, grade, subject, dump)
