@@ -10,6 +10,7 @@
       - @schools.each do |s|
         = render 'item', { :school => s }
 
+    %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
 
   = render 'shared/map', :map => @map
 
@@ -19,6 +20,25 @@
   var searching = false;
   $(document).ready(function(e) {
     $('.l-footer-wrapper').hide();
+    
+    $('body').on('change', 'input.compare-check', function(e) {
+      var count = $('input.compare-check:checked').length;
+      if(count > 0) {
+        $('a.do-compare').show();
+      } else {
+        $('a.do-compare').hide();
+      }
+      return true;
+    });
+    
+    $('a.do-compare').click(function(e) {
+      ids = [];
+      $('input.compare-check:checked').each(function(idx, el) {
+        ids.push($(el).val());
+      });
+      window.location = "/compare/+" + ids.join(',');
+      return false;
+    });
     
     $('form.form-search').submit(function(e) {
       // Get ajax for da new search and update list
@@ -54,7 +74,10 @@
             }
             map.overlays.schools.addData(response);
           }
-          var template = "{{#features}}{{#properties}}<li><a href='/schools/{{slug}}'>{{name}}</a><br/>{{address}}<br/>Grades {{grades_served}}{{#grade}}<br/>Overall: {{grade}}{{/grade}}</li>{{/properties}}{{/features}}";
+          var template = "{{#features}}{{#properties}}<li><a href='/schools/{{slug}}'>{{name}}</a><br/>{{address}}<br/>" +
+            "Grades {{grades_served}}{{#grade}}<br/>" +
+            "<label class='float_right'><input class='compare-check' name='compare[]' type='checkbox' value='{{id}}'/> Compare</label>" +
+            "Overall: {{grade}}{{/grade}}</li>{{/properties}}{{/features}}";
           var html = Mustache.to_html(template, response);
           $('.school_list').html(html);
           listSpinner.stop();

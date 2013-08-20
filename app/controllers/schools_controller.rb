@@ -153,18 +153,16 @@ class SchoolsController < ApplicationController
       redirect_to '/compare', :notice => "Thank you, you may now choose new schools to compare." and return
     elsif str.blank?
       list = session[:compare]
-    elsif m = str.match(/^\+([0-9]+)$/)
-      id = m[1].to_i
-      list = (session[:compare] || []) + [id]
+    elsif m = str.match(/^\+([0-9,]+)$/)
+      ids = m[1].split(',').collect { |i| i.to_i }
+      list = (session[:compare] || []) + ids
     else
-      list = str.split('/')
+      list = str.split(',')
     end
     
     # Limit
     list = list.collect { |i| i.to_i }.uniq
-    while list.size > AppConfig.max_compared
-      list.shift
-    end
+    list.shift while list.size > AppConfig.max_compared
 
     session[:compare] = list
 

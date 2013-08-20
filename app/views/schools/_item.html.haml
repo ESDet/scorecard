@@ -5,5 +5,8 @@
   %br/
   Grades #{school.grades_served}
   %br/
+  %label.float_right
+    = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
+    Compare
   - unless school.grade.blank?
     Overall: #{school.grade}
