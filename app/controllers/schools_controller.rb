@@ -13,7 +13,8 @@ class SchoolsController < ApplicationController
     session[:loc]     = params[:loc]
     
     @title = current_search    
-    @schools = scope_from_filters(filter, type, params[:loc]).order('points desc')
+    @schools = scope_from_filters(filter, type, params[:loc])
+    @schools.sort! { |a,b| b.points.to_i <=> a.points.to_i }
     #@schools = @schools.all if @schools.is_a?(Class)
     #@schools = @schools.sort { |a,b| b.points.to_i <=> a.points.to_i }
 
@@ -227,7 +228,24 @@ class SchoolsController < ApplicationController
     logger.info "scope from filters: #{filter}, #{type}, #{loc}"
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
     #schools = schools.send(type) if type
-    schools = schools.where(:zip => loc) unless loc.blank?
+    if loc.andand.match /^[0-9]{5}$/
+      schools = schools.where(:zip => loc)
+    elsif !loc.blank?
+      geo = Bedrock::Geocoder.bing_geocode({
+        :address => loc,
+        :city => 'Detroit',
+        :state => 'MI',
+      })
+      if geo
+        #f = School.rgeo_factory_for_column :centroid
+        miles = AppConfig.radius_mi
+        f = RGeo::Geographic.projected_factory(:projection_proj4 => AppConfig.detroit_proj)
+        p = f.point(geo[:location][:lon], geo[:location][:lat])
+        env = p.buffer(1609 * miles).envelope
+        schools = schools.inside(Bedrock::extent(env))
+      end
+    end
+    schools = schools.all if schools.is_a?(Class)
     return schools
   end
   

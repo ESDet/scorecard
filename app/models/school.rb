@@ -78,8 +78,8 @@ class School < ActiveRecord::Base
       :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter]
     }
-    others = School.where(['address = ? and id <> ?', self.address, self.id]).select('id, name, address, grades_served, bcode, slug')
-    result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
+    #others = School.where(['address = ? and id <> ?', self.address, self.id]).select('id, name, address, grades_served, bcode, slug')
+    #result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
   end
   
@@ -333,13 +333,13 @@ class School < ActiveRecord::Base
   def details(tab)
     throw "Not implemented yet" unless tab == :status
     h = {}
-    dump = meap_2012.marshal_dump
+    dump = meap_2012.andand.marshal_dump
     if k8?
       [:math, :reading].each do |subject|   # used to have :science
         h[subject] = {}
-        logger.info dump.inspect
-        grades = (3..8).select { |g| logger.info "grade_#{g}_#{subject}_tested"; dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
-        logger.info grades.inspect
+        #logger.info dump.inspect
+        grades = (3..8).select { |g| dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
+        #logger.info grades.inspect
         grades.each do |g|
           next if g == 3 and subject == :math  # Weird, it's 100% everywhere for now
           prof   = dump["grade_#{g}_#{subject}_proficient".to_sym].to_i
@@ -357,7 +357,7 @@ class School < ActiveRecord::Base
       a = {}
       act = act_2013.andand.marshal_dump
       
-      logger.ap act
+      #logger.ap act
       # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
       [:allsub, :reading, :math, :english, :science].each do |subject|
         key = "#{subject}percentmeeting".to_sym

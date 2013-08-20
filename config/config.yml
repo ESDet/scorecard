@@ -3,6 +3,8 @@ common:
   cache_key: 12
   analytics_key:
   max_compared: 5
+  radius_mi: 2
+  detroit_proj: +proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs
 
 development:
   analytics_key:
