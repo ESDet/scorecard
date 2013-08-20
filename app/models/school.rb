@@ -361,7 +361,6 @@ class School < ActiveRecord::Base
       # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
       [:allsub, :reading, :math, :english, :science].each do |subject|
         key = "#{subject}percentmeeting".to_sym
-        logger.info "#{key} = #{act[key]}"
         a[subject] = act.andand[key].to_i
       end
       h[:act] = a
