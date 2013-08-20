@@ -149,7 +149,7 @@ class SchoolsController < ApplicationController
   def compare
     str = params[:which] || ''
     if str == 'clear'
-      sesion[:compare] = []
+      session[:compare] = []
       redirect_to '/compare', :notice => "Thank you, you may now choose new schools to compare." and return
     elsif str.blank?
       list = session[:compare]
