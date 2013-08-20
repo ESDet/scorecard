@@ -374,10 +374,10 @@ class School < ActiveRecord::Base
   def history(tab)
     throw "Not implemented yet" unless tab == :status
     dump = {
-      2012 => meap_2012.marshal_dump,
-      2011 => meap_2011.marshal_dump,
-      2010 => meap_2010.marshal_dump,
-      2009 => meap_2009.marshal_dump
+      2012 => meap_2012.andand.marshal_dump,
+      2011 => meap_2011.andand.marshal_dump,
+      2010 => meap_2010.andand.marshal_dump,
+      2009 => meap_2009.andand.marshal_dump
     }
     h = {}
     (3..8).each do |grade|
@@ -386,6 +386,7 @@ class School < ActiveRecord::Base
         next if grade == 3 and subject == :math  # Bogus 100%s
         h[grade][subject] = {}
         dump.each do |year, dump|
+          next if dump.blank?
           percent = meap_percent(year, grade, subject, dump)
           h[grade][subject][year] = percent unless percent.nil?
         end
