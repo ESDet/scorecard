@@ -1,0 +1,28 @@
+.summary
+  .container_12
+    .grid_12
+      %h2 Compare Schools
+
+      - if @schools.size == 0
+        %p Please #{link_to 'search for schools', schools_path} and choose several to compare.
+        
+      - else
+        = link_to 'Add a school', schools_path, :class => 'btn'
+        = link_to "Clear the chart and start over", "/compare/clear", :class => 'btn'
+        
+        %table.compare
+          %thead
+            %tr
+              %th
+              - @schools.each do |s|
+                %th
+                  = link_to 'x', "/compare/#{(session[:compare] - [s.id]).join(',')}", :class => 'close label float_right'
+                  %h3
+                    = link_to s.name, s
+                    
+          %tbody
+            - @chart.each do |label, arr|
+              %tr
+                %td= label
+                - arr.each do |s|
+                  %td= raw s
