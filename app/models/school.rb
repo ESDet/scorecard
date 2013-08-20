@@ -355,14 +355,14 @@ class School < ActiveRecord::Base
     
     if high?
       a = {}
-      act = act_2013.marshal_dump
+      act = act_2013.andand.marshal_dump
       
       logger.ap act
       # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
       [:allsub, :reading, :math, :english, :science].each do |subject|
         key = "#{subject}percentmeeting".to_sym
         logger.info "#{key} = #{act[key]}"
-        a[subject] = act[key].to_i
+        a[subject] = act.andand[key].to_i
       end
       h[:act] = a
     end
