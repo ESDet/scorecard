@@ -231,6 +231,7 @@ class SchoolsController < ApplicationController
     if loc.andand.match /^[0-9]{5}$/
       schools = schools.where(:zip => loc)
     elsif !loc.blank?
+      loc = loc.gsub("&", " and ")
       geo = Bedrock::Geocoder.bing_geocode({
         :address => loc,
         :city => 'Detroit',
