@@ -4,6 +4,7 @@
       %h2= @school.name
       .noprint
         = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
+        = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn'
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
       %h3 Grades: #{@school.grades_served || 'Unknown'}
       %br/

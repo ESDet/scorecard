@@ -50,6 +50,7 @@ class SchoolsController < ApplicationController
     end
   end
   
+  
   def show
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
@@ -136,134 +137,64 @@ class SchoolsController < ApplicationController
         Examples can include: adult education and alternative learning programs."]
       }
 
-=begin    
-
-    # High school
-    # ==============
-    # R, W, M, S, X
-    cats = ['R', 'W', 'M', 'S', 'X'].reverse
-    
-    munge = Proc.new { |school, arr, field|
-      arr.collect { |i| school[field.gsub('#{i}', i)] }.enum_for(:each_with_index).collect { |score, index| [score.andand.to_i, index+1] }
-    }
-    
-    high_school = munge.call(@school, cats, 'PCT_PROF_ALLSTUD_11_#{i}_MME_2012')
-    high_state = munge.call(@school, cats, 'PCT_PROF_MI_ALLSTUD_11_#{i}_MME_2012')
-    @high_ac = {
-      :empty => high_school.reject { |s| s[0].nil? }.empty?,
-      :school => {
-        :scores => high_school,
-        :labels => high_school.collect { |s| "#{s[0]}%" },
-      },
-      :state => {
-        :scores => high_state,
-        :labels => high_state.collect { |s| "#{s[0]}%" },
-      },
-      :ticks => [
-        "Social Studies (#{@school.TREND_PCT_PROF_ALLSTUD_11_X_MME_2008_2012})",
-        "Science (#{@school.TREND_PCT_PROF_ALLSTUD_11_S_MME_2008_2012})",
-        "Math (#{@school.TREND_PCT_PROF_ALLSTUD_11_M_MME_2008_2012})",
-        "Writing (#{@school.TREND_PCT_PROF_ALLSTUD_11_W_MME_2008_2012})",
-        "Reading (#{@school.TREND_PCT_PROF_ALLSTUD_11_R_MME_2008_2012})"
-      ]
-    }
-    
-    @high_act = {
-      :school => [ [@school.AVG_ALLSTUD_ALLSUB_ACT_2012.andand.round(1) || 'N/A' , 1 ] ],
-      :state => [ [@school.AVG_MI_ALLSTUD_ALLSUB_ACT_2012.andand.round(1) || 'N/A', 1] ],
-      :ticks => [ "Trend: #{@school.TREND_ALLSTUD_ALLSUB_ACT_2008_2012 || 'N/A'}" ],
-    }
-    @high_grad = {
-      :school => [ [@school.PCT_ALLSTUD_12_GRAD_4YR_2012.andand.round(0) || 'N/A' , 1 ] ],
-      :state => [ [@school.PCT_MI_ALLSTUD_12_GRAD_4YR_2012.andand.round(0) || 'N/A', 1] ],
-      :ticks => [ "Trend: #{@school.TREND_ALLSTUD_12_GRAD_4YR_2007_2011 || 'N/A'}" ],
-    }
-    
-    # Elementary school 
-    cats = [
-      ['ALLSTUD',   'All'],
-      ['FEMALE',    'Female'],
-      ['MALE',      'Male'],
-      ['LOWINCOME', 'Low Income'],
-      ['SPED', 'Special Education']
-    ].reverse
-    
-    @r_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_R_MEAP_2012"].nil? }
-    @m_cats = cats.reject { |c| @school["PCT_PROF_#{c[0]}_ALL_M_MEAP_2012"].nil? }
-    
-    reading_school = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_R_MEAP_2012')
-    reading_state  = munge.call(@school, @r_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_R_MEAP_2012')
-    math_school    = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_#{i}_ALL_M_MEAP_2012')
-    math_state     = munge.call(@school, @m_cats.collect { |c| c[0] }, 'PCT_PROF_MI_#{i}_ALL_M_MEAP_2012')
-    
-    third_school = munge.call(@school, ['R'], 'PCT_PROF_ALLSTUD_03_#{i}_MEAP_2012')
-    third_state = munge.call(@school, ['R'], 'PCT_PROF_MI_ALLSTUD_03_#{i}_MEAP_2012')
-    third_ticks = ["Proficiency"]
-    third_ticks[0] += " (#{@school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011})" unless @school.TREND_PCT_PROF_ALLSTUD_03_R_MEAP_2007_2011.nil?
-    
-    reading_ticks = @r_cats.collect { |cat| cat[1] }
-    reading_ticks[reading_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011})" unless reading_ticks.empty? or @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011.blank?
-    math_ticks = @m_cats.collect { |cat| cat[1] }
-    math_ticks[math_ticks.size-1] += " (Trend: #{@school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011})" unless math_ticks.empty? or @school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011.blank?
-    
-    @elem_academics = {
-      :reading => {
-        :school => {
-          :scores => reading_school,
-          :labels => reading_school.collect { |s| "#{s[0]}%" }
-        },
-        :state => {
-          :scores => reading_state,
-          :labels => reading_state.collect  { |s| "#{s[0]}%" }        
-        },
-        :ticks => reading_ticks,
-      },
-      :math => {
-        :school => {
-          :scores => math_school,
-          :labels => math_school.collect { |s| "#{s[0]}%" },
-        },
-        :state => {
-          :scores => math_state,
-          :labels => math_state.collect  { |s| "#{s[0]}%" },
-        },
-        :ticks => math_ticks,
-      },
-      :third => {
-        :school => {
-          :scores => third_school,
-          :labels => third_school.collect  { |s| "#{s[0]}%" },
-        },
-        :state => {
-          :scores => third_state,
-          :labels => third_state.collect { |s| "#{s[0]}%" },
-        },
-        :ticks => third_ticks,
-      },
-    }
-    
-    @history = [ ]
-    if @school.high?
-      ['AVG_ALLSTUD_ALLSUB_ACT_', 'PCT_ALLSTUD_12_GRAD_4YR_'].each do |m|
-        series = (2007..2012).collect { |year| [year, @school[m + year.to_s]] }.reject { |x| x[1].nil? }
-        @history << series
-      end
-      @history_labels = ['Avg ACT Score', '4-Year Graduation Rate', '']
-    else
-      ['PCT_PROF_ALLSTUD_ALL_R_MEAP_', 'PCT_PROF_ALLSTUD_ALL_M_MEAP_', 'PCT_PROF_ALLSTUD_03_R_MEAP_'].each do |m|
-        series = (2007..2012).collect { |year| [year, @school[m + year.to_s]] }.reject { |x| x[1].nil? }
-        @history << series 
-      end
-      @history_labels = ['All Students MEAP Proficiency (Reading)', 'All Students MEAP Proficiency (Math)', '3rd Grade Reading Proficiency']
-    end
-    
-=end
     respond_to do |format|
       format.html do
         render layout: 'noside'
       end
       #format.pdf { render :layout => false }
     end
+  end
+  
+  
+  def compare
+    str = params[:which] || ''
+    if str == 'clear'
+      sesion[:compare] = []
+      redirect_to '/compare', :notice => "Thank you, you may now choose new schools to compare." and return
+    elsif str.blank?
+      list = session[:compare]
+    elsif m = str.match(/^\+([0-9]+)$/)
+      id = m[1]
+      list = (session[:compare] || []) + [id]
+    else
+      list = str.split('/')
+    end
+    
+    # Limit
+    list = list.uniq.collect { |i| i.to_i }
+    while list.size > AppConfig.max_compared
+      list = list.shift
+    end
+
+    session[:compare] = list
+
+        
+    @schools = School.find(list)
+    @grades = @schools.collect { |s| s.grades }
+
+    @transposed = []
+    @grades.each_with_index do |g,i|
+      s = @schools[i]
+      tx = {}
+      tx['Overall Grade']     = g[:cumulative][:letter] || 'NG'
+      tx['Academic Status']   = g[:status][:letter]     || 'NG'
+      tx['Academic Progress'] = g[:progress][:letter]   || 'NG'
+      tx['School Climate']    = g[:climate][:letter]    || 'NG'
+      tx['Grades Served']     = s.grades_served || 'Unknown'
+      tx['Governance']        = "Unknown"
+      @transposed[i] = tx
+    end
+    
+    # Turn an array of hashes to a hash of arrays..
+    @chart = {}
+    @transposed.each_with_index do |h,i|
+      h.each do |label,val|
+        @chart[label] ||= []
+        @chart[label][i] = val
+      end
+    end
+    
+    render layout: 'noside'
   end
   
   def increment

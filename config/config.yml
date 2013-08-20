@@ -2,6 +2,7 @@ common:
   typekit_key: rak2ush
   cache_key: 12
   analytics_key:
+  max_compared: 5
 
 development:
   analytics_key:
