@@ -16,7 +16,7 @@
         .tab-pane.active{id: "#{key}-summary"}
           .grade_container
             .grade= grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
-            .grade.sub3 #{grade[:total]} / #{grade[:possible]}
+            .grade.sub3 #{grade[:total].blank? ? '?' : grade[:total]} / #{grade[:possible].blank? ? '?' : grade[:possible]}
           .subscore_wrapper
             = render 'shared/subscores', :scores => grade[:summary_table]
             

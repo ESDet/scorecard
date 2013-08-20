@@ -40,6 +40,11 @@ class Importer
     types = p.show_vocabulary 3
     types = Hash[types.collect { |t| [t['tid'], t['name']] }]
     puts "Types: #{types.inspect}"
+    
+    govs = p.show_vocabulary 7
+    govs = Hash[govs.collect { |t| [t['tid'], t['name']] }]
+    puts "Governances: #{govs.inspect}"
+    
     schools = p.show_vocabulary 4
     schools.each do |s|
       tid = s['tid']
@@ -53,7 +58,7 @@ class Importer
       # First the basic stuff
       ensure_column :basic, :text
       basic = {}
-      ['email', 'school_scorecard_status', 'school_status', 'loc_email', 'scorecard_display', 'geo'].each do |f|
+      ['email', 'school_scorecard_status', 'school_status', 'loc_email', 'scorecard_display'].each do |f|
         val = s["field_#{f}"]
         if val.empty?
           val = nil
@@ -70,6 +75,14 @@ class Importer
         basic['school_type'] = types[stid]
       end
       
+      sgid = s['field_governance']
+      unless sgid.blank?
+        sgid = sgid['und'].andand.first.andand['tid']
+        puts "School governance tid: #{sgid}, and govs[sgid] = #{govs[sgid]}"
+        basic['governance'] = govs[sgid]
+      end
+      
+      
       addr = s['field_address']['und'].first
       basic[:address] = addr
       basic[:links] = s['field_links'].empty? ? nil : s['field_links']['und'].collect { |l| l['url'] }
@@ -78,7 +91,11 @@ class Importer
       school = School.find_or_create_by_bcode(bcode)
       school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :school_type => types[stid],
         :address => address, :address2 => address2, :zip => addr['postal_code'] }
-      if school.address_changed? and !addr['thoroughfare'].blank?
+        
+      if geo = basic['field_geo'].andand['und'].andand.first
+        puts "Found geographic position: #{geo.inspect}"
+        school.centroid = RGeo::Geographic.spherical_factory.point(geo['lon'].to_f, geo['lat'].to_f)
+      elsif school.address_changed? and !addr['thoroughfare'].blank?
         geo = Bedrock::Geocoder.bing_geocode({
           :address => addr['thoroughfare'],
           :city    => addr['locality'],

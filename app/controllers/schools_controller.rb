@@ -54,7 +54,7 @@ class SchoolsController < ApplicationController
   def show
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
-      redirect_to root_path and return if @school.nil?
+      redirect_to root_path and return if @school.nil? or @school.basic.scorecard_display == '0'
     rescue
       render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
       redirect_to root_path and return
@@ -154,16 +154,16 @@ class SchoolsController < ApplicationController
     elsif str.blank?
       list = session[:compare]
     elsif m = str.match(/^\+([0-9]+)$/)
-      id = m[1]
+      id = m[1].to_i
       list = (session[:compare] || []) + [id]
     else
       list = str.split('/')
     end
     
     # Limit
-    list = list.uniq.collect { |i| i.to_i }
+    list = list.collect { |i| i.to_i }.uniq
     while list.size > AppConfig.max_compared
-      list = list.shift
+      list.shift
     end
 
     session[:compare] = list
@@ -180,8 +180,10 @@ class SchoolsController < ApplicationController
       tx['Academic Status']   = g[:status][:letter]     || 'NG'
       tx['Academic Progress'] = g[:progress][:letter]   || 'NG'
       tx['School Climate']    = g[:climate][:letter]    || 'NG'
+      
+      tx['Address']           = "#{s.address}<br/>#{s.address2}"
       tx['Grades Served']     = s.grades_served || 'Unknown'
-      tx['Governance']        = "Unknown"
+      tx['Governance']        = s.basic.governance || 'Unknown'
       @transposed[i] = tx
     end
     

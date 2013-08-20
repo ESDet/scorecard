@@ -7,7 +7,7 @@
         = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn'
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
       %h3 Grades: #{@school.grades_served || 'Unknown'}
-      %br/
+      %p Governance: #{@school.basic.governance || 'Unknown'}
 
   .container_12
     .grid_3

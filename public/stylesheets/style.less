@@ -236,9 +236,11 @@ ul.school_list {
 .profile .lead { color: @dblue; }
 
 table.compare {
-  margin: 2em 0;
+  margin: 2em 0; font-size: 0.9em;
+  tbody tr:nth-child(odd) { background-color: #f4f8ff; }
   td, th {
-    max-width: 300px; padding: 0.5em 1.5em; text-align: left; position: relative; padding-right: 2em;
+    border-collapse: collapse;
+    max-width: 300px; padding: 0.5em 1em; text-align: left;
     &:first-child { text-align: right; }
     h3 { margin-top: 0; }
     a.close { font-size: 0.7em; color: white; margin-left: 10px;}
