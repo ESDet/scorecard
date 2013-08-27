@@ -201,9 +201,19 @@ class SchoolsController < ApplicationController
   def increment
     s = scope_from_filters(session[:filter], session[:type], session[:loc])
     if params[:by] == 1
-      s = s.first(:conditions => ["id > ?", params[:id].to_i]) || s.first
+      if s.is_a? Array
+        avail = s.select { |i| i.id > params[:id].to_i }
+        s = (avail.empty? ? s : avail).first
+      else
+        s = s.first(:conditions => ["id > ?", params[:id].to_i]) || s.first
+      end
     elsif params[:by] == -1
-      s = s.last(:conditions => ["id < ?", params[:id].to_i]) || s.last
+      if s.is_a? Array
+        avail = s.select { |i| i.id < params[:id].to_i }
+        s = (avail.empty? ? s : avail).last
+      else
+        s = s.last(:conditions => ["id < ?", params[:id].to_i]) || s.last
+      end
     end
     redirect_to (s.nil? ? schools_path : school_path(s.slug))
   end
