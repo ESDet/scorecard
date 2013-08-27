@@ -30,7 +30,7 @@
                 .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='##{key}-details']" }
                 
             - elsif section == :climate
-              .graph{:id => "#{key}_5e", 'data-grades' => grade[:details].to_json, 'data-tab' => "a[href='##{key}-details']", 'data-direction' => 'horizontal', :style => 'height: 320px; width: 640px;' }
+              .graph{:id => "#{key}_5e", 'data-grades' => grade[:details].to_json, 'data-tab' => "a[href='##{key}-details']", 'data-direction' => 'horizontal', :style => 'height: 340px; width: 640px;' }
             
             
         - if tabs.include? :history
