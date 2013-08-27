@@ -54,12 +54,12 @@
   .container_12.clear_floats.profile
     .grid_12
       %p.lead Score Breakdown
-      = render 'shared/grade_overview', :grade => @grades[:status],   :title => 'Academic Status',   :icon => 'icon_status_white.png',
+      = render 'shared/grade_overview', :section => :status, :grades => @grades,   :title => 'Academic Status',   :icon => 'icon_status_white.png',
         :tabs => [:summary, :details, :history, :help]
-      = render 'shared/grade_overview', :grade => @grades[:progress], :title => 'Academic Progress', :icon => 'icon_progress_white.png',
+      = render 'shared/grade_overview', :section => :progress, :grades => @grades, :title => 'Academic Progress', :icon => 'icon_progress_white.png',
         :tabs => [:summary, :help]
-      = render 'shared/grade_overview', :grade => @grades[:climate],  :title => 'School Climate',    :icon => 'icon_climate_white.png',
-        :tabs => [:summary, :help]
+      = render 'shared/grade_overview', :section => :climate, :grades => @grades,  :title => 'School Climate',    :icon => 'icon_climate_white.png',
+        :tabs => [:summary, :details, :help]
     
 .container_12.clear_floats
   .grid_12.self_reported

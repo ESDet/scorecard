@@ -2,7 +2,8 @@ class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
   require 'bedrock/acts_as_geocoded'
   
-  acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :address2, :grades_served, :slug, :grade, :points], :add_properties => :my_properties
+  acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :address2, :grades_served, :slug, :grade, :points],
+    :add_properties => :my_properties
   #acts_as_geocoded :address => :address, :point => :centroid, :sleep => 0.15
   utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   set_rgeo_factory_for_column(:centroid, utm_factory)
@@ -50,6 +51,16 @@ class School < ActiveRecord::Base
     :traditional      => 'Traditional public',
   }
   
+  FIVE_E_LABELS = {
+    :Student_Response_Rate => 'Response rate on student survey',
+    :Teacher_Response_Rate => 'Response rate on teacher survey',
+    :E_leaders => 'Effective Leaders',
+    :E_teachers => 'Collaborative Teachers', 
+    :E_families => 'Involved Families',
+    :E_environment => 'Supportive Environment',
+    :E_instruction => 'Ambitious Instruction',
+  }
+
   GRADES.each do |k,v|
     scope k,         where(:school_type => v)
   end
@@ -226,6 +237,7 @@ class School < ActiveRecord::Base
     [:status, :progress, :climate].each { |s| h[s][:summary_table] = summary_table(s) }
     h[:status][:details] = details(:status)
     h[:status][:history] = history(:status)
+    h[:climate][:details] = details(:climate)
 
     return h
   end
@@ -329,43 +341,52 @@ class School < ActiveRecord::Base
     h
   end
   
-  # So far only Academic Status tab implemented
+  # So far only Academic Status & Climate tabs implemented
   def details(tab)
-    throw "Not implemented yet" unless tab == :status
+    
     h = {}
-    dump = meap_2012.andand.marshal_dump
-    if k8?
-      [:math, :reading].each do |subject|   # used to have :science
-        h[subject] = {}
-        #logger.info dump.inspect
-        grades = (3..8).select { |g| dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
-        #logger.info grades.inspect
-        grades.each do |g|
-          next if g == 3 and subject == :math  # Weird, it's 100% everywhere for now
-          prof   = dump["grade_#{g}_#{subject}_proficient".to_sym].to_i
-          tested = dump["grade_#{g}_#{subject}_tested".to_sym].to_i
-          prof   = (prof == 9)   ? 0 : prof
-          tested = (tested == 9) ? 0 : tested
-          next if tested == 0
-          percent = (100.0 * prof.to_f / tested.to_f).to_i
-          h[subject][g] = percent
+    if tab == :status
+      dump = meap_2012.andand.marshal_dump
+      if k8?
+        [:math, :reading].each do |subject|   # used to have :science
+          h[subject] = {}
+          #logger.info dump.inspect
+          grades = (3..8).select { |g| dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
+          #logger.info grades.inspect
+          grades.each do |g|
+            next if g == 3 and subject == :math  # Weird, it's 100% everywhere for now
+            prof   = dump["grade_#{g}_#{subject}_proficient".to_sym].to_i
+            tested = dump["grade_#{g}_#{subject}_tested".to_sym].to_i
+            prof   = (prof == 9)   ? 0 : prof
+            tested = (tested == 9) ? 0 : tested
+            next if tested == 0
+            percent = (100.0 * prof.to_f / tested.to_f).to_i
+            h[subject][g] = percent
+          end
         end
       end
-    end
-    
-    if high?
-      a = {}
-      act = act_2013.andand.marshal_dump
       
-      #logger.ap act
-      # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
-      [:allsub, :reading, :math, :english, :science].each do |subject|
-        key = "#{subject}percentmeeting".to_sym
-        a[subject] = act.andand[key].to_i
+      if high?
+        a = {}
+        act = act_2013.andand.marshal_dump
+        
+        #logger.ap act
+        # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
+        [:allsub, :reading, :math, :english, :science].each do |subject|
+          key = "#{subject}percentmeeting".to_sym
+          a[subject] = act.andand[key].to_i
+        end
+        h[:act] = a
       end
-      h[:act] = a
+      
+    elsif tab == :climate
+      FIVE_E_LABELS.each do |key, label|
+        h[label] = 100 * rand
+      end
+      
+    else
+      throw "Tab not implemented yet"
     end
-    
     h
   end
   

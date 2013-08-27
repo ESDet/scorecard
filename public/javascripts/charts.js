@@ -76,6 +76,7 @@ $(document).ready(function() {
     var ticks = _.keys(grades);
     var values = _.values(grades);
     var title = labels[subject] || subject;
+    var direction = $(e).data('direction') || 'vertical';
     if(subject == 'reading' || subject == 'math' || subject == 'science') {
       title += " by Grade";
     } else if(subject == 'act') {
@@ -83,35 +84,36 @@ $(document).ready(function() {
     }
     
     if(values.length > 0) {
-      var chart = jQuery.jqplot (id, [values],
-        { 
-          title: title,
-          width: widths[subject],
-          seriesDefaults: {
-            renderer: jQuery.jqplot.BarRenderer, 
-            shadow: false,
-            pointLabels: { show: true, location: 'n' },
-            rendererOptions: {
-              barDirection: 'vertical',
-              barWidth: 35
-            }
-          }, 
-          grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: true, shadowWidth: 3, shadowDepth: 1, shadowAlpha: 0.2 }, 
-          legend: { show:false },
-          axes: {
-            xaxis: {
-              renderer: $.jqplot.CategoryAxisRenderer,
-              ticks: ticks
-            },
-            yaxis: {
-              tickOptions: { formatString: '%d%%' },
-              min: 0,
-              max: 100,
-              ticks: [0, 25, 50, 75, 100]
-            }
-          }  
-        }
-      );
+      opts = {
+        title: title,
+        width: widths[subject],
+        seriesDefaults: {
+          renderer: jQuery.jqplot.BarRenderer, 
+          shadow: false,
+          pointLabels: { show: true, location: 'n' },
+          rendererOptions: {
+            barDirection: direction,
+            barWidth: 35
+          }
+        }, 
+        grid: { background: '#ffffff', drawGridlines: false, drawBorder: false, shadow: true, shadowWidth: 3, shadowDepth: 1, shadowAlpha: 0.2 }, 
+        legend: { show:false },
+        axes: {
+          
+        }  
+      };
+      opts.axes[direction == 'vertical' ? 'xaxis' : 'yaxis'] = {
+        renderer: $.jqplot.CategoryAxisRenderer,
+        ticks: ticks
+      };
+      opts.axes[direction == 'vertical' ? 'yaxis' : 'xaxis'] = {
+        tickOptions: { formatString: '%d%%' },
+        min: 0,
+        max: 100,
+        ticks: [0, 25, 50, 75, 100]
+      };
+      
+      var chart = jQuery.jqplot (id, [values], opts);
       
       $(tab).on('shown', (function(ch) {
         return function(e) {

@@ -1,5 +1,6 @@
 #block-boxes-did-you-know.block.block--boxes.block--boxes-dyk_box.block--boxes-did-you-know
   - key = Mogrify.transliterate(title)
+  - grade = grades[section]
   %h2.block__title
     - if local_assigns[:icon]
       = image_tag icon
@@ -22,10 +23,14 @@
             
         - if tabs.include? :details
           .tab-pane{id: "#{key}-details"}
-            - if @school.high?
-              %p For each subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
-            - grade[:details].each do |k,v|
-              .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='##{key}-details']" }
+            - if section == :status
+              - if @school.high?
+                %p For each subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
+              - grade[:details].each do |k,v|
+                .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='##{key}-details']" }
+                
+            - elsif section == :climate
+              .graph{:id => "#{key}_5e", 'data-grades' => grade[:details].to_json, 'data-tab' => "a[href='##{key}-details']", 'data-direction' => 'horizontal', :style => 'height: 320px; width: 640px;' }
             
             
         - if tabs.include? :history
@@ -34,14 +39,43 @@
               .history{:id => "#{key}_history_#{g}", 'data-grade' => g, 'data-scores' => subjects.to_json, 'data-tab' => "a[href='##{key}-history']" }
           
         - if tabs.include? :help
-          .tab-pane{id: "#{key}-help"}
-            %p
-              Help me if you can, I'm feeling down
-              %br/
-              And I do appreciate you being round
-              %br/
-              Help me, get my feet back on the ground
-              %br/
-              Won't you please, please help me, help me, help me, ooh
+          .tab-pane.help-tab{id: "#{key}-help"}
+            - if section == :climate
+              %table#climate-help
+                %thead
+                  %tr
+                    /%th Category5E
+                    %th Net 5Essentials Score
+                    %th Category of Improvement
+                %tbody
+                  %tr
+                    /%td 1
+                    %td -3 to -5
+                    %td Not Yet Organized
+                  %tr
+                    /%td 2
+                    %td -1
+                    %td Partially Organized
+                  %tr
+                    /%td 3
+                    %td 0
+                    %td Moderately Organized
+                  %tr
+                    /%td 4
+                    %td 1 to 2
+                    %td Organized
+                  %tr
+                    /%td 5
+                    %td 3 to 5
+                    %td Well Organized 
+            - else
+              %p
+                Help me if you can, I'm feeling down
+                %br/
+                And I do appreciate you being round
+                %br/
+                Help me, get my feet back on the ground
+                %br/
+                Won't you please, please help me, help me, help me, ooh
           
         .clear_floats
