@@ -16,6 +16,7 @@ javascripts:
     - public/javascripts/plugins/jqplot.highlighter.min.js
     - public/javascripts/bootstrap.min.js
     - public/javascripts/mustache.js
+    - public/javascripts/application.js
   mapping:
     - public/paraffin/lib/leaflet/leaflet-src.js
     - public/paraffin/lib/leaflet/plugins/leaflet-hash.js

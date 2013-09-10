@@ -1,13 +1,15 @@
 .summary
   .container_12
     .grid_12
-      %h2= @school.name
       .noprint
         = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
-        = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn'
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
-      %h3 Grades: #{@school.grades_served || 'Unknown'}
-      %p Governance: #{@school.basic.governance || 'Unknown'}
+      %br/
+      %h2= @school.name
+      %p
+        Grades: #{@school.grades_served || 'Unknown'}
+        %br/
+        Governance: #{@school.basic.governance || 'Unknown'}
 
   .container_12
     .grid_3
@@ -29,6 +31,7 @@
         .grade.sub{:title => 'Academic Status'}= @grades[:status][:letter] || 'NG'
         .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter] || 'NG'
         .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || 'NG'
+      = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare'
                 
     .grid_5.minimap_container
       .minimap= render :partial => 'shared/map', :object => @map
@@ -47,13 +50,16 @@
     .grid_4
       - if copy = @category_copy[@school.esd.andand.schoolcategory]
         %p #{copy[0]}: #{copy[1]}
+  
 
-
-
+  %br/
+  %br/
+  %hr/
+  
 - if @school.esd
   .container_12.clear_floats.profile
     .grid_12
-      %p.lead Score Breakdown
+      %p.lead{:style => 'margin-bottom: 0em;'} Score Breakdown
       = render 'shared/grade_overview', :section => :status, :grades => @grades,   :title => 'Academic Status',   :icon => 'icon_status_white.png',
         :tabs => [:summary, :details, :history, :help]
       = render 'shared/grade_overview', :section => :progress, :grades => @grades, :title => 'Academic Progress', :icon => 'icon_progress_white.png',
@@ -79,7 +85,7 @@
                 %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
 
       #other_demographics.tab-pane.active
-        #dems.noprint{:style => 'float: left; width: 360px; height: 180px; margin-right: 40px;'}
+        #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
         #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
 
       #other_details.tab-pane.nomobile
@@ -287,20 +293,6 @@
     
 %br/
 
-.container_12
-- if false
-  .grid_12
-    %h3 Historical Trends
-    - if @school.high?
-      .grid_6.alpha
-        %b Average ACT Score
-        #historical_act{:style => "height: 220px; position: relative;"}
-      .grid_6.omega
-        %b 4-Year Graduation Rate
-        #historical_grad{:style => "height: 220px; position: relative;"}
-    - else    
-      #historical.linechart{:style => "height: 220px; position: relative;"}
-    
 
 .container_12
 - if false
@@ -439,4 +431,14 @@
   var history = #{@history.to_json};
   var history_labels = #{@history_labels.to_json};
   
+  
+  $(document).ready(function(e) {
+    /*var x = #{@school.centroid.x.to_json}, y = #{@school.centroid.y.to_json};
+    var p = new L.LatLng(y, x);
+    var b = new L.LatLngBounds(p, p);
+    map.map.panInsidebounds(b);*/
+  });
+  
 = javascript_include_tag 'charts'
+
+

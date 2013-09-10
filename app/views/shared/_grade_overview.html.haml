@@ -17,7 +17,7 @@
         .tab-pane.active{id: "#{key}-summary"}
           .grade_container
             .grade= grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
-            .grade.sub3 #{grade[:total].blank? ? '?' : grade[:total]} / #{grade[:possible].blank? ? '?' : grade[:possible]}
+            .grade.sub3 #{grade[:total].blank? ? '?' : grade[:total]} / #{grade[:possible].blank? ? '?' : grade[:possible]} pts
           .subscore_wrapper
             = render 'shared/subscores', :scores => grade[:summary_table]
             
@@ -26,6 +26,8 @@
             - if section == :status
               - if @school.high?
                 %p For each subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
+              - else
+                %p Percentage of students in each grade who are proficient in Math and Reading.
               - grade[:details].each do |k,v|
                 .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='##{key}-details']" }
                 
@@ -35,6 +37,11 @@
             
         - if tabs.include? :history
           .tab-pane{id: "#{key}-history"}
+            - exists = grade[:history].collect { |n,subjects| subjects.values }.flatten.reject { |i| i.empty? }
+            - if exists.empty?
+              %p We currently have no historical data to show for this school.
+            - else
+              %p These charts show the percentage of students proficient in reading and math over the last four years.
             - grade[:history].each do |g,subjects|
               .history{:id => "#{key}_history_#{g}", 'data-grade' => g, 'data-scores' => subjects.to_json, 'data-tab' => "a[href='##{key}-history']" }
           

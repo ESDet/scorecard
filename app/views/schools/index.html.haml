@@ -24,9 +24,9 @@
     $('body').on('change', 'input.compare-check', function(e) {
       var count = $('input.compare-check:checked').length;
       if(count > 0) {
-        $('a.do-compare').show();
+        $('a.do-compare').removeClass('hide');
       } else {
-        $('a.do-compare').hide();
+        $('a.do-compare').addClass('hide');
       }
       return true;
     });

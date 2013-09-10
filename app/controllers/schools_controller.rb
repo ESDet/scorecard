@@ -55,14 +55,18 @@ class SchoolsController < ApplicationController
   def show
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
-      redirect_to root_path and return if @school.nil? or @school.basic.scorecard_display == '0'
+      if @school.basic.scorecard_display == '0'
+        redirect_to next_path(@school.id) and return if params[:from] == '1'
+        redirect_to previous_path(@school.id) and return if params[:from] == '-1'
+        redirect_to root_path and return
+      end
+      redirect_to root_path and return if @school.nil?
     rescue
       render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
       redirect_to root_path and return
     end
     
     @subtitle = @school.name
-        
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
       :elements => [@school])
@@ -70,14 +74,17 @@ class SchoolsController < ApplicationController
       :ty => :geojson,
       :elements => [District.find(580)]
     )
+    extent = Bedrock::city_extents(:detroit)
+    extent = Bedrock.merge_extents(extent, @school.extent)
+
     @map = Bedrock::Map.new({
       :base_layers    => ['street'],
       :layers         => [ @det_o, @school_o ],
       :layer_control  => true,
-      :min_zoom => 10,
-      :max_zoom => 18,
-      :extent => Bedrock::city_extents(:detroit),
-      :layer_control => false,
+      :min_zoom       => 10,
+      :max_zoom       => 18,
+      :extent         => extent,
+      :layer_control  => false,
     })
     
     @grades = @school.grades
@@ -114,7 +121,7 @@ class SchoolsController < ApplicationController
     @demographics = ethnicities.collect do |e|
       num = @school.meap_2012.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
       num = 0 if num == 9
-      [ "#{e.titleize}: #{num}", num]
+      [ "#{e.titleize}: #{num} students", num]
     end
     
     @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
@@ -215,7 +222,7 @@ class SchoolsController < ApplicationController
         s = s.last(:conditions => ["id < ?", params[:id].to_i]) || s.last
       end
     end
-    redirect_to (s.nil? ? schools_path : school_path(s.slug))
+    redirect_to (s.nil? ? schools_path : school_path(s.slug)+"?from=#{params[:by]}")
   end
   
   # Ajax update the count of schools matching a filter set

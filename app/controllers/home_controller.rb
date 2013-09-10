@@ -80,6 +80,12 @@ class HomeController < ApplicationController
     end
   end
   
+  def robots
+    response = (Rails.env == 'production') ? '' : "User-Agent: *\nDisallow: /"
+    render :text => response
+  end
+  
+  
   protected
 
   def password_protect

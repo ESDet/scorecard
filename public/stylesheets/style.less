@@ -15,7 +15,7 @@
 @mblue:  #78d5f7;
 @dgreen: #29b473; 
 
-@headerheight: 65px; 
+@headerheight: 80px; 
 @footerheight: 180px;
 
 
@@ -53,7 +53,8 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 #nav {
   height: @headerheight; padding: 16px 20px; font-weight: bold; color: white; font-size: 1.2em; box-sizing: border-box; margin-bottom: 0;
   .title { margin-top: 5px; }
-  a.btn { color: white; margin-left: 2em; margin-top: 20px; background-color: @orange3; padding: 0.5em 1em; }
+  a.btn { color: white; margin-left: 0em; margin-top: 20px; background-color: @orange3; padding: 0.5em 1em; }
+  a.btn:first-child { margin-left: 3em; }
   a.btn:hover { background-color: @orange3; text-decoration: none; }
   .menu { text-align: right; }
   .search {
@@ -61,7 +62,7 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
     input[type=text] { display: inline-block; max-width: 85%; }
   }
   i { vertical-align: baseline; }
-  img.logo { height: 36px; width: auto; margin-top: -5px; }
+  img.logo { height: 60px; width: auto; margin-top: -5px; margin-right: 3em; }
 }
 
 .menu, .branding { text-align: left; }
@@ -81,7 +82,8 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
     overflow-x: hidden; overflow-y: scroll; z-index: 10; border-right: 1px solid  $dblue;
     h1 { margin-top: 0; }
     a.do-compare {
-      position: fixed; bottom: 10px; left: 10px; right: 10px; display: block;
+      position: fixed; bottom: 0px; left: 0px; width: 300px; display: block;
+      background-color: @orange3; font-size: 1.4em; text-align: center; box-sizing: border-box;
       &.hide { display: none; }
     }
   }
@@ -225,7 +227,7 @@ ul.school_list {
   height: 250px; float: left; margin-right: 20px; margin-bottom: 20px; max-width: 100%; 
 }
 
-.summary { 
+.summary {  
   &.closed { background-color: @lightgrey; }  
   .wrapper { height: 200px; border: 2px solid @dgreen; }
   .lead { color: @dblue; }
@@ -236,8 +238,17 @@ ul.school_list {
     .grade:nth-child(1) { display: block; margin: 0 auto 10px auto; }
     .grade img { width: 70%; height: auto; margin-top: 3px; }
   }
+  a.btn.compare { display: inline-block; width: 170px; margin-top: 0.5em; box-sizing: border-box; }
 }
-.profile .lead { color: @dblue; }
+.profile {
+  .lead { color: @dblue; }
+  .nav-pills > li {
+    & > a { color: @dblue;  -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }
+    & > a:hover { background-color: #e2e2e2; }
+    &.active > a { color: white; }
+  }
+}
+
 
 table.compare {
   margin: 2em 0; font-size: 0.9em;
