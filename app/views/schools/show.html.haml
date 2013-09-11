@@ -128,6 +128,10 @@
           %li= link_to 'K8 2013', '#k8', 'data-toggle' => 'tab'
         - if @school.esd_hs_2013
           %li= link_to 'HS 2013', '#hs', 'data-toggle' => 'tab'
+        - if @school.act_2013
+          %li= link_to 'ACT 2013', '#act', 'data-toggle' => 'tab'
+        - if @school.fiveessentials_2013
+          %li= link_to '5Essentials 2013', '#fivee', 'data-toggle' => 'tab'
       .tab-content
         #basic.tab-pane.active
           - @school.basic.marshal_dump.each do |k,v|
@@ -151,6 +155,16 @@
             %br/
         #hs.tab-pane
           - @school.esd_hs_2013.andand.marshal_dump.andand.each do |k,v|
+            %b #{k}:
+            = v
+            %br/
+        #act.tab-pane
+          - @school.act_2013.andand.marshal_dump.andand.each do |k,v|
+            %b #{k}:
+            = v
+            %br/
+        #fivee.tab-pane
+          - @school.fiveessentials_2013.andand.marshal_dump.andand.each do |k,v|
             %b #{k}:
             = v
             %br/
