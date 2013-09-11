@@ -131,10 +131,10 @@ class Importer
     base = m[1]
     year = m[2]
     
-    if base == 'meap'
+    if base == 'meap' or base == 'fiveessentials'
       key_re = /^meap_#{year}_(.*)$/
       bcode_key = 'bcode'
-    elsif base.include? 'esd' or base == 'act'
+    elsif base.include? 'esd' or base == 'act' or base
       key_re = /^(.*)$/
       bcode_key = 'buildingcode'
     end
@@ -160,26 +160,6 @@ class Importer
         end
       end
     end while !results.empty?
-    
-
-    if false    
-      # This was working (if slow) for the others
-      School.find_each do |s|
-        scores = p.get_dataset dataset, s.bcode
-        scores.each do |data|
-          h = {}
-          bcode = data[bcode_key].gsub(/[^0-9]/, '')
-          puts "bcode #{bcode}"
-          data.each do |key, val|
-            next unless m = key.match(key_re)
-            key2 = m[1]
-            #puts "  #{key2} = #{val}"
-            h[key2] = val
-          end
-          s.update_attribute(dataset, OpenStruct.new(h))
-        end
-      end
-    end
     
   end  
   

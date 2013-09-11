@@ -10,6 +10,7 @@ $(document).ready(function(e) {
 
   $('ul.nav a[data-toggle="tab"]').on('shown', function (e) {
     var tgt = $(this).attr('href');
+    // We need to slightly modify the anchor so the browser doesn't override and skip to the element
     window.location.hash = tgt + '-tab';
     return true;
   });

@@ -7,6 +7,7 @@ namespace :import do
     Importer.get_scores 'meap_2012'
     Importer.get_scores 'esd_k8_2013'
     Importer.get_scores 'esd_hs_2013'
+    Importer.get_scores 'fiveessentials_2013'
   end
   
   desc "Create school table schema from feed"
@@ -25,6 +26,7 @@ namespace :import do
     Importer.get_scores 'meap_2011'
     Importer.get_scores 'meap_2010'
     Importer.get_scores 'meap_2009'        
+    Importer.get_scores 'fiveessentials_2013'
     puts "Done!"
   end
 
@@ -45,6 +47,10 @@ namespace :import do
   task :hs => :environment do |t, args|
     puts "Fetching HS"
     Importer.get_scores('esd_hs_2013')
+  end
+  task :fivee => :environment do |t, args|
+    puts "Fetching 5Essentials"
+    Importer.get_scores('fiveessentials_2013')
   end
   
   
