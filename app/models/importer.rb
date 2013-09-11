@@ -131,12 +131,15 @@ class Importer
     base = m[1]
     year = m[2]
     
-    if base == 'meap' or base == 'fiveessentials'
+    if base == 'meap'
       key_re = /^meap_#{year}_(.*)$/
       bcode_key = 'bcode'
-    elsif base.include? 'esd' or base == 'act' or base
+    elsif base.include? 'esd' or base == 'act'
       key_re = /^(.*)$/
       bcode_key = 'buildingcode'
+    elsif base == 'fiveessentials'
+      key_re = /^(.*)$/
+      bcode_key = 'bcode'
     end
     ensure_column dataset, :text
     

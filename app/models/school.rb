@@ -10,7 +10,7 @@ class School < ActiveRecord::Base
   
   require 'mogrify'
   include Mogrify
-  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_hs_2013, :act_2013].each do |k|
+  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_hs_2013, :act_2013, :fiveessentials_2013].each do |k|
     serialize k, OpenStruct
   end
   before_save :set_slug
@@ -52,13 +52,13 @@ class School < ActiveRecord::Base
   }
   
   FIVE_E_LABELS = {
-    :Student_Response_Rate => 'Response rate on student survey',
-    :Teacher_Response_Rate => 'Response rate on teacher survey',
-    :E_leaders => 'Effective Leaders',
-    :E_teachers => 'Collaborative Teachers', 
-    :E_families => 'Involved Families',
-    :E_environment => 'Supportive Environment',
-    :E_instruction => 'Ambitious Instruction',
+    :"response rate on student survey"    => 'Response rate on student survey',
+    :"response rate on teacher survey"    => 'Response rate on teacher survey',
+    :"essential: effective leaders"       => 'Effective Leaders',
+    :"essential: collaborative teachers"  => 'Collaborative Teachers', 
+    :"essential: involved families"       => 'Involved Families',
+    :"essential: supportive environment"  => 'Supportive Environment',
+    :"essential: ambitious instruction"   => 'Ambitious Instruction',
   }
 
   GRADES.each do |k,v|
@@ -380,8 +380,10 @@ class School < ActiveRecord::Base
       end
       
     elsif tab == :climate
+      dump = fiveessentials_2013.andand.marshal_dump
+      return {} if dump.nil?
       FIVE_E_LABELS.each do |key, label|
-        h[label] = 100 * rand
+        h[label] = dump[key].to_i
       end
       
     else

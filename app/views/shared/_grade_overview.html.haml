@@ -32,7 +32,10 @@
                 .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='##{key}-details']" }
                 
             - elsif section == :climate
-              .graph{:id => "#{key}_5e", 'data-grades' => grade[:details].to_json, 'data-tab' => "a[href='##{key}-details']", 'data-direction' => 'horizontal', :style => 'height: 340px; width: 640px;' }
+              - if grade[:details].empty?
+                %p Sorry, we currently have no 5Essentials data to show for this school.
+              - else
+                .graph{:id => "#{key}_5e", 'data-grades' => grade[:details].to_json, 'data-tab' => "a[href='##{key}-details']", 'data-direction' => 'horizontal', :style => 'height: 340px; width: 640px;' }
             
             
         - if tabs.include? :history
