@@ -30,9 +30,9 @@
         - else
           %p
             %b= raw letter
-        .grade.sub{:title => 'Academic Status'}= @grades[:status][:letter] || 'NG'
-        .grade.sub{:title => 'Academic Progress'}= @grades[:progress][:letter] || 'NG'
-        .grade.sub{:title => 'School Climate'}= @grades[:climate][:letter] || 'NG'
+        .grade.sub{:title => 'Academic Status'}= link_to (@grades[:status][:letter] || 'NG'), '#academic-status'
+        .grade.sub{:title => 'Academic Progress'}= link_to (@grades[:progress][:letter] || 'NG'), '#academic-progress'
+        .grade.sub{:title => 'School Climate'}= link_to (@grades[:climate][:letter] || 'NG'), '#school-climate'
       = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare'
                 
     .grid_5.minimap_container

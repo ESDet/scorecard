@@ -4,8 +4,10 @@ $(document).ready(function(e) {
   if(window.location.hash) {
     var id = window.location.hash.substring(0).replace('-tab', '');
     var $tab = $('ul.nav a[href="' + id + '"]');
-    $tab.tab('show');
-    $('html, body').animate({scrollTop: $tab.offset().top}, 900)
+    if($tab.size > 0) {
+      $tab.tab('show');
+      $('html, body').animate({scrollTop: $tab.offset().top}, 900)
+    }
   }
 
   $('ul.nav a[data-toggle="tab"]').on('shown', function (e) {

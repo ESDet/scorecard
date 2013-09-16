@@ -1,5 +1,6 @@
 #block-boxes-did-you-know.block.block--boxes.block--boxes-dyk_box.block--boxes-did-you-know
   - key = Mogrify.transliterate(title)
+  %a{:name => key}
   - grade = grades[section]
   %h2.block__title
     - if local_assigns[:icon]
