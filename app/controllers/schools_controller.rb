@@ -132,7 +132,7 @@ class SchoolsController < ApplicationController
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
 
-    @tips = Hash[*(Tip.all.collect { |t| [t.name, t] }.flatten)]
+    @tips = Hash[Tip.all.collect { |t| [t.name.to_sym, t] }]
     @category_copy = {
       'Turnaround' => ['Fresh start school',
         "These are schools that Michigan has identified as the lowest achieving five percent of schools in the state.

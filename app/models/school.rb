@@ -383,7 +383,8 @@ class School < ActiveRecord::Base
       dump = fiveessentials_2013.andand.marshal_dump
       return {} if dump.nil?
       FIVE_E_LABELS.each do |key, label|
-        h[label] = dump[key].to_i
+        val = dump[key].to_i
+        h[label] = val unless val.blank?
       end
       
     else

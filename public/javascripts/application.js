@@ -15,5 +15,15 @@ $(document).ready(function(e) {
     return true;
   });
 
+  $('.help').popover({
+    html: true,
+    container: 'body'
+  });
+  
+  $('body').on('click', '.popover .close', function(e) {
+    var tgt = $(this).attr('data-target');
+    $('i.help[data-id=' + tgt + ']').popover('hide');
+    return false;
+  });
   
 });

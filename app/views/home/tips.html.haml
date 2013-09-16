@@ -1,0 +1,14 @@
+%h1 Edit Help Tooltips
+
+= form_tag '/tips', :method => :post do
+  - @tips.each do |tip|
+    %h3 #{tip.name}:
+    = hidden_field_tag "tips[][id]", tip.id
+    = text_area_tag "tips[][body]", tip.body, :style => 'width: 640px; max-width: 100%; height: 10em;'
+    %br
+    %br/
+    
+  %br/
+  = submit_tag 'Save All', :class => 'btn'
+  %br/
+  %br/

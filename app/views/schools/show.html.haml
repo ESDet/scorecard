@@ -13,8 +13,10 @@
 
   .container_12
     .grid_3
-      .blue
+      .blue.relative
         %h3 Overall Score
+        = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
+        
       .grades_container
         - letter = @grades[:cumulative][:letter].to_s
         - if letter.blank?
@@ -61,11 +63,11 @@
     .grid_12
       %p.lead{:style => 'margin-bottom: 0em;'} Score Breakdown
       = render 'shared/grade_overview', :section => :status, :grades => @grades,   :title => 'Academic Status',   :icon => 'icon_status_white.png',
-        :tabs => [:summary, :details, :history, :help]
+        :tabs => [:summary, :details, :history]
       = render 'shared/grade_overview', :section => :progress, :grades => @grades, :title => 'Academic Progress', :icon => 'icon_progress_white.png',
-        :tabs => [:summary, :help]
+        :tabs => [:summary]
       = render 'shared/grade_overview', :section => :climate, :grades => @grades,  :title => 'School Climate',    :icon => 'icon_climate_white.png',
-        :tabs => [:summary, :details, :help]
+        :tabs => [:summary, :details]
     
 .container_12.clear_floats
   .grid_12.self_reported
@@ -75,6 +77,7 @@
       %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab', :class => 'nomobile'
     .tab-content
       #other_profile.tab-pane
+        = render 'shared/tip', :tip => @tips[:self_reported]
         %table
           - @profile_fields.each do |field,label|
             - val = @school.profile.send(field)
@@ -89,6 +92,8 @@
         #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
 
       #other_details.tab-pane.nomobile
+        = render 'shared/tip', :tip => @tips[:other_details]
+
         - if e = @school.esd
           %h3 Challenge Factors:
           %div Overall Student Characteristics Points: #{e.studchrs_pts}
@@ -171,152 +176,15 @@
   
 %br/
  
-- if false and @school.high?
-  .container_12.clear_floats
-    .grid_6
-      %h3 How Is This School Doing Academically?
-      
-      = render :partial => 'shared/tip', :object => @tips["MME"]
-      - if @high_ac[:empty]
-        %p We have no data on this school's Michigan Merit Examination results.
-      - else
-        %p
-          Following are percentages of
-          %b 11th and 12th graders
-          meeting and exceeding state standards on the Michigan Merit Examination (MME):
-        %b Spring 2012
-        #academics.barchart
-          - if false
-            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2012).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2008_2012
-      
-    .grid_6
-      %h3 How Well Does This School Prepare Students for College?
-      
-      = render :partial => 'shared/tip', :object => @tips["ACT"]
-      %b School Average ACT Score, 2011-12
-      - if @school.AVG_ALLSTUD_ALLSUB_ACT_2012.nil?
-        %div No data available for this score.
-      - else
-        #act.barchart{:style => 'height: 90px;'}
-      = render :partial => 'shared/tip', :object => @tips["Graduation Rate"]
-      %b Graduation Rate, 2012
-      - if @school.PCT_ALLSTUD_12_GRAD_4YR_2012.nil?
-        %div No data available for this score.
-      - else
-        #grad.barchart{:style => 'height: 90px;'}
-      
-      %br/
-      .grid_6.alpha.omega
-        %b Average ACT Score for admission, 2010-11
-      .grid_3.alpha
-        University of Michigan:
-        %b 31
-        %br/
-        Michigan State University:
-        %b 26
-      .grid_3.omega
-        Wayne State University:
-        %b 21
-        %br/
-        %br/
-        %br/
-  
-      .grid_6.alpha.omega
-        = render :partial => 'shared/tip', :object => @tips["College Enrollment and Performance"]
-        %b College Enrollment and Performance, Class of 2009:
-        - if @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.nil? and @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.nil? and @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.nil?
-          %div No data are available for this school.
-        - else
-          %table.enrollment
-            %thead
-              %tr
-                %th 
-                  %b Of every 10 students who started 9th grade...
-                %th
-                  .score= @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.andand.round(1) || 'N/A'
-                  Graduated from this school on time
-                    
-                %th
-                  .score= @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.andand.round(1) || 'N/A'
-                  Enrolled in college
-                %th
-                  .score= @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.andand.round(1) || 'N/A'
-                  Finished a year of college
-            %tbody
-              %tr
-                %td
-                  - 10.times do
-                    = image_tag 'icons/student.png'
-                %td
-                  - @school.NUM_REAL_HSGRAD_4R_PER_09COHORT_2009.round(0).to_i.times do
-                    = image_tag 'icons/student.png'
-                %td
-                  - @school.NUM_REAL_ENROLL_IHE_PER_09COHORT_2009.round(0).to_i.times do
-                    = image_tag 'icons/student.png'
-                %td
-                  - @school.NUM_REAL_1YR_IHE_PER_09COHORT_2009.round(0).to_i.times do
-                    = image_tag 'icons/student.png'
-
-- elsif false and (@school.elementary? or @school.middle?)
-  .container_12.clear_floats
-    .grid_12  
-      = render :partial => 'shared/tip', :object => @tips["How Is This School Doing Academically?"]
-      %h3 How Is This School Doing Academically?
-      = render :partial => 'shared/tip', :object => @tips["Michigan Education Assessment Program"]
-      %p Following are the percentages of all students performing at or above grade level on the Michigan Education Assessment Program:
-    .grid_6
-      %h4 Reading, Fall 2012
-      - if @elem_academics[:reading][:school][:scores].blank?
-        We have no data to report for this school.
-      - else
-        #reading.barchart{:style => "height: #{40+50*@r_cats.size}px; position: relative;"}
-          - if false
-            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_R_MEAP_2012).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_R_MEAP_2007_2011
-      
-    .grid_6
-      %h4 Math, Fall 2012
-      - if @elem_academics[:math][:school][:scores].blank?
-        We have no data to report for this school.
-      - else
-        #math.barchart{:style => "height: #{40+50*@m_cats.size}px;"}
-          - if false
-            .trend{:style => "left: #{130+(4*@school.PCT_PROF_ALLSTUD_ALL_M_MEAP_2012).to_i}px;"}= render :partial => 'shared/trend', :object => @school.TREND_PCT_PROF_ALLSTUD_ALL_M_MEAP_2007_2011
-      
-  %br/
-  %br/
-  
-  .container_12
-    .grid_6
-      %h3 Student Performance Growth
-      = image_tag 'coming_2013.png', :class => 'float_left', :style => 'margin-right: 10px;'
-      %p This year, we can only report if students state standards or not. In the future, we will measure how much students progress. Every student should progress one entire grade level each year. But sometimes, students progress a lot and they still are not meeting state standards because they started the year so far behind. We think it is important to show which schools are helping students progress, even if their students are not yet meeting standards.
-      
-    .grid_6
-      %h3 How Well Does This School Prepare Students for College?
-      - if @school.elementary?
-        %p 3rd grade reading is an early indicator if students are on track for graduation:
-        - if @school.PCT_PROF_ALLSTUD_03_R_MEAP_2012.nil?
-          %div We have no data about this school's 3rd grade reading level.
-        - else
-          #third.barchart{:style => 'height: 100px;'}
-      - elsif @school.middle?
-        = image_tag 'coming_2013.png', :class => 'float_left', :style => 'margin-right: 10px;'
-        %h4 Percentage of 8th Graders meeting state standards in algebra
-        %p 8th grade proficiency in algebra is an early indicator if students are on track for graduation
-      
-    
-%br/
 
 
 .container_12
 - if false
   .grid_6
-    = render :partial => 'shared/tip', :object => @tips["Is This School Organized for Improvement?"]
     %h3 Is This School Organized for Improvement?
     %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
     .overall
       %h2= @school.SCORE_DESCRIPTION_5E_2012
-      = render :partial => 'shared/tip', :object => @tips["Overall score"]
       %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
       %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
       - unless @school.RESULTS_LINK_5E.blank?
@@ -339,7 +207,6 @@
     
     
   .grid_6
-    = render :partial => 'shared/tip', :object => @tips["What Is This School's Environment Like?"]
     %h3 What Is This School's Environment Like?
     %p Parents and community members visited this school unannounced to observe the learning environment and school culture. This is what they saw:
     
@@ -377,46 +244,6 @@
       = image_tag 'icons/community.png'
       %h4 Community and Relationships
       = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:community] }
-
-
-.container_12
-- if false
-  .grid_6
-    - unless @activities[:arts].empty? and @activities[:wellness].empty? and @activities[:academic].empty?
-      = render :partial => 'shared/tip', :object => @tips["How Does This School Support Well-Rounded Development?"]
-      %h3 How Does This School Support Well-Rounded Development?
-      %p Extracurricular activities help students explore their interests and apply what they learn in school to the real world. Examples of these activities at this school include:
-      - unless @activities[:arts].empty?
-        .section
-          = image_tag 'icons/arts.png'
-          %h4 Arts and Culture
-          = render :partial => 'shared/two_cols', :locals => { :items => @activities[:arts] }
-        %br.clear_floats/
-      - unless @activities[:wellness].empty?
-        .section
-          = image_tag 'icons/wellness.png'
-          %h4 Wellness and Fitness
-          = render :partial => 'shared/two_cols', :locals => { :items => @activities[:wellness] }
-          %br.clear_floats/
-      - unless @activities[:academic].empty?
-        .section
-          = image_tag 'icons/academic.png'
-          %h4 Academic
-          = render :partial => 'shared/two_cols', :locals => { :items =>  @activities[:academic] }
-    
-    
-  .grid_6
-    - unless @programs.empty?
-      = render :partial => 'shared/tip', :object => @tips["How Does This School Help Students Overcome Challenges to Learning?"]
-      %h3 How Does This School Help Students Overcome Challenges to Learning?
-      %p Students may have learning disabilities, struggle with their behavior, or face challenges outside of school that affect their academic performance. This school provides the following programs to help students overcome such challenges:
-      = render :partial => 'shared/two_cols', :locals => { :items => @programs }
-      %br.clear_floats/      
-      
-    - unless @school.ADMISSIONS_LONG.blank?
-      = render :partial => 'shared/tip', :object => @tips["What Are the School's Admission Requirements and Deadlines?"]
-      %h3 What Are the School's Admission Requirements and Deadlines?
-      %p= @school.ADMISSIONS_LONG
 
     
 

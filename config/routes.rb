@@ -11,6 +11,8 @@ ESD::Application.routes.draw do
   
   match 'robots.txt'        => 'home#robots',    :as => :robots
   match 'refresh'           => 'home#refresh'
+  match 'tips'              => 'home#tips', :via => :get
+  match 'tips'              => 'home#save_tips', :via => :post
   
   root :to => "home#index"
 

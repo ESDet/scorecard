@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_filter :password_protect, :only => [:refresh]
+  before_filter :password_protect, :only => [:refresh, :tips]
   
   def index
     session[:filter] = session[:loc] = nil
@@ -15,6 +15,12 @@ class HomeController < ApplicationController
     redirect_to root_path, :notice => "Search isn't done yet, sorry!"
   end
   
+  def robots
+    response = (Rails.env == 'production') ? '' : "User-Agent: *\nDisallow: /"
+    render :text => response
+  end
+
+
   
   def refresh
     if request.method == 'GET'
@@ -86,11 +92,23 @@ class HomeController < ApplicationController
     end
   end
   
-  def robots
-    response = (Rails.env == 'production') ? '' : "User-Agent: *\nDisallow: /"
-    render :text => response
-  end
+
+  def tips
+    @tips = Tip.all
+    render :layout => 'noside'
+  end  
   
+  def save_tips
+    tips = params[:tips]
+    
+    tips.each do |t|
+      tip = Tip.find(t[:id])
+      tip.update_attributes(t)
+    end
+    
+    flash[:notice] = 'Saved your changes.'
+    redirect_to '/tips'
+  end
   
   protected
 
