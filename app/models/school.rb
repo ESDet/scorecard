@@ -384,7 +384,7 @@ class School < ActiveRecord::Base
       return {} if dump.nil?
       FIVE_E_LABELS.each do |key, label|
         val = dump[key].to_i
-        h[label] = val unless val.blank?
+        h[label] = val unless val.blank? or val == 0
       end
       
     else
