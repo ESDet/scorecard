@@ -1,1 +1,1 @@
-%i.help.icon-question-sign{'data-id' => tip.name, 'data-title' => 'Help', 'data-content' => tip.body + "<a class='close' href='#' data-target='#{tip.name}'>&times;</a>", 'data-placement' => local_assigns.has_key?(:placement) ? placement : 'left'}
+%i.help.icon-question-sign{'data-id' => tip.name, 'data-title' => tip.title, 'data-content' => tip.body + "<a class='close' href='#' data-target='#{tip.name}'>&times;</a>", 'data-placement' => local_assigns.has_key?(:placement) ? placement : 'left'}

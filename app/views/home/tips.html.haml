@@ -4,6 +4,7 @@
   - @tips.each do |tip|
     %h3 #{tip.name}:
     = hidden_field_tag "tips[][id]", tip.id
+    = text_field_tag "tips[][title]", tip.title, :style => 'width: 640px; max-width: 100%; display: block;'
     = text_area_tag "tips[][body]", tip.body, :style => 'width: 640px; max-width: 100%; height: 10em;'
     %br
     %br/

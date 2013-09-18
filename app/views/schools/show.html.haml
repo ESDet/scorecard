@@ -15,9 +15,9 @@
     .grid_3
       .blue.relative
         %h3 Overall Score
-        = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
         
-      .grades_container
+      .grades_container.relative
+        = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
         - letter = @grades[:cumulative][:letter].to_s
         - if letter.blank?
           .grade{:title => 'No Grade'} NG

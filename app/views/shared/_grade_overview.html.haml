@@ -16,12 +16,13 @@
     #boxes-box-school_score_widget.boxes-box
       .boxes-box-content.tab-content
         .tab-pane.active{id: "#{key}-summary"}
-          = render 'shared/tip', :tip => @tips["grade_#{section}".to_sym]
           .grade_container
-            .grade= grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
+            .grade
+              = render 'shared/tip', :tip => @tips["grade_#{section}".to_sym], :placement => 'right'
+              = grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
             .grade.sub3 #{grade[:total].blank? ? '?' : grade[:total]} / #{grade[:possible].blank? ? '?' : grade[:possible]} pts
           .subscore_wrapper
-            = render 'shared/subscores', :scores => grade[:summary_table]
+            = render 'shared/subscores', :scores => grade[:summary_table], :section => section
             
         - if tabs.include? :details
           .tab-pane{id: "#{key}-details"}

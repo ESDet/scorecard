@@ -249,34 +249,42 @@ class School < ActiveRecord::Base
       if elementary? and e = self.esd_k8_2013
         h += [
           { :name     => "Math Proficienty Rate (2-Year Avg)",
-            :value    => esd.pr2_math.to_f.round(2),
-            :points   => esd.pr2_math_pts,
-            :possible => esd.pr2_math_ptsps },
+            :key      => :pr2_math,
+            :value    => e.pr2_math.to_f.round(2),
+            :points   => e.pr2_math_pts,
+            :possible => e.pr2_math_ptsps },
           { :name     => "ELA (Reading + Writing) Proficiency Rate (2-Year Average)",
-            :value    => esd.pr2_ela.to_f.round(2),
-            :points   => esd.pr2_ela_pts,
-            :possible => esd.pr2_ela_ptsps },
+            :key      => :pr2_ela,
+            :value    => e.pr2_ela.to_f.round(2),
+            :points   => e.pr2_ela_pts,
+            :possible => e.pr2_ela_ptsps },
           { :name     => "Other (Science & Social Studies) Proficiency Rate (2-Year Average)",
-            :value    => esd.pr2_other.to_f.round(2),
-            :points   => esd.pr2_other_pts,
-            :possible => esd.pr2_other_ptsps }
+            :key      => :pr2_other,
+            :value    => e.pr2_other.to_f.round(2),
+            :points   => e.pr2_other_pts,
+            :possible => e.pr2_other_ptsps }
         ] 
       end
       if high? and e = self.esd_hs_2013
         h += [
           { :name     => "ACT Composite Score (2 Year Average)",
-            :value    => esd.act2_comp.to_f.round(1),
-            :points   => esd.act2_comp_pts,
-            :possible => esd.act2_comp_psspts },
+            :key      => :act2_comp,
+            :value    => e.act2_comp.to_f.round(1),
+            :points   => e.act2_comp_pts,
+            :possible => e.act2_comp_psspts },
           { :name     => "ACT Percent College Ready",
-            :value    => esd.act2_pcr.to_f.round(2),
-            :points   => esd.act2_pcr_pts,
-            :possible => esd.act2_pcr_psspts },
-          { :name     => "Graduation Rate (2011-12)",
-            :value    => esd.gradrate.to_f.round(2),
-            :points   => esd.gradrate_pts,
-            :possible => esd.gradrate_psspts },
+            :key      => :act2_pcr,
+            :value    => e.act2_pcr.to_f.round(2),
+            :points   => e.act2_pcr_pts,
+            :possible => e.act2_pcr_psspts },
         ]
+        h +[
+          { :name     => "Graduation Rate (2011-12)",
+            :key      => :gradrate,
+            :value    => e.gradrate.to_f.round(2),
+            :points   => e.gradrate_pts,
+            :possible => e.gradrate_psspts },
+        ] unless e.gradrate.blank?
       end
     end
     
@@ -284,10 +292,12 @@ class School < ActiveRecord::Base
       if elementary? and e = self.esd_k8_2013
         h += [
           { :name     => "Performance Level Change Score",
+            :key      => :plc_comp,
             :value    =>  e.plc_comp.to_f.round(2),
             :points   =>  e.plc_comp_pts,
             :possible =>  e.plc_comp_ptsps },
           { :name     => "NWEA/Scantron Percent Meeting Growth Target",
+            :key      => :bench_comp,
             :value    =>  e.bench_comp.to_f.round(2),
             :points   =>  e.bench_comp_pts,
             :possible =>  e.bench_comp_ptsps }
@@ -297,10 +307,11 @@ class School < ActiveRecord::Base
       if high? and e = esd_hs_2013
         h += [
           { :name     => "Year-over-Year ACT Composite Score Gain (2 Year Average, 2010-11 to 2011-12, 2011-12 to 2012-13)",
+            :key      => :act_grwth,
             :value    => e.act_grwth.to_f.round(2),
             :points   => e.act_grwth_pts,
             :possible => e.act_grwth_psspts },
-        ]
+        ] unless e.act_grwth.blank?
       end
     end
     
@@ -308,14 +319,17 @@ class School < ActiveRecord::Base
       if elementary? and e = self.esd_k8_2013
           h += [
             { :name     => "Site Visit Average Score",
+              :key      => :site_s,
               :value    => e.site_s.to_f.round(2),
               :points   => e.site_s_pts,
               :possible => e.site_s_ptsps },
             { :name     => "Net 5Essentials Score (2012-13)",
+              :key      => :net5e_1213,
               :value    => e.net5e_1213,
               :points   => e.net5e_1213_pts,
               :possible => e.net5e_1213_ptsps },
             { :name     => "5Essentials Growth Score",
+              :key      => :five_e_grwth,
               :value    => e.five_e_grwth,
               :points   => e.five_e_grwth_pts,
               :possible => e.five_e_grwth_ptsps },
@@ -323,14 +337,17 @@ class School < ActiveRecord::Base
       elsif high? and e = self.esd_hs_2013
         h += [
           { :name     => "Site Visit Average Score",
+            :key      => :site_s,
             :value    => e.site_s.to_f.round(2),
             :points   => e.site_s_pts,
             :possible => e.site_s_psspts },
           { :name     => "Net 5Essentials Score (2012-13)",
+            :key      => :net5e_1213,
             :value    => e.net5e_1213,
             :points   => e.net5e_1213_pts,
             :possible => e.net5e_1213_psspts },
           { :name     => "5Essentials Growth Score",
+            :key      => :five_e_grwth,
             :value    => e.five_e_grwth,
             :points   => e.five_e_grwth_pts,
             :possible => e.five_e_grwth_psspts },

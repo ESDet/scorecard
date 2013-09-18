@@ -23,7 +23,7 @@ class SchoolsController < ApplicationController
         @school_o = Bedrock::Overlay.from_config('schools',
           :ty         => :geojson,
           :url        => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc], :type => session[:type]),
-          :mouseover  => true,
+          :mouseover  => false,
           :key => {
             '#f48b68' => 'K8 Schools',
             '#00aff0' => 'High Schools',
