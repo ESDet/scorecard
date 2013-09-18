@@ -28,4 +28,12 @@ $(document).ready(function(e) {
     return false;
   });
   
+  $('body').keydown(function(e) {
+    if (e.keyCode == 27) { 
+      $('.help').popover('hide');
+      return false;
+    }
+    return true;
+  });
+  
 });
