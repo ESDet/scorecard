@@ -1,0 +1,11 @@
+.grid_3.alpha.element_label
+  = label
+.grid_3.omega
+  .elements_score.noprint{:style => 'position: relative; width: 220px;'}
+    .bar{:style => "right: #{128-(1.25*val).to_i}px;"}
+    .circled.ib{:style => "position: absolute; top: 0px; right: #{125-(1.25*val).to_i}px;"}= val.to_i
+  .printonly.centered{:style => 'margin-bottom: 1em; padding-top: 0.5em;'}
+    #{val.to_i}%
+    %br/
+    
+.clear_floats
