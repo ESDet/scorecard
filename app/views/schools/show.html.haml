@@ -40,7 +40,8 @@
       %p
         %a{:href => @school.gmaps_url, :target => '_blank'} #{@school.address} &middot; #{@school.address2}
       
-      %br/
+      = link_to 'Print', "javascript:window.print();", :class => 'btn noprint'
+
       - unless true or @school.PDF_FILE_NAME.blank?
         .float_right
           %a.btn{:href => "/pdfs/#{@school.PDF_FILE_NAME}", :target => '_blank'}
