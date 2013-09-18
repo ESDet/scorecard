@@ -145,6 +145,19 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   display: block; width: 20px; height: 20px; position: absolute; right: 8px; top: 8px; cursor: pointer;
 }
 
+.elements_wrapper { padding: 1em 1em 0 1em; background-color: white;
+  .element_label { min-height: 50px; margin: 3px 0; padding-top: 7px; }
+  .elements_score {
+    height: 45px; margin: 3px 0; background-image: url(/images/5e_scale.png); background-repeat: no-repeat; background-position: right top;
+    .bar { position: absolute; left: 67px;  height: 10px; top: 10px; background-color: @dblue; }
+  }
+  .circled {
+    -webkit-border-radius: 999px; -moz-border-radius: 999px; border-radius: 999px; behavior: url(PIE.htc);
+    width: 28px; height: 28px; font-size: 14px; font-weight: bold; padding: 6px 0; text-align: center; 
+    background-color: @dblue; color: white; margin-bottom: 10px; 
+  }
+}
+
 .blue {
   h2, h3 { background-color: @cyan; padding: 0.5em; margin-bottom: 0; color: white; }
   ul {

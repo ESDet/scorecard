@@ -39,8 +39,14 @@
               - if grade[:details].empty?
                 %p Sorry, we currently have no 5Essentials data to show for this school.
               - else
-                .graph{:id => "#{key}_5e", 'data-grades' => grade[:details].to_json, 'data-tab' => "a[href='##{key}-details']", 'data-direction' => 'horizontal', :style => 'height: 340px; width: 640px;' }
-            
+                %p
+                  The student response rate was #{grade[:details]['Response rate on student survey']}%
+                  and the teacher response rate was #{grade[:details]['Response rate on teacher survey']}%.
+                .elements_wrapper
+                  - grade[:details].delete 'Response rate on student survey'
+                  - grade[:details].delete 'Response rate on teacher survey'
+                  - grade[:details].each do |label,val|
+                    = render 'shared/fivee', :label => label, :val => val
             
         - if tabs.include? :history
           .tab-pane{id: "#{key}-history"}

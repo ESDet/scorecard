@@ -4,7 +4,7 @@ $(document).ready(function(e) {
   if(window.location.hash) {
     var id = window.location.hash.substring(0).replace('-tab', '');
     var $tab = $('ul.nav a[href="' + id + '"]');
-    if($tab.size > 0) {
+    if($tab.length > 0) {
       $tab.tab('show');
       $('html, body').animate({scrollTop: $tab.offset().top}, 900)
     }
