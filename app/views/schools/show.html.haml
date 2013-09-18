@@ -33,7 +33,7 @@
         .grade.sub{:title => 'Academic Status'}= link_to (@grades[:status][:letter] || 'NG'), '#academic-status'
         .grade.sub{:title => 'Academic Progress'}= link_to (@grades[:progress][:letter] || 'NG'), '#academic-progress'
         .grade.sub{:title => 'School Climate'}= link_to (@grades[:climate][:letter] || 'NG'), '#school-climate'
-      = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare'
+      = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare noprint'
                 
     .grid_5.minimap_container
       .minimap= render :partial => 'shared/map', :object => @map
@@ -54,14 +54,14 @@
         %p #{copy[0]}: #{copy[1]}
   
 
-  %br/
-  %br/
+  %br.noprint/
+  %br.noprint/
   %hr/
   
 - if @school.esd
   .container_12.clear_floats.profile
     .grid_12
-      %p.lead{:style => 'margin-bottom: 0em;'} Score Breakdown
+      %p.lead Score Breakdown
       = render 'shared/grade_overview', :section => :status, :grades => @grades,   :title => 'Academic Status',   :icon => 'icon_status_white.png',
         :tabs => [:summary, :details, :history]
       = render 'shared/grade_overview', :section => :progress, :grades => @grades, :title => 'Academic Progress', :icon => 'icon_progress_white.png',
@@ -76,7 +76,17 @@
       %li= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
       %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab', :class => 'nomobile'
     .tab-content
+      #other_demographics.tab-pane.active
+        %h2.printonly Demographics
+        #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
+        .printonly{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
+          - @demographics.each do |arr|
+            %div= arr[0]
+          
+        #enroll{:style => 'float: left; width: 360px; height: 160px;'}
+
       #other_profile.tab-pane
+        %h2.printonly.clear_floats Self-Reported Profile
         = render 'shared/tip', :tip => @tips[:self_reported]
         %table
           - @profile_fields.each do |field,label|
@@ -87,11 +97,8 @@
                   %h3 #{label}:
                 %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
 
-      #other_demographics.tab-pane.active
-        #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
-        #enroll.noprint{:style => 'float: left; width: 360px; height: 160px;'}
-
       #other_details.tab-pane.nomobile
+        %h2.printonly Other Details
         = render 'shared/tip', :tip => @tips[:other_details]
 
         - if e = @school.esd
@@ -121,7 +128,7 @@
 
 
 - unless Rails.env == 'production'
-  .container_12.clear_floats
+  .container_12.clear_floats.noprint
     .grid_12
       %h2 Raw Data Dumplings
       %ul.nav.nav-tabs

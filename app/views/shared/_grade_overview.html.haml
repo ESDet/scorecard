@@ -4,7 +4,7 @@
   - grade = grades[section]
   %h2.block__title
     - if local_assigns[:icon]
-      = image_tag icon
+      = image_tag icon, :class => 'noprint'
     = title
   - unless tabs.empty?
     %ul.nav.nav-pills
@@ -26,6 +26,7 @@
             
         - if tabs.include? :details
           .tab-pane{id: "#{key}-details"}
+            %h2.printonly Details
             = render 'shared/tip', :tip => @tips["detail_#{section}".to_sym]
             - if section == :status
               - if @school.high?
@@ -50,6 +51,7 @@
             
         - if tabs.include? :history
           .tab-pane{id: "#{key}-history"}
+            %h2.printonly History
             = render 'shared/tip', :tip => @tips["history_#{section}".to_sym]
             - exists = grade[:history].collect { |n,subjects| subjects.values }.flatten.reject { |i| i.empty? }
             - if exists.empty?
@@ -58,45 +60,5 @@
               %p These charts show the percentage of students proficient in reading and math over the last four years.
             - grade[:history].each do |g,subjects|
               .history{:id => "#{key}_history_#{g}", 'data-grade' => g, 'data-scores' => subjects.to_json, 'data-tab' => "a[href='##{key}-history']" }
-          
-        - if tabs.include? :help
-          .tab-pane.help-tab{id: "#{key}-help"}
-            - if section == :climate
-              %table#climate-help
-                %thead
-                  %tr
-                    /%th Category5E
-                    %th Net 5Essentials Score
-                    %th Category of Improvement
-                %tbody
-                  %tr
-                    /%td 1
-                    %td -3 to -5
-                    %td Not Yet Organized
-                  %tr
-                    /%td 2
-                    %td -1
-                    %td Partially Organized
-                  %tr
-                    /%td 3
-                    %td 0
-                    %td Moderately Organized
-                  %tr
-                    /%td 4
-                    %td 1 to 2
-                    %td Organized
-                  %tr
-                    /%td 5
-                    %td 3 to 5
-                    %td Well Organized 
-            - else
-              %p
-                Help me if you can, I'm feeling down
-                %br/
-                And I do appreciate you being round
-                %br/
-                Help me, get my feet back on the ground
-                %br/
-                Won't you please, please help me, help me, help me, ooh
           
         .clear_floats

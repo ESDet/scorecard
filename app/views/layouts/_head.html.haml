@@ -10,7 +10,7 @@
   
   - if Rails.env == 'development'
     = include_javascripts :common, :mapping
-    = include_stylesheets :common
+    = include_stylesheets :common, :media => 'all'
     %link{:rel => "stylesheet/less", :type => "text/css", :href => "/stylesheets/style.less", :media => 'all'}
     %link{:rel => "stylesheet/less", :type => "text/css", :href => "/stylesheets/print.less", :media => 'print'}
     = javascript_include_tag 'less-1.2.0.min.js'

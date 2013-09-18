@@ -12,7 +12,7 @@
 body { background: #fff; }
 #nav { display: none; }
 #wrapper { width: 300px; }
-.noprint { display: none; }
+.noprint { display: none !important; }
 .printonly { display: block; }
 
 .float_right { float: right; }
@@ -26,11 +26,24 @@ body { background: #fff; }
 .ib { display: inline-block; float: none; }
 .subtle { color: @dblue; }
 
-.leaflet-control-zoom { display: none; }
+h1, h2, h3, h4, .grade { color: black !important; }
 
-h1, h2, h3, h4 { font-family: serif; }
+.leaflet-control-zoom,
+i.help,
+#usabilla_live_button_container,
+.jqplot-table-legend,
+.block--boxes-did-you-know ul.nav,
+ul.nav { display: none; }
 
-.jqplot-table-legend { display: none; }
+.tab-content { border: none; }
+.tab-content > .tab-pane { display: block; margin-bottom: 1em; }
+.tab-content:last-child { margin-bottom: 0; }
+
+.profile .lead { margin-bottom: 1em; }
+.elements_wrapper .element_label { min-height: 1em; padding-top: 0; }
+
+.block .grade_container .grade { background-color: transparent; border: 1px solid #888; }
+#block-boxes-did-you-know-es h2, #block-boxes-did-you-know h2 { background-color: transparent; }
 
 .color1 { background-color: #e94739; }
 .color2 { background-color: #f25f3c; }
@@ -38,4 +51,4 @@ h1, h2, h3, h4 { font-family: serif; }
 .color4 { background-color: #aed485; }
 .color5 { background-color: #8cc657; }
 
-#usabilla_live_button_container { display: none; }
+
