@@ -212,14 +212,35 @@ class SchoolsController < ApplicationController
     @grades.each_with_index do |g,i|
       s = @schools[i]
       tx = {}
-      tx['Overall Grade']     = g[:cumulative][:letter] || 'NG'
-      tx['Academic Status']   = g[:status][:letter]     || 'NG'
-      tx['Academic Progress'] = g[:progress][:letter]   || 'NG'
-      tx['School Climate']    = g[:climate][:letter]    || 'NG'
       
-      tx['Address']           = "#{s.address}<br/>#{s.address2}"
-      tx['Grades Served']     = s.grades_served || 'Unknown'
-      tx['Governance']        = s.basic.governance || 'Unknown'
+      if s.earlychild?
+        eg = s.earlychild
+        tx['Overall Rating']            = eg.publishedrating
+        tx['Address']                   = "#{s.address}<br/>#{s.address2}"
+        tx['Total Points']              = eg.gscpts
+        tx['Staff Qualifications']      = eg.gscptsstaff
+        tx['Family/Community Partnerships'] = eg.gscptsfamily
+        tx['Administration']            = eg.gscptsadmin
+        tx['Environment Pts']           = eg.gscptsenv
+        tx['Curriculum']                = eg.gscptscurr
+        tx['Financial Assistance']      = eg.gscsubsidy
+        tx['Special Needs Experience']  = eg.gscspecial
+        tx['Care Setting']              = eg.gscsetting
+        tx['Environment']               = eg.environment
+        tx['Meals Provided']            = eg.meals
+        tx['Provides Transportation?']  = eg.transportation
+        
+      else
+        tx['Overall Grade']     = g[:cumulative][:letter] || 'NG'
+        tx['Academic Status']   = g[:status][:letter]     || 'NG'
+        tx['Academic Progress'] = g[:progress][:letter]   || 'NG'
+        tx['School Climate']    = g[:climate][:letter]    || 'NG'
+        
+        tx['Address']           = "#{s.address}<br/>#{s.address2}"
+        tx['Grades Served']     = s.grades_served || 'Unknown'
+        tx['Governance']        = s.basic.governance || 'Unknown'
+      end
+      
       @transposed[i] = tx
     end
     
