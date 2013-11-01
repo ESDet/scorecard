@@ -10,7 +10,7 @@ class School < ActiveRecord::Base
   
   require 'mogrify'
   include Mogrify
-  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_hs_2013, :act_2013, :fiveessentials_2013].each do |k|
+  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_hs_2013, :act_2013, :fiveessentials_2013, :earlychild].each do |k|
     serialize k, OpenStruct
   end
   before_save :set_slug
@@ -74,6 +74,7 @@ class School < ActiveRecord::Base
   def high?;        school_type == GRADES[:high] or k12?; end
   def k8?;          school_type == GRADES[:k8]; end
   def k12?;         school_type == GRADES[:k12]; end
+  def earlychild?;  school_type == 'EC'; end
   
   def display?;     self.basic.scorecard_display == '1'; end
   
@@ -85,7 +86,7 @@ class School < ActiveRecord::Base
     
     result = {
       :name       => self.name,
-      :level      => self.k12? ? 'K12' : (self.high? ? 'HS' : 'K8'),
+      :level      => self.k12? ? 'K12' : (self.high? ? 'HS' : (self.earlychild? ? 'EC' : 'K8')),
       :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter]
     }
@@ -150,7 +151,7 @@ class School < ActiveRecord::Base
     cat = esd.andand.schoolcategory
     
     h = { :cumulative => {}, :status => {}, :progress => {}, :climate => {}, :other => {} }
-    return h if esd.nil?
+    return h if esd.nil? and !earlychild?
     
     if self.esd_hs_2013
       # Common to all HS varieties:
@@ -232,6 +233,10 @@ class School < ActiveRecord::Base
           :percent  => esd.turnaround_pct }
       end
       
+    elsif self.earlychild
+      h[:status][:summary_table] = summary_table(:status)
+      return h
+      
     end
 
     [:status, :progress, :climate].each { |s| h[s][:summary_table] = summary_table(s) }
@@ -278,13 +283,48 @@ class School < ActiveRecord::Base
             :points   => e.act2_pcr_pts,
             :possible => e.act2_pcr_psspts },
         ]
-        h +[
+        h += [
           { :name     => "Graduation Rate (2011-12)",
             :key      => :gradrate,
             :value    => e.gradrate.to_f.round(2),
             :points   => e.gradrate_pts,
             :possible => e.gradrate_psspts },
         ] unless e.gradrate.blank?
+      end
+      
+      if earlychild? and ec = self.earlychild
+        h += [
+          #{ :name => 'Total Score',
+          #  :key  => :gscpts,
+          #  :points => ec.gscpts,
+          #  :possible => 50,
+          #},
+          { :name => 'Staff Qualifications and Professional Development',
+            :key => :gscptsstaff,
+            :points => ec.gscptsstaff,
+            :possible => 16,
+          },
+          { :name => 'Family and Community Partnerships',
+            :key => :gscptsfamily,
+            :points => ec.gscptsfamily,
+            :possible => 8,
+          },
+          { :name => 'Administration and Management',
+            :key => :gscptsadmin,
+            :points => ec.gscptsadmin,
+            :possible => 6,
+          },
+          { :name => 'Environment',
+            :key => :gscptsenv,
+            :points => ec.gscptsenv,
+            :possible => 8,
+          },
+          { :name => 'Curriculum and Instruction',
+            :key => :gscptscurr,
+            :points => ec.gscptscurr,
+            :possible => 12,
+          },
+        ]
       end
     end
     

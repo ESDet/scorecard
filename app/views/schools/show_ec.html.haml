@@ -1,0 +1,97 @@
+.summary
+  .container_12
+    .grid_12
+      .noprint
+        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
+        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
+      %br/
+      %h2= @school.name
+
+  .container_12
+    .grid_3
+      .blue.relative
+        %h3 Overall Score
+        
+      .grades_container.relative
+        = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
+        .grade.earlychild
+          - @ec.publishedrating.times do
+            &#9733;
+      = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare noprint'
+                
+    .grid_5.minimap_container
+      .minimap= render :partial => 'shared/map', :object => @map
+      %p
+        %a{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
+      %p
+        Contact person: #{@ec.gsccontact}
+        %br/
+        - unless @ec.gsemail.blank?
+          Email: #{@ec.gsemail}
+          %br/
+        - unless @ec.phone.blank?
+          Phone: #{@ec.phone}
+          %br/
+        - unless @ec.website.blank?
+          Website: #{raw auto_link(@ec.website)}
+      
+
+
+    .grid_4
+      %h3 Hours
+      - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |day|
+        - next if @ech[(day + 'dayopen').to_sym].blank? or @ech[(day + 'dayclose').to_sym].blank?
+        #{day.titleize}: #{@ech[(day + 'dayopen').to_sym]} &mdash; #{@ech[(day + 'dayclose').to_sym]}
+        %br/
+      %p Months of operation: #{@ec.monthsofoperation}
+
+      %p= link_to 'Print', "javascript:window.print();", :class => 'btn noprint'
+  
+
+  %br.noprint/
+  %br.noprint/
+  
+.container_12.clear_floats.profile
+  .grid_12
+
+    #block-boxes-did-you-know.block.block--boxes.block--boxes-dyk_box.block--boxes-did-you-know
+      %a{:name => 'scores'}
+      %h2.block__title
+        = image_tag 'icon_status_white.png', :class => 'noprint'
+        Score Breakdown
+      .block__content
+        #boxes-box-school_score_widget.boxes-box
+          .boxes-box-content
+            .grade_container
+              .grade= @ec.gscpts
+              .grade.sub3 #{@ec.gscpts} / 50 pts
+            .subscore_wrapper
+              = render 'shared/subscores', :scores => @grades[:status][:summary_table]
+                
+            .clear_floats
+
+    
+.container_12.clear_floats
+  .grid_12.self_reported
+    %h2 Additional Details
+    #other_profile
+      = render 'shared/tip', :tip => @tips[:self_reported]
+      %table
+        - @profile_fields.each do |field,label|
+          - val = @ech[field.to_sym]
+          - unless val.blank?
+            %tr
+              %td
+                %h3 #{label}:
+              %td
+                - if [:agefrom, :ageto].include? field
+                  - if val.to_i > 11
+                    #{(val.to_i/12).to_i} years,
+                  #{val.to_i%12} months
+                - else
+                  = (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+
+
+
+%br/
+%br/

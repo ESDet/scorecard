@@ -55,7 +55,7 @@ class SchoolsController < ApplicationController
   def show
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
-      if @school.basic.scorecard_display == '0'
+      if !@school.earlychild? and @school.basic.scorecard_display == '0'
         redirect_to next_path(@school.id) and return if params[:from] == '1'
         redirect_to previous_path(@school.id) and return if params[:from] == '-1'
         redirect_to root_path and return
@@ -77,15 +77,45 @@ class SchoolsController < ApplicationController
     extent = Bedrock::city_extents(:detroit)
     extent = Bedrock.merge_extents(extent, @school.extent)
 
+    @tips = Hash[Tip.all.collect { |t| [t.name.to_sym, t] }]
+
     @map = Bedrock::Map.new({
       :base_layers    => ['street'],
       :layers         => [ @det_o, @school_o ],
       :layer_control  => true,
       :min_zoom       => 10,
       :max_zoom       => 18,
-      :extent         => extent,
+      :zoom           => 10,
+      #:extent         => extent,
+      :center         => { :lat => @school.centroid.y, :lon => @school.centroid.x },
       :layer_control  => false,
     })
+    
+    if @school.earlychild?
+      @ec = @school.earlychild
+      @ech = @ec.marshal_dump
+      @grades = @school.grades
+      @profile_fields = {
+        :gscmessage => 'Message to Families',
+        :gscspecialty => 'Program Specialty',
+        :gscschedule => 'Schedule Type',
+        :agefrom => 'Accepts Ages from',
+        :ageto => 'Accepts Ages to',
+        :gsccapacity => 'Total Licensed Capacity',        
+        :gsceligibility => 'Program Eligibility Criteria',
+        :gscsubsidy => 'Financial Assistance',
+        :gscspecial => 'Special Needs Experience',
+        :gscsetting => 'Care Setting',
+        :environment => 'Environment',
+        :meals => 'Meals Provided',
+        :gscpayschedule => 'Payment Schedule',
+        :gscfee => 'Application / Registration Fee',
+        :transportation => 'Provides Transportation?',
+        :gsccontract => 'Written Contract',
+      }
+      render 'show_ec', layout: 'noside'
+      return
+    end
     
     @grades = @school.grades
     
@@ -132,7 +162,6 @@ class SchoolsController < ApplicationController
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
 
-    @tips = Hash[Tip.all.collect { |t| [t.name.to_sym, t] }]
     @category_copy = {
       'Turnaround' => ['Fresh start school',
         "These are schools that Michigan has identified as the lowest achieving five percent of schools in the state.

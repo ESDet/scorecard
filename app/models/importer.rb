@@ -163,7 +163,45 @@ class Importer
         end
       end
     end while !results.empty?
-    
   end  
+  
+  
+  def self.get_earlychild
+    dataset = 'earlychild'
+    ensure_column dataset, :text
+
+    p = Portal.new
+    per = 1000
+    results = []
+    ofs = 0
+    begin
+      results = p.get_dataset dataset, nil, { :limit => per, :offset => ofs }
+      ofs += per
+      
+      results.each do |r|
+        next if r['publishedrating'].to_i < 3 
+        loc = RGeo::Geographic.spherical_factory.point(r['lon'].to_f, r['lat'].to_f)
+        r['publishedrating'] = r['publishedrating'].to_i
+        h = {
+          :bcode        => r['licensenumber'],
+          :name         => r['businessname'],
+          :school_type  => 'EC',
+          :address      => r['address'],
+          :address2     => "#{r['city']}, MI #{r['zipcode']}",
+          :zip          => r['zipcode'],
+          :earlychild   => OpenStruct.new(r),
+          :centroid     => loc,
+        }
+        if s = School.find_by_bcode(h[:bcode])
+          puts "Found license #{h[:bcode]} - #{h[:name]}"
+          s.update_attribute(dataset, h[:earlychild])
+        else
+          puts "Creating lic# #{h[:bcode]} - #{h[:name]}"
+          s = School.create(h)
+          h
+        end
+      end
+    end while !results.empty?
+  end
   
 end

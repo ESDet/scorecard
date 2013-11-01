@@ -57,6 +57,10 @@ namespace :import do
     puts "Fetching 5Essentials"
     Importer.get_scores('fiveessentials_2013')
   end
+  task :earlychild => :environment do |t, args|
+    puts "Fetching Early Childhood"
+    Importer.get_earlychild
+  end
   
   
 
