@@ -34,6 +34,7 @@ class HomeController < ApplicationController
         'meap_all'  => 'MEAP 2009-12',
         'act'       => 'ACT 2013',
         '5e'        => '5Essentials 2013',
+        'ec'        => 'Early Childhood',
         #'reset'     => "Erase database and reload everything",
       }.collect { |k,v| [v,k] }
       render :layout => 'noside'
@@ -51,6 +52,7 @@ class HomeController < ApplicationController
         Importer.get_scores 'meap_2010'
         Importer.get_scores 'meap_2009'
         Importer.get_scores 'fiveessentials_2013'
+        Importer.get_earlychild
 
       when 'all'
         Importer.get_profiles
@@ -62,6 +64,7 @@ class HomeController < ApplicationController
         Importer.get_scores 'meap_2009'
         Importer.get_scores 'act_2013'
         Importer.get_scores 'fiveessentials_2013'
+        Importer.get_earlychild
         
       when 'profiles'
         Importer.get_profiles
@@ -86,6 +89,10 @@ class HomeController < ApplicationController
         
       when '5e'
         Importer.get_scores 'fiveessentials_2013'
+      end
+      
+      when 'ec'
+        Importer.get_earlychild
       end
       
       redirect_to :refresh, :notice => "Ok, we've refreshed that data!"
