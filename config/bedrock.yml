@@ -3,7 +3,7 @@ cloudmade_style: 998
 
 layers:
   schools:
-    template: "<b><a href='/schools/{{slug}}'>{{name}}</a></b><br/>{{address}}<br/>Grades {{grades_served}}{{#grade}}<br/>Overall: {{grade}}{{/grade}}<br/>{{#others}}<br/><a href='/schools/{{slug}}'>{{name}}</a><br/>{{#grades}}Grades {{grades}}<br/>{{/grades}}{{/others}}"
+    template: "<b><a href='/schools/{{slug}}'>{{name}}</a></b><br/>{{address}}{{#grades_served}}<br/>Grades {{grades_served}}{{/grades_served}}{{#grade}}<br/>Overall: {{grade}}{{/grade}}<br/>{{#others}}<br/><a href='/schools/{{slug}}'>{{name}}</a><br/>{{#grades}}Grades {{grades}}<br/>{{/grades}}{{/others}}"
     style_handler: "function(e) { return { fillColor: { 'K8': '#f48b68', 'K12': '#ff00ff', 'HS': '#00aff0', 'EC': '#bbffbb' }[e.properties.level] }; }"
     geometry_type: point
     style:
