@@ -3,7 +3,7 @@ class SchoolsController < ApplicationController
   caches_action :index, :if => proc { request.format.json? }, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
   caches_action :overview, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
   
-
+  helper_method :format_phone
   
   def index
     filter = ['all', 'k8', 'high'].include?(params[:filter]) ? params[:filter] : nil
@@ -28,6 +28,7 @@ class SchoolsController < ApplicationController
             '#f48b68' => 'K8 Schools',
             '#00aff0' => 'High Schools',
             '#ff00ff' => 'K12 Schools',
+            '#bbffbb' => 'Early Childhood',
           })
         @district_o = Bedrock::Overlay.from_config('districts',
           :ty => :geojson,
@@ -269,6 +270,16 @@ class SchoolsController < ApplicationController
   end
   
   private
+  
+  def format_phone(ph)
+    if ph.length == 10
+      "#{ph[0..2]}-#{ph[2..4]}-#{ph[4..-1]}"
+    elsif ph.length == 7
+      "#{ph[0..2]}-#{ph[2..-1]}"
+    else
+      ph
+    end
+  end
   
   def scope_from_filters(filter, type, loc)
     logger.info "scope from filters: #{filter}, #{type}, #{loc}"
