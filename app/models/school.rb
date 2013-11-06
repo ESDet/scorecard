@@ -29,7 +29,7 @@ class School < ActiveRecord::Base
 
 
   GRADES = {
-    :early      => 'Early childhood',
+    :ec         => 'EC',
     :k8         => 'K8',
     :k12        => 'K12',
     :suburban   => 'Suburban',

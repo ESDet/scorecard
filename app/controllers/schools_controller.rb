@@ -6,7 +6,7 @@ class SchoolsController < ApplicationController
   helper_method :format_phone
   
   def index
-    filter = ['all', 'k8', 'high'].include?(params[:filter]) ? params[:filter] : nil
+    filter = ['all', 'k8', 'high', 'ec'].include?(params[:filter]) ? params[:filter] : nil
     type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
     session[:filter]  = filter
     session[:type]    = type
@@ -28,7 +28,7 @@ class SchoolsController < ApplicationController
             '#f48b68' => 'K8 Schools',
             '#00aff0' => 'High Schools',
             '#ff00ff' => 'K12 Schools',
-            '#bbffbb' => 'Early Childhood',
+            '#bbffbb' => 'Preschools',
           })
         @district_o = Bedrock::Overlay.from_config('districts',
           :ty => :geojson,

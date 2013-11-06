@@ -75,9 +75,9 @@
             map.overlays.schools.addData(response);
           }
           var template = "{{#features}}{{#properties}}<li><a href='/schools/{{slug}}'>{{name}}</a><br/>{{address}}<br/>" +
-            "Grades {{grades_served}}{{#grade}}<br/>" +
+            "{{#grades_served}}Grades {{grades_served}}<br/>{{/grades_served}}" +
             "<label class='float_right'><input class='compare-check' name='compare[]' type='checkbox' value='{{id}}'/> Compare</label>" +
-            "Overall: {{grade}}{{/grade}}</li>{{/properties}}{{/features}}";
+            "{{#grade}}Overall: {{grade}}{{/grade}}</li>{{/properties}}{{/features}}";
           var html = Mustache.to_html(template, response);
           $('.school_list').html(html);
           listSpinner.stop();
