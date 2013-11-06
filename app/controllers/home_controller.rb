@@ -89,7 +89,6 @@ class HomeController < ApplicationController
         
       when '5e'
         Importer.get_scores 'fiveessentials_2013'
-      end
       
       when 'ec'
         Importer.get_earlychild
