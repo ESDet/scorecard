@@ -99,7 +99,9 @@ class School < ActiveRecord::Base
   end
   
   def esd
-    self.esd_hs_2013 || self.esd_k8_2013
+    return self.esd_hs_2013 if self.high?
+    return self.esd_k8_2013 if self.k8?
+    nil
   end
   
   # For really simple sorting
@@ -158,7 +160,7 @@ class School < ActiveRecord::Base
     h = { :cumulative => {}, :status => {}, :progress => {}, :climate => {}, :other => {} }
     return h if esd.nil? and !earlychild?
     
-    if self.esd_hs_2013
+    if self.high? and self.esd_hs_2013
       # Common to all HS varieties:
       h[:status] = {
         :letter   => esd.status_ltrgrade.blank? ? 'NG' : esd.status_ltrgrade,
@@ -198,7 +200,7 @@ class School < ActiveRecord::Base
           :percent  => esd.turnaround_pct }
       end
       
-    elsif self.esd_k8_2013
+    elsif self.k8? and esd_k8_2013
       # Common to all the K8 varieties..
       h[:status] = {
         :letter   => esd.status_ltrgrade.blank? ? 'NG' : esd.status_ltrgrade,

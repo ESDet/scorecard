@@ -58,6 +58,9 @@
         %br/
         
     .grid_4
+      - if copy = @category_copy[@school.esd.andand.schoolcategory]
+        %p #{copy[0]}: #{copy[1]}
+
       - if letter.blank? or ['NG', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
         %p 
           This school did not receive a grade because either (1) we have insufficient data to assign a grade or (2) it
@@ -65,8 +68,6 @@
           not yet have the capability yet to analyze the data. We recommend that you visit with the school's leadership to
           better understand how the school performs against a college ready standard.
          
-      - if copy = @category_copy[@school.esd.andand.schoolcategory]
-        %p #{copy[0]}: #{copy[1]}
   
 
   %br.noprint/
