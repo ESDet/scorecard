@@ -9,16 +9,23 @@
       %p
         Grades: #{@school.grades_served || 'Unknown'}
         %br/
-        Governance: #{@school.basic.governance || 'Unknown'}
+        - unless @school.basic.governance.blank?
+          Governance: #{@school.basic.governance}
+        - unless @school.basic.operator.blank?
+          = "/"
+          Operator:  #{@school.basic.operator}
+        - unless @school.basic.authorizer.blank?
+          = "/"
+          Authorizer: #{@school.basic.authorizer}
 
   .container_12
     .grid_3
+      - letter = @grades[:cumulative][:letter].to_s
       .blue.relative
         %h3 Overall Score
         
       .grades_container.relative
         = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
-        - letter = @grades[:cumulative][:letter].to_s
         - if letter.blank?
           .grade{:title => 'No Grade'} NG
         - elsif letter.length < 3
@@ -51,6 +58,13 @@
         %br/
         
     .grid_4
+      - if letter.blank? or ['NG', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+        %p 
+          This school did not receive a grade because either (1) we have insufficient data to assign a grade or (2) it
+          uses different assessments to measure student academic status and/or progress than most schools, and ESD does
+          not yet have the capability yet to analyze the data. We recommend that you visit with the school's leadership to
+          better understand how the school performs against a college ready standard.
+         
       - if copy = @category_copy[@school.esd.andand.schoolcategory]
         %p #{copy[0]}: #{copy[1]}
   

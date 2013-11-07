@@ -10,7 +10,7 @@
       .boxes-box-content
         .score-right
           #front-filter
-            = render :partial => 'shared/filters'
+            = render 'shared/filters', :long_names => true
         .clear_floats
 
 
@@ -38,6 +38,17 @@
                   return false;
                 });
 
+                $('.btn-group.grades a').click(function(e) {
+                  var kind = $(this).data('filter');
+                  if(kind == 'ec') {
+                    $('#top_k12').hide();
+                    $('#top_ec').show();
+                  } else {
+                    $('#top_k12').show();
+                    $('#top_ec').hide();
+                  }
+                  return false;
+                });
 
               });
         .clear_floats

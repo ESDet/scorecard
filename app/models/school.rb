@@ -69,6 +69,8 @@ class School < ActiveRecord::Base
     scope k,         where(:sch => v)
   end
   
+  scope :not_ec, where("school_type <> 'EC'")
+  
   def elementary?;  k8? or k12?; end
   def middle?;      k8? or k12?; end
   def high?;        school_type == GRADES[:high] or k12?; end

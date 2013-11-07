@@ -3,7 +3,8 @@ class HomeController < ApplicationController
   
   def index
     session[:filter] = session[:loc] = nil
-    @top = School.order('points desc').limit(10)
+    @top = School.not_ec.order('points desc').limit(10)
+    @top_ec = School.ec.order('points desc').limit(10)
   end
 
   

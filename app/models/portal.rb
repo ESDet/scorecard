@@ -39,8 +39,8 @@ class Portal
       puts "Getting: #{url + query}"
       response = HTTParty.get(url + query)
     elsif method == :post
-      #headers = { 'Content-Type' => 'application/json' }
-      #response = HTTParty.post(url, data.to_json, headers)
+      headers = { 'Content-Type' => 'application/json' }
+      response = HTTParty.post(url, { :body => data.to_json, :headers => headers })
       #response, data = http.post(uri.path, data.to_json, headers)
     end
     #puts response.inspect

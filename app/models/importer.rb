@@ -45,6 +45,15 @@ class Importer
     govs = Hash[govs.collect { |t| [t['tid'], t['name']] }]
     puts "Governances: #{govs.inspect}"
     
+    operators = p.show_vocabulary 10
+    operators = Hash[operators.collect { |t| [t['tid'], t['name']] }]
+    puts "Operators: #{operators.inspect}"
+
+    authorizers = p.show_vocabulary 11
+    authorizers = Hash[authorizers.collect { |t| [t['tid'], t['name']] }]
+    puts "Authorizers: #{authorizers.inspect}"
+
+    
     schools = p.show_vocabulary 4
     schools.each do |s|
       tid = s['tid']
@@ -68,6 +77,13 @@ class Importer
         basic[f.to_sym] = val
       end
       
+      # Don't store the ones to not display
+      if basic[:scorecard_display].to_i == 0
+        existing = School.find_by_bcode(bcode)
+        existing.andand.destroy
+        next
+      end
+      
       stid = s['field_school_type']
       unless stid.blank?
         stid = stid['und'].andand.first.andand['tid']
@@ -79,7 +95,21 @@ class Importer
       unless sgid.blank?
         sgid = sgid['und'].andand.first.andand['tid']
         puts "School governance tid: #{sgid}, and govs[sgid] = #{govs[sgid]}"
-        basic['governance'] = govs[sgid]
+        basic[:governance] = govs[sgid]
+      end
+
+      soid = s['field_operator']
+      unless soid.blank?
+        soid = soid['und'].andand.first.andand['tid']
+        puts "School operator tid: #{soid}, and ops[soid] = #{operators[soid]}"
+        basic[:operator] = operators[soid]
+      end
+
+      soid = s['field_authorizer']
+      unless soid.blank?
+        soid = soid['und'].andand.first.andand['tid']
+        puts "School authorizer tid: #{soid}, and auths[soid] = #{authorizers[soid]}"
+        basic[:authorizer] = authorizers[soid]
       end
       
       
@@ -110,6 +140,12 @@ class Importer
       # And the extended profile stuff
       ensure_column :profile, :text
       profile = p.get_related tid
+      encoding_options = {
+        :invalid           => :replace,  # Replace invalid byte sequences
+        :undef             => :replace,  # Replace anything not defined in ASCII
+        :replace           => '',        # Use a blank for those replacements
+        :universal_newline => true       # Always break lines with \n
+      }
       if profile.is_a?(Hash)
         h = {}
         profile.each do |k,v|
@@ -117,6 +153,7 @@ class Importer
           key = m[1]
           next if v.empty? or v['und'].empty?
           val = (v['und'].size == 1) ? v['und'].first.andand['value'] : v['und'].collect { |i| i['value'] }.join(', ')
+          val = val.encode Encoding.find('ASCII'), encoding_options unless val.nil?
           puts "  #{key} = #{val.inspect}"
           h[key] = val
         end
@@ -186,6 +223,7 @@ class Importer
           :bcode        => r['licensenumber'],
           :name         => r['businessname'],
           :school_type  => 'EC',
+          :points       => r['gscpts'].to_i,
           :address      => r['address'],
           :address2     => "#{r['city']}, MI #{r['zipcode']}",
           :zip          => r['zipcode'],

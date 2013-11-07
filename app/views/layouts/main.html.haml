@@ -17,12 +17,18 @@
                 
   
           .blue
-            %h2 Top 10 Highest-Graded Schools in Detroit
-            %ul
-              - @top.each do |s|
-                - grade = s.grades[:cumulative]
-                %li= link_to s.name, s
-          
+            #top_k12
+              %h2 Top 10 Highest-Graded Schools in Detroit
+              %ul
+                - @top.each do |s|
+                  - grade = s.grades[:cumulative]
+                  %li= link_to s.name, s
+            #top_ec.hide
+              %h2 Top 10 Detroit Preschools
+              %ul
+                - @top_ec.each do |s|
+                  - grade = s.grades[:cumulative]
+                  %li= link_to s.name, s
           %br/
 
         %section.l-content-right

@@ -28,7 +28,7 @@ class SchoolsController < ApplicationController
             '#f48b68' => 'K8 Schools',
             '#00aff0' => 'High Schools',
             '#ff00ff' => 'K12 Schools',
-            '#bbffbb' => 'Preschools',
+            '#134370' => 'Preschools',
           })
         @district_o = Bedrock::Overlay.from_config('districts',
           :ty => :geojson,
