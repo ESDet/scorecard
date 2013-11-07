@@ -4,9 +4,13 @@ namespace :import do
   task :all => :environment do |t, args|
     Importer.get_schema
     Importer.get_profiles
-    Importer.get_scores 'meap_2012'
     Importer.get_scores 'esd_k8_2013'
     Importer.get_scores 'esd_hs_2013'
+    Importer.get_scores 'meap_2012'
+    Importer.get_scores 'meap_2011'
+    Importer.get_scores 'meap_2010'
+    Importer.get_scores 'meap_2009'
+    Importer.get_scores 'act_2013'        
     Importer.get_scores 'fiveessentials_2013'
     Importer.get_earlychild
   end
@@ -42,6 +46,7 @@ namespace :import do
     Importer.get_scores('meap_2012')
     Importer.get_scores('meap_2011')
     Importer.get_scores('meap_2010')
+    Importer.get_scores 'meap_2009'
   end
   task :k8 => :environment do |t, args|
     puts "Fetching K8"
