@@ -1,6 +1,6 @@
 common:
   typekit_key: rak2ush
-  cache_key: 12
+  cache_key: 15
   analytics_key:
   max_compared: 5
   radius_mi: 2

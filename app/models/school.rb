@@ -86,14 +86,15 @@ class School < ActiveRecord::Base
     kinds << 'middle' if middle?
     kinds << 'high' if high?
     
+    k12 = (School.where(:bcode => self.bcode).count == 2)
     result = {
       :name       => self.name,
-      :level      => self.k12? ? 'K12' : (self.high? ? 'HS' : (self.earlychild? ? 'EC' : 'K8')),
+      :level      => k12 ? 'K12' : (self.high? ? 'HS' : (self.earlychild? ? 'EC' : 'K8')),
       :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter]
     }
-    #others = School.where(['address = ? and id <> ?', self.address, self.id]).select('id, name, address, grades_served, bcode, slug')
-    #result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
+    others = School.where(:centroid => self.centroid).select('id, name, address, school_type, grades_served, bcode, slug') - [self]
+    result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
   end
   
@@ -408,6 +409,7 @@ class School < ActiveRecord::Base
     h = {}
     if tab == :status
       dump = meap_2012.andand.marshal_dump
+      return {} if dump.nil?
       if k8?
         [:math, :reading].each do |subject|   # used to have :science
           h[subject] = {}
@@ -430,6 +432,7 @@ class School < ActiveRecord::Base
       if high?
         a = {}
         act = act_2013.andand.marshal_dump
+        return {} if act.nil?
         
         #logger.ap act
         # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013

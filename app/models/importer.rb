@@ -112,30 +112,39 @@ class Importer
         basic[:authorizer] = authorizers[soid]
       end
       
-      
+      # Address
       addr = s['field_address']['und'].first
       basic[:address] = addr
       basic[:links] = s['field_links'].empty? ? nil : s['field_links']['und'].collect { |l| l['url'] }
       address = addr['thoroughfare']
       address2 = "#{addr['locality']}, #{addr['administrative_area']} #{addr['postal_code']}"
-      school = School.find_or_create_by_bcode(bcode)
-      school.attributes = { 'tid' => tid, 'name' => name, :basic => OpenStruct.new(basic), :school_type => types[stid],
-        :address => address, :address2 => address2, :zip => addr['postal_code'] }
-        
-      if geo = basic['field_geo'].andand['und'].andand.first
+
+      # Geography
+      if geo = s['field_geo'].andand['und'].andand.first
         puts "Found geographic position: #{geo.inspect}"
-        school.centroid = RGeo::Geographic.spherical_factory.point(geo['lon'].to_f, geo['lat'].to_f)
-      elsif school.address_changed? and !addr['thoroughfare'].blank?
+        centroid = RGeo::Geographic.spherical_factory.point(geo['lon'].to_f, geo['lat'].to_f)
+      elsif !addr['thoroughfare'].blank?
         geo = Bedrock::Geocoder.bing_geocode({
           :address => addr['thoroughfare'],
           :city    => addr['locality'],
           :state   => addr['administrative_area'],
           :zip     => addr['postal_code']
         })
-        school.centroid = RGeo::Geographic.spherical_factory.point(geo.andand[:location].andand[:lon] || 0, geo.andand[:location].andand[:lat] || 0)
+        centroid = RGeo::Geographic.spherical_factory.point(geo.andand[:location].andand[:lon] || 0, geo.andand[:location].andand[:lat] || 0)
       end
-      school.save
-      
+
+      # Ze attributes
+      attrs = {
+        :tid          => tid,
+        :bcode        => bcode,
+        :name         => name, 
+        :basic        => OpenStruct.new(basic),
+        :school_type  => types[stid],
+        :address      => address,
+        :address2     => address2,
+        :zip          => addr['postal_code'],
+        :centroid => centroid
+      }
 
       # And the extended profile stuff
       ensure_column :profile, :text
@@ -157,8 +166,32 @@ class Importer
           puts "  #{key} = #{val.inspect}"
           h[key] = val
         end
-        school.update_attributes(:profile => OpenStruct.new(h), :grades_served => h['grades_served'])
+        attrs.merge!({:profile => OpenStruct.new(h), :grades_served => h['grades_served']})
       end
+      
+      # Now apply these to 1 or 2 schools
+      if attrs[:school_type] == 'K12'
+        # Make two schools (or update them)
+        if School.where(:bcode => bcode).count == 1
+          # Migrate from old version
+          School.delete_all(:bcode => bcode)
+        end
+        k8a = attrs.merge({ :school_type => 'K8', :name => "#{attrs[:name]} (K8)" })
+        hsa = attrs.merge({ :school_type => 'HS', :name => "#{attrs[:name]} (HS)" })
+        if School.where(:bcode => bcode).count == 2
+          # Ok update them both
+          School.where(:bcode => bcode, :school_type => 'K8').first.update_attributes(k8a)
+          School.where(:bcode => bcode, :school_type => 'HS').first.update_attributes(hsa)
+        else
+          School.create(k8a)
+          School.create(hsa)
+        end
+      else
+        school = School.find_or_create_by_bcode(bcode)
+        school.attributes = attrs
+        school.save
+      end
+
     end
   end
   
@@ -189,7 +222,8 @@ class Importer
       
       results.each do |r|
         bcode = r[bcode_key].gsub(/[^0-9]/, '')
-        if s = School.find_by_bcode(bcode)
+        schools = School.where(:bcode => bcode)
+        schools.each do |s|
           puts "bcode #{bcode} - #{s.name}"
           h = {}
           r.each do |key, val|
