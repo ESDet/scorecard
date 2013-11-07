@@ -5,7 +5,10 @@
         = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
       %br/
-      %h2= @school.name
+      %h2
+        = @school.name
+        - if @school.basic.school_status == 'Closed'
+          (Closed)
       %p
         Grades: #{@school.grades_served || 'Unknown'}
         %br/

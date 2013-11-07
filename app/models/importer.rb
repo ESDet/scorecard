@@ -37,22 +37,22 @@ class Importer
   def self.get_profiles
     p = Portal.new
     field_re = /^field_(.*)$/
-    types = p.show_vocabulary 3
-    types = Hash[types.collect { |t| [t['tid'], t['name']] }]
-    puts "Types: #{types.inspect}"
-    
-    govs = p.show_vocabulary 7
-    govs = Hash[govs.collect { |t| [t['tid'], t['name']] }]
-    puts "Governances: #{govs.inspect}"
-    
-    operators = p.show_vocabulary 10
-    operators = Hash[operators.collect { |t| [t['tid'], t['name']] }]
-    puts "Operators: #{operators.inspect}"
 
-    authorizers = p.show_vocabulary 11
-    authorizers = Hash[authorizers.collect { |t| [t['tid'], t['name']] }]
-    puts "Authorizers: #{authorizers.inspect}"
-
+    vocabs = {
+      :types       => 3,
+      :status      => 2,
+      :govs        => 7,
+      :operators   => 10,
+      :authorizers => 11,
+    }
+    
+    vocabs.each do |key, vid|
+      dict = p.show_vocabulary vid
+      dict = Hash[dict.collect { |t| [t['tid'], t['name']] }]
+      vocabs[key] = dict
+    end
+      
+    ap vocabs
     
     schools = p.show_vocabulary 4
     schools.each do |s|
@@ -84,32 +84,21 @@ class Importer
         next
       end
       
-      stid = s['field_school_type']
-      unless stid.blank?
-        stid = stid['und'].andand.first.andand['tid']
-        puts "School_type tid: #{stid}, and types[stid] = #{types[stid]}"
-        basic['school_type'] = types[stid]
-      end
+      lookups = {
+        'school_type' => :types,
+        'school_status' => :status,
+        'governance' => :govs,
+        'operator' => :operators,
+        'authorizer' => :authorizers,
+      }
       
-      sgid = s['field_governance']
-      unless sgid.blank?
-        sgid = sgid['und'].andand.first.andand['tid']
-        puts "School governance tid: #{sgid}, and govs[sgid] = #{govs[sgid]}"
-        basic[:governance] = govs[sgid]
-      end
-
-      soid = s['field_operator']
-      unless soid.blank?
-        soid = soid['und'].andand.first.andand['tid']
-        puts "School operator tid: #{soid}, and ops[soid] = #{operators[soid]}"
-        basic[:operator] = operators[soid]
-      end
-
-      soid = s['field_authorizer']
-      unless soid.blank?
-        soid = soid['und'].andand.first.andand['tid']
-        puts "School authorizer tid: #{soid}, and auths[soid] = #{authorizers[soid]}"
-        basic[:authorizer] = authorizers[soid]
+      lookups.each do |field, vocab|
+        dict = vocabs[vocab]
+        val = s["field_#{field}"]
+        next if val.blank?
+        val = val['und'].andand.first.andand['tid']
+        puts "#{field} tid=#{val} and looked-up = #{dict[val]}"
+        basic[field] = dict[val]
       end
       
       # Address
@@ -118,6 +107,7 @@ class Importer
       basic[:links] = s['field_links'].empty? ? nil : s['field_links']['und'].collect { |l| l['url'] }
       address = addr['thoroughfare']
       address2 = "#{addr['locality']}, #{addr['administrative_area']} #{addr['postal_code']}"
+      basic[:address]
 
       # Geography
       if geo = s['field_geo'].andand['und'].andand.first
@@ -139,11 +129,11 @@ class Importer
         :bcode        => bcode,
         :name         => name, 
         :basic        => OpenStruct.new(basic),
-        :school_type  => types[stid],
+        :school_type  => basic['school_type'],
         :address      => address,
         :address2     => address2,
         :zip          => addr['postal_code'],
-        :centroid => centroid
+        :centroid     => centroid
       }
 
       # And the extended profile stuff
