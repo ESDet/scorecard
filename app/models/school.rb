@@ -103,6 +103,8 @@ class School < ActiveRecord::Base
   
   # For really simple sorting
   def total_points 
+    return self.earlychild.gscpts if earlychild?
+    
     highs = {
       'Mature' => :total_pts,
       'New' => :total_pts,

@@ -219,9 +219,10 @@ class Importer
         next if r['publishedrating'].to_i < 3 
         loc = RGeo::Geographic.spherical_factory.point(r['lon'].to_f, r['lat'].to_f)
         r['publishedrating'] = r['publishedrating'].to_i
+        
         h = {
           :bcode        => r['licensenumber'],
-          :name         => r['businessname'],
+          :name         => r['businessname'].gsub('&#039;', "'").gsub('&amp;', '&'),
           :school_type  => 'EC',
           :points       => r['gscpts'].to_i,
           :address      => r['address'],
@@ -232,7 +233,7 @@ class Importer
         }
         if s = School.find_by_bcode(h[:bcode])
           puts "Found license #{h[:bcode]} - #{h[:name]}"
-          s.update_attribute(dataset, h[:earlychild])
+          s.update_attributes(h)
         else
           puts "Creating lic# #{h[:bcode]} - #{h[:name]}"
           s = School.create(h)
