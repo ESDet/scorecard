@@ -77,22 +77,6 @@ namespace :import do
   end
 
   
-  desc "Load up tips from data_source_exp"
-  task :tips => :environment do |t, args|
-    session = GoogleDrive.login(user, pass)
-    sheets = session.spreadsheet_by_key(ss_key).worksheets
-    ws = sheets[4]
-    num_rows = ws.num_rows
-    num_cols = ws.num_cols
-    Tip.delete_all
-    ws.rows[1..num_rows].each do |row|
-      puts row[0]
-      puts row[1]
-      puts "-----"
-      Tip.create(:name => row[0], :body => row[1])
-    end
-  end
-  
   
 end  
 
