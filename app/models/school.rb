@@ -34,6 +34,7 @@ class School < ActiveRecord::Base
     :k12        => 'K12',
     :suburban   => 'Suburban',
     :elementary => ['Early childhood', 'K8', 'K12'],
+    :k8hs       => ['K8', 'K12', 'HS'],
     :middle     => ['K8', 'K12'],
     :high       => 'HS',
   }

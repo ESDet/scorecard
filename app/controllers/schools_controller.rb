@@ -6,7 +6,7 @@ class SchoolsController < ApplicationController
   helper_method :format_phone
   
   def index
-    filter = ['all', 'k8', 'high', 'ec'].include?(params[:filter]) ? params[:filter] : nil
+    filter = ['all', 'k8', 'high', 'ec', 'k8hs'].include?(params[:filter]) ? params[:filter] : nil
     type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
     session[:filter]  = filter
     session[:type]    = type
@@ -204,8 +204,7 @@ class SchoolsController < ApplicationController
 
     session[:compare] = list
 
-        
-    @schools = School.find(list)
+    @schools = School.where(:id => list)
     @grades = @schools.collect { |s| s.grades }
 
     @transposed = []
@@ -252,6 +251,16 @@ class SchoolsController < ApplicationController
         @chart[label][i] = val
       end
     end
+    
+    # When you go to add others to compare, we want to show only compatible
+    # if only preschools
+    types = @schools.collect { |s| s.school_type }.uniq.reject { |s| s.nil? }.sort.join('_')
+    @filter = {
+      'EC'    => 'ec',
+      'HS_K8' => 'k8hs',
+      'K8'    => 'k8',
+      'HS'    => 'hs',
+    }[types] || 'all'
     
     render layout: 'noside'
   end

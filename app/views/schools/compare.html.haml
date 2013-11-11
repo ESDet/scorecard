@@ -7,7 +7,7 @@
         %p Please #{link_to 'search for schools', schools_path} and choose several to compare.
         
       - else
-        = link_to 'Add a school', schools_path, :class => 'btn'
+        = link_to 'Add a school', schools_path(:filter => @filter), :class => 'btn'
         = link_to "Reset the chart", "/compare/clear", :class => 'btn'
         
         %table.compare
