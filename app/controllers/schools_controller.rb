@@ -149,16 +149,21 @@ class SchoolsController < ApplicationController
     }
 
     ethnicities = %w(american_indian asian african_american hispanic hawaiian white two_or_more_races)
-    @demographics = ethnicities.collect do |e|
-      num = @school.meap_2012 ? @school.meap_2012.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i : 0
-      num = 0 if num == 9
-      [ "#{e.titleize}: #{num} students", num]
-    end
-    
-    @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
-      num = @school.meap_2012.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
-      num = 0 if num == 9
-      num
+    if @school.meap_2012
+      @demographics = ethnicities.collect do |e|
+        num = @school.meap_2012.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
+        num = 0 if num == 9
+        [ "#{e.titleize}: #{num} students", num]
+      end
+      
+      @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
+        num = @school.meap_2012.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
+        num = 0 if num == 9
+        num
+      end
+    else
+      @demographics = []
+      @enrollment = []
     end
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
