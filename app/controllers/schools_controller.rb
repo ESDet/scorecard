@@ -303,9 +303,9 @@ class SchoolsController < ApplicationController
   
   def format_phone(ph)
     if ph.length == 10
-      "#{ph[0..2]}-#{ph[2..4]}-#{ph[4..-1]}"
+      "#{ph[0..2]}-#{ph[3..5]}-#{ph[6..-1]}"
     elsif ph.length == 7
-      "#{ph[0..2]}-#{ph[2..-1]}"
+      "#{ph[0..2]}-#{ph[3..-1]}"
     else
       ph
     end
