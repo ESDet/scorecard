@@ -150,7 +150,7 @@ class SchoolsController < ApplicationController
 
     ethnicities = %w(american_indian asian african_american hispanic hawaiian white two_or_more_races)
     @demographics = ethnicities.collect do |e|
-      num = @school.meap_2012.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
+      num = @school.meap_2012 ? @school.meap_2012.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i : 0
       num = 0 if num == 9
       [ "#{e.titleize}: #{num} students", num]
     end
