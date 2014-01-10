@@ -195,7 +195,7 @@ class SchoolsController < ApplicationController
       session[:compare] = []
       redirect_to '/compare', :notice => "Thank you, you may now choose new schools to compare." and return
     elsif str.blank?
-      list = session[:compare]
+      list = session[:compare] || []
     elsif m = str.match(/^\+([0-9,]+)$/)
       ids = m[1].split(',').collect { |i| i.to_i }
       list = (session[:compare] || []) + ids

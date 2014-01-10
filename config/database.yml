@@ -7,13 +7,13 @@ local: &local
   host: localhost
   encoding: utf8
 
-lime: &lime
+sage: &sage
   adapter: mysql2spatial
   pool: 5
   timeout: 5000
   username: rails
   password: huju5Azafu
-  host: lime_private
+  host: sage_private
 
 development:
   <<: *local
@@ -24,11 +24,11 @@ test:
   database: esd2_test
   
 staging:
-  <<: *lime
+  <<: *sage
   database: esd2_stage
 
 production:
-  <<: *lime
+  <<: *sage
   database: esd2_prod
 
 
