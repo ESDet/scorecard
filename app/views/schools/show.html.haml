@@ -70,10 +70,10 @@
 
       - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
         %p 
-          This school did not receive a grade because either (1) we have insufficient data to assign a grade or (2) it
-          uses different assessments to measure student academic status and/or progress than most schools, and ESD does
-          not yet have the capability yet to analyze the data. We recommend that you visit with the school's leadership to
-          better understand how the school performs against a college ready standard.
+          There is not enough data available at this time to accurately assign an overall grade. This happens because the
+          school uses different assessments to measure student academic status and/or progress than most schools, or the school
+          is too new for enough data to be available. We recommend that you visit with the school's leadership to better understand
+          how the school performs against a college ready standard.
          
   
 
@@ -174,12 +174,12 @@
             = v
             %br/
         #profile.tab-pane
-          - @school.profile.marshal_dump.each do |k,v|
+          - @school.profile.andand.marshal_dump.each do |k,v|
             %b #{k}:
             = v
             %br/
         #meap.tab-pane
-          - @school.meap_2012.marshal_dump.andand.each do |k,v|
+          - @school.meap_2012.andand.marshal_dump.andand.each do |k,v|
             %b #{k}:
             = v
             %br/
