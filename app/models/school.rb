@@ -113,12 +113,13 @@ class School < ActiveRecord::Base
   def total_points 
     return self.earlychild.gscpts if earlychild?
       
+    percent = nil
     if high? and self.esd_hs_2013
-      return self.esd_hs_2013.send(:total_pts).to_i
+      percent = self.esd_hs_2013.mature_pct.to_f
     elsif elementary? and self.esd_k8_2013_r1
-      return (self.esd_k8_2013_r1.total_pct.to_f * 100).to_i
+      percent = self.esd_k8_2013_r1.total_pct.to_f
     end
-    return nil
+    return percent.nil? ? nil : (percent * 100).to_i
   end
   
   def overall_grade

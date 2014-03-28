@@ -127,7 +127,7 @@
         - if e = @school.esd
           %h3 Challenge Factors:
           %div Overall Student Characteristics Points: #{e.studchrs_pts}
-          - if old = @school.esd_k8_2013
+          - if old = (@school.k8? ? @school.esd_k8_2013 : e)
             %div Socio-economic Status: #{(old.econdis_pct.to_f*100).to_i}%
             %div Special Education: #{(old.sped_pct.to_f*100).to_i}%
             %div English Language Learners: #{(old.ell_pct.to_f*100).to_i}%

@@ -15,8 +15,6 @@ class SchoolsController < ApplicationController
     @title = current_search    
     @schools = scope_from_filters(filter, type, params[:loc])
     @schools.sort! { |a,b| b.points.to_i <=> a.points.to_i }
-    #@schools = @schools.all if @schools.is_a?(Class)
-    #@schools = @schools.sort { |a,b| b.points.to_i <=> a.points.to_i }
 
     respond_to do |format|
       format.html do
