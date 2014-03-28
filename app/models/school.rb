@@ -62,6 +62,9 @@ class School < ActiveRecord::Base
     :"essential: supportive environment"  => 'Supportive Environment',
     :"essential: ambitious instruction"   => 'Ambitious Instruction',
   }
+  
+  NA_GRADES = ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined',
+    'No Status/Progress Data', 'No Status Data']
 
   GRADES.each do |k,v|
     scope k,         where(:school_type => v)

@@ -32,7 +32,7 @@
         
       .grades_container.relative
         = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
-        - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+        - if letter.blank? or School::NA_GRADES.include? letter
           .grade.na{:title => 'No Grade'} N/A
         - elsif letter.length < 3
           .grade{:title => "Cumulative Grade"}= letter
@@ -127,9 +127,10 @@
         - if e = @school.esd
           %h3 Challenge Factors:
           %div Overall Student Characteristics Points: #{e.studchrs_pts}
-          %div Socio-economic Status: #{(e.econdis_pct.to_f*100).to_i}%
-          %div Special Education: #{(e.sped_pct.to_f*100).to_i}%
-          %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
+          - if old = @school.esd_k8_2013
+            %div Socio-economic Status: #{(old.econdis_pct.to_f*100).to_i}%
+            %div Special Education: #{(old.sped_pct.to_f*100).to_i}%
+            %div English Language Learners: #{(old.ell_pct.to_f*100).to_i}%
           - if @school.high?
             %br/
             %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2013.andand.fafsa_rate.to_f*100).to_i}%" || 'N/A'}
