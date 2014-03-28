@@ -28,7 +28,7 @@ class Importer
   def self.ensure_column(key, ty=:string)
     School.reset_column_information
     if !School.column_names.include? key.to_s
-      puts "Adding column #{key}"
+      puts "Adding column #{key} as #{ty}"
       School.connection.add_column(TABLE_NAME, key, ty, {})
       School.reset_column_information
     end

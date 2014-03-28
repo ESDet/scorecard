@@ -10,7 +10,8 @@ class School < ActiveRecord::Base
   
   require 'mogrify'
   include Mogrify
-  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_hs_2013, :act_2013, :fiveessentials_2013, :earlychild].each do |k|
+  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_k8_2013_r1, :esd_hs_2013,
+    :act_2013, :fiveessentials_2013, :earlychild].each do |k|
     serialize k, OpenStruct
   end
   before_save :set_slug
@@ -101,54 +102,38 @@ class School < ActiveRecord::Base
   
   def esd
     return self.esd_hs_2013 if self.high?
-    return self.esd_k8_2013 if self.k8?
+    return self.esd_k8_2013_r1 if self.k8?
     nil
   end
   
   # For really simple sorting
   def total_points 
     return self.earlychild.gscpts if earlychild?
-    
-    highs = {
-      'Mature' => :total_pts,
-      'New' => :total_pts,
-      'Turnaround' => :turnaround_pts,
-      'Specialty' => :total_pts,
-    }
-    elems = {
-      'Mature' => :pts_earned,
-      'New' => :pts_earned,
-      'Turnaround' => :turnaround_pts_earned,
-    }
       
     if high? and self.esd_hs_2013
-      sym = highs[self.esd_hs_2013.schoolcategory]
-      return nil if sym.nil?
-      return self.esd_hs_2013.send(sym).to_i
-    elsif elementary? and self.esd_k8_2013
-      sym = elems[self.esd_k8_2013.schoolcategory]
-      return nil if sym.nil?
-      return self.esd_k8_2013.send(sym).to_i
+      return self.esd_hs_2013.send(:total_pts).to_i
+    elsif elementary? and self.esd_k8_2013_r1
+      return (self.esd_k8_2013_r1.total_pct.to_f * 100).to_i
     end
     return nil
   end
   
   def overall_grade
     fields = {
-      'Mature'      => :mature_ltrgrade,
-      'New'         => :newschool_designation,
-      'Turnaround'  => :turnaround_designation,
+      'Mature'      => :total_ltrgrade,
+      'New'         => :total_ltrgrade,
+      'Turnaround'  => :total_ltrgrade,
       'Specialty'   => nil,
     }
       
     if high? and self.esd_hs_2013
-      sym = fields[self.esd_hs_2013.schoolcategory]
+      sym = fields[self.esd_hs_2013.schoolcategory.titleize]
       return nil if sym.nil?
       return self.esd_hs_2013.send(sym)
-    elsif elementary? and self.esd_k8_2013
-      sym = fields[self.esd_k8_2013.schoolcategory]
+    elsif elementary? and self.esd_k8_2013_r1
+      sym = fields[self.esd_k8_2013_r1.schoolcategory.titleize]
       return nil if sym.nil?
-      return self.esd_k8_2013.send(sym)
+      return self.esd_k8_2013_r1.send(sym)
     end
     return nil
   end
@@ -156,7 +141,7 @@ class School < ActiveRecord::Base
   
   
   def grades
-    cat = esd.andand.schoolcategory
+    cat = esd.andand.schoolcategory.andand.titleize
     
     h = { :cumulative => {}, :status => {}, :progress => {}, :climate => {}, :other => {} }
     return h if esd.nil? and !earlychild?
@@ -164,81 +149,53 @@ class School < ActiveRecord::Base
     if self.high? and self.esd_hs_2013
       # Common to all HS varieties:
       h[:status] = {
-        :letter   => esd.status_ltrgrade.blank? ? 'NG' : esd.status_ltrgrade,
+        :letter   => esd.status_ltrgrade.blank? ? 'N/A' : esd.status_ltrgrade,
         :total    => esd.status_pts,
         :possible => esd.status_psspts,
         :details  => [] }
       h[:progress] = {
-        :letter   => esd.progress_ltrgrade.blank? ? 'NG' : esd.progress_ltrgrade,
+        :letter   => esd.progress_ltrgrade.blank? ? 'N/A' : esd.progress_ltrgrade,
         :total    => esd.progress_pts,
         :possible => esd.progress_psspts }
       h[:climate] = {
-        :letter   => esd.culture_ltrgrade.blank? ? 'NG' : esd.culture_ltrgrade,
+        :letter   => esd.culture_ltrgrade.blank? ? 'N/A' : esd.culture_ltrgrade,
         :total    => esd.culture_pts,
         :possible => esd.culture_psspts }
       h[:other] = {
         :total    => esd.studchrs_pts.to_i + esd.fafsa_rate_pts.to_i }
 
-      if cat == 'Mature'
+      if ['Mature', 'New', 'Turnaround'].include? cat
         h[:cumulative] = {
-          :letter   => esd.mature_ltrgrade.blank? ? 'NG' : esd.mature_ltrgrade,
+          :letter   => esd.total_ltrgrade.blank? ? 'N/A' : esd.total_ltrgrade,
           :total    => esd.total_pts,
           :possible => esd.total_psspts,
-          :percent  => esd.mature_pct }
-      
-      elsif cat == 'New'
-        h[:cumulative] = {
-          :letter   => esd.newschool_designation.blank? ? 'NG' : esd.newschool_designation,
-          :total    => esd.total_pts,
-          :possible => esd.total_psspts,
-          :percent  => esd.newschool_pct }
-          
-      elsif cat == 'Turnaround'
-        h[:cumulative] = {
-          :letter   => esd.turnaround_designation.blank? ? 'NG' : esd.turnaround_designation,
-          :total    => esd.turnaround_pts,
-          :possible => esd.turnaround_psspts,
-          :percent  => esd.turnaround_pct }
+          :percent  => esd.total_pct }
       end
       
-    elsif self.k8? and esd_k8_2013
+    elsif self.k8? and esd_k8_2013_r1
       # Common to all the K8 varieties..
       h[:status] = {
-        :letter   => esd.status_ltrgrade.blank? ? 'NG' : esd.status_ltrgrade,
+        :letter   => esd.status_ltrgrade.blank? ? 'N/A' : esd.status_ltrgrade,
         :total    => esd.pts_status,
         :possible => esd.ptspos_status,
         :details  => [] }
       h[:progress] = {
-        :letter   => esd.progress_ltrgrade.blank? ? 'NG' : esd.progress_ltrgrade,
+        :letter   => esd.progress_ltrgrade.blank? ? 'N/A' : esd.progress_ltrgrade,
         :total    => esd.pts_progress,
         :possible => esd.ptspos_progress }
       h[:climate] = {
-        :letter   => esd.culture_ltrgrade.blank? ? 'NG' : esd.culture_ltrgrade,
+        :letter   => esd.culture_ltrgrade.blank? ? 'N/A' : esd.culture_ltrgrade,
         :total    => esd.pts_culture,
         :possible => esd.ptspos_culture }
       h[:other] = {
         :total    => esd.studchrs_pts }
 
-      if cat == 'Mature'
+      if ['Mature', 'New', 'Turnaround'].include? cat
         h[:cumulative] = {
-          :letter   => esd.mature_ltrgrade.blank? ? 'NG' : esd.mature_ltrgrade,
+          :letter   => esd.total_ltrgrade.blank? ? 'N/A' : esd.total_ltrgrade,
           :total    => esd.pts_earned,
           :possible => esd.pts_possible,
-          :percent  => esd.mature_pct }
-        
-      elsif cat == 'New'
-        h[:cumulative] = {
-          :letter   => esd.newschool_designation.blank? ? 'NG' : esd.newschool_designation,
-          :total    => esd.pts_earned,
-          :possible => esd.pts_possible,
-          :percent  => esd.newschool_pct }
-      
-      elsif cat == 'Turnaround'
-        h[:cumulative] = {
-          :letter   => esd.turnaround_designation.blank? ? 'NG' : esd.turnaround_designation,
-          :total    => esd.turnaround_pts_earned,
-          :possible => esd.turnaround_pts_possible,
-          :percent  => esd.turnaround_pct }
+          :percent  => esd.total_pct }
       end
       
     elsif self.earlychild
@@ -259,19 +216,19 @@ class School < ActiveRecord::Base
   def summary_table(cat)
     h = []
     if cat == :status
-      if elementary? and e = self.esd_k8_2013
+      if elementary? and e = self.esd_k8_2013_r1
         h += [
-          { :name     => "Math Proficienty Rate (2-Year Avg)",
+          { :name     => "Percent of Students Proficient in Math (2-Year Average)",
             :key      => :pr2_math,
             :value    => e.pr2_math.to_f.round(2),
             :points   => e.pr2_math_pts,
             :possible => e.pr2_math_ptsps },
-          { :name     => "ELA (Reading + Writing) Proficiency Rate (2-Year Average)",
+          { :name     => "Percent of Students Proficient in Reading & Writing (2-Year Average)",
             :key      => :pr2_ela,
             :value    => e.pr2_ela.to_f.round(2),
             :points   => e.pr2_ela_pts,
             :possible => e.pr2_ela_ptsps },
-          { :name     => "Other (Science & Social Studies) Proficiency Rate (2-Year Average)",
+          { :name     => "Percent of Students Proficient in Science & Social Studies (2-Year Average)",
             :key      => :pr2_other,
             :value    => e.pr2_other.to_f.round(2),
             :points   => e.pr2_other_pts,
@@ -285,14 +242,14 @@ class School < ActiveRecord::Base
             :value    => e.act2_comp.to_f.round(1),
             :points   => e.act2_comp_pts,
             :possible => e.act2_comp_psspts },
-          { :name     => "ACT Percent College Ready",
+          { :name     => "Percent College Ready Measured by ACT Scores",
             :key      => :act2_pcr,
             :value    => e.act2_pcr.to_f.round(2),
             :points   => e.act2_pcr_pts,
             :possible => e.act2_pcr_psspts },
         ]
         h += [
-          { :name     => "Graduation Rate (2011-12)",
+          { :name     => "4-Year Graduation Rate, Class 2012",
             :key      => :gradrate,
             :value    => e.gradrate.to_f.round(2),
             :points   => e.gradrate_pts,
@@ -337,14 +294,14 @@ class School < ActiveRecord::Base
     end
     
     if cat == :progress
-      if elementary? and e = self.esd_k8_2013
+      if elementary? and e = self.esd_k8_2013_r1
         h += [
-          { :name     => "Performance Level Change Score",
+          { :name     => " Percent of Students Making Progress on MEAP",
             :key      => :plc_comp,
             :value    =>  e.plc_comp.to_f.round(2),
             :points   =>  e.plc_comp_pts,
             :possible =>  e.plc_comp_ptsps },
-          { :name     => "NWEA/Scantron Percent Meeting Growth Target",
+          { :name     => "Percent of Students Reaching their 1-Year Growth Target (Math & Reading)",
             :key      => :bench_comp,
             :value    =>  e.bench_comp.to_f.round(2),
             :points   =>  e.bench_comp_pts,
@@ -364,9 +321,9 @@ class School < ActiveRecord::Base
     end
     
     if cat == :climate
-      if elementary? and e = self.esd_k8_2013
+      if elementary? and e = self.esd_k8_2013_r1
           h += [
-            { :name     => "Site Visit Average Score",
+            { :name     => "Community-Led Site Visit Score",
               :key      => :site_s,
               :value    => e.site_s.to_f.round(2),
               :points   => e.site_s_pts,
@@ -376,7 +333,7 @@ class School < ActiveRecord::Base
               :value    => e.net5e_1213,
               :points   => e.net5e_1213_pts,
               :possible => e.net5e_1213_ptsps },
-            { :name     => "5Essentials Growth Score",
+            { :name     => "5Essentials Trend",
               :key      => :five_e_grwth,
               :value    => e.five_e_grwth,
               :points   => e.five_e_grwth_pts,
@@ -384,7 +341,7 @@ class School < ActiveRecord::Base
           ]
       elsif high? and e = self.esd_hs_2013
         h += [
-          { :name     => "Site Visit Average Score",
+          { :name     => "Community-Led Site Visit Score",
             :key      => :site_s,
             :value    => e.site_s.to_f.round(2),
             :points   => e.site_s_pts,
@@ -394,7 +351,7 @@ class School < ActiveRecord::Base
             :value    => e.net5e_1213,
             :points   => e.net5e_1213_pts,
             :possible => e.net5e_1213_psspts },
-          { :name     => "5Essentials Growth Score",
+          { :name     => "5Essentials Trend",
             :key      => :five_e_grwth,
             :value    => e.five_e_grwth,
             :points   => e.five_e_grwth_pts,

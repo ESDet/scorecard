@@ -45,7 +45,7 @@ class HomeController < ApplicationController
       when 'reset'
         Importer.get_schema
         Importer.get_profiles
-        Importer.get_scores 'esd_k8_2013'
+        Importer.get_scores 'esd_k8_2013_r1'
         Importer.get_scores 'esd_hs_2013'
         Importer.get_scores 'act_2013'
         Importer.get_scores 'meap_2012'
@@ -57,7 +57,7 @@ class HomeController < ApplicationController
 
       when 'all'
         Importer.get_profiles
-        Importer.get_scores 'esd_k8_2013'
+        Importer.get_scores 'esd_k8_2013_r1'
         Importer.get_scores 'esd_hs_2013'
         Importer.get_scores 'meap_2012'
         Importer.get_scores 'meap_2011'
@@ -83,7 +83,7 @@ class HomeController < ApplicationController
         Importer.get_scores 'act_2013'
       
       when 'k8'
-        Importer.get_scores 'esd_k8_2013'
+        Importer.get_scores 'esd_k8_2013_r1'
 
       when 'hs'
         Importer.get_scores 'esd_hs_2013'

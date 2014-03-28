@@ -7,6 +7,9 @@
       %br/
       %h2
         = @school.name
+        - copy = @category_copy[@school.esd.andand.schoolcategory.andand.titleize]
+        - if copy
+          (#{copy[0].titleize})
         - if @school.basic.school_status == 'Closed'
           (Closed)
       %p
@@ -29,20 +32,21 @@
         
       .grades_container.relative
         = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
-        - if letter.blank?
-          .grade{:title => 'No Grade'} NG
+        - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+          .grade.na{:title => 'No Grade'} N/A
         - elsif letter.length < 3
           .grade{:title => "Cumulative Grade"}= letter
         - elsif letter == 'Promising'
           .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
-        - elsif ['Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
-          .grade{:title => 'No Grade'} NG
         - else
           %p
             %b= raw letter
-        .grade.sub{:title => 'Academic Status'}= link_to (@grades[:status][:letter] || 'NG'), '#academic-status'
-        .grade.sub{:title => 'Academic Progress'}= link_to (@grades[:progress][:letter] || 'NG'), '#academic-progress'
-        .grade.sub{:title => 'School Climate'}= link_to (@grades[:climate][:letter] || 'NG'), '#school-climate'
+        .grade.sub{:title => 'Academic Status', :class => ((@grades[:status][:letter] || 'N/A') == 'N/A') ? 'na' : ''}
+          = link_to (@grades[:status][:letter] || 'N/A'), '#academic-status'
+        .grade.sub{:title => 'Academic Progress', :class => ((@grades[:progress][:letter] || 'N/A') == 'N/A') ? 'na' : ''}
+          = link_to (@grades[:progress][:letter] || 'N/A'), '#academic-progress'
+        .grade.sub{:title => 'School Climate', :class => ((@grades[:climate][:letter] || 'N/A') == 'N/A') ? 'na' : ''}
+          = link_to (@grades[:climate][:letter] || 'N/A'), '#school-climate'
       = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare noprint'
                 
     .grid_5.minimap_container
@@ -61,10 +65,10 @@
         %br/
         
     .grid_4
-      - if copy = @category_copy[@school.esd.andand.schoolcategory]
+      - if copy
         %p #{copy[0]}: #{copy[1]}
 
-      - if letter.blank? or ['NG', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+      - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
         %p 
           This school did not receive a grade because either (1) we have insufficient data to assign a grade or (2) it
           uses different assessments to measure student academic status and/or progress than most schools, and ESD does
@@ -128,7 +132,7 @@
           %div English Language Learners: #{(e.ell_pct.to_f*100).to_i}%
           - if @school.high?
             %br/
-            %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2013.andand.fafsa_rate.to_f*100).to_i}%" || 'NG'}
+            %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2013.andand.fafsa_rate.to_f*100).to_i}%" || 'N/A'}
         
 
 
@@ -155,7 +159,7 @@
         %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
         - if @school.meap_2012
           %li= link_to 'MEAP 2012', '#meap', 'data-toggle' => 'tab'
-        - if @school.esd_k8_2013
+        - if @school.esd_k8_2013_r1
           %li= link_to 'K8 2013', '#k8', 'data-toggle' => 'tab'
         - if @school.esd_hs_2013
           %li= link_to 'HS 2013', '#hs', 'data-toggle' => 'tab'
@@ -180,7 +184,7 @@
             = v
             %br/
         #k8.tab-pane
-          - @school.esd_k8_2013.andand.marshal_dump.andand.each do |k,v|
+          - @school.esd_k8_2013_r1.andand.marshal_dump.andand.each do |k,v|
             %b #{k}:
             = v
             %br/

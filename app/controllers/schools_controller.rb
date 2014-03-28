@@ -235,10 +235,10 @@ class SchoolsController < ApplicationController
         tx['Provides Transportation?']  = eg.transportation
         
       else
-        tx['Overall Grade']     = g[:cumulative][:letter] || 'NG'
-        tx['Academic Status']   = g[:status][:letter]     || 'NG'
-        tx['Academic Progress'] = g[:progress][:letter]   || 'NG'
-        tx['School Climate']    = g[:climate][:letter]    || 'NG'
+        tx['Overall Grade']     = g[:cumulative][:letter] || 'N/A'
+        tx['Academic Status']   = g[:status][:letter]     || 'N/A'
+        tx['Academic Progress'] = g[:progress][:letter]   || 'N/A'
+        tx['School Climate']    = g[:climate][:letter]    || 'N/A'
         
         tx['Address']           = "#{s.address}<br/>#{s.address2}"
         tx['Grades Served']     = s.grades_served || 'Unknown'
