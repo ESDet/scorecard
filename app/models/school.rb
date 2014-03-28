@@ -114,9 +114,9 @@ class School < ActiveRecord::Base
     return self.earlychild.gscpts if earlychild?
       
     percent = nil
-    if high? and self.esd_hs_2013
+    if high? and self.esd_hs_2013 and self.esd_hs_2013.schoolcategory.andand.downcase == 'mature'
       percent = self.esd_hs_2013.mature_pct.to_f
-    elsif elementary? and self.esd_k8_2013_r1
+    elsif elementary? and self.esd_k8_2013_r1 and self.esd_k8_2013_r1.schoolcategory.andand.downcase == 'mature'
       percent = self.esd_k8_2013_r1.total_pct.to_f
     end
     return percent.nil? ? nil : (percent * 100).to_i
