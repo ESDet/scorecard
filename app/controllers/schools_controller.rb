@@ -332,8 +332,7 @@ class SchoolsController < ApplicationController
         miles = AppConfig.radius_mi
         f = RGeo::Geographic.projected_factory(:projection_proj4 => AppConfig.detroit_proj)
         p = f.point(geo[:location][:lon], geo[:location][:lat])
-        env = p.buffer(1609 * miles).envelope
-        schools = schools.inside(Bedrock::extent(env))
+        schools = schools.inside(p.buffer(1609 * miles))
       end
     end
     schools = schools.all if schools.is_a?(Class)
