@@ -143,7 +143,8 @@ class Importer
         :invalid           => :replace,  # Replace invalid byte sequences
         :undef             => :replace,  # Replace anything not defined in ASCII
         :replace           => '',        # Use a blank for those replacements
-        :universal_newline => true       # Always break lines with \n
+        #:universal_newline => true,       # Always break lines with \n
+        :UNIVERSAL_NEWLINE_DECORATOR => true,
       }
       if profile.is_a?(Hash)
         h = {}
