@@ -174,7 +174,7 @@ class School < ActiveRecord::Base
 
       if ['Mature', 'New', 'Turnaround'].include? cat
         h[:cumulative] = {
-          :letter   => esd.total_ltrgrade.blank? ? 'N/A' : esd.total_ltrgrade,
+          :letter   => self.overall_grade || 'N/A',
           :total    => esd.total_pts,
           :possible => esd.total_psspts,
           :percent  => esd.total_pct }
