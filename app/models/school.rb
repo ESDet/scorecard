@@ -123,18 +123,22 @@ class School < ActiveRecord::Base
   end
   
   def overall_grade
-    fields = {
-      'Mature'      => :total_ltrgrade,
-      'New'         => :total_ltrgrade,
-      'Turnaround'  => :total_ltrgrade,
-      'Specialty'   => nil,
-    }
-      
     if high? and self.esd_hs_2013
+      fields = {
+        'Mature'      => :mature_ltrgrade,
+        'New'         => :newschool_designation,
+        'Turnaround'  => :turnaround_designation,
+      }
       sym = fields[self.esd_hs_2013.schoolcategory.titleize]
       return nil if sym.nil?
       return self.esd_hs_2013.send(sym)
     elsif elementary? and self.esd_k8_2013_r1
+      fields = {
+        'Mature'      => :total_ltrgrade,
+        'New'         => :total_ltrgrade,
+        'Turnaround'  => :total_ltrgrade,
+        'Specialty'   => nil,
+      }
       sym = fields[self.esd_k8_2013_r1.schoolcategory.titleize]
       return nil if sym.nil?
       return self.esd_k8_2013_r1.send(sym)
