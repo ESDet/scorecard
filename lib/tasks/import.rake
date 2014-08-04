@@ -10,7 +10,7 @@ namespace :import do
     Importer.get_scores 'meap_2011'
     Importer.get_scores 'meap_2010'
     Importer.get_scores 'meap_2009'
-    Importer.get_scores 'act_2013'        
+    Importer.get_scores 'act_2013'
     Importer.get_scores 'fiveessentials_2013'
     Importer.get_earlychild
   end

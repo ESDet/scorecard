@@ -2,6 +2,8 @@ class Importer
 
   PK = 'bcode'
   TABLE_NAME = 'schools'
+  
+  NEW14 = ["academic_focus", "instructional_model", "staff_resources", "arts_visual", "arts_media", "arts_music", "arts_performing_written", "transportation_options", "special_ed_level", "special_ed_programs", "boys_sports", "girls_sports", "dual_enrollment", "ell_level", "ell_languages", "dual_enrollment_institutio", "family_supports", "facilities", "parent_supports", "dress_code", "schedule", "student_leadership_opportu", "student_development_progra", "college_prep", "skills_training", "before_after_care", "bullying_policy", "immersion", "special_tracks", "early_childhood_programs", "extra_learning_resources", "foreign_language", "facebook_url", "school_url", "parent_involvement", "application_process", "admissions_url", "application_fee", "application_fee_amount", "applications_received", "students_accepted", "feeder_school", "destination_school", "student_clubs", "student_clubs_dance", "student_clubs_language", "student_clubs_other"]
 
 
   def self.get_schema
