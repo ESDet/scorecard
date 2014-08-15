@@ -491,7 +491,7 @@ class School < ActiveRecord::Base
   
   def self.seal_image(category, rating)
     return 'el_icons/Overview.png' if category == :overview
-    return 'el_icons/EL_Award_Participant.png' if rating.match(/Below|Not/)
+    return 'el_icons/EL_Award_Participant.png' if rating.andand.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
       :mini       => 'Mini',
