@@ -13,6 +13,7 @@ namespace :import do
     Importer.get_scores 'act_2013'
     Importer.get_scores 'fiveessentials_2013'
     Importer.get_earlychild
+    Importer.get_el_2014
   end
   
   desc "Create school table schema from feed"
@@ -34,6 +35,7 @@ namespace :import do
     Importer.get_scores 'act_2013'        
     Importer.get_scores 'fiveessentials_2013'
     Importer.get_earlychild
+    Importer.get_el_2014
     puts "Done!"
   end
 
@@ -67,6 +69,7 @@ namespace :import do
   task :earlychild => :environment do |t, args|
     puts "Fetching Early Childhood"
     Importer.get_earlychild
+    Importer.get_el_2014
   end
   
   

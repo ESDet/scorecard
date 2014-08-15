@@ -24,6 +24,10 @@
 @e_lgreen: #A7D8BF;
 @e_green:  #29B473;
 
+/* 2014 summer update */
+@turq: #35bff2;
+@lgrey: #dae1e4;
+
 
 html { overflow-y: scroll; height: 100%; }
 body { height: 100%; padding: 0; margin: 0; background-color: white; color: black; }
@@ -142,13 +146,13 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
  h3 { margin: 0; }
 }
 
-#other_profile {   position: relative; }
-#other_profile table, table#climate-help {
+#other_profile, #overview {   position: relative; }
+#other_profile table, table#climate-help, #overview table {
   td, th { padding: 0.5em 1em; vertical-align: top; }
   td:nth-child(1) { text-align: right; min-width: 200px; }
   h3 { margin: 0; }
 }
-#other_profile table { width: 100%; }
+#other_profile table, #overview table { width: 100%; }
 
 .help {
   display: block; width: 20px; height: 20px; position: absolute; right: 8px; top: 8px; cursor: pointer;
@@ -283,7 +287,7 @@ ul.school_list {
     .grade img { width: 70%; height: auto; margin-top: 3px; }
     i.help { right: 28px; top: 28px; }
   }
-  a.btn.compare { display: inline-block; width: 170px; margin-top: 0.5em; box-sizing: border-box; }
+  a.btn.compare, a.btn.print { display: block;  margin: 0.5em 0; box-sizing: border-box; }
 }
 .profile {
   .lead { color: @dblue; margin-bottom: 0em; }
@@ -305,6 +309,32 @@ table.compare {
     h3 { margin-top: 0; }
     a.close { font-size: 0.7em; color: white; margin-left: 10px;}
   }
+}
+
+.earlychild {
+  ul.nav { 
+    li {
+      width: 24%; background-color: @lgrey; text-align: center;
+      margin-right: 5px; border-radius: 4px 4px 0 0;
+    }
+    li.active { background-color: white; }
+    a { min-height: 160px; color: @turq; }
+    img { margin-top: 0.5em; }
+  }
+  .community_line {
+    border-bottom: 1px solid @turq; padding: 0.5em 0; position: relative;
+    &:first-of-type { border-top: 1px solid @turq; }
+    .score {
+      position: absolute; left: 0px; top: 0.5em;
+      .points { color: @turq; }
+    }
+    .statement, .explanation { padding-left: 6em; }
+    .statement { color: @turq; margin-top: 0; }
+    .explanation { }
+  }
+  
+  .el-icon { width: 100px; height: 100px; }
+  .overall-seal .el-icon { width: 100%; height: auto; }
 }
 
 
@@ -406,7 +436,7 @@ table.compare {
   }
   #block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-name .score-right { background: none; }
   #enroll { max-width: 100%; }
-  #other_profile table {
+  #other_profile table, #overview table {
     td { display: inline-block; overflow: hidden; }
     td:nth-child(1) { display: block; text-align: left; padding-bottom: 0; }
   }

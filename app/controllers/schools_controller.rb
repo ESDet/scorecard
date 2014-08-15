@@ -92,25 +92,54 @@ class SchoolsController < ApplicationController
     
     if @school.earlychild?
       @ec = @school.earlychild
+      @el = @school.esd_el_2014
       @ech = @ec.marshal_dump
       @grades = @school.grades
       @profile_fields = {
-        :gscmessage => 'Message to Families',
-        :gscspecialty => 'Program Specialty',
-        :gscschedule => 'Schedule Type',
-        :agefrom => 'Accepts Ages from',
-        :ageto => 'Accepts Ages to',
-        :gsccapacity => 'Total Licensed Capacity',        
+        :gscmessage     => 'Message to Families',
+        :gscspecialty   => 'Program Specialty',
+        :gscschedule    => 'Schedule Type',
+        :agefrom        => 'Accepts Ages from',
+        :ageto          => 'Accepts Ages to',
+        :gsccapacity    => 'Total Licensed Capacity',        
         :gsceligibility => 'Program Eligibility Criteria',
-        :gscsubsidy => 'Financial Assistance',
-        :gscspecial => 'Special Needs Experience',
-        :gscsetting => 'Care Setting',
-        :environment => 'Environment',
-        :meals => 'Meals Provided',
+        :gscsubsidy     => 'Financial Assistance',
+        :gscspecial     => 'Special Needs Experience',
+        :gscsetting     => 'Care Setting',
+        :environment    => 'Environment',
+        :meals          => 'Meals Provided',
         :gscpayschedule => 'Payment Schedule',
-        :gscfee => 'Application / Registration Fee',
+        :gscfee         => 'Application / Registration Fee',
         :transportation => 'Provides Transportation?',
-        :gsccontract => 'Written Contract',
+        :gsccontract    => 'Written Contract',
+      }
+      
+      @community = {
+        :clc_fairaverage => {
+          :statement => 'This program does a good job of teaching children about different cultures.',
+          :explanation => 'The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.',
+          :points => @el.andand.clc_fairaverage.to_f,
+        },
+        :professionalism_fairaverage => {
+          :statement => 'The staff is professional.',
+          :explanation => 'The rating is based on how teachers and staff treated themselves and each other while in the room with children.',
+          :points => @el.andand.professionalism_fairaverage.to_f,
+        },
+        :safety_fairaverage => {
+          :statement => 'The classroom is safe, clean and organized.',
+          :explanation => 'This rating is based on the conditions of the classroom.',
+          :points => @el.andand.safety_fairaverage.to_f,
+        },
+        :interactions_fairaverage => {
+          :statement => 'The teachers respect and support children and other adults.',
+          :explanation => 'The rating is based on how well teachers manage the classroom.',
+          :points => @el.andand.interactions_fairaverage.to_f,
+        },
+        :familycommunity_fairaverage => {
+          :statement => 'This program builds family and community partnerships.',
+          :explanation => 'The rating is based on how the family, community and school work together.',
+          :points => @el.andand.familycommunity_fairaverage.to_f,
+        },
       }
       render 'show_ec', layout: 'noside'
       return

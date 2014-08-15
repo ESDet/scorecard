@@ -11,7 +11,7 @@ class School < ActiveRecord::Base
   require 'mogrify'
   include Mogrify
   [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_k8_2013_r1, :esd_hs_2013,
-    :act_2013, :fiveessentials_2013, :earlychild].each do |k|
+    :act_2013, :fiveessentials_2013, :earlychild, :esd_el_2014].each do |k|
     serialize k, OpenStruct
   end
   before_save :set_slug
@@ -65,6 +65,7 @@ class School < ActiveRecord::Base
   
   NA_GRADES = ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined',
     'No Status/Progress Data', 'No Status Data']
+    
 
   GRADES.each do |k,v|
     scope k,         where(:school_type => v)
@@ -486,4 +487,20 @@ class School < ActiveRecord::Base
       }
     "http://maps.google.com?#{opts.to_query}"
   end
+  
+  def self.seal_image(category, rating)
+    cat = {
+      :overall    => 'Award',
+      :mini       => 'Mini',
+      :community  => 'Sub_Comm',
+      :state      => 'Sub_State',
+      :staff      => 'Sub_Staff',
+    }[category]
+    
+    valid_metals = ['Bronze', 'Silver', 'Gold']
+    metal = valid_metals.include?(rating) ? rating : (category == :overall ? 'Participant' : 'None')
+    
+    "el_icons/EL_#{cat}_#{metal}.png"
+  end
+  
 end

@@ -247,8 +247,10 @@ class Importer
         loc = RGeo::Geographic.spherical_factory.point(r['lon'].to_f, r['lat'].to_f)
         r['publishedrating'] = r['publishedrating'].to_i
         
+        id = r['id'].gsub(/[^0-9]/, '')
+        license = r['licensenumber']
         h = {
-          :bcode        => r['licensenumber'],
+          :bcode        => id,
           :name         => r['businessname'].gsub('&#039;', "'").gsub('&amp;', '&'),
           :school_type  => 'EC',
           :points       => r['gscpts'].to_i,
@@ -258,8 +260,10 @@ class Importer
           :earlychild   => OpenStruct.new(r),
           :centroid     => loc,
         }
-        if s = School.find_by_bcode(h[:bcode])
-          puts "Found license #{h[:bcode]} - #{h[:name]}"
+        s = School.find_by_bcode(license)
+        s ||= School.find_by_bcode(id)
+        if s
+          puts "Found id/license #{id} - #{h[:name]}"
           s.update_attributes(h)
         else
           puts "Creating lic# #{h[:bcode]} - #{h[:name]}"
@@ -269,5 +273,33 @@ class Importer
       end
     end while !results.empty?
   end
+  
+  def self.get_el_2014
+    dataset = 'esd_el_2014'
+    ensure_column dataset, :text
+
+    p = Portal.new
+    per = 1000
+    results = []
+    ofs = 0
+    begin
+      results = p.get_dataset dataset, nil, { :limit => per, :offset => ofs }
+      ofs += per
+      
+      results.each do |r|
+        # To join with the earlychild records, whic have a bcode like this
+        pid = r['program_id'].gsub(/[^0-9]/, '')
+        
+        if s = School.find_by_bcode(pid)
+          s.update_attribute(dataset, OpenStruct.new(r))
+        else
+          puts "No school found with bcode #{pid}"
+          ap r
+        end
+      
+      end
+    end while !results.empty?
+  end
+  
   
 end
