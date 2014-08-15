@@ -141,6 +141,14 @@ class SchoolsController < ApplicationController
           :points => @el.andand.familycommunity_fairaverage.to_f,
         },
       }
+      @stars = {
+        0 => 'Program meets state licensing requirements',
+        1 => 'Program meets state licensing requirements and is participating in Great Start to Quality',
+        2 => 'Program demonstrates quality across some standards',
+        3 => 'Program demonstrates quality across several standards',
+        4 => 'Program demonstrates quality across almost all standards',
+        5 => 'Program demonstrates highest quality',
+      }
       render 'show_ec', layout: 'noside'
       return
     end

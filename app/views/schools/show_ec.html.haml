@@ -54,7 +54,7 @@
   %ul.nav.nav-tabs
     %li.active
       %a{:href => '#overview', 'data-toggle' => 'tab'}
-        .question Overview
+        .question About This School
     %li
       %a{:href => '#community', 'data-toggle' => 'tab'}
         .question What does the community think?
@@ -92,17 +92,45 @@
         After spending four hours observing and taking notes, reviewers answer questions on a four-point scale that measures how much they
         agree with the statements below (I do not agree at all, I somewhat agree, I mostly agree, and I completely agree). A score
         of 4.0 out of 4.0 is considered an "excellent" rating.
-        
-      - @community.each do |field, info|
-        .community_line
-          .score
-            %span.points= info[:points].round(1)
-            %span / 4.0
-          %h4.statement= info[:statement]
-          .explanation= info[:explanation]
+      
+      - if @el
+        - @community.each do |field, info|
+          .community_line
+            .score
+              %span.points= info[:points].round(1)
+              %span / 4.0
+            %h3.statement= info[:statement]
+            .explanation= info[:explanation]
         
               
     #state.tab-pane
+      %p
+        The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS),
+        which is a state-run program. The points in each category are from the program's self-assessment.
+
+      .overall-stars        
+        = render 'stars', :n => (5 * @ec.andand.gscpts.to_f / 50.0).to_i
+      %table
+        %thead
+          %tr
+            %th
+              %span.points= @ec.andand.gscpts
+              %span / 50
+            %th Overall Score
+        %tbody
+          - @grades[:status][:summary_table].each do |item|
+            %tr
+              %td
+                %span.points= item[:points]
+                %span / #{item[:possible]}
+              %td= item[:name]
+    
+      %br/
+      %h3 Here is what the star ratings mean:
+      - @stars.each do |n, desc|
+        %div
+          = render 'stars', :n => n
+          = desc
     
     #staff.tab-pane
 
