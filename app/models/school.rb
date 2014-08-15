@@ -11,7 +11,8 @@ class School < ActiveRecord::Base
   require 'mogrify'
   include Mogrify
   [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_k8_2013_r1, :esd_hs_2013,
-    :act_2013, :fiveessentials_2013, :earlychild, :esd_el_2014].each do |k|
+    :act_2013, :fiveessentials_2013, :meap_2013, :act_2014,
+    :earlychild, :esd_el_2014, :esd_k8_2014, :esd_hs_2014, :esd_site_visit_2014, :fiveessentials_2014].each do |k|
     serialize k, OpenStruct
   end
   before_save :set_slug
@@ -105,8 +106,8 @@ class School < ActiveRecord::Base
   end
   
   def esd
-    return self.esd_hs_2013 if self.high?
-    return self.esd_k8_2013_r1 if self.k8?
+    return self.esd_hs_2014 if self.high?
+    return self.esd_k8_2014 if self.k8?
     nil
   end
   
@@ -115,34 +116,34 @@ class School < ActiveRecord::Base
     return self.earlychild.gscpts if earlychild?
       
     percent = nil
-    if high? and self.esd_hs_2013 and self.esd_hs_2013.schoolcategory.andand.downcase == 'mature'
-      percent = self.esd_hs_2013.mature_pct.to_f
-    elsif elementary? and self.esd_k8_2013_r1 and self.esd_k8_2013_r1.schoolcategory.andand.downcase == 'mature'
-      percent = self.esd_k8_2013_r1.total_pct.to_f
+    if high? and defined?(self.esd_hs_2014) and self.esd_hs_2014.andand.schoolcategory.andand.downcase == 'mature'
+      percent = self.esd_hs_2014.mature_pct.to_f
+    elsif elementary? and defined?(self.esd_k8_2014) and self.esd_k8_2014.andand.schoolcategory.andand.downcase == 'mature'
+      percent = self.esd_k8_2014.total_pct.to_f
     end
     return percent.nil? ? nil : (percent * 100).to_i
   end
   
   def overall_grade
-    if high? and self.esd_hs_2013
+    if high? and defined?(self.esd_hs_2014) and self.esd_hs_2014
       fields = {
         'Mature'      => :mature_ltrgrade,
         'New'         => :newschool_designation,
         'Turnaround'  => :turnaround_designation,
       }
-      sym = fields[self.esd_hs_2013.schoolcategory.titleize]
+      sym = fields[self.esd_hs_2014.schoolcategory.titleize]
       return nil if sym.nil?
-      return self.esd_hs_2013.send(sym)
-    elsif elementary? and self.esd_k8_2013_r1
+      return self.esd_hs_2014.send(sym)
+    elsif elementary? and defined?(self.esd_k8_2014) and self.esd_k8_2014
       fields = {
         'Mature'      => :total_ltrgrade,
         'New'         => :total_ltrgrade,
         'Turnaround'  => :total_ltrgrade,
         'Specialty'   => nil,
       }
-      sym = fields[self.esd_k8_2013_r1.schoolcategory.titleize]
+      sym = fields[self.esd_k8_2014.schoolcategory.titleize]
       return nil if sym.nil?
-      return self.esd_k8_2013_r1.send(sym)
+      return self.esd_k8_2014.send(sym)
     end
     return nil
   end
@@ -155,7 +156,7 @@ class School < ActiveRecord::Base
     h = { :cumulative => {}, :status => {}, :progress => {}, :climate => {}, :other => {} }
     return h if esd.nil? and !earlychild?
     
-    if self.high? and self.esd_hs_2013
+    if self.high? and self.esd_hs_2014
       # Common to all HS varieties:
       h[:status] = {
         :letter   => esd.status_ltrgrade.blank? ? 'N/A' : esd.status_ltrgrade,
@@ -181,7 +182,7 @@ class School < ActiveRecord::Base
           :percent  => esd.total_pct }
       end
       
-    elsif self.k8? and esd_k8_2013_r1
+    elsif self.k8? and esd_k8_2014
       # Common to all the K8 varieties..
       h[:status] = {
         :letter   => esd.status_ltrgrade.blank? ? 'N/A' : esd.status_ltrgrade,
@@ -225,7 +226,7 @@ class School < ActiveRecord::Base
   def summary_table(cat)
     h = []
     if cat == :status
-      if elementary? and e = self.esd_k8_2013_r1
+      if elementary? and e = self.esd_k8_2014
         h += [
           { :name     => "Percent of Students Proficient in Math (2-Year Average)",
             :key      => :pr2_math,
@@ -244,7 +245,7 @@ class School < ActiveRecord::Base
             :possible => e.pr2_other_ptsps }
         ] 
       end
-      if high? and e = self.esd_hs_2013
+      if high? and e = self.esd_hs_2014
         h += [
           { :name     => "ACT Composite Score (2 Year Average)",
             :key      => :act2_comp,
@@ -303,7 +304,7 @@ class School < ActiveRecord::Base
     end
     
     if cat == :progress
-      if elementary? and e = self.esd_k8_2013_r1
+      if elementary? and e = self.esd_k8_2014
         h += [
           { :name     => " Percent of Students Making Progress on MEAP",
             :key      => :plc_comp,
@@ -318,7 +319,7 @@ class School < ActiveRecord::Base
         ]
       end
               
-      if high? and e = esd_hs_2013
+      if high? and e = esd_hs_2014
         h += [
           { :name     => "Year-over-Year ACT Composite Score Gain (2 Year Average, 2010-11 to 2011-12, 2011-12 to 2012-13)",
             :key      => :act_grwth,
@@ -330,7 +331,7 @@ class School < ActiveRecord::Base
     end
     
     if cat == :climate
-      if elementary? and e = self.esd_k8_2013_r1
+      if elementary? and e = self.esd_k8_2014
           h += [
             { :name     => "Community-Led Site Visit Score",
               :key      => :site_s,
@@ -348,7 +349,7 @@ class School < ActiveRecord::Base
               :points   => e.five_e_grwth_pts,
               :possible => e.five_e_grwth_ptsps },
           ]
-      elsif high? and e = self.esd_hs_2013
+      elsif high? and e = self.esd_hs_2014
         h += [
           { :name     => "Community-Led Site Visit Score",
             :key      => :site_s,
@@ -400,11 +401,11 @@ class School < ActiveRecord::Base
       
       if high?
         a = {}
-        act = act_2013.andand.marshal_dump
+        act = act_2014.andand.marshal_dump
         return {} if act.nil?
         
         #logger.ap act
-        # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2013
+        # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2014
         [:allsub, :reading, :math, :english, :science].each do |subject|
           key = "#{subject}percentmeeting".to_sym
           a[subject] = act.andand[key].to_i
@@ -413,7 +414,7 @@ class School < ActiveRecord::Base
       end
       
     elsif tab == :climate
-      dump = fiveessentials_2013.andand.marshal_dump
+      dump = fiveessentials_2014.andand.marshal_dump
       return {} if dump.nil?
       FIVE_E_LABELS.each do |key, label|
         val = dump[key].to_i
@@ -489,6 +490,8 @@ class School < ActiveRecord::Base
   end
   
   def self.seal_image(category, rating)
+    return 'el_icons/Overview.png' if category == :overview
+    return 'el_icons/EL_Award_Participant.png' if rating.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
       :mini       => 'Mini',

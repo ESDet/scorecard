@@ -16,7 +16,7 @@ class Portal
     result.first
   end
   
-  # Possible views: meap_2012*, esd_k8_2013, esd_hs_2013, act_2013...
+  # Possible views: meap_2012*, esd_k8_2014, esd_hs_2014, act_2014...
   # opts = { :limit => x, :offset => y }
   def get_dataset(view, bcode=nil, opts={})
     data = bcode.nil? ? {} : { 'filters[bcode]' => bcode } 

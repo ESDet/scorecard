@@ -9,42 +9,46 @@
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
 
   .container_12
-    .grid_2.overall-seal
+    .grid_3.overall-seal
       = render 'seal', :category => :overall, :rating => @el.andand.overall_rating
 
-    .grid_4
+    .grid_3
       %h3.hours Hours
-      - num = 0
-      - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |day|
-        - next if @ech[(day + 'dayopen').to_sym].blank? or @ech[(day + 'dayclose').to_sym].blank?
-        - num += 1
-        #{day.titleize}: #{@ech[(day + 'dayopen').to_sym]} &mdash; #{@ech[(day + 'dayclose').to_sym]}
-        %br/
-      - if num == 0
-        No hours of operation listed.
-      %p Months of operation: #{@ec.monthsofoperation}
+      .arial
+        - num = 0
+        - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |day|
+          - next if @ech[(day + 'dayopen').to_sym].blank? or @ech[(day + 'dayclose').to_sym].blank?
+          - num += 1
+          #{day.titleize}: #{@ech[(day + 'dayopen').to_sym]} &mdash; #{@ech[(day + 'dayclose').to_sym]}
+          %br/
+        - if num == 0
+          No hours of operation listed.
+        %p Months of operation: #{@ec.monthsofoperation}
+        %p
+          - unless @ec.gsccontact.blank?
+            Contact person: #{@ec.gsccontact}
+            %br/
+          - unless @ec.gsemail.blank?
+            Email: #{@ec.gsemail}
+            %br/
+          - unless @ec.phone.blank?
+            Phone: #{format_phone(@ec.phone)}
+            %br/
+          - unless @ec.website.blank?
+            Website: #{raw auto_link(@ec.website)}
 
 
     .grid_6.minimap_container
       .grid_3.alpha
-        = link_to 'Print This Page', "javascript:window.print();", :class => 'btn print noprint'
+        %a.btn.light.arial.print.noprint{:href => "javascript:window.print();"}
+          = image_tag 'el_icons/print-icon.png'
+          Print This Page
       .grid_3.omega
-        = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare noprint'
+        %a.btn.light.arial.compare.noprint{:href => "/compare/+#{@school.id}"}
+          = image_tag 'el_icons/compare-icon.png'
+          Compare This School
       .clear_floats/
       .minimap= render :partial => 'shared/map', :object => @map
-      
-      %p
-        - unless @ec.gsccontact.blank?
-          Contact person: #{@ec.gsccontact}
-          %br/
-        - unless @ec.gsemail.blank?
-          Email: #{@ec.gsemail}
-          %br/
-        - unless @ec.phone.blank?
-          Phone: #{format_phone(@ec.phone)}
-          %br/
-        - unless @ec.website.blank?
-          Website: #{raw auto_link(@ec.website)}
   
 
   %br.noprint/
@@ -54,18 +58,19 @@
   %ul.nav.nav-tabs
     %li.active
       %a{:href => '#overview', 'data-toggle' => 'tab'}
-        .question About This School
+        .question.bebas About This School
+        = render 'seal', :category => :overview, :rating => nil
     %li
       %a{:href => '#community', 'data-toggle' => 'tab'}
-        .question What does the community think?
+        .question.bebas What does the community think?
         = render 'seal', :category => :community, :rating => @el.andand.overall_site_visit_rating
     %li
       %a{:href => '#state', 'data-toggle' => 'tab'}
-        .question What does the state think?
+        .question.bebas What does the state think?
         = render 'seal', :category => :state, :rating => @el.andand.sas_score_rating
     %li
       %a{:href => '#staff', 'data-toggle' => 'tab'}
-        .question What does the staff think?
+        .question.bebas What does the staff think?
         = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating
     
   .tab-content
@@ -89,7 +94,7 @@
                     #{(val.to_i/12).to_i} years,
                   #{val.to_i%12} months
                 - else
-                  = (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+                  = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
   
     #community.tab-pane
       %p
@@ -101,11 +106,11 @@
       - if @el
         - @community.each do |field, info|
           .community_line
-            .score
+            %h3.score
               %span.points= info[:points].round(1)
               %span / 4.0
             %h3.statement= info[:statement]
-            .explanation= info[:explanation]
+            .explanation.arial= info[:explanation]
         
               
     #state.tab-pane
@@ -114,7 +119,7 @@
         which is a state-run program. The points in each category are from the program's self-assessment.
 
       .overall-stars        
-        = render 'stars', :n => (5 * @ec.andand.gscpts.to_f / 50.0).to_i
+        = render 'stars', :n => [@ec.andand.publishedrating.to_i, 0].max
       %table
         %thead
           %tr

@@ -4,14 +4,15 @@ namespace :import do
   task :all => :environment do |t, args|
     Importer.get_schema
     Importer.get_profiles
-    Importer.get_scores 'esd_k8_2013_r1'
-    Importer.get_scores 'esd_hs_2013'
+    Importer.get_scores 'esd_k8_2014'
+    Importer.get_scores 'esd_hs_2014'
+    Importer.get_scores 'meap_2013'
     Importer.get_scores 'meap_2012'
     Importer.get_scores 'meap_2011'
     Importer.get_scores 'meap_2010'
     Importer.get_scores 'meap_2009'
-    Importer.get_scores 'act_2013'
-    Importer.get_scores 'fiveessentials_2013'
+    Importer.get_scores 'act_2014'
+    Importer.get_scores 'fiveessentials_2014'
     Importer.get_earlychild
     Importer.get_el_2014
   end
@@ -26,14 +27,15 @@ namespace :import do
   task :data => :environment do |t, args|
     puts "Getting data..."
     Importer.get_profiles
-    Importer.get_scores 'esd_k8_2013_r1'
-    Importer.get_scores 'esd_hs_2013'
+    Importer.get_scores 'esd_k8_2014'
+    Importer.get_scores 'esd_hs_2014'
+    Importer.get_scores 'meap_2013'
     Importer.get_scores 'meap_2012'
     Importer.get_scores 'meap_2011'
     Importer.get_scores 'meap_2010'
     Importer.get_scores 'meap_2009'
-    Importer.get_scores 'act_2013'        
-    Importer.get_scores 'fiveessentials_2013'
+    Importer.get_scores 'act_2014'
+    Importer.get_scores 'fiveessentials_2014'
     Importer.get_earlychild
     Importer.get_el_2014
     puts "Done!"
@@ -52,19 +54,19 @@ namespace :import do
   end
   task :k8 => :environment do |t, args|
     puts "Fetching K8"
-    Importer.get_scores('esd_k8_2013_r1')
+    Importer.get_scores('esd_k8_2014')
   end
   task :hs => :environment do |t, args|
     puts "Fetching HS"
-    Importer.get_scores('esd_hs_2013')
+    Importer.get_scores('esd_hs_2014')
   end
   task :act => :environment do |t, args|
     puts "Fetching ACT"
-    Importer.get_scores('act_2013')
+    Importer.get_scores('act_2014')
   end
   task :fivee => :environment do |t, args|
     puts "Fetching 5Essentials"
-    Importer.get_scores('fiveessentials_2013')
+    Importer.get_scores('fiveessentials_2014')
   end
   task :earlychild => :environment do |t, args|
     puts "Fetching Early Childhood"

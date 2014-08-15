@@ -11,7 +11,7 @@ class Importer
     begin; conn.drop_table TABLE_NAME; rescue; end
     conn.create_table TABLE_NAME
     
-    keys = [:bcode, :tid, :name, :slug, :address, :address2, :zip, :school_type]
+    keys = [:bcode, :tid, :name, :slug, :address, :address2, :zip, :school_type, :grades_served, :grade]
     keys.each do |key|
       begin
         conn.add_column(TABLE_NAME, key, :string, {})

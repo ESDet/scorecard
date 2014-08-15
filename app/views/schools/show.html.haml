@@ -127,13 +127,13 @@
         - if e = @school.esd
           %h3 Challenge Factors:
           %div Overall Student Characteristics Points: #{e.studchrs_pts}
-          - if old = (@school.k8? ? @school.esd_k8_2013 : e)
+          - if old = (@school.k8? ? @school.esd_k8_2014 : e)
             %div Socio-economic Status: #{(old.econdis_pct.to_f*100).to_i}%
             %div Special Education: #{(old.sped_pct.to_f*100).to_i}%
             %div English Language Learners: #{(old.ell_pct.to_f*100).to_i}%
           - if @school.high?
             %br/
-            %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2013.andand.fafsa_rate.to_f*100).to_i}%" || 'N/A'}
+            %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%" || 'N/A'}
         
 
 
@@ -160,14 +160,14 @@
         %li= link_to 'School Profile', '#profile', 'data-toggle' => 'tab'
         - if @school.meap_2012
           %li= link_to 'MEAP 2012', '#meap', 'data-toggle' => 'tab'
-        - if @school.esd_k8_2013_r1
-          %li= link_to 'K8 2013', '#k8', 'data-toggle' => 'tab'
-        - if @school.esd_hs_2013
-          %li= link_to 'HS 2013', '#hs', 'data-toggle' => 'tab'
-        - if @school.act_2013
-          %li= link_to 'ACT 2013', '#act', 'data-toggle' => 'tab'
-        - if @school.fiveessentials_2013
-          %li= link_to '5Essentials 2013', '#fivee', 'data-toggle' => 'tab'
+        - if @school.esd_k8_2014
+          %li= link_to 'K8 2014', '#k8', 'data-toggle' => 'tab'
+        - if @school.esd_hs_2014
+          %li= link_to 'HS 2014', '#hs', 'data-toggle' => 'tab'
+        - if @school.act_2014
+          %li= link_to 'ACT 2014', '#act', 'data-toggle' => 'tab'
+        - if @school.fiveessentials_2014
+          %li= link_to '5Essentials 2014', '#fivee', 'data-toggle' => 'tab'
       .tab-content
         #basic.tab-pane.active
           - @school.basic.marshal_dump.each do |k,v|
@@ -185,22 +185,22 @@
             = v
             %br/
         #k8.tab-pane
-          - @school.esd_k8_2013_r1.andand.marshal_dump.andand.each do |k,v|
+          - @school.esd_k8_2014.andand.marshal_dump.andand.each do |k,v|
             %b #{k}:
             = v
             %br/
         #hs.tab-pane
-          - @school.esd_hs_2013.andand.marshal_dump.andand.each do |k,v|
+          - @school.esd_hs_2014.andand.marshal_dump.andand.each do |k,v|
             %b #{k}:
             = v
             %br/
         #act.tab-pane
-          - @school.act_2013.andand.marshal_dump.andand.each do |k,v|
+          - @school.act_2014.andand.marshal_dump.andand.each do |k,v|
             %b #{k}:
             = v
             %br/
         #fivee.tab-pane
-          - @school.fiveessentials_2013.andand.marshal_dump.andand.each do |k,v|
+          - @school.fiveessentials_2014.andand.marshal_dump.andand.each do |k,v|
             %b #{k}:
             = v
             %br/
