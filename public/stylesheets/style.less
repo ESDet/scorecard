@@ -27,6 +27,7 @@
 /* 2014 summer update */
 @turq: #35bff2;
 @lgrey: #dae1e4;
+@orange: #f27c56;
 
 
 html { overflow-y: scroll; height: 100%; }
@@ -149,8 +150,8 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 #other_profile, #overview {   position: relative; }
 #other_profile table, table#climate-help, #overview table {
   td, th { padding: 0.5em 1em; vertical-align: top; }
-  td:nth-child(1) { text-align: right; min-width: 200px; }
-  h3 { margin: 0; }
+  td:nth-child(1) { text-align: right; min-width: 200px; width: 33%; }
+  h3 { margin: 0; color: @turq; }
 }
 #other_profile table, #overview table { width: 100%; }
 
@@ -277,9 +278,9 @@ ul.school_list {
 
 .summary {  
   &.closed { background-color: @lightgrey; }  
-  .wrapper { height: 200px; border: 2px solid @dgreen; }
+  .wrapper { height: 180px; border: 2px solid @dgreen; }
   .lead { color: @dblue; }
-  h2 { font-size: 2.5em; margin-top: 0; }
+  h2 { font-size: 2.5em; margin-top: 0; color: @orange; margin-bottom: 0em; }
   .blue { width: 170px; text-align: center; h3 { margin-top: 0; } }
   .grades_container {
     background-color: @lblue; padding: 20px 20px 10px 20px;  width: 170px;
@@ -288,6 +289,8 @@ ul.school_list {
     i.help { right: 28px; top: 28px; }
   }
   a.btn.compare, a.btn.print { display: block;  margin: 0.5em 0; box-sizing: border-box; }
+  a.address { color: @orange; }
+  .hours { color: @turq; border-bottom: 1px solid @turq; }
 }
 .profile {
   .lead { color: @dblue; margin-bottom: 0em; }
@@ -312,14 +315,17 @@ table.compare {
 }
 
 .earlychild {
+  .tab-pane { padding: 1em 8em 4em 8em; }
   ul.nav { 
     li {
-      width: 24%; background-color: @lgrey; text-align: center;
-      margin-right: 5px; border-radius: 4px 4px 0 0;
+      width: 22%; background-color: @lgrey; text-align: center;
+      margin-right: 4%; border-radius: 4px 4px 0 0;
     }
     li.active { background-color: white; }
-    a { min-height: 160px; color: @turq; }
-    img { margin-top: 0.5em; }
+    li:last-of-type { margin-right: 0; }
+    a { min-height: 195px; padding: 9px 0 9px 0; }
+    img { margin-top: 1em; }
+    .question { color: @turq; border-bottom: 1px solid @turq; display: block; height: 2.5em; padding: 0 9px 0 9px; }
   }
   .community_line {
     border-bottom: 1px solid @turq; padding: 0.5em 0; position: relative;
@@ -333,7 +339,7 @@ table.compare {
     .explanation { }
   }
   
-  .el-icon { width: 100px; height: 100px; }
+  .el-icon { width: 60%; height: auto; }
   .overall-seal .el-icon { width: 100%; height: auto; }
 }
 

@@ -1,20 +1,19 @@
 .summary.earlychild
   .container_12
-    .grid_12
+    .grid_12{:style => 'margin-bottom: 1em;'}
       .noprint
         = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
       %br/
       %h2= @school.esd_el_2014.andand.program_name || @school.name
-      %p
-        %a{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
+      %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
 
   .container_12
     .grid_2.overall-seal
       = render 'seal', :category => :overall, :rating => @el.andand.overall_rating
 
     .grid_4
-      %h3 Hours
+      %h3.hours Hours
       - num = 0
       - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |day|
         - next if @ech[(day + 'dayopen').to_sym].blank? or @ech[(day + 'dayclose').to_sym].blank?
@@ -28,7 +27,7 @@
 
     .grid_6.minimap_container
       .grid_3.alpha
-        = link_to 'Print', "javascript:window.print();", :class => 'btn print noprint'
+        = link_to 'Print This Page', "javascript:window.print();", :class => 'btn print noprint'
       .grid_3.omega
         = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare noprint'
       .clear_floats/
