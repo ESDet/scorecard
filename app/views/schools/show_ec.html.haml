@@ -5,7 +5,7 @@
         = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
       %br/
-      %h2= @school.esd_el_2014.andand.program_name || @school.name
+      %h2= raw(@school.esd_el_2014.andand.program_name || @school.name)
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
 
   .container_12
@@ -71,6 +71,11 @@
   .tab-content
     #overview.tab-pane.active.self_reported
       = render 'shared/tip', :tip => @tips[:ec_profile]
+      - if @el.nil?
+        %p.orange
+          This program doesn't have an overall rating from Excellent Schools Detroit because it chose to opt out of 
+          the community and staff surveys.
+        
       %table
         - @profile_fields.each do |field,label|
           - val = @ech[field.to_sym]
