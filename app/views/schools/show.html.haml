@@ -41,12 +41,6 @@
         - else
           %p
             %b= raw letter
-        .grade.sub{:title => 'Academic Status', :class => ((@grades[:status][:letter] || 'N/A') == 'N/A') ? 'na' : ''}
-          = link_to (@grades[:status][:letter] || 'N/A'), '#academic-status'
-        .grade.sub{:title => 'Academic Progress', :class => ((@grades[:progress][:letter] || 'N/A') == 'N/A') ? 'na' : ''}
-          = link_to (@grades[:progress][:letter] || 'N/A'), '#academic-progress'
-        .grade.sub{:title => 'School Climate', :class => ((@grades[:climate][:letter] || 'N/A') == 'N/A') ? 'na' : ''}
-          = link_to (@grades[:climate][:letter] || 'N/A'), '#school-climate'
       = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare noprint'
                 
     .grid_5.minimap_container

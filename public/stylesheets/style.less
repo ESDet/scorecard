@@ -107,7 +107,7 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 .btn {
   background-color: @dblue; color: white; padding: 0.5em; margin-right: 1em;
   img { max-height: 1em; width: auto; margin-right: 0.5em; }
-  &.light { background-color: white; border: 1px solid @lgreen; color: black; }
+  &.light { background-color: white; border: 1px solid @lgreen; color: @lgreen; }
 }
 
 @unit: 14px;
@@ -338,6 +338,7 @@ table.compare {
     a { min-height: 195px; padding: 9px 0 9px 0; }
     img { margin-top: 1em; }
     .question { color: black; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
+    li.active .question { color: @turq; }
   }
   .overall-stars { font-size: 2em; }
   .community_line {
