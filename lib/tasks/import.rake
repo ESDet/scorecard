@@ -13,6 +13,7 @@ namespace :import do
     Importer.get_scores 'meap_2009'
     Importer.get_scores 'act_2014'
     Importer.get_scores 'fiveessentials_2014'
+    Importer.get_scores 'esd_site_visit_2014'
     Importer.get_earlychild
     Importer.get_el_2014
   end
@@ -36,6 +37,7 @@ namespace :import do
     Importer.get_scores 'meap_2009'
     Importer.get_scores 'act_2014'
     Importer.get_scores 'fiveessentials_2014'
+    Importer.get_scores 'esd_site_visit_2014'
     Importer.get_earlychild
     Importer.get_el_2014
     puts "Done!"
@@ -72,6 +74,9 @@ namespace :import do
     puts "Fetching Early Childhood"
     Importer.get_earlychild
     Importer.get_el_2014
+  end
+  task :sitevisit => :environment do |t, args|
+    Importer.get_scores 'esd_site_visit_2014'
   end
   
   
