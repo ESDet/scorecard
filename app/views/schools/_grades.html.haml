@@ -5,7 +5,6 @@
   .grade
     = render 'shared/tip', :tip => @tips["grade_#{section}".to_sym], :placement => 'right'
     = grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
-  .grade.sub3 #{grade[:total].blank? ? '?' : grade[:total]} / #{grade[:possible].blank? ? '?' : grade[:possible]} pts
 .subscore_wrapper
   = render 'shared/subscores', :scores => grade[:summary_table], :section => section
         

@@ -1,6 +1,6 @@
 .summary.k12
   .container_12
-    .grid_12
+    .grid_12{:style => 'margin-bottom: 1em;'}
       .noprint
         = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
         = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
@@ -12,17 +12,6 @@
           (#{copy[0].titleize})
         - if @school.basic.school_status == 'Closed'
           (Closed)
-      %p.address
-        Grades: #{@school.grades_served || 'Unknown'}
-        %br/
-        - unless @school.basic.governance.blank?
-          Governance: #{@school.basic.governance}
-        - unless @school.basic.operator.blank?
-          = "/"
-          Operator:  #{@school.basic.operator}
-        - unless @school.basic.authorizer.blank?
-          = "/"
-          Authorizer: #{@school.basic.authorizer}
 
   .container_12
     .grid_3
@@ -42,6 +31,28 @@
           %p
             %b= raw letter
 
+    .grid_3.arial.hours
+      Grades: #{@school.grades_served || 'Unknown'}
+      %br/
+      - unless @school.basic.governance.blank?
+        Governance: #{@school.basic.governance}
+      - unless @school.basic.operator.blank?
+        = "/"
+        Operator:  #{@school.basic.operator}
+      - unless @school.basic.authorizer.blank?
+        = "/"
+        Authorizer: #{@school.basic.authorizer}
+
+      - if copy
+        %p #{copy[0]}: #{copy[1]}
+
+      - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+        %p 
+          There is not enough data available at this time to accurately assign an overall grade. This happens because the
+          school uses different assessments to measure student academic status and/or progress than most schools, or the school
+          is too new for enough data to be available. We recommend that you visit with the school's leadership to better understand
+          how the school performs against a college ready standard.
+         
     .grid_6.minimap_container
       .grid_3.alpha
         %a.btn.light.arial.print.noprint.nomobile{:href => "javascript:window.print();"}
@@ -62,22 +73,12 @@
             %i.icon-download-alt
             Download PDF
 
-    .grid_3
-      - if copy
-        %p #{copy[0]}: #{copy[1]}
+    
 
-      - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
-        %p 
-          There is not enough data available at this time to accurately assign an overall grade. This happens because the
-          school uses different assessments to measure student academic status and/or progress than most schools, or the school
-          is too new for enough data to be available. We recommend that you visit with the school's leadership to better understand
-          how the school performs against a college ready standard.
-         
   
 
   %br.noprint/
   %br.noprint/
-  %hr/
   
 - if @school.esd
   .container_12.clear_floats.k12.profile
@@ -95,19 +96,19 @@
             .question.bebas
               %span.nomobile Academic Status
               %span.mobile_only Academic Status
-            = render 'seal', :school => @school, :category => :status, :rating => 0
+            = render 'tab_grade', :grade => @grades[:status]
         %li
           %a{:href => '#progress', 'data-toggle' => 'tab'}
             .question.bebas
               %span.nomobile Academic Progress
               %span.mobile_only Academic Progress
-            = render 'seal', :school => @school, :category => :progress, :rating => 0
+            = render 'tab_grade', :grade => @grades[:progress]
         %li
           %a{:href => '#climate', 'data-toggle' => 'tab'}
             .question.bebas
               %span.nomobile School Climate
               %span.mobile_only School Climate
-            = render 'seal', :school => @school, :category => :climate, :rating => 0
+            = render 'tab_grade', :grade => @grades[:climate]
 
 
     
