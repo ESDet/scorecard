@@ -90,7 +90,7 @@
           the community and staff surveys.
           
       - if @ec.andand.gscmessage
-        %p= @ec.gscmessage
+        %p= raw @ec.gscmessage
         
       %table
         - @profile_fields.each do |field,label|
@@ -108,7 +108,7 @@
                   = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
   
     #community.tab-pane
-      %p.explanation
+      %p.turquoise
         The Community rating is based on surveys conducted on-site at the program by a group of trained reviewers from the community.
         After spending four hours observing and taking notes, reviewers answer questions on a four-point scale that measures how much they
         agree with the statements below (I do not agree at all, I somewhat agree, I mostly agree, and I completely agree). A score
@@ -125,7 +125,7 @@
         
               
     #state.tab-pane
-      %p
+      %p.turquoise
         The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS),
         which is a state-run program. The points in each category are from the program's self-assessment.
 
@@ -154,6 +154,16 @@
           = desc
     
     #staff.tab-pane
+      %p.turquoise
+        Teachers and staff here were asked to complete  a survey about their program. The survey
+        included items about community engagement, family engagement, cultural and linguistic competence,
+        and climate and culture. Teachers and staff answered questions on a four-point scale. Those answers
+        were then averaged to create the number below.
+        
+      %hr
+        
+      - if @el.andand.teacher_score_mean
+        = render 'staff_rating', :score => @el.teacher_score_mean, :state => 3.64
 
     
 
