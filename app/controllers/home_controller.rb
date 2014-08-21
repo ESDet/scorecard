@@ -35,6 +35,7 @@ class HomeController < ApplicationController
         'meap_all'  => 'MEAP 2009-13',
         'act'       => 'ACT 2014',
         '5e'        => '5Essentials 2014',
+        'sitevisit' => 'ESD Site Visit 2014'
         'ec'        => 'Early Childhood',
         #'reset'     => "Erase database and reload everything",
       }.collect { |k,v| [v,k] }
@@ -93,9 +94,13 @@ class HomeController < ApplicationController
         
       when '5e'
         Importer.get_scores 'fiveessentials_2014'
+        
+      when 'sitevisit'
+        Importer.get_scores 'esd_site_visit_2014'
       
       when 'ec'
         Importer.get_earlychild
+        Importer.get_el_2014
       end
       
       redirect_to :refresh, :notice => "Ok, we've refreshed that data!"

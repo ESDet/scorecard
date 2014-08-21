@@ -12,6 +12,7 @@
           (#{copy[0].titleize})
         - if @school.basic.school_status == 'Closed'
           (Closed)
+      %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
 
   .container_12
     .grid_3
@@ -32,16 +33,20 @@
             %b= raw letter
 
     .grid_3.arial.hours
-      Grades: #{@school.grades_served || 'Unknown'}
+      %span.day Grades:
+      #{@school.grades_served || 'Unknown'}
       %br/
       - unless @school.basic.governance.blank?
-        Governance: #{@school.basic.governance}
+        %span.day Governance:
+        #{@school.basic.governance}
       - unless @school.basic.operator.blank?
         = "/"
-        Operator:  #{@school.basic.operator}
+        %span.day Operator:
+        #{@school.basic.operator}
       - unless @school.basic.authorizer.blank?
         = "/"
-        Authorizer: #{@school.basic.authorizer}
+        %span.day Authorizer:
+        #{@school.basic.authorizer}
 
       - if copy
         %p #{copy[0]}: #{copy[1]}
@@ -64,8 +69,7 @@
           Compare This School
       .clear_floats/
       .minimap= render :partial => 'shared/map', :object => @map
-      %p
-        %a{:href => @school.gmaps_url, :target => '_blank'} #{@school.address} &middot; #{@school.address2}
+
       
       - unless true or @school.PDF_FILE_NAME.blank?
         .float_right
@@ -74,9 +78,7 @@
             Download PDF
 
     
-
-  
-
+  .clear_floats
   %br.noprint/
   %br.noprint/
   
