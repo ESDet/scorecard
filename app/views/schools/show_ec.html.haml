@@ -2,8 +2,8 @@
   .container_12
     .grid_12{:style => 'margin-bottom: 1em;'}
       .noprint
-        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
-        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
+        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
+        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
       %br/
       %h2= raw(@school.esd_el_2014.andand.program_name || @school.name)
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
@@ -61,27 +61,35 @@
   %br.noprint/
   %br.noprint/
   
-.container_12.clear_floats
+.container_12.clear_floats.details
   %ul.nav.nav-tabs
     %li.active
       %a{:href => '#overview', 'data-toggle' => 'tab'}
-        .question.bebas About This School
+        .question.bebas
+          %span.nomobile About This School
+          %span.mobile_only About
         = render 'seal', :category => :overview, :rating => nil
     %li
       %a{:href => '#community', 'data-toggle' => 'tab'}
-        .question.bebas What does the community think?
+        .question.bebas
+          %span.nomobile What does the community think?
+          %span.mobile_only Community's Rating
         = render 'seal', :category => :community, :rating => @el.andand.overall_site_visit_rating
     %li
       %a{:href => '#state', 'data-toggle' => 'tab'}
-        .question.bebas What does the state think?
+        .question.bebas
+          %span.nomobile What does the state think?
+          %span.mobile_only State's Rating
         = render 'seal', :category => :state, :rating => @el.andand.sas_score_rating
     %li
       %a{:href => '#staff', 'data-toggle' => 'tab'}
-        .question.bebas What does the staff think?
+        .question.bebas
+          %span.nomobile What does the staff think?
+          %span.mobile_only Staff's Rating
         = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating
     
   .tab-content
-    #ground
+    #ground.nomobile
     #overview.tab-pane.active.self_reported
       = render 'shared/tip', :tip => @tips[:ec_profile]
       - if @el.nil?

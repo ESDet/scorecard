@@ -96,7 +96,7 @@ class SchoolsController < ApplicationController
       @ech = @ec.marshal_dump
       @grades = @school.grades
       @profile_fields = {
-        :gscmessage     => 'Message to Families',
+        #:gscmessage     => 'Message to Families',
         :gscspecialty   => 'Program Specialty',
         :gscschedule    => 'Schedule Type',
         :agefrom        => 'Accepts Ages from',

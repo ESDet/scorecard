@@ -332,22 +332,25 @@ table.compare {
   }
 }
 
-.earlychild {
-  .tab-pane { padding: 1em 8em 4em 8em; }
-  ul.nav { 
-    li {
-      width: 23.5%; background-color: @lgrey; text-align: center;
-      margin-right: 2%; border-radius: 4px 4px 0 0;
-    }
-    li.active { background-color: white; }
-    li:last-of-type { margin-right: 0; }
-    a { min-height: 195px; padding: 9px 0 9px 0; }
-    img { margin-top: 1em; }
-    .question { color: @dturq; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
-    li.active .question { color: @turq; }
+.tab-pane { padding: 1em 8em 4em 8em; }
+ul.nav { 
+  li {
+    width: 23.5%; background-color: @lgrey; text-align: center;
+    margin-right: 2%; border-radius: 4px 4px 0 0;
   }
-  .overall-stars { font-size: 2em; }
-  .turquoise { color: @dturq; }
+  li.active { background-color: white; }
+  li:last-of-type { margin-right: 0; }
+  img { margin-top: 1em; }
+  .question { color: @dturq; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
+  li.active .question { color: @turq; }
+}
+.overall-stars { font-size: 2em; }
+.turquoise { color: @dturq; }
+
+.earlychild {
+  ul.nav {
+    a { min-height: 195px; padding: 9px 0 9px 0; }
+  }
   .community_line {
     border-bottom: 1px solid @turq; padding: 0.5em 0; position: relative; padding-bottom: 0.66em;
     &:first-of-type { border-top: 1px solid @turq; }
@@ -369,8 +372,10 @@ table.compare {
     }
   }
   .points { color: @turq; }
-  .el-icon { width: 60%; height: auto; }
+  .el-icon, .mini-el-icon { width: 60%; height: auto; }
+  .overall-seal .centered.nomobile { display: block !important; }
   .el-icon.overview { margin-top: 0; }
+  .mini-el-icon { width: 40px; height: auto; float: right; margin-left: 0.5em; }
   .overall-seal {
     padding: 1em;
     .el-icon { width: 100%; height: auto; margin-top: 1em; }
@@ -378,6 +383,9 @@ table.compare {
   .stars { color: @turq; letter-spacing: -2px; font-size: 1.2em; margin-right: 9px; }
 }
 
+@media only screen and (min-width: 960px) {
+  .mobile_only { display: none; }
+}
 
 @media only screen and (max-width: 959px) {
   body { min-width: 0px; }
@@ -421,7 +429,7 @@ table.compare {
     .home { display: none; }
     .search { display: none; }
   }
-  #bodywrap { padding: 0.5em; }
+  #bodywrap { padding: 0.5em 1em; overflow-x: hidden; }
   .l-content-left, .l-content-right {
     width: auto;
   }
@@ -432,12 +440,37 @@ table.compare {
       input[type=text] { width: 200px; max-width: 100%; }
     }
   }
-  #outer_wrapper { top: 85px; }
   .popover-inner { max-width: 280px; }
   .nomobile { display: none !important; }
   .usabilla_live_button_container { display: none; }
   .column { padding: 0 0.5em; }
   
+  /*.details { background-color: @dturq; padding: 0.5em; }*/
+  ul.nav.nav-tabs {
+    li {
+      width: 100%; text-align: left; margin-bottom: 2px; padding: 0.5em 1em;
+      a { border: none; }
+      .question { padding: none; }
+      a:hover { background-color: inherit; }
+      .question { border-bottom: none; font-size: 2.2em; padding: 0; }
+      .mini-el-icon { margin-top: -25px; }
+    }
+    li.active a { border: none; }
+    li:not(.active) { border-radius: 4px; }
+  }
+  .tab-pane { padding: 0; }
+  .earlychild {
+    ul.nav.nav-tabs {
+      li a { min-height: 0; }
+    }
+    #state {
+      table {
+        th { padding: 9px 20px 9px 0; min-width: 90px; }
+        td { padding-left: 0px; }
+      }
+      .stars { display: block; }
+    }
+  }
   
   #front-filter .grades {
     a { font-size: 1em; }
@@ -452,6 +485,8 @@ table.compare {
   .summary {
     .minimap { display: none; }
     .grades_container img { height: 50px; width: auto; margin: 10px 10px 0 0; }
+    .el-icon { max-width: 80%; }
+    a.btn.print, a.btn.compare { margin: 0; }
   }
   .profile .block .grade_container { position: static; }
   .block {
@@ -482,11 +517,15 @@ table.compare {
     td:nth-child(1) { display: block; text-align: left; padding-bottom: 0; }
   }
   #footer.l-footer-wrapper {
-    height: auto; position: static; text-align: center;
-    img { margin: 10px; height: 60px; width: auto; }
+    height: auto; position: static; text-align: center; padding-bottom: 0.5em;
+    img { margin: 10px; height: auto; width: 100%; }
+    .l-footer {
+      padding-left: 0; 
+      .grid_4 { float: left; width: 25%; }
+    }
   }
-  
   #outer_wrapper {
+    top: 85px;
     #lefty { position: static; width: auto; }
     .wrapper { display: none; }
   }

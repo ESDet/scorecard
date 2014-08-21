@@ -494,7 +494,7 @@ class School < ActiveRecord::Base
     return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
-      :mini       => 'Mini',
+      :mini       => 'Mobile',
       :community  => 'Sub_Comm',
       :state      => 'Sub_State',
       :staff      => 'Sub_Staff',
