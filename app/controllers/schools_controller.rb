@@ -94,6 +94,7 @@ class SchoolsController < ApplicationController
       @ec = @school.earlychild
       @el = @school.esd_el_2014
       @ech = @ec.marshal_dump
+      @staff_state_avg = 3.62
       @grades = @school.grades
       @profile_fields = {
         #:gscmessage     => 'Message to Families',

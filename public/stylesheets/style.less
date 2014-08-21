@@ -30,6 +30,10 @@
 @lgrey: #dae1e4;
 @orange: #f27c56;
 
+@bar1: #d4f0e3;
+@bar2: #a17644;
+@bar3: #938886;
+@bar4: #ffc75d;
 
 html { overflow-y: scroll; height: 100%; }
 body { height: 100%; padding: 0; margin: 0; background-color: white; color: black; }
@@ -332,7 +336,7 @@ table.compare {
   }
 }
 
-.tab-pane { padding: 1em 8em 4em 8em; }
+.tab-content .tab-pane { padding: 1em 8em 4em 8em; }
 ul.nav { 
   li {
     width: 23.5%; background-color: @lgrey; text-align: center;
@@ -369,6 +373,29 @@ ul.nav {
       thead { font-size: 1.5em; th { text-align: left; } }
       td, th { padding: 9px 20px; border-bottom: 1px solid @turq; }
       td:first-child, th:first-child { text-align: center; }
+    }
+  }
+  #staff {
+    .staff-rating {
+      position: relative; width: 100%; padding-top: 30px; padding-bottom: 40px;
+      .axis {
+        text-align: center; color: @lgreen;
+        .left { float: left; }
+        .right { float: right; }
+        .middle { }
+      }
+      .bar { height: 20px;
+        div { height: 100%; display: inline-block; margin-right: -4px; }
+        .light-green { background-color: @bar1; width: 50%; }
+        .bronze { background-color: @bar2; width: 20%; }
+        .silver { background-color: @bar3; width: 20%; }
+        .gold { background-color: @bar4; width: 10%; }
+      }
+      .pointer {
+        position: absolute; border-right: 2px solid @lgreen; padding-right: 0.5em; 
+        &.state { top: 0px; padding-bottom: 45px; color: @lgreen; font-size: 90%; }
+        &.score { bottom: 0px; padding-top: 35px; color: @turq; border-color: @turq; }
+      }
     }
   }
   .points { color: @turq; }
