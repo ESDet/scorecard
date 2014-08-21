@@ -12,30 +12,37 @@
     .grid_3.overall-seal
       = render 'seal', :category => :overall, :rating => @el.andand.overall_rating
 
-    .grid_3
-      %h3.hours Hours
+    .grid_3.hours
+      %h3 Hours
       .arial
         - num = 0
         - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |day|
           - next if @ech[(day + 'dayopen').to_sym].blank? or @ech[(day + 'dayclose').to_sym].blank?
           - num += 1
-          #{day.titleize}: #{@ech[(day + 'dayopen').to_sym]} &mdash; #{@ech[(day + 'dayclose').to_sym]}
+          %span.day #{day.titleize}:
+          #{@ech[(day + 'dayopen').to_sym]} &mdash; #{@ech[(day + 'dayclose').to_sym]}
           %br/
         - if num == 0
           No hours of operation listed.
-        %p Months of operation: #{@ec.monthsofoperation}
+        %p
+          %span.day Months of operation:
+          #{@ec.monthsofoperation}
         %p
           - unless @ec.gsccontact.blank?
-            Contact person: #{@ec.gsccontact}
+            %span.day Contact person:
+            #{@ec.gsccontact}
             %br/
           - unless @ec.gsemail.blank?
-            Email: #{@ec.gsemail}
+            %span.day Email:
+            #{@ec.gsemail}
             %br/
           - unless @ec.phone.blank?
-            Phone: #{format_phone(@ec.phone)}
+            %span.day Phone:
+            #{format_phone(@ec.phone)}
             %br/
           - unless @ec.website.blank?
-            Website: #{raw auto_link(@ec.website)}
+            %span.day Website:
+            #{raw auto_link(@ec.website)}
 
 
     .grid_6.minimap_container
@@ -74,12 +81,16 @@
         = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating
     
   .tab-content
+    #ground
     #overview.tab-pane.active.self_reported
       = render 'shared/tip', :tip => @tips[:ec_profile]
       - if @el.nil?
         %p.orange
           This program doesn't have an overall rating from Excellent Schools Detroit because it chose to opt out of 
           the community and staff surveys.
+          
+      - if @ec.andand.gscmessage
+        %p= @ec.gscmessage
         
       %table
         - @profile_fields.each do |field,label|
@@ -97,7 +108,7 @@
                   = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
   
     #community.tab-pane
-      %p
+      %p.explanation
         The Community rating is based on surveys conducted on-site at the program by a group of trained reviewers from the community.
         After spending four hours observing and taking notes, reviewers answer questions on a four-point scale that measures how much they
         agree with the statements below (I do not agree at all, I somewhat agree, I mostly agree, and I completely agree). A score

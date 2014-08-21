@@ -100,8 +100,9 @@ h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
   .active a, .active a:hover { border-color: @turq; border-bottom-color: transparent; }
 }
 .tab-content { 
-  border: 1px solid @turq; border-top: 0; margin-bottom: 2em;
-  .tab-pane { padding: 1em; position: relative; }
+  border: 1px solid @turq; border-top: 0; margin-bottom: 2em; position: relative;
+  .tab-pane { padding: 1em; position: relative; background-color: white; }
+  #ground { position: absolute; left: -30px; right: -30px; top: -162px; bottom: 0; background-color: @dturq; z-index: -30; }
 }
 
 .btn {
@@ -290,7 +291,7 @@ ul.school_list {
 
 .summary {  
   &.closed { background-color: @lightgrey; }  
-  .wrapper { height: 180px; border: 2px solid @dgreen; }
+  .wrapper { height: 180px; border: 1px solid @lgreen; }
   .lead { color: @dblue; }
   h2 { font-size: 2.5em; margin-top: 0; color: @orange; margin-bottom: 0em; }
   .blue { width: 170px; text-align: center; h3 { margin-top: 0; } }
@@ -302,7 +303,11 @@ ul.school_list {
   }
   a.btn.compare, a.btn.print { display: block;  margin: 0.5em 0; box-sizing: border-box; }
   a.address { color: @orange; }
-  .hours { color: @turq; border-bottom: 1px solid @turq; }
+  .hours {
+    h3 { color: @turq; border-bottom: 1px solid @turq; }
+    .arial { font-size: 0.9em; }
+    .day { font-weight: bold; }
+  }
 }
 .profile {
   .lead { color: @dblue; margin-bottom: 0em; }
@@ -330,17 +335,18 @@ table.compare {
   .tab-pane { padding: 1em 8em 4em 8em; }
   ul.nav { 
     li {
-      width: 23%; background-color: @lgrey; text-align: center;
+      width: 23.5%; background-color: @lgrey; text-align: center;
       margin-right: 2%; border-radius: 4px 4px 0 0;
     }
     li.active { background-color: white; }
     li:last-of-type { margin-right: 0; }
     a { min-height: 195px; padding: 9px 0 9px 0; }
     img { margin-top: 1em; }
-    .question { color: black; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
+    .question { color: @dturq; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
     li.active .question { color: @turq; }
   }
   .overall-stars { font-size: 2em; }
+  #community > .explanation { color: @dturq; }
   .community_line {
     border-bottom: 1px solid @turq; padding: 0.5em 0; position: relative; padding-bottom: 0.66em;
     &:first-of-type { border-top: 1px solid @turq; }
@@ -545,7 +551,7 @@ table.compare {
 .tabs-stacked .open>a:hover{border-color:#999999;}
 .tabbable{*zoom:1;}.tabbable:before,.tabbable:after{display:table;content:"";}
 .tabbable:after{clear:both;}
-.tab-content{overflow:hidden;}
+/*.tab-content{overflow:hidden;}*/
 .tabs-below .nav-tabs,.tabs-right .nav-tabs,.tabs-left .nav-tabs{border-bottom:0;}
 .tab-content>.tab-pane,.pill-content>.pill-pane{display:none;}
 .tab-content>.active,.pill-content>.active{display:block;}
