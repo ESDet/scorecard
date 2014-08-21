@@ -35,7 +35,7 @@ class HomeController < ApplicationController
         'meap_all'  => 'MEAP 2009-13',
         'act'       => 'ACT 2014',
         '5e'        => '5Essentials 2014',
-        'sitevisit' => 'ESD Site Visit 2014'
+        'sitevisit' => 'ESD Site Visit 2014',
         'ec'        => 'Early Childhood',
         #'reset'     => "Erase database and reload everything",
       }.collect { |k,v| [v,k] }
