@@ -10,7 +10,7 @@
 
   .container_12
     .grid_3.overall-seal
-      = render 'seal', :category => :overall, :rating => @el.andand.overall_rating
+      = render 'seal', :category => :overall, :rating => @el.andand.overall_rating, :school => @school
 
     .grid_3.hours
       %h3 Hours
@@ -47,7 +47,7 @@
 
     .grid_6.minimap_container
       .grid_3.alpha
-        %a.btn.light.arial.print.noprint{:href => "javascript:window.print();"}
+        %a.btn.light.arial.print.noprint.nomobile{:href => "javascript:window.print();"}
           = image_tag 'el_icons/print-icon.png'
           Print This Page
       .grid_3.omega
@@ -61,32 +61,32 @@
   %br.noprint/
   %br.noprint/
   
-.container_12.clear_floats.details
+.container_12.clear_floats.details.earlychild
   %ul.nav.nav-tabs
     %li.active
       %a{:href => '#overview', 'data-toggle' => 'tab'}
         .question.bebas
           %span.nomobile About This School
           %span.mobile_only About
-        = render 'seal', :category => :overview, :rating => nil
+        = render 'seal', :category => :overview, :rating => nil, :school => @school
     %li
       %a{:href => '#community', 'data-toggle' => 'tab'}
         .question.bebas
           %span.nomobile What does the community think?
           %span.mobile_only Community's Rating
-        = render 'seal', :category => :community, :rating => @el.andand.overall_site_visit_rating
+        = render 'seal', :category => :community, :rating => @el.andand.overall_site_visit_rating, :school => @school
     %li
       %a{:href => '#state', 'data-toggle' => 'tab'}
         .question.bebas
           %span.nomobile What does the state think?
           %span.mobile_only State's Rating
-        = render 'seal', :category => :state, :rating => @el.andand.sas_score_rating
+        = render 'seal', :category => :state, :rating => @el.andand.sas_score_rating, :school => @school
     %li
       %a{:href => '#staff', 'data-toggle' => 'tab'}
         .question.bebas
           %span.nomobile What does the staff think?
           %span.mobile_only Staff's Rating
-        = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating
+        = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating, :school => @school
     
   .tab-content
     #ground.nomobile

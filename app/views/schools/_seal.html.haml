@@ -1,4 +1,4 @@
-.centered.nomobile= image_tag School.seal_image(category, rating), :class => "el-icon #{category}"
+.centered.nomobile= image_tag school.seal_image(category, rating), :class => "el-icon #{category}"
 - unless category == :overview or category == :overall
-  = image_tag School.seal_image(:mini, rating), :class => "mini-el-icon #{category} mobile_only"
+  = image_tag school.seal_image(:mini, rating), :class => "mini-el-icon #{category} mobile_only"
     

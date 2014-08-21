@@ -489,21 +489,30 @@ class School < ActiveRecord::Base
     "http://maps.google.com?#{opts.to_query}"
   end
   
-  def self.seal_image(category, rating)
+  
+  
+  def seal_image(category, rating)
     return 'el_icons/Overview.png' if category == :overview
-    return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
-    cat = {
-      :overall    => 'Award',
-      :mini       => 'Mobile',
-      :community  => 'Sub_Comm',
-      :state      => 'Sub_State',
-      :staff      => 'Sub_Staff',
-    }[category]
+    if self.earlychild?
+      return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
+      cat = {
+        :overall    => 'Award',
+        :mini       => 'Mobile',
+        :community  => 'Sub_Comm',
+        :state      => 'Sub_State',
+        :staff      => 'Sub_Staff',
+      }[category]
+      
+      valid_metals = ['Bronze', 'Silver', 'Gold']
+      metal = valid_metals.include?(rating) ? rating : (category == :overall ? 'Participant' : 'None')
+      
+      "el_icons/EL_#{cat}_#{metal}.png"
     
-    valid_metals = ['Bronze', 'Silver', 'Gold']
-    metal = valid_metals.include?(rating) ? rating : (category == :overall ? 'Participant' : 'None')
-    
-    "el_icons/EL_#{cat}_#{metal}.png"
+    else
+      cat = 'Sub_Comm'
+      metal = 'Silver'
+      "el_icons/EL_#{cat}_#{metal}.png"
+    end
   end
   
 end

@@ -1,9 +1,9 @@
-.summary
+.summary.k12
   .container_12
     .grid_12
       .noprint
-        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn'
-        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn'
+        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
+        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
       %br/
       %h2
         = @school.name
@@ -12,7 +12,7 @@
           (#{copy[0].titleize})
         - if @school.basic.school_status == 'Closed'
           (Closed)
-      %p
+      %p.address
         Grades: #{@school.grades_served || 'Unknown'}
         %br/
         - unless @school.basic.governance.blank?
@@ -41,24 +41,28 @@
         - else
           %p
             %b= raw letter
-      = link_to 'Compare This School', "/compare/+#{@school.id}", :class => 'btn compare noprint'
-                
-    .grid_5.minimap_container
+
+    .grid_6.minimap_container
+      .grid_3.alpha
+        %a.btn.light.arial.print.noprint.nomobile{:href => "javascript:window.print();"}
+          = image_tag 'el_icons/print-icon.png'
+          Print This Page
+      .grid_3.omega
+        %a.btn.light.arial.compare.noprint{:href => "/compare/+#{@school.id}"}
+          = image_tag 'el_icons/compare-icon.png'
+          Compare This School
+      .clear_floats/
       .minimap= render :partial => 'shared/map', :object => @map
       %p
         %a{:href => @school.gmaps_url, :target => '_blank'} #{@school.address} &middot; #{@school.address2}
       
-      = link_to 'Print', "javascript:window.print();", :class => 'btn noprint'
-
       - unless true or @school.PDF_FILE_NAME.blank?
         .float_right
           %a.btn{:href => "/pdfs/#{@school.PDF_FILE_NAME}", :target => '_blank'}
             %i.icon-download-alt
             Download PDF
-        %br/
-        %br/
-        
-    .grid_4
+
+    .grid_3
       - if copy
         %p #{copy[0]}: #{copy[1]}
 
@@ -76,59 +80,84 @@
   %hr/
   
 - if @school.esd
-  .container_12.clear_floats.profile
+  .container_12.clear_floats.k12.profile
     .grid_12
-      %p.lead Score Breakdown
-      = render 'shared/grade_overview', :section => :status, :grades => @grades,   :title => 'Academic Status',   :icon => 'icon_status_white.png',
-        :tabs => [:summary, :details, :history]
-      = render 'shared/grade_overview', :section => :progress, :grades => @grades, :title => 'Academic Progress', :icon => 'icon_progress_white.png',
-        :tabs => [:summary]
-      = render 'shared/grade_overview', :section => :climate, :grades => @grades,  :title => 'School Climate',    :icon => 'icon_climate_white.png',
-        :tabs => [:summary, :details]
+
+      %ul.nav.nav-tabs
+        %li.active
+          %a{:href => '#overview', 'data-toggle' => 'tab'}
+            .question.bebas
+              %span.nomobile About This School
+              %span.mobile_only About
+            = render 'seal', :school => @school, :category => :overview, :rating => nil
+        %li
+          %a{:href => '#status', 'data-toggle' => 'tab'}
+            .question.bebas
+              %span.nomobile Academic Status
+              %span.mobile_only Academic Status
+            = render 'seal', :school => @school, :category => :status, :rating => 0
+        %li
+          %a{:href => '#progress', 'data-toggle' => 'tab'}
+            .question.bebas
+              %span.nomobile Academic Progress
+              %span.mobile_only Academic Progress
+            = render 'seal', :school => @school, :category => :progress, :rating => 0
+        %li
+          %a{:href => '#climate', 'data-toggle' => 'tab'}
+            .question.bebas
+              %span.nomobile School Climate
+              %span.mobile_only School Climate
+            = render 'seal', :school => @school, :category => :climate, :rating => 0
+
+
     
-.container_12.clear_floats
-  .grid_12.self_reported
-    %ul.nav.nav-tabs
-      %li.active= link_to 'Demographics', '#other_demographics', 'data-toggle' => 'tab'
-      %li= link_to 'Self-Reported Profile', '#other_profile', 'data-toggle' => 'tab'
-      %li= link_to 'Other Details', '#other_details', 'data-toggle' => 'tab', :class => 'nomobile'
-    .tab-content
-      #other_demographics.tab-pane.active
-        %h2.printonly Demographics
-        #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
-        .printonly{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
-          - @demographics.each do |arr|
-            %div= arr[0]
+      .tab-content
+        #overview.tab-pane.active
+          #other_demographics
+            %h2 Demographics
+            #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
+            .printonly{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
+              - @demographics.each do |arr|
+                %div= arr[0]
+              
+            #enroll{:style => 'float: left; width: 360px; height: 160px;'}
+    
+          #other_profile
+            %h2.clear_floats Self-Reported Profile
+            = render 'shared/tip', :tip => @tips[:self_reported]
+            %table
+              - @profile_fields.each do |field,label|
+                - val = @school.profile.send(field)
+                - unless val.blank?
+                  %tr
+                    %td
+                      %h3 #{label}:
+                    %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+    
+          #other_details
+            %h2 Other Details
+            = render 'shared/tip', :tip => @tips[:other_details]
+    
+            - if e = @school.esd
+              %h3 Challenge Factors:
+              %div Overall Student Characteristics Points: #{e.studchrs_pts}
+              - if old = (@school.k8? ? @school.esd_k8_2014 : e)
+                %div Socio-economic Status: #{(old.econdis_pct.to_f*100).to_i}%
+                %div Special Education: #{(old.sped_pct.to_f*100).to_i}%
+                %div English Language Learners: #{(old.ell_pct.to_f*100).to_i}%
+              - if @school.high?
+                %br/
+                %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%" || 'N/A'}
+                
+        #status.tab-pane  
+          = render 'grades', :section => :status, :grades => @grades,   :title => 'Academic Status', :tabs => [:summary, :details, :history]
           
-        #enroll{:style => 'float: left; width: 360px; height: 160px;'}
-
-      #other_profile.tab-pane
-        %h2.printonly.clear_floats Self-Reported Profile
-        = render 'shared/tip', :tip => @tips[:self_reported]
-        %table
-          - @profile_fields.each do |field,label|
-            - val = @school.profile.send(field)
-            - unless val.blank?
-              %tr
-                %td
-                  %h3 #{label}:
-                %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
-
-      #other_details.tab-pane.nomobile
-        %h2.printonly Other Details
-        = render 'shared/tip', :tip => @tips[:other_details]
-
-        - if e = @school.esd
-          %h3 Challenge Factors:
-          %div Overall Student Characteristics Points: #{e.studchrs_pts}
-          - if old = (@school.k8? ? @school.esd_k8_2014 : e)
-            %div Socio-economic Status: #{(old.econdis_pct.to_f*100).to_i}%
-            %div Special Education: #{(old.sped_pct.to_f*100).to_i}%
-            %div English Language Learners: #{(old.ell_pct.to_f*100).to_i}%
-          - if @school.high?
-            %br/
-            %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%" || 'N/A'}
+        #progress.tab-pane
+          = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',  :tabs => [:summary]
         
+        #climate.tab-pane
+          = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
+    
 
 
 .container_12
@@ -145,7 +174,7 @@
         = @school[k]
 
 
-- unless Rails.env == 'production'
+- unless true or Rails.env == 'production'
   .container_12.clear_floats.noprint
     .grid_12
       %h2 Raw Data
