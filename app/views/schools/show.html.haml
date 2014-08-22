@@ -34,7 +34,7 @@
 
     .grid_3.hours
       %h3 Grades
-      #{@school.grades_served || 'Unknown'}
+      .arial #{@school.grades_served || 'Unknown'}
       %br/
       - unless @school.basic.governance.blank?
         %h3 Governance
@@ -139,7 +139,7 @@
                       %tr
                         %td
                           %h3 #{label}:
-                        %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+                        %td= (['0', 'n'].include?(val) ? 'No' : (['1', 'y'].include?(val) ? 'Yes' : val))
     
           #other_details
             %h3.bebas.underlined Extra Credit
