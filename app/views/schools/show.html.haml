@@ -35,7 +35,6 @@
     .grid_3.hours
       %h3 Grades
       .arial #{@school.grades_served || 'Unknown'}
-      %br/
       - unless @school.basic.governance.blank?
         %h3 Governance
         .arial #{@school.basic.governance}
