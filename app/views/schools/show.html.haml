@@ -32,24 +32,24 @@
           %p
             %b= raw letter
 
-    .grid_3.arial.hours
-      %span.day Grades:
+    .grid_3.hours
+      %h3 Grades
       #{@school.grades_served || 'Unknown'}
       %br/
       - unless @school.basic.governance.blank?
-        %span.day Governance:
-        #{@school.basic.governance}
+        %h3 Governance
+        .arial #{@school.basic.governance}
       - unless @school.basic.operator.blank?
         = "/"
-        %span.day Operator:
-        #{@school.basic.operator}
+        %h3 Operator
+        .arial #{@school.basic.operator}
       - unless @school.basic.authorizer.blank?
         = "/"
-        %span.day Authorizer:
-        #{@school.basic.authorizer}
+        %h3 Authorizer
+        .arial #{@school.basic.authorizer}
 
       - if copy
-        %p #{copy[0]}: #{copy[1]}
+        %p.arial #{copy[0]}: #{copy[1]}
 
       - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
         %p 
@@ -131,7 +131,7 @@
             = render 'shared/tip', :tip => @tips[:self_reported]
             - @profile_fields.each do |group,fields|
               - unless fields.keys.reject { |i| @school.profile.send(i).blank? }.empty?
-                %h3= group
+                %h3.bebas.underlined= group
                 %table
                   - fields.each do |field,label|
                     - val = @school.profile.send(field)
@@ -142,7 +142,7 @@
                         %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
     
           #other_details
-            %h3 Extra Credit
+            %h3.bebas.underlined Extra Credit
             = render 'shared/tip', :tip => @tips[:other_details]
     
             - if e = @school.esd
@@ -158,13 +158,13 @@
                       %h3 #{label}:
                     %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
 
-          %h3 Demographics
+          %h3.bebas Demographics
           - @demographics.each do |arr|
             %div= arr[0]
               
           %br/
           %br/
-          %h3 Enrollment By Grade
+          %h3.bebas.underlined Enrollment By Grade
           #enroll{:style => 'float: left; width: 360px; height: 160px;'}
           
           .clear_floats

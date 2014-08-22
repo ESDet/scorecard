@@ -4,19 +4,24 @@
       %tr
         %th
         - unless scores.first[:value].nil?
-          %th Score
-        %th Pts
-        %th Max
+          %th
+            %h3 SCORE
+        %th
+          %h3 POINTS
+        %th
+          %h3 MAX
     - scores.andand.each do |h|
       %tr
-        %td= h[:name]
+        %td
+          %h3= h[:name]
         - unless h[:value].nil?
           %td= (h[:value].is_a?(Float) and h[:value] <= 1.0) ? "#{(h[:value] * 100).to_i}%" : h[:value]
         %td= h[:points]
         %td
           .relative
             = h[:possible]
-            - if local_assigns.has_key? :section
-              = render 'shared/tip', :tip => @tips["#{section}_#{h[:key]}".to_sym]
+            - if false
+              - if local_assigns.has_key? :section
+                = render 'shared/tip', :tip => @tips["#{section}_#{h[:key]}".to_sym]
   
         

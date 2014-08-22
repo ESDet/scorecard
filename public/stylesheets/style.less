@@ -75,6 +75,10 @@ body { height: auto; padding: 0; margin: 0; background-color: transparent; color
 .lead { font-size: 23px; }
 table td, table th { vertical-align: top; }
 
+h3.bebas {
+  font-size: 1.5em; color: @dturq; marign-top: 0.5em;
+  &.underlined { display: block; border-bottom: 1px solid @dturq; padding-bottom: 5px; }
+}
 h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
 hr { height: 1px; border: none; color: @turq; background-color: @turq; }
 
@@ -255,12 +259,13 @@ ul.school_list {
     .grade { background-color: #29b473; }
   }
   h2.block__title img { height: 32px; width: auto; margin: -8px 4px -8px 0px; vertical-align: middle; position: relative;  }
-  h3 { margin-top: 0; }
+  /*h3 { margin-top: 0; }*/
   .subscore_wrapper {
-    margin-left: 150px;
     table.scores { width: 100%; 
+      h3 { color: @turq; margin: 0; }
+      tr { border-bottom: 1px solid @turq; }
       td, th { text-align: left; padding: 6px 15px; vertical-align: top;  }
-      td:nth-child(1) {  width: 450px; }
+      td:nth-child(1) {  width: 450px; text-align: right; }
       td i.help { top: 0; right: 0; }
       tbody tr:nth-child(odd) { background-color: rgba(255, 255, 255, 0.2); }
     }
