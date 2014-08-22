@@ -51,7 +51,7 @@ $(document).ready(function() {
 
   // Demographics pie chart
   var bg = '#ffffff'; //klosed ? colors.lightgrey : colors.light;
-  var dem_plot = jQuery.jqplot ('dems', [dem_data], 
+  /*var dem_plot = jQuery.jqplot ('dems', [dem_data], 
     { 
       grid: { background: bg, drawBorder: false, shadow: false }, 
       seriesColors: [ colors.lgreen, colors.dblue, colors.orange, colors.red, colors.yellow ],
@@ -66,7 +66,7 @@ $(document).ready(function() {
       }, 
       legend: { show:true, location: 'e', border: '0px', fontSize: '13px', background: bg }
     }
-  ); 
+  );*/ 
   
   $('.graph').each(function(idx, e) {
     var id = $(e).attr('id');

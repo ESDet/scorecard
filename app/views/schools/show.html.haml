@@ -123,22 +123,23 @@
           %p.turquoise
             The following information is entered by a staff member from this school.
           %hr/
-          
           %p.orange Lorem ipsum dolor sit amet..
+          %hr/
           
     
           #other_profile
             = render 'shared/tip', :tip => @tips[:self_reported]
             - @profile_fields.each do |group,fields|
-              %h3= group
-              %table
-                - fields.each do |field,label|
-                  - val = @school.profile.send(field)
-                  - unless val.blank?
-                    %tr
-                      %td
-                        %h3 #{label}:
-                      %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+              - unless fields.keys.reject { |i| @school.profile.send(i).blank? }.empty?
+                %h3= group
+                %table
+                  - fields.each do |field,label|
+                    - val = @school.profile.send(field)
+                    - unless val.blank?
+                      %tr
+                        %td
+                          %h3 #{label}:
+                        %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
     
           #other_details
             %h3 Extra Credit
@@ -158,14 +159,15 @@
                     %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
 
           %h3 Demographics
-          #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
-          .printonly{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
-            - @demographics.each do |arr|
-              %div= arr[0]
+          - @demographics.each do |arr|
+            %div= arr[0]
               
+          %br/
+          %br/
           %h3 Enrollment By Grade
           #enroll{:style => 'float: left; width: 360px; height: 160px;'}
-
+          
+          .clear_floats
                 
         #status.tab-pane  
           %p.turquoise

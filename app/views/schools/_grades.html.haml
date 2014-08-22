@@ -1,12 +1,11 @@
 - key = Mogrify.transliterate(title)
 - grade = grades[section]
 
-.grade_container
-  .grade
-    = render 'shared/tip', :tip => @tips["grade_#{section}".to_sym], :placement => 'right'
-    = grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
-.subscore_wrapper
-  = render 'shared/subscores', :scores => grade[:summary_table], :section => section
+- if false
+  .grade_container
+    .grade
+      = render 'shared/tip', :tip => @tips["grade_#{section}".to_sym], :placement => 'right'
+      = grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
         
 - if tabs.include? :details
   %h2.printonly Details
