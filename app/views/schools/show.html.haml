@@ -48,13 +48,6 @@
       - if copy
         %p.arial #{copy[0]}: #{copy[1]}
 
-      - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
-        %p 
-          There is not enough data available at this time to accurately assign an overall grade. This happens because the
-          school uses different assessments to measure student academic status and/or progress than most schools, or the school
-          is too new for enough data to be available. We recommend that you visit with the school's leadership to better understand
-          how the school performs against a college ready standard.
-         
     .grid_6.minimap_container
       .grid_3.alpha
         %a.btn.light.arial.print.noprint.nomobile{:href => "javascript:window.print();"}
@@ -66,6 +59,12 @@
           Compare This School
       .clear_floats/
       .minimap= render :partial => 'shared/map', :object => @map
+      - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
+        %p 
+          There is not enough data available at this time to accurately assign an overall grade. This happens because the
+          school uses different assessments to measure student academic status and/or progress than most schools, or the school
+          is too new for enough data to be available. We recommend that you visit with the school's leadership to better understand
+          how the school performs against a college ready standard.
 
       
       - unless true or @school.PDF_FILE_NAME.blank?
