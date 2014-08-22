@@ -1,15 +1,14 @@
 - key = Mogrify.transliterate(title)
 - grade = grades[section]
 
-- if false
-  .grade_container
-    .grade
-      = render 'shared/tip', :tip => @tips["grade_#{section}".to_sym], :placement => 'right'
-      = grade[:letter].to_s.length < 3 ? grade[:letter] : '?'
-        
 - if tabs.include? :details
   %h2.printonly Details
+
   = render 'shared/tip', :tip => @tips["detail_#{section}".to_sym]
+
+  .subscore_wrapper
+    = render 'shared/subscores', :scores => grade[:summary_table], :section => section
+
   - if section == :status
     - if @school.high?
       %p For each subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
@@ -22,9 +21,14 @@
     - if grade[:details].empty?
       %p Sorry, we currently have no 5Essentials data to show for this school.
     - else
-      %p
-        The student response rate was #{grade[:details]['Response rate on student survey']}%
+
+      %p.turquoise
+        For this survey, the student response rate was #{grade[:details]['Response rate on student survey']}%
         and the teacher response rate was #{grade[:details]['Response rate on teacher survey']}%.
+      %p.turquoise
+        The following charts show what the school scored in each category.
+      %p.turquoise
+        Dark Green = Well Organized, Red = Not Yet Organized
       .elements_wrapper
         - grade[:details].delete 'Response rate on student survey'
         - grade[:details].delete 'Response rate on teacher survey'
