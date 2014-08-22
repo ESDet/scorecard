@@ -96,24 +96,23 @@
         %li
           %a{:href => '#status', 'data-toggle' => 'tab'}
             .question.bebas
-              %span.nomobile Academic Status
+              %span.nomobile How do the students do on tests?
               %span.mobile_only Academic Status
             = render 'tab_grade', :grade => @grades[:status]
         %li
           %a{:href => '#progress', 'data-toggle' => 'tab'}
             .question.bebas
-              %span.nomobile Academic Progress
+              %span.nomobile Have their grades improved?
               %span.mobile_only Academic Progress
             = render 'tab_grade', :grade => @grades[:progress]
         %li
           %a{:href => '#climate', 'data-toggle' => 'tab'}
             .question.bebas
-              %span.nomobile School Climate
+              %span.nomobile What is the environment like?
               %span.mobile_only School Climate
             = render 'tab_grade', :grade => @grades[:climate]
 
 
-    
       .tab-content
         #overview.tab-pane.active
           %p.turquoise
@@ -169,12 +168,24 @@
 
                 
         #status.tab-pane  
+          %p.turquoise
+            We measure school performance using state-mandated tests and high school graduation rates. 
+            This is excluded from the "Fresh Start" schools.
+            
           = render 'grades', :section => :status, :grades => @grades,   :title => 'Academic Status', :tabs => [:summary, :details, :history]
           
         #progress.tab-pane
+          %p.turquoise
+            We measure how much students are learning during a school year on computer-based growth assessments, and
+            how much students improved year-over-year on state tests.
+        
           = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',  :tabs => [:summary]
         
         #climate.tab-pane
+          %p.turquoise
+            We measure what students, teachers, and community volunteers think and feel about the school. We do this through
+            community site visits and surveys.
+
           = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
     
 
