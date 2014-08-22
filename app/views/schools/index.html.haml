@@ -31,6 +31,18 @@
       return true;
     });
     
+    $('.school_list .school').mouseover(function(e) {
+      var bcode = $(this).data('bcode');
+      for(var i in map.overlays.schools._layers) {
+        var layer = map.overlays.schools._layers[i];
+        var feature = layer.feature;
+        if(bcode == feature.properties.bcode) {
+          layer.openPopup();
+        }
+      }
+      return true;
+    });
+    
     $('a.do-compare').click(function(e) {
       ids = [];
       $('input.compare-check:checked').each(function(idx, el) {

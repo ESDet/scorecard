@@ -2,7 +2,7 @@
 %html
   = render 'layouts/head'
   
-  %body
+  %body{:class => "#{params[:controller]}-#{params[:action]}"}
     #container
       %header#nav.l-header
         = link_to image_tag('scorecard_logo.png', :class => 'logo float_left'), root_path

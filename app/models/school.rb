@@ -96,6 +96,7 @@ class School < ActiveRecord::Base
     k12 = (School.where(:bcode => self.bcode).count == 2)
     result = {
       :name       => self.name,
+      :bcode      => self.bcode,
       :level      => k12 ? 'K12' : (self.high? ? 'HS' : (self.earlychild? ? 'EC' : 'K8')),
       :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter]

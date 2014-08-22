@@ -23,7 +23,7 @@
       <!--[if lte IE 8]><link rel="stylesheet" href="/leaflet/leaflet.ie.css" /><![endif]-->
       <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/javascripts/excanvas.js"></script><![endif]-->      
 
-  %body
+  %body{:class => "#{params[:controller]}-#{params[:action]}"}
     #nav
       .container_12
         .grid_12.menu
