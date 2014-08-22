@@ -504,7 +504,7 @@ class School < ActiveRecord::Base
       }[category]
       
       valid_metals = ['Bronze', 'Silver', 'Gold']
-      metal = valid_metals.include?(rating) ? rating : (category == :overall ? 'Participant' : 'None')
+      metal = valid_metals.include?(rating) ? rating : ((category == :overall and !rating.nil?)? 'Participant' : 'None')
       
       "el_icons/EL_#{cat}_#{metal}.png"
     

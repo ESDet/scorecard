@@ -3,7 +3,7 @@
 
 @dblue:   #134370;
 @yellow:  #ffcc4e;
-@lgreen:  #8dc63f;
+@lgreen:  #27b373;
 @red:     #953734;
 @greyish: #556677;
 
@@ -36,9 +36,9 @@
 @bar4: #ffc75d;
 
 html { overflow-y: scroll; height: 100%; }
-body { height: 100%; padding: 0; margin: 0; background-color: white; color: black; }
+body { height: auto; padding: 0; margin: 0; background-color: transparent; color: black; }
 #container { min-height:100%; position:relative; }
-#bodywrap { padding: 1em 0 @footerheight 0; }
+#bodywrap { padding: 1em 0 @footerheight 0; margin-bottom: 0; }
 #footer.l-footer-wrapper {
   height: @footerheight; width: 100%; padding: 2em 0; position: absolute; bottom: 0px; left: 0px;
   img { height: 100px; width: auto; }
@@ -107,7 +107,13 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
 .tab-content { 
   border: 1px solid @turq; border-top: 0; margin-bottom: 2em; position: relative;
   .tab-pane { padding: 1em; position: relative; background-color: white; }
-  #ground { position: absolute; left: -30px; right: -30px; top: -162px; bottom: 0; background-color: @dturq; z-index: -30; }
+}
+
+#ground-wrapper {
+  position: relative;
+  #ground {
+    position: absolute; left: -5000px; right: -5000px; top: 47px; bottom: 0; background-color: @dturq; z-index: -2;
+  }
 }
 
 .btn {
