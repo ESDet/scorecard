@@ -116,41 +116,57 @@
     
       .tab-content
         #overview.tab-pane.active
-          #other_demographics
-            %h2 Demographics
-            #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
-            .printonly{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
-              - @demographics.each do |arr|
-                %div= arr[0]
-              
-            #enroll{:style => 'float: left; width: 360px; height: 160px;'}
+          %p.turquoise
+            Our Scorecard measures schools across three categories. Schools receive a final grade based on the three
+            categories, plus any extra credit. Excellent Schools Detroit recommends schools with a C+ grade or better.
+            We also recommend "Fresh Start" schools or new schools that we consider promising. If we do not feel comfortable
+            with the amount of data collected for a school, we label it "No Grade" until we can gather more information.
+          %p.turquoise
+            The following information is entered by a staff member from this school.
+          %hr/
+          
+          %p.orange Lorem ipsum dolor sit amet..
+          
     
           #other_profile
-            %h2.clear_floats Self-Reported Profile
             = render 'shared/tip', :tip => @tips[:self_reported]
-            %table
-              - @profile_fields.each do |field,label|
-                - val = @school.profile.send(field)
-                - unless val.blank?
+            - @profile_fields.each do |group,fields|
+              %h3= group
+              %table
+                - fields.each do |field,label|
+                  - val = @school.profile.send(field)
+                  - unless val.blank?
+                    %tr
+                      %td
+                        %h3 #{label}:
+                      %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+    
+          #other_details
+            %h3 Extra Credit
+            = render 'shared/tip', :tip => @tips[:other_details]
+    
+            - if e = @school.esd
+              %p.turquoise
+                We acknowledge  challenges faced by schools that serve high populations of low-income students, English
+                language learners and special education students. We give schools extra credit if they face these challenges
+                or if they have many students that complete the Free Application for Federal Student Aid (FAFSA).
+                
+              %table
+                - @extra_credit.each do |label,val|
                   %tr
                     %td
                       %h3 #{label}:
                     %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
-    
-          #other_details
-            %h2 Other Details
-            = render 'shared/tip', :tip => @tips[:other_details]
-    
-            - if e = @school.esd
-              %h3 Challenge Factors:
-              %div Overall Student Characteristics Points: #{e.studchrs_pts}
-              - if old = (@school.k8? ? @school.esd_k8_2014 : e)
-                %div Socio-economic Status: #{(old.econdis_pct.to_f*100).to_i}%
-                %div Special Education: #{(old.sped_pct.to_f*100).to_i}%
-                %div English Language Learners: #{(old.ell_pct.to_f*100).to_i}%
-              - if @school.high?
-                %br/
-                %div FAFSA Completion Rate: #{"#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%" || 'N/A'}
+
+          %h3 Demographics
+          #dems.noprint{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
+          .printonly{:style => 'float: left; width: 420px; height: 180px; margin-right: 40px;'}
+            - @demographics.each do |arr|
+              %div= arr[0]
+              
+          %h3 Enrollment By Grade
+          #enroll{:style => 'float: left; width: 360px; height: 160px;'}
+
                 
         #status.tab-pane  
           = render 'grades', :section => :status, :grades => @grades,   :title => 'Academic Status', :tabs => [:summary, :details, :history]

@@ -157,67 +157,7 @@ class SchoolsController < ApplicationController
     @grades = @school.grades
     
     @profile_fields = {
-      "after_school_transportatio" => 'After School Transportation',
-      "ap_classes" => 'AP Classes',
-      "character_development" => 'Character Development',
-      "college_counseling" => 'College Counseling',
-      "counselor_student_ratio" => 'Counselor-to-Student Ratio',
-      "discipline_programs" => 'Discipline Programs',
-      "dual_enrollment" => 'Dual Enrollment',
-      "dual_enrollment_institutio" => 'Dual Enrollment Institution',
-      "early_child_center_relatio" => 'Early Childhood Center Relations',
-      "early_childhood_programs" => 'Early Childhood Programs',
-      "early_childhood_transition" => 'Early Childhood Transition',
-      "email" => 'Email',
-      "english_language_learners" => 'English Language Learners',
-      "family_supports" => 'Family Support',
-      #"grades_served" => 'Grades Served',
-      "in_school_programs" => 'In-School Programs',
-      "organized_sports" => 'Sports',
-      "parent_supports" => 'Parent Support',
-      #"school_contact_first_name",
-      #"school_contact_last_name",
-      "special_needs" => "Special Needs Students",
-      "special_tracks" => "Special Tracks",
-      "student_development_progra" => "Student Development Programs",
-      "student_leadership_opportu" => "Student Leadership Opportunities",
-      "transportation" => "Transportation",
-    }.merge({
-                "academic_focus" => "Academic Focus",
-           "instructional_model" => "Instructional Model",
-               "staff_resources" => "Staff Resources",
-                   "arts_visual" => "Arts - Visual",
-                    "arts_media" => "Arts - Media",
-                    "arts_music" => "Arts - Music",
-       "arts_performing_written" => "Arts - Performing & Written",
-        "transportation_options" => "Transportation",
-              "special_ed_level" => "Special Education Level",
-           "special_ed_programs" => "Special Education Programs",
-                   "boys_sports" => "Boys Sports",
-                  "girls_sports" => "Girls Sports",
-               "dual_enrollment" => "Dual Enrollment",
-                     "ell_level" => "ELL Level",
-                 "ell_languages" => "ELL Languages",
-    "dual_enrollment_institutio" => "Dual Enrollment Institutions",
-               "family_supports" => "Family Supports",
-                    "facilities" => "Facilities",
-               "parent_supports" => "Parent Supports",
-                    "dress_code" => "Dress Code",
-                      "schedule" => "Schedule",
-    "student_leadership_opportu" => "Student Leadership Opportunities",
-    "student_development_progra" => "Student Development Programs",
-                  "college_prep" => "College Prep",
-               "skills_training" => "Skills Training",
-             "before_after_care" => "Before/After Care",
-               "bullying_policy" => "Bullying Policy",
-                     "immersion" => "Immersion",
-                "special_tracks" => "Special Tracks",
-      "early_childhood_programs" => "Early Childhood Programs",
-      "extra_learning_resources" => "Extra Learning Resources",
-              "foreign_language" => "Foreign Language",
-                  "facebook_url" => "Facebook URL",
-                    "school_url" => "School URL",
-            "parent_involvement" => "Parent Involvement",
+      "Enrollment" => {
            "application_process" => "Application Process",
                 "admissions_url" => "Admissions URL",
                "application_fee" => "Application Fee",
@@ -226,11 +166,80 @@ class SchoolsController < ApplicationController
              "students_accepted" => "Students Accepted",
                  "feeder_school" => "Feeder School",
             "destination_school" => "Destination School",
+      },
+      'Classes' => {
+                "academic_focus" => "Academic Focus",
+           "instructional_model" => "Instructional Model",
+                   "arts_visual" => "Arts - Visual",
+                    "arts_media" => "Arts - Media",
+                    "arts_music" => "Arts - Music",
+       "arts_performing_written" => "Arts - Performing & Written",
+                     "immersion" => "Immersion",
+              "foreign_language" => "Foreign Language",
+                    "ap_classes" => 'AP Classes',
+               "dual_enrollment" => 'Dual Enrollment',
+    "dual_enrollment_institutio" => 'Dual Enrollment Institution',
+      },
+      'Culture' => {
+                    "dress_code" => "Dress Code",
+               "bullying_policy" => "Bullying Policy",
+            "parent_involvement" => "Parent Involvement",
+      },
+      'Support' => {
+              "special_ed_level" => "Special Education Level",
+           "special_ed_programs" => "Special Education Programs",
+                     "ell_level" => "ELL Level",
+                 "ell_languages" => "ELL Languages",
+                  "college_prep" => "College Prep",
+      "extra_learning_resources" => "Extra Learning Resources",
+                    "facilities" => "Facilities",
+               "skills_training" => "Skills Training",
+             "before_after_care" => "Before/After Care",
+               "staff_resources" => "Staff Resources",
+      },
+      'Extracurricular' => {
+                   "boys_sports" => "Boys Sports",
+                  "girls_sports" => "Girls Sports",
                  "student_clubs" => "Student Clubs",
            "student_clubs_dance" => "Student Clubs Dance",
         "student_clubs_language" => "Student Clubs Language",
            "student_clubs_other" => "Student Clubs Other"
-    })    
+      },
+      'Other' => {
+        "after_school_transportatio" => 'After School Transportation',
+        "character_development" => 'Character Development',
+        "college_counseling" => 'College Counseling',
+        "counselor_student_ratio" => 'Counselor-to-Student Ratio',
+        "discipline_programs" => 'Discipline Programs',
+        "early_child_center_relatio" => 'Early Childhood Center Relations',
+        "early_childhood_programs" => 'Early Childhood Programs',
+        "early_childhood_transition" => 'Early Childhood Transition',
+        "email" => 'Email',
+        "english_language_learners" => 'English Language Learners',
+        "family_supports" => 'Family Support',
+        "in_school_programs" => 'In-School Programs',
+        "organized_sports" => 'Sports',
+        "parent_supports" => 'Parent Support',
+        "special_needs" => "Special Needs Students",
+        "special_tracks" => "Special Tracks",
+        "student_development_progra" => "Student Development Programs",
+        "student_leadership_opportu" => "Student Leadership Opportunities",
+        "transportation" => "Transportation",
+          "transportation_options" => "Transportation",
+                 "dual_enrollment" => "Dual Enrollment",
+      "dual_enrollment_institutio" => "Dual Enrollment Institutions",
+                 "family_supports" => "Family Supports",
+                 "parent_supports" => "Parent Supports",
+                        "schedule" => "Schedule",
+      "student_leadership_opportu" => "Student Leadership Opportunities",
+      "student_development_progra" => "Student Development Programs",
+                  "special_tracks" => "Special Tracks",
+        "early_childhood_programs" => "Early Childhood Programs",
+                    "facebook_url" => "Facebook URL",
+                      "school_url" => "School URL",
+      }
+    }
+    #@profile_fields_flat = @profile_fields.values.collect { |h| h.to_a }.flatten(1)
 
     ethnicities = %w(american_indian asian african_american hispanic hawaiian white two_or_more_races)
     if @school.meap_2012
@@ -251,6 +260,22 @@ class SchoolsController < ApplicationController
     end
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
+    
+    @extra_credit = {}
+    if e = @school.esd
+      @extra_credit['Overall Student Characteristics Points'] = e.studchrs_pts
+      if old = (@school.k8? ? @school.esd_k8_2014 : e)
+        @extra_credit.merge!({ 
+          'Socio-economic Status' => "#{(old.econdis_pct.to_f*100).to_i}%",
+          'Special Education' => "#{(old.sped_pct.to_f*100).to_i}%",
+          'English Language Learners' => "#{(old.ell_pct.to_f*100).to_i}%",
+        })
+      end
+      if @school.high?
+        @extra_credit['FAFSA Completion Rate'] = "#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%"
+      end
+    end
+
 
     @category_copy = {
       'Turnaround' => ['Fresh start school',
