@@ -518,4 +518,8 @@ class School < ActiveRecord::Base
     end
   end
   
+  def self.grade_image(letter)
+    "el_icons/K12_Grade_#{letter}.png"
+  end
+  
 end
