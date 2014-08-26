@@ -135,7 +135,10 @@
                       %tr
                         %td
                           %h3 #{label}:
-                        %td= (['0', 'n'].include?(val) ? 'No' : (['1', 'y'].include?(val) ? 'Yes' : val))
+                        %td.arial
+                          - vals = val.split(",").collect { |v| v.squish }
+                          - labels = vals.collect { |v| School::VALUE_LABELS[v] || v }
+                          = labels.join(', ')
     
           #other_details
             %h3.bebas.underlined Extra Credit

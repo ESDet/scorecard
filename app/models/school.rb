@@ -1,6 +1,8 @@
 class School < ActiveRecord::Base
   require 'bedrock/acts_as_feature'
   require 'bedrock/acts_as_geocoded'
+  require 'definitions'
+  include Definitions
   
   acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :address2, :grades_served, :slug, :grade, :points],
     :add_properties => :my_properties
