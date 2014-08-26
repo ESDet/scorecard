@@ -15,22 +15,23 @@
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
 
   .container_12
-    .grid_3
+    .grid_3.overall-seal
       - letter = @grades[:cumulative][:letter].to_s
-      .blue.relative
-        %h3 Overall Score
-        
-      .grades_container.relative
-        = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
-        - if letter.blank? or School::NA_GRADES.include? letter
-          .grade.na{:title => 'No Grade'} N/A
-        - elsif letter.length < 3
-          .grade{:title => "Cumulative Grade"}= letter
-        - elsif letter == 'Promising'
-          .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
-        - else
-          %p
-            %b= raw letter
+      = render 'tab_grade', :grade => @grades[:cumulative]
+
+      - if false
+        .grades_container.relative
+          = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
+          = render
+          - if letter.blank? or School::NA_GRADES.include? letter
+            .grade.na{:title => 'No Grade'} N/A
+          - elsif letter.length < 3
+            .grade{:title => "Cumulative Grade"}= letter
+          - elsif letter == 'Promising'
+            .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
+          - else
+            %p
+              %b= raw letter
 
     .grid_3.hours
       %h3 Grades
@@ -79,130 +80,119 @@
   %br.noprint/
   
 - if @school.esd
-  .container_12.clear_floats.k12.profile
-    .grid_12
-
-      %ul.nav.nav-tabs
-        %li.active
-          %a{:href => '#overview', 'data-toggle' => 'tab'}
-            .question.bebas
-              %span.nomobile About This School
-              %span.mobile_only About
-            = render 'seal', :school => @school, :category => :overview, :rating => nil
-        %li
-          %a{:href => '#status', 'data-toggle' => 'tab'}
-            .question.bebas
-              %span.nomobile How do the students do on tests?
-              %span.mobile_only Academic Status
-            = render 'tab_grade', :grade => @grades[:status]
-        %li
-          %a{:href => '#progress', 'data-toggle' => 'tab'}
-            .question.bebas
-              %span.nomobile Have their grades improved?
-              %span.mobile_only Academic Progress
-            = render 'tab_grade', :grade => @grades[:progress]
-        %li
-          %a{:href => '#climate', 'data-toggle' => 'tab'}
-            .question.bebas
-              %span.nomobile What is the environment like?
-              %span.mobile_only School Climate
-            = render 'tab_grade', :grade => @grades[:climate]
-
-
-      .tab-content
-        #overview.tab-pane.active
-          %p.turquoise
-            Our Scorecard measures schools across three categories. Schools receive a final grade based on the three
-            categories, plus any extra credit. Excellent Schools Detroit recommends schools with a C+ grade or better.
-            We also recommend "Fresh Start" schools or new schools that we consider promising. If we do not feel comfortable
-            with the amount of data collected for a school, we label it "No Grade" until we can gather more information.
-          %p.turquoise
-            The following information is entered by a staff member from this school.
-          %hr/
-          %p.orange Lorem ipsum dolor sit amet..
-          %hr/
-          
-    
-          #other_profile
-            = render 'shared/tip', :tip => @tips[:self_reported]
-            - @profile_fields.each do |group,fields|
-              - unless fields.keys.reject { |i| @school.profile.send(i).blank? }.empty?
-                %h3.bebas.underlined= group
-                %table
-                  - fields.each do |field,label|
-                    - val = @school.profile.send(field)
-                    - unless val.blank?
-                      %tr
-                        %td
-                          %h3 #{label}:
-                        %td.arial
-                          - vals = val.split(",").collect { |v| v.squish }
-                          - labels = vals.collect { |v| School::VALUE_LABELS[v] || v }
-                          = labels.join(', ')
-    
-          #other_details
-            %h3.bebas.underlined Extra Credit
-            = render 'shared/tip', :tip => @tips[:other_details]
-    
-            - if e = @school.esd
-              %p.turquoise
-                We acknowledge  challenges faced by schools that serve high populations of low-income students, English
-                language learners and special education students. We give schools extra credit if they face these challenges
-                or if they have many students that complete the Free Application for Federal Student Aid (FAFSA).
-                
-              %table
-                - @extra_credit.each do |label,val|
-                  %tr
-                    %td
-                      %h3 #{label}:
-                    %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
-
-          %h3.bebas.underlined Demographics
-          - @demographics.each do |arr|
-            %div= arr[0]
-              
-          %br/
-          %br/
-          %h3.bebas.underlined Enrollment By Grade
-          #enroll{:style => 'float: left; width: 360px; height: 160px;'}
-          
-          .clear_floats
-                
-        #status.tab-pane  
-          %p.turquoise
-            We measure school performance using state-mandated tests and high school graduation rates. 
-            This is excluded from the "Fresh Start" schools.
+  #ground-wrapper  
+    #ground
+    .container_12.clear_floats.details.k12
+      .grid_12
+  
+        %ul.nav.nav-tabs
+          %li.active
+            %a{:href => '#overview', 'data-toggle' => 'tab'}
+              .question.bebas
+                %span.nomobile About This School
+                %span.mobile_only About
+              = render 'seal', :school => @school, :category => :overview, :rating => nil
+          %li
+            %a{:href => '#status', 'data-toggle' => 'tab'}
+              .question.bebas
+                %span.nomobile How do the students do on tests?
+                %span.mobile_only Academic Status
+              = render 'tab_grade', :grade => @grades[:status]
+          %li
+            %a{:href => '#progress', 'data-toggle' => 'tab'}
+              .question.bebas
+                %span.nomobile Have their grades improved?
+                %span.mobile_only Academic Progress
+              = render 'tab_grade', :grade => @grades[:progress]
+          %li
+            %a{:href => '#climate', 'data-toggle' => 'tab'}
+              .question.bebas
+                %span.nomobile What is the environment like?
+                %span.mobile_only School Climate
+              = render 'tab_grade', :grade => @grades[:climate]
+  
+  
+        .tab-content
+          #overview.tab-pane.active
+            %p.turquoise
+              Our Scorecard measures schools across three categories. Schools receive a final grade based on the three
+              categories, plus any extra credit. Excellent Schools Detroit recommends schools with a C+ grade or better.
+              We also recommend "Fresh Start" schools or new schools that we consider promising. If we do not feel comfortable
+              with the amount of data collected for a school, we label it "No Grade" until we can gather more information.
+            %p.turquoise
+              The following information is entered by a staff member from this school.
+            %hr/
+            %p.orange Lorem ipsum dolor sit amet..
+            %hr/
             
-          = render 'grades', :section => :status, :grades => @grades,   :title => 'Academic Status', :tabs => [:summary, :details, :history]
+      
+            #other_profile
+              = render 'shared/tip', :tip => @tips[:self_reported]
+              - @profile_fields.each do |group,fields|
+                - unless fields.keys.reject { |i| @school.profile.send(i).blank? }.empty?
+                  %h3.bebas.underlined= group
+                  %table
+                    - fields.each do |field,label|
+                      - val = @school.profile.send(field)
+                      - unless val.blank?
+                        %tr
+                          %td
+                            %h3 #{label}:
+                          %td.arial
+                            - vals = val.split(",").collect { |v| v.squish }
+                            - labels = vals.collect { |v| School::VALUE_LABELS[v] || v }
+                            = labels.join(', ')
+      
+            #other_details
+              %h3.bebas.underlined Extra Credit
+              = render 'shared/tip', :tip => @tips[:other_details]
+      
+              - if e = @school.esd
+                %p.turquoise
+                  We acknowledge  challenges faced by schools that serve high populations of low-income students, English
+                  language learners and special education students. We give schools extra credit if they face these challenges
+                  or if they have many students that complete the Free Application for Federal Student Aid (FAFSA).
+                  
+                %table
+                  - @extra_credit.each do |label,val|
+                    %tr
+                      %td
+                        %h3 #{label}:
+                      %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+  
+            %h3.bebas.underlined Demographics
+            - @demographics.each do |arr|
+              %div= arr[0]
+                
+            %br/
+            %br/
+            %h3.bebas.underlined Enrollment By Grade
+            #enroll{:style => 'float: left; width: 360px; height: 160px;'}
+            
+            .clear_floats
+                  
+          #status.tab-pane  
+            %p.turquoise
+              We measure school performance using state-mandated tests and high school graduation rates. 
+              This is excluded from the "Fresh Start" schools.
+              
+            = render 'grades', :section => :status, :grades => @grades,   :title => 'Academic Status', :tabs => [:summary, :details, :history]
+            
+          #progress.tab-pane
+            %p.turquoise
+              We measure how much students are learning during a school year on computer-based growth assessments, and
+              how much students improved year-over-year on state tests.
           
-        #progress.tab-pane
-          %p.turquoise
-            We measure how much students are learning during a school year on computer-based growth assessments, and
-            how much students improved year-over-year on state tests.
-        
-          = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',  :tabs => [:summary, :details]
-        
-        #climate.tab-pane
-          %p.turquoise
-            We measure what students, teachers, and community volunteers think and feel about the school. We do this through
-            community site visits and surveys.
+            = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',  :tabs => [:summary, :details]
+          
+          #climate.tab-pane
+            %p.turquoise
+              We measure what students, teachers, and community volunteers think and feel about the school. We do this through
+              community site visits and surveys.
+  
+            = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
+      
 
-          = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
-    
-
-
-.container_12
-  .grid_6{:style => 'overflow: hidden;'}
-    - unless true or (@school.school_contact_first_name.blank? and @school.school_contact_last_name.blank?)
-      %p
-        %b Contact:
-        = @school.school_contact_first_name
-        = @school.school_contact_last_name
-    - @profile_fields.each do |k,v|
-      - next if @school[k].blank?
-      %p
-        %b #{v}:
-        = @school[k]
 
 
 - unless true or Rails.env == 'production'
@@ -259,79 +249,6 @@
             = v
             %br/
   
-%br/
- 
-
-
-.container_12
-- if false
-  .grid_6
-    %h3 Is This School Organized for Improvement?
-    %p Teachers and students were surveyed about the five essential elements of their school. If a school is green, or strong, on ANY three of these elements, it is 10 times more likely to improve over time. If a school is not green on at least three elements, students at the school likely will do the same or worse next year.
-    .overall
-      %h2= @school.SCORE_DESCRIPTION_5E_2012
-      %h3 Overall score: #{@school.SCORE_OVERALL_5E_2012.nil? ? 'N/A' : @school.SCORE_OVERALL_5E_2012.to_i}
-      %div Response rate: #{@school.TCH_RESPONSE_5E_2012.andand.to_i || 'N/A'}% teachers, #{@school.STUD_RESPONSE_5E_2012.andand.to_i || 'N/A'}% students
-      - unless @school.RESULTS_LINK_5E.blank?
-        %div= link_to "View the full report for this school", @school.RESULTS_LINK_5E, :target => '_blank'
-    = render :partial => 'shared/5e', :collection => @elements, :as => :element
-    %br.clear_floats/
-    %table.sitevisit_key.clear_floats.noprint
-      %tr{:style => 'height: 25px;'}
-        %td.color1
-        %td.color2
-        %td.color3
-        %td.color4
-        %td.color5
-      %tr
-        %td Not yet organized
-        %td Partially organized
-        %td Moderately organized
-        %td Organized
-        %td Well organized
-    
-    
-  .grid_6
-    %h3 What Is This School's Environment Like?
-    %p Parents and community members visited this school unannounced to observe the learning environment and school culture. This is what they saw:
-    
-    %table.sitevisit_key
-      %tr{:style => 'height: 25px;'}
-        %td.color1
-          .printonly 1
-        %td.color2
-          .printonly 2
-        %td.color3
-          .printonly 3
-        %td.color4
-          .printonly 4
-        %td.color5
-          .printonly 5
-      %tr
-        %td Strongly disagree
-        %td Disagree
-        %td Neither agree nor disagree
-        %td Agree
-        %td Strongly agree
-
-    .section
-      = image_tag 'icons/environment.png'
-      %h4 Physical Environment
-      = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:env] }
-
-    .section
-      = image_tag 'icons/academic.png'
-      %h4 Culture of Academic Achievement
-      = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:culture] }
-    .clear_floats
-
-    .section
-      = image_tag 'icons/community.png'
-      %h4 Community and Relationships
-      = render :partial => 'shared/colors', :locals => { :items => @sitevisit[:community] }
-
-    
-
 %br/
 %br/
 
