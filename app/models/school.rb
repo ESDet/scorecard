@@ -37,7 +37,7 @@ class School < ActiveRecord::Base
     :k8         => 'K8',
     :k12        => 'K12',
     :suburban   => 'Suburban',
-    :elementary => ['Early childhood', 'K8', 'K12'],
+    :elementary => ['K8', 'K12'],
     :k8hs       => ['K8', 'K12', 'HS'],
     :middle     => ['K8', 'K12'],
     :high       => 'HS',
@@ -70,9 +70,12 @@ class School < ActiveRecord::Base
     'No Status/Progress Data', 'No Status Data']
     
 
-  GRADES.each do |k,v|
-    scope k,         where(:school_type => v)
+  GRADES.slice(:ec, :k8, :k12, :suburban, :k8hs, :high).each do |k,v|
+    scope k, where(:school_type => v)
   end
+  scope :elementary, where("grades_served REGEXP 'KP|KF|1|2|3|4|5'")
+  scope :middle, where("grades_served REGEXP '6|7|8'")
+  #scope :high, where("grades_served REGEXP '9|10|11|12'")
   
   TYPES.each do |k,v|
     scope k,         where(:sch => v)
