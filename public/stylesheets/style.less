@@ -260,7 +260,6 @@ ul.school_list {
     .grade { background-color: #29b473; }
   }
   h2.block__title img { height: 32px; width: auto; margin: -8px 4px -8px 0px; vertical-align: middle; position: relative;  }
-  /*h3 { margin-top: 0; }*/
   .subscore_wrapper {
     table.scores { width: 100%; 
       h3 { color: @turq; margin: 0; }
@@ -357,6 +356,7 @@ ul.nav {
   li:last-of-type { margin-right: 0; }
   img { margin-top: 1em; }
   .question { color: @dturq; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
+  .question.hide { display: none; }
   li.active .question { color: @turq; }
 }
 .overall-stars { font-size: 2em; }
@@ -435,6 +435,23 @@ ul.nav {
   }
   .tab-content .tab-pane { padding: 1em 2em; }
   .block { background-color: white; padding: 1em 2em; }
+  #top-tabs {
+    &.nav-tabs > li.active > a {
+      background-color: @lgrey;
+      .question { border-bottom: 1px solid @turq; color: @dturq; }
+    }
+  }
+  #top {
+    background-color: @lgrey;
+    ul.top {
+      list-style: none; padding-left: 0;
+      li {
+        margin-bottom: 1em;
+        a, a:visited { color: @dturq; }
+      }
+      .mini-icon { height: 20px; width: auto; margin-right: 0.5em; }
+    }
+  }
 }
 
 

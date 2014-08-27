@@ -1,9 +1,10 @@
 .btn-group.grades{:style => 'margin-right: 1em; margin-bottom: 0.5em;'}
-  - names = (local_assigns.has_key?(:long_names) and long_names) ? ['All', 'Preschools', 'K8 Schools', 'High Schools'] : ['All', 'Pre-K', 'K8', 'HS']
+  - names = (local_assigns.has_key?(:long_names) and long_names) ? ['All', 'Pre-school', 'Elementary', 'Middle', 'High'] : ['All', 'Pre-K', 'ES', 'MS', 'HS']
   = link_to names[0],  '#', 'data-filter' => 'all', :class => 'light'
   = link_to names[1],  '#', 'data-filter' => 'ec', :class => 'light'
-  = link_to names[2],  '#', 'data-filter' => 'k8', :class => 'light'
-  = link_to names[3],  '#', 'data-filter' => 'high', :class => 'light'
+  = link_to names[2],  '#', 'data-filter' => 'elementary', :class => 'light'
+  = link_to names[3],  '#', 'data-filter' => 'middle', :class => 'light'
+  = link_to names[4],  '#', 'data-filter' => 'high', :class => 'light'
   
   
 %form.form-search.search{:method => :get, :action => schools_path}

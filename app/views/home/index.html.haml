@@ -3,21 +3,23 @@
   #ground
   .container_12.clear_floats
     .grid_4
-      %ul.nav.nav-tabs.left
+      %ul#top-tabs.nav.nav-tabs.left
         %li.active
-          .question.bebas Top 10 Highest-Graded Schools in Detroit
-          #top_k12
-            %ul
-              - @top.each do |s|
-                - grade = s.grades[:cumulative]
-                %li= link_to s.name, s
-          #top_ec.hide
-            %h2 Top 10 Detroit Preschools
-            %ul
-              - @top_ec.each do |s|
-                - grade = s.grades[:cumulative]
-                %li= link_to s.name, s
-    
+          %a{:href => '#top', 'data-toggle' => 'tab'}
+            - @top_labels.each do |kind,label|
+              .top-title.question.bebas{'data-kind' => kind, :class => kind == :all ? '' : 'hide'}= label
+      .tab-content
+        #top.tab-pane.active
+          - @top.keys.each_with_index do |kind, i|
+            - ktop = @top[kind]
+            %ul.top{'data-kind' => kind, :class => i>0 ? 'hide' : ''}
+              - ktop.each do |s|
+                %li
+                  - if kind == :ec
+                    = image_tag s.seal_image(:overall, s.esd_el_2014.andand.overall_rating), :class => 'mini-icon float_left'
+                  - else
+                    = image_tag School.grade_image(s.grades[:cumulative][:letter].to_s), :class => 'mini-icon float_left'
+                  = link_to s.name, s
     
     .grid_8
       %ul.nav.nav-tabs
@@ -55,13 +57,8 @@
       
               $('.btn-group.grades a').click(function(e) {
                 var kind = $(this).data('filter');
-                if(kind == 'ec') {
-                  $('#top_k12').hide();
-                  $('#top_ec').show();
-                } else {
-                  $('#top_k12').show();
-                  $('#top_ec').hide();
-                }
+                $('.top-title, ul.top').addClass('hide');
+                $(".top-title[data-kind='" + kind + "'], ul.top[data-kind='" + kind + "']").removeClass('hide');
                 return false;
               });
       
