@@ -171,7 +171,6 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
   .l-content-right { width: 100%; }
   input[type=text] { max-width: 100%; }
 }
-#front-filter #filter-search, #name-search { background-color: @orange3; }
 #block-mailchimp-lists-get-email-updates .block__content {
  a:link, a:visited, input[type=submit] { border: none;  }
  h3 { margin: 0; }
@@ -292,8 +291,15 @@ ul.school_list {
 }
 
 .grades a {
-  font-size: 1.5em; background-color: @orange3; color: white; padding: 5px 8px;
-  &.active { background-color: black;  }
+  font-size: 1.5em; background-color: white; color: @lgreen; padding: 5px 8px; border: 2px solid @lgreen;
+  &.active { background-color: @lgreen; color: white; }
+}
+.home-index {
+  input[type=text] {
+    font-size: 1.5em; padding: 5px 8px; margin: 1em 0; max-width: 100%;
+    &#q { margin-top: 0; }
+  }
+  .btn.search { background-color: @lgreen; color: white; max-width: 100%; width: 100%; display: block; font-size: 1.5em; text-align: right; }
 }
 #lefty .grades a { font-size: 13px; }
 
@@ -551,7 +557,7 @@ ul.nav {
     a { font-size: 1em; }
   }
   .form-search {
-    #loc { max-width: 80% !important; }
+    #loc { max-width: 80% !important; font-size: 1.5em; padding: 8px; }
   }
   #lefty, #front-filter { 
     .l-content-right { width: 80%; }

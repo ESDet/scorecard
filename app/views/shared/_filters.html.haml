@@ -11,11 +11,7 @@
   = hidden_field_tag :filter, params[:filter]
   = text_field_tag :loc, params[:loc], :placeholder => 'Enter address or 5 digit zip code'
   
-  .section-learn
-    .l-content-right
-      %ul.menu
-        %li
-          %a#filter-search{:href => '#'} Search
+  %a.btn#filter-search.search{:href => '#'} Search &gt;
 
 
 :javascript
