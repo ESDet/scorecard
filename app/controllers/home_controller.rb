@@ -5,6 +5,7 @@ class HomeController < ApplicationController
     session[:filter] = session[:loc] = nil
     @top = School.not_ec.order('points desc').limit(10)
     @top_ec = School.ec.where("address2 like 'Detroit%'").order('points desc').limit(10)
+    render :layout => 'noside'
   end
 
   

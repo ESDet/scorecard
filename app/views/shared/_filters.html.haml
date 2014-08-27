@@ -1,15 +1,13 @@
 .btn-group.grades{:style => 'margin-right: 1em; margin-bottom: 0.5em;'}
   - names = (local_assigns.has_key?(:long_names) and long_names) ? ['All', 'Preschools', 'K8 Schools', 'High Schools'] : ['All', 'Pre-K', 'K8', 'HS']
-  = link_to names[0],  '#', 'data-filter' => 'all'
-  = link_to names[1],  '#', 'data-filter' => 'ec'
-  = link_to names[2],  '#', 'data-filter' => 'k8'
-  = link_to names[3],  '#', 'data-filter' => 'high'
+  = link_to names[0],  '#', 'data-filter' => 'all', :class => 'light'
+  = link_to names[1],  '#', 'data-filter' => 'ec', :class => 'light'
+  = link_to names[2],  '#', 'data-filter' => 'k8', :class => 'light'
+  = link_to names[3],  '#', 'data-filter' => 'high', :class => 'light'
   
   
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
-  - if false
-    = select_tag :type, options_for_select(school_type_options), :style => 'width: 100%;'
   = text_field_tag :loc, params[:loc], :placeholder => 'Enter address or 5 digit zip code'
   
   .section-learn

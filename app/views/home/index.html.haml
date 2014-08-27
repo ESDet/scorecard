@@ -1,63 +1,84 @@
-%h1 2014 Scorecard
 
-%p.lead.centered Excellent Schools Detroit reviews Detroit schools each year and produces a scorecard that measures school quality.
-
-
-#block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-zip
-  %h2.block__title  Search for Schools by Location
-  .block__content
-    #boxes-box-school_score_widget.boxes-box
-      .boxes-box-content
-        .score-right
-          #front-filter
-            = render 'shared/filters', :long_names => true
-        .clear_floats
-
-
-
-#block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-name
-  %h2.block__title Search for Schools by Name
-  .block__content
-    #boxes-box-school_score_widget.boxes-box
-      .boxes-box-content
-        .score-right
-          #front-filter
-            = form_tag '/search', { :method => :post, :class => 'form-byname search' } do
-              = text_field_tag :q, nil, :placeholder => 'Search by school name', :autocomplete => 'off'
-              .section-learn
-                .l-content-right
-                  %ul.menu
-                    %li
-                      %a#name-search{:href => '#'} Search
-            :javascript
-              $(document).ready(function() {
-                var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
-                $('input#q').typeahead({ source: school_names });
-                $('#name-search').click(function(e) {
-                  $('.form-byname').submit();
-                  return false;
-                });
-
-                $('.btn-group.grades a').click(function(e) {
-                  var kind = $(this).data('filter');
-                  if(kind == 'ec') {
-                    $('#top_k12').hide();
-                    $('#top_ec').show();
-                  } else {
-                    $('#top_k12').show();
-                    $('#top_ec').hide();
-                  }
-                  return false;
-                });
-
+#ground-wrapper  
+  #ground
+  .container_12.clear_floats
+    .grid_4
+      %ul.nav.nav-tabs.left
+        %li.active
+          .question.bebas Top 10 Highest-Graded Schools in Detroit
+          #top_k12
+            %ul
+              - @top.each do |s|
+                - grade = s.grades[:cumulative]
+                %li= link_to s.name, s
+          #top_ec.hide
+            %h2 Top 10 Detroit Preschools
+            %ul
+              - @top_ec.each do |s|
+                - grade = s.grades[:cumulative]
+                %li= link_to s.name, s
+    
+    
+    .grid_8
+      %ul.nav.nav-tabs
+        %li.active
+          %a{:href => '#location', 'data-toggle' => 'tab'}
+            .question.bebas By Location
+        %li
+          %a{:href => '#name', 'data-toggle' => 'tab'}
+            .question.bebas By Name
+        %li
+          %a{:href => '#characteristics', 'data-toggle' => 'tab'}
+            .question.bebas By Characteristics
+            
+      
+      .tab-content
+        #location.tab-pane.active
+          = render 'shared/filters', :long_names => true
+          .clear_floats
+      
+        
+        #name.tab-pane
+          = form_tag '/search', { :method => :post, :class => 'form-byname search' } do
+            = text_field_tag :q, nil, :placeholder => 'Search by school name', :autocomplete => 'off'
+            %a#name-search{:href => '#'} Search
+          .clear_floats
+            
+          :javascript
+            $(document).ready(function() {
+              var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
+              $('input#q').typeahead({ source: school_names });
+              $('#name-search').click(function(e) {
+                $('.form-byname').submit();
+                return false;
               });
-        .clear_floats
-
-
-
-  
-
-.clear_floats
-%br/
-%br/
+      
+              $('.btn-group.grades a').click(function(e) {
+                var kind = $(this).data('filter');
+                if(kind == 'ec') {
+                  $('#top_k12').hide();
+                  $('#top_ec').show();
+                } else {
+                  $('#top_k12').show();
+                  $('#top_ec').hide();
+                }
+                return false;
+              });
+      
+            });  
+            
+        #characteristics.tab-pane
+          TODO these filters
+        
+      
+      .clear_floats
+      %br/
+      
+      .block
+        Here is another div yo
+        
+        
+      .clear_floats
+      %br/
+      %br/
 
