@@ -290,7 +290,7 @@ ul.school_list {
   &.sub3 { font-size: 18px; width: 130px; height: 40px; display: inline-block; }
 }
 
-.grades a {
+.grades a, .dropdown > a {
   font-size: 1.5em; background-color: white; color: @lgreen; padding: 5px 8px; border: 2px solid @lgreen;
   &.active { background-color: @lgreen; color: white; }
 }
@@ -300,6 +300,10 @@ ul.school_list {
     &#q { margin-top: 0; }
   }
   .btn.search { background-color: @lgreen; color: white; max-width: 100%; width: 100%; display: block; font-size: 1.5em; text-align: right; }
+  .dropdown {
+    margin-bottom: 1em; width: 45%; margin-right: 4%; float: left;
+    a.trigger { display: block;  }
+  }
 }
 #lefty .grades a { font-size: 13px; }
 

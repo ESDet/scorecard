@@ -65,7 +65,16 @@
             });  
             
         #characteristics.tab-pane
-          TODO these filters
+          - @dropdowns.each do |menu|
+            .dropdown
+              %a.trigger{'data-toggle' => 'dropdown', :href => '#'}
+                = menu[:title]
+                %span.caret
+              %ul.dropdown-menu
+                - menu[:options].each do |val,label|
+                  %li= link_to label, '#', 'data-value' => val
+
+          %a#char-search.btn.search.clear_floats{:href => '#'} Search &gt;
         
       
       .clear_floats
