@@ -17,6 +17,8 @@ class HomeController < ApplicationController
       :middle     => "Highest Rated Middle Schools",
       :high       => "Highest Rated High Schools",
     }
+    @tips   = Tip.find_by_name('tips_tricks')
+    @guides = Tip.find_by_name('parent_guides')
     render :layout => 'noside'
   end
 

@@ -521,10 +521,11 @@ class School < ActiveRecord::Base
     end
   end
   
-  def self.grade_image(letter)
+  def self.grade_image(letter, style=:normal)
     valid = %w[A Aplus B Bplus C Cplus D F]
     mod = letter.gsub('+', 'plus')
     mod = valid.include?(mod) ? mod : 'NA'
+    return "el_icons/Sm_#{mod}.png" if style == :small
     "el_icons/K12_Grade_#{mod}.png"
   end
   

@@ -18,7 +18,7 @@
                   - if kind == :ec
                     = image_tag s.seal_image(:overall, s.esd_el_2014.andand.overall_rating), :class => 'mini-icon float_left'
                   - else
-                    = image_tag School.grade_image(s.grades[:cumulative][:letter].to_s), :class => 'mini-icon float_left'
+                    = image_tag School.grade_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
                   = link_to s.name, s
     
     .grid_8
@@ -72,8 +72,11 @@
       %br/
       
       .block
-        Here is another div yo
+        %h3.bebas.underlined= @tips.title
+        = raw(@tips.body)
         
+        %h3.bebas.underlined= @guides.title
+        = raw(@guides.body)
         
       .clear_floats
       %br/
