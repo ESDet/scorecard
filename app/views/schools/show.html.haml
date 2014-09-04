@@ -2,9 +2,16 @@
   .container_12
     .grid_12{:style => 'margin-bottom: 1em;'}
       .noprint
-        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
-        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
-      %br/
+        - if @school.school_url
+          = link_to raw('School Website'), @school.school_url, :class => 'btn light'
+        - if @school.facebook_url
+          = link_to raw('Facebook'), @school.facebook_url, :class => 'btn light'
+        - unless Rails.env.production?
+          = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
+          = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
+        %br/
+        %br/
+          
       %h2
         = @school.name
         - copy = @category_copy[@school.esd.andand.schoolcategory.andand.titleize]
@@ -17,8 +24,8 @@
   .container_12
     .grid_3.overall-seal
       - letter = @grades[:cumulative][:letter].to_s
-      = render 'tab_grade', :grade => @grades[:cumulative]
-
+      = image_tag School.grade_image(@grades[:cumulative][:letter].to_s, :normal), :class => 'el-icon'
+        
       - if false
         .grades_container.relative
           = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
@@ -143,22 +150,23 @@
                             - labels = vals.collect { |v| School::VALUE_LABELS[v] || v }
                             = labels.join(', ')
       
-            #other_details
-              %h3.bebas.underlined Extra Credit
-              = render 'shared/tip', :tip => @tips[:other_details]
-      
-              - if e = @school.esd
-                %p.turquoise
-                  We acknowledge  challenges faced by schools that serve high populations of low-income students, English
-                  language learners and special education students. We give schools extra credit if they face these challenges
-                  or if they have many students that complete the Free Application for Federal Student Aid (FAFSA).
-                  
-                %table
-                  - @extra_credit.each do |label,val|
-                    %tr
-                      %td
-                        %h3 #{label}:
-                      %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
+            - if false
+              #other_details
+                %h3.bebas.underlined Extra Credit
+                = render 'shared/tip', :tip => @tips[:other_details]
+        
+                - if e = @school.esd
+                  %p.turquoise
+                    We acknowledge  challenges faced by schools that serve high populations of low-income students, English
+                    language learners and special education students. We give schools extra credit if they face these challenges
+                    or if they have many students that complete the Free Application for Federal Student Aid (FAFSA).
+                    
+                  %table
+                    - @extra_credit.each do |label,val|
+                      %tr
+                        %td
+                          %h3 #{label}:
+                        %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
   
             %h3.bebas.underlined Demographics
             - @demographics.each do |arr|

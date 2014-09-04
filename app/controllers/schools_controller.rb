@@ -160,15 +160,16 @@ class SchoolsController < ApplicationController
     #@profile_fields_flat = @profile_fields.values.collect { |h| h.to_a }.flatten(1)
 
     ethnicities = %w(american_indian asian african_american hispanic hawaiian white two_or_more_races)
-    if @school.meap_2012
+    if @school.meap_2013
       @demographics = ethnicities.collect do |e|
-        num = @school.meap_2012.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
+        num = @school.meap_2013.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
         num = 0 if num == 9
-        [ "#{e.titleize}: #{num} students", num]
+        num == 0 ? nil : [ "#{e.titleize}: #{num} students", num]
       end
+      @demographics.reject! { |a| a.nil? }
       
       @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
-        num = @school.meap_2012.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
+        num = @school.meap_2013.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
         num = 0 if num == 9
         num
       end

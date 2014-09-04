@@ -119,12 +119,20 @@ class School < ActiveRecord::Base
   
   # For really simple sorting
   def total_points 
-    return self.earlychild.gscpts if earlychild?
+    if earlychild?
+      mul = {
+        'Gold' => 4,
+        'Silver' => 3,
+        'Bronze' => 2,
+        'Below Bronze' => 1,
+      }[self.esd_el_2014.andand.overall_rating] || 0
+      return mul * 100 + self.earlychild.andand.gscpts.to_i
+    end
       
     percent = nil
-    if high? and defined?(self.esd_hs_2014) and self.esd_hs_2014.andand.schoolcategory.andand.downcase == 'mature'
-      percent = self.esd_hs_2014.mature_pct.to_f
-    elsif elementary? and defined?(self.esd_k8_2014) and self.esd_k8_2014.andand.schoolcategory.andand.downcase == 'mature'
+    if high? and defined?(self.esd_hs_2014) and self.esd_hs_2014
+      percent = self.esd_hs_2014.total_pct.to_f
+    elsif elementary? and defined?(self.esd_k8_2014) and self.esd_k8_2014
       percent = self.esd_k8_2014.total_pct.to_f
     end
     return percent.nil? ? nil : (percent * 100).to_i
@@ -132,24 +140,9 @@ class School < ActiveRecord::Base
   
   def overall_grade
     if high? and defined?(self.esd_hs_2014) and self.esd_hs_2014
-      fields = {
-        'Mature'      => :mature_ltrgrade,
-        'New'         => :newschool_designation,
-        'Turnaround'  => :turnaround_designation,
-      }
-      sym = fields[self.esd_hs_2014.schoolcategory.titleize]
-      return nil if sym.nil?
-      return self.esd_hs_2014.send(sym)
+      return self.esd_hs_2014.total_ltrgrade
     elsif elementary? and defined?(self.esd_k8_2014) and self.esd_k8_2014
-      fields = {
-        'Mature'      => :total_ltrgrade,
-        'New'         => :total_ltrgrade,
-        'Turnaround'  => :total_ltrgrade,
-        'Specialty'   => nil,
-      }
-      sym = fields[self.esd_k8_2014.schoolcategory.titleize]
-      return nil if sym.nil?
-      return self.esd_k8_2014.send(sym)
+      return self.esd_k8_2014.total_ltrgrade
     end
     return nil
   end
@@ -495,6 +488,20 @@ class School < ActiveRecord::Base
     "http://maps.google.com?#{opts.to_query}"
   end
   
+  def school_url
+    normalize_url(self.profile.andand.school_url)
+  end
+  
+  def facebook_url
+    normalize_url(self.profile.andand.facebook_url)
+  end
+  
+  def normalize_url(u)
+    return u if u.nil?
+    x = u.gsub(/^(http|https):\/\//, '')
+    return nil if x.blank?
+    "http://#{x}"
+  end
   
   
   def seal_image(category, rating)

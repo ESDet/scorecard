@@ -16,7 +16,7 @@
               - ktop.each do |s|
                 %li
                   - if kind == :ec
-                    = image_tag s.seal_image(:overall, s.esd_el_2014.andand.overall_rating), :class => 'mini-icon float_left'
+                    = image_tag s.seal_image(:mini, s.esd_el_2014.andand.overall_rating), :class => 'mini-icon float_left'
                   - else
                     = image_tag School.grade_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
                   = link_to s.name, s

@@ -1,8 +1,6 @@
 %li.school{'data-bcode' => school.bcode}
   = link_to school.name, school_path(school.slug)
   %br/
-  = school.address
-  %br/
   Grades #{school.grades_served}
   %br/
   %label.float_right

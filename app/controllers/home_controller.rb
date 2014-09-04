@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     session[:filter] = session[:loc] = nil
     @top = {
       :all        => School.not_ec.order('points desc').limit(10),
-      :ec         => School.ec.where("address2 like 'Detroit%'").order('points desc').limit(10),
+      :ec         => School.ec.where('esd_el_2014 is not null').where("address2 like 'Detroit%'").order('points desc').limit(10),
       :elementary => School.elementary.order('points desc').limit(10),
       :middle     => School.middle.order('points desc').limit(10),
       :high       => School.high.order('points desc').limit(10),

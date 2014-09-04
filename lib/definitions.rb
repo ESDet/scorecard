@@ -49,6 +49,7 @@ module Definitions
         "student_clubs_language" => "Student Clubs Language",
            "student_clubs_other" => "Student Clubs Other"
       },
+=begin
       'Other' => {
         "after_school_transportatio" => 'After School Transportation',
         "character_development" => 'Character Development',
@@ -82,6 +83,7 @@ module Definitions
                     "facebook_url" => "Facebook URL",
                       "school_url" => "School URL",
       }
+=end
     }
     
     

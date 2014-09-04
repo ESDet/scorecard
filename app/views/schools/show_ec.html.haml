@@ -1,9 +1,10 @@
 .summary.earlychild
   .container_12
     .grid_12{:style => 'margin-bottom: 1em;'}
-      .noprint
-        = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
-        = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
+      - unless Rails.env.production?
+        .noprint
+          = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
+          = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
       %br/
       %h2= raw(@school.esd_el_2014.andand.program_name || @school.name)
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
@@ -131,6 +132,8 @@
                 %span / 4.0
               %h3.statement= info[:statement]
               .explanation.arial= info[:explanation]
+
+        = render 'legend'
           
                 
       #state.tab-pane
@@ -175,6 +178,7 @@
         - if @el.andand.teacher_score_mean
           = render 'staff_rating', :score => @el.teacher_score_mean, :state => 3.64
 
+        = render 'legend'
     
 
   %br/
