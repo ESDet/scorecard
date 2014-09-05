@@ -263,7 +263,7 @@ class School < ActiveRecord::Base
             :possible => e.act2_pcr_psspts },
         ]
         h += [
-          { :name     => "4-Year Graduation Rate, Class 2012",
+          { :name     => "4-Year Graduation Rate, Class 2013",
             :key      => :gradrate,
             :value    => e.gradrate.to_f.round(2),
             :points   => e.gradrate_pts,
@@ -342,7 +342,7 @@ class School < ActiveRecord::Base
               :value    => e.site_s.to_f.round(2),
               :points   => e.site_s_pts,
               :possible => e.site_s_ptsps },
-            { :name     => "Net 5Essentials Score (2012-13)",
+            { :name     => "Net 5Essentials Score (2013-14)",
               :key      => :net5e_1213,
               :value    => e.net5e,
               :points   => e.net5e_pts,
@@ -360,7 +360,7 @@ class School < ActiveRecord::Base
             :value    => e.site_s.to_f.round(2),
             :points   => e.site_s_pts,
             :possible => e.site_s_psspts },
-          { :name     => "Net 5Essentials Score (2012-13)",
+          { :name     => "Net 5Essentials Score (2013-14)",
             :key      => :net5e_1213,
             :value    => e.net5e,
             :points   => e.net5e_pts,
@@ -382,7 +382,7 @@ class School < ActiveRecord::Base
     
     h = {}
     if tab == :status
-      dump = meap_2012.andand.marshal_dump
+      dump = meap_2013.andand.marshal_dump
       return {} if dump.nil?
       if k8?
         [:math, :reading].each do |subject|   # used to have :science
@@ -391,11 +391,12 @@ class School < ActiveRecord::Base
           grades = (3..8).select { |g| dump.has_key? "grade_#{g}_#{subject}_tested".to_sym }
           #logger.info grades.inspect
           grades.each do |g|
-            next if g == 3 and subject == :math  # Weird, it's 100% everywhere for now
+            #next if g == 3 and subject == :math  # Weird, it's 100% everywhere for now
             prof   = dump["grade_#{g}_#{subject}_proficient".to_sym].to_i
             tested = dump["grade_#{g}_#{subject}_tested".to_sym].to_i
-            prof   = (prof == 9)   ? 0 : prof
-            tested = (tested == 9) ? 0 : tested
+            logger.info "grade #{g} #{subject} - #{prof} and #{tested}"
+            #prof   = (prof == 9)   ? 0 : prof
+            #tested = (tested == 9) ? 0 : tested
             next if tested == 0
             percent = (100.0 * prof.to_f / tested.to_f).to_i
             h[subject][g] = percent
@@ -435,6 +436,7 @@ class School < ActiveRecord::Base
   def history(tab)
     throw "Not implemented yet" unless tab == :status
     dump = {
+      2013 => meap_2013.andand.marshal_dump,
       2012 => meap_2012.andand.marshal_dump,
       2011 => meap_2011.andand.marshal_dump,
       2010 => meap_2010.andand.marshal_dump,

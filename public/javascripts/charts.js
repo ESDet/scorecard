@@ -11,10 +11,10 @@ var colors = {
 };
 
 var widths = {
-  math: 400,
-  reading: 400,
+  math: 300,
+  reading: 300,
   science: 140,
-  act: 400
+  act: 300
 };
 
 var labels = {

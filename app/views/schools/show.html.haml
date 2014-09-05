@@ -112,11 +112,12 @@
               categories, plus any extra credit. Excellent Schools Detroit recommends schools with a C+ grade or better.
               We also recommend "Fresh Start" schools or new schools that we consider promising. If we do not feel comfortable
               with the amount of data collected for a school, we label it "No Grade" until we can gather more information.
-            %p.turquoise
-              The following information is entered by a staff member from this school.
-            %hr/
-            %p.orange Lorem ipsum dolor sit amet..
-            %hr/
+            - unless true
+              %p.turquoise
+                The following information is entered by a staff member from this school.
+              %hr/
+              %p.orange Lorem ipsum dolor sit amet..
+              %hr/
             
       
             #other_profile
