@@ -370,7 +370,7 @@ class SchoolsController < ApplicationController
           logger.info "started with #{schools.count} schools"
           if key.is_a?(String)
             schools = schools.select do |s|
-              logger.info "  check #{s.bcode}: #{s.profile[key].inspect}"
+              logger.info "  check #{s.bcode}: #{s.profile[key].inspect}" if s.profile[key]
               school_vals = (s.profile[key] || '').split(',').collect { |i| i.squish }
               intersection = vals & school_vals
               !intersection.empty?
