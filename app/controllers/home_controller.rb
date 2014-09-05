@@ -19,42 +19,7 @@ class HomeController < ApplicationController
     }
     @tips   = Tip.find_by_name('tips_tricks')
     @guides = Tip.find_by_name('parent_guides')
-    @dropdowns = [
-      {
-        :key     => :grade,
-        :title   => 'Grade Level',
-        :options => {
-          :ec => 'Pre-Schools',
-          :elementary => 'Elementary Schools',
-          :middle => 'Middle Schools',
-          :high => 'High Schools',
-        },
-      },
-      {
-        :key     => :arts,
-        :title   => 'Arts and Music',
-        :options => {
-          :a => 'Lorem',
-          :b => 'Ipsum',
-        },
-      },
-      {
-        :key     => :support,
-        :title   => 'Student Support',
-        :options => {
-          :a => 'Lorem',
-          :b => 'Ipsum',
-        },
-      },
-      {
-        :key     => :sports,
-        :title   => 'Sports',
-        :options => {
-          :a => 'Lorem',
-          :b => 'Ipsum',
-        },
-      },
-    ]
+    @dropdowns = Definitions::FILTERS
     render :layout => 'noside'
   end
 

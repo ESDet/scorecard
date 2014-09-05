@@ -452,5 +452,83 @@ module Definitions
             "student_clubs_language" => "Type language club",
        "student_clubs_other_[1,2,3]" => "Other (we allow three)"
      }
+     
+     
+    FILTERS = [
+      {
+        :key     => :grade,
+        :title   => 'Grade Level',
+        :options => [
+          ['Pre-Schools', 'grades_served', 'ec'],
+          ['Elementary Schools', 'grades_served', 'elementary'],
+          ['Middle Schools', 'grades_served', 'middle'],
+          ['High Schools', 'grades_served', 'high'],
+        ],
+      },
+      {
+        :key     => :arts,
+        :title   => 'Arts and Music',
+        :options => [
+          ['Band', 'arts_music', 'band'],
+          ['Ceramics', 'arts_visual', 'ceramic'],
+          ['Choir / chorus', 'arts_music', 'chorus'],
+          ['Computer graphics', 'arts_media', ['graphics', 'animation']],
+          ['Creative writing',	'arts_performing_written',	'creative_writing'],
+          ['Dance',	'arts_performing_written',	'dance'],
+          ['Drama',	'arts_performing_written',	'drama'],
+          ['Drawing',	'arts_visual	drawing'],
+          ['Instrumental music lessons',	'arts_music',	'music_lessons'],
+          ['Jazz band	arts_music',	'jazz_band'],
+          ['Orchestra', 'arts_music',	'orchestra'],
+          ['Painting',	'arts_visual',	'painting'],
+          ['Photography	arts_visual',	'photography'],
+          ['Video / Film production',	'arts_media',	'video'],
+		    ],
+      },
+      {
+        :key     => :support,
+        :title   => 'Student Support',
+        :options => [
+          ['English Language Learners', 'ell_level', ['basic', 'moderate', 'intensive']],
+          ['Autism', 'special_ed_programs', 'autism'],
+          ['Visual impairments',	'special_ed_programs',	'blindness'],
+          ['Hearing impairments',	'special_ed_programs',	'deafness'],
+          ['Emotional behavioral disabilities',	'special_ed_programs',	'emotional'],
+          ['Speech and language impairments',	'special_ed_programs',	'speech'],
+          ['Specific learning disabilities',	'special_ed_programs',	'ld'],
+          ['Significant developmental delay',	'special_ed_programs',	'developmental_delay'],
+          ['Orthopedic impairments',	'special_ed_programs',	'orthopedic'],
+          ['Multiple disabilities',	'special_ed_programs',	'multiple'],
+          ['Other health impairments',	'special_ed_programs',	'other'],
+          ['Cognitive disability',	'special_ed_programs',	'cognitive'],
+        ],
+      },
+      {
+        :key     => :sports,
+        :title   => 'Sports',
+        :options => [
+          ['Baseball',	['boys_sports', 'girls_sports'],	'baseball'],
+          ['Basketball',	['boys_sports', 'girls_sports'],	'basketball'],
+          ['Cheerleading',	['boys_sports', 'girls_sports'],	'cheerleading'],
+          ['Crew / Rowing',	['boys_sports', 'girls_sports'],	'crew'],
+          ['Cross country',	['boys_sports', 'girls_sports'],	'cross_country'],
+          ['Fencing',	['boys_sports', 'girls_sports'],	'fencing'],
+          ['Football',	['boys_sports', 'girls_sports'],	'football'],
+          ['Golf',	['boys_sports', 'girls_sports'], 'golf'],
+          ['Ice hockey',	['boys_sports', 'girls_sports'],	'ice_hockey'],
+          ['Judo / Other martial arts',	['boys_sports', 'girls_sports'],	'martial_arts'],
+          ['Lacrosse',	['boys_sports', 'girls_sports'],	'lacrosse'],
+          ['Rugby',	['boys_sports', 'girls_sports'],	'rugby'],
+          ['Skiing',	['boys_sports', 'girls_sports'],	'skiing'],
+          ['Soccer',	['boys_sports', 'girls_sports'],	'soccer'],
+          ['Softball',	['boys_sports', 'girls_sports'],	'softball'],
+          ['Swimming',	['boys_sports', 'girls_sports'],	'swimming'],
+          ['Tennis',	['boys_sports', 'girls_sports'],	'tennis'],
+          ['Track',	['boys_sports', 'girls_sports'],	'track'],
+          ['Volleyball',	['boys_sports', 'girls_sports'],	'volleyball'],
+          ['Wrestling',	['boys_sports', 'girls_sports'],	'wrestling'],
+        ],
+      },
+    ]
     
 end
