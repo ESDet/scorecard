@@ -494,7 +494,7 @@ class School < ActiveRecord::Base
   end
   
   def school_url
-    normalize_url(self.profile.andand.school_url)
+    normalize_url(self.profile.andand.school_url || self.earlychild.andand.website)
   end
   
   def facebook_url

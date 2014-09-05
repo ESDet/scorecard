@@ -3,8 +3,12 @@
 .summary.earlychild
   .container_12
     .grid_12{:style => 'margin-bottom: 1em;'}
-      - unless Rails.env.production?
-        .noprint
+      .noprint
+        - if @school.school_url
+          = link_to raw('School Website'), @school.school_url, :class => 'btn light'
+        - if @school.facebook_url
+          = link_to raw('Facebook'), @school.facebook_url, :class => 'btn light'
+        - unless Rails.env.production?
           = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
           = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
       %br/
@@ -42,10 +46,6 @@
           - unless @ec.phone.blank?
             %span.day Phone:
             #{format_phone(@ec.phone)}
-            %br/
-          - unless @ec.website.blank?
-            %span.day Website:
-            #{raw auto_link(@ec.website)}
 
 
     .grid_6.minimap_container

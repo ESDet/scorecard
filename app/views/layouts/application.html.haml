@@ -1,12 +1,12 @@
 !!!
 %html
   = render 'layouts/head'
-  
+  - home = current_page?(root_path)
   %body{:class => "#{params[:controller]}-#{params[:action]}"}
     #container
       %header#nav.l-header
-        = link_to image_tag('scorecard_logo.png', :class => 'logo float_left'), root_path
-        - unless current_page?(root_path)
+        = link_to image_tag(home ? 'scorecard_logo.png' : 'scorecard_thin.png', :class => 'logo float_left'), root_path
+        - unless home
           .float_right
             = link_to 'Home', root_path, :class => 'btn home light'
             = link_to 'Find a School', schools_path, :class => 'btn light schools nomobile'
