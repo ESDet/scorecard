@@ -18,6 +18,8 @@
 :javascript
   var listSpinner = null;
   var searching = false;
+  var charFilters = #{@cq.to_json};
+  
   $(document).ready(function(e) {
     $('.l-footer-wrapper').hide();
     
@@ -61,7 +63,8 @@
       var data = {
         filter: $('#filter', this).val(),
         type: $('#type', this).val(),
-        loc: $('#loc', this).val()
+        loc: $('#loc', this).val(), 
+        complex: charFilters
       };
       if(!listSpinner) {
         listSpinner = new Spinner({zIndex: 4000});

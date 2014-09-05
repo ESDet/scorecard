@@ -7,20 +7,21 @@ class SchoolsController < ApplicationController
   
   def index
     filter = ['all', 'ec', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
-    type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
+    #type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
     session[:filter]  = filter
-    session[:type]    = type
+    #session[:type]    = type
     session[:loc]     = params[:loc]
+    session[:complex] = nil
     
     if params[:complex]
-      @cq = JSON.parse(params[:complex])
-      session[:complex] = @cq
-    else
-      @cq = session[:complex]
+      @cq = params[:complex].is_a?(String) ? JSON.parse(params[:complex]) : params[:complex]
+      #session[:complex] = @cq
+    #else
+    #  @cq = session[:complex]
     end
     
     @title = current_search    
-    @schools = scope_from_filters(filter, type, params[:loc], @cq)
+    @schools = scope_from_filters(filter, params[:loc], @cq)
     @schools.sort! { |a,b| b.points.to_i <=> a.points.to_i }
 
     respond_to do |format|
@@ -306,7 +307,7 @@ class SchoolsController < ApplicationController
   end
   
   def increment
-    s = scope_from_filters(session[:filter], session[:type], session[:loc])
+    s = scope_from_filters(session[:filter], session[:loc])
     if params[:by] == 1
       if s.is_a? Array
         avail = s.select { |i| i.id > params[:id].to_i }
@@ -333,7 +334,7 @@ class SchoolsController < ApplicationController
     session[:type]    = type
     session[:loc]     = params[:loc]
     title = current_search    
-    schools = scope_from_filters(filter, type, params[:loc])
+    schools = scope_from_filters(filter, params[:loc])
     title = title.gsub('All ', '')
     title = title.gsub('Schools', 'School') if schools.count == 1
     render :text => "There #{schools.count==1?'is':'are'} #{schools.count} #{title} in Detroit"
@@ -351,8 +352,8 @@ class SchoolsController < ApplicationController
     end
   end
   
-  def scope_from_filters(filter, type, loc, complex=nil)
-    logger.info "scope from filters: #{filter}, #{type}, #{loc}"
+  def scope_from_filters(filter, loc, complex=nil)
+    logger.info "scope from filters: #{filter}, #{loc}"
     logger.ap complex if complex
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
     

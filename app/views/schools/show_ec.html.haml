@@ -1,3 +1,5 @@
+- participant = !!@school.esd_el_2014
+
 .summary.earlychild
   .container_12
     .grid_12{:style => 'margin-bottom: 1em;'}
@@ -66,7 +68,7 @@
   #ground
   .container_12.clear_floats.details.earlychild
     %ul.nav.nav-tabs
-      %li.active
+      %li{:class => participant ? 'active' : ''}
         %a{:href => '#overview', 'data-toggle' => 'tab'}
           .question.bebas
             %span.nomobile About This School
@@ -78,12 +80,15 @@
             %span.nomobile What does the community think?
             %span.mobile_only Community's Rating
           = render 'seal', :category => :community, :rating => @el.andand.overall_site_visit_rating, :school => @school
-      %li
+      %li{:class => participant ? '' : 'active'}
         %a{:href => '#state', 'data-toggle' => 'tab'}
           .question.bebas
             %span.nomobile What does the state think?
             %span.mobile_only State's Rating
-          = render 'seal', :category => :state, :rating => @el.andand.sas_score_rating, :school => @school
+          - if participant
+            = render 'seal', :category => :state, :rating => @el.andand.sas_score_rating, :school => @school
+          - else
+            = render 'stars', :n => [@ec.andand.publishedrating.to_i, 0].max
       %li
         %a{:href => '#staff', 'data-toggle' => 'tab'}
           .question.bebas
@@ -92,7 +97,7 @@
           = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating, :school => @school
       
     .tab-content
-      #overview.tab-pane.active.self_reported
+      #overview.tab-pane.self_reported{:class => participant ? 'active' : ''}
         = render 'shared/tip', :tip => @tips[:ec_profile]
         - if @el.nil?
           %p.orange
@@ -136,7 +141,7 @@
         = render 'legend'
           
                 
-      #state.tab-pane
+      #state.tab-pane{:class => participant ? '' : 'active'}
         %p.turquoise
           The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS),
           which is a state-run program. The points in each category are from the program's self-assessment.
