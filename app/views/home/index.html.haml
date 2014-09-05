@@ -46,31 +46,14 @@
             %a#name-search.btn.search{:href => '#'} Search &gt;
           .clear_floats
             
-          :javascript
-            $(document).ready(function() {
-              var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
-              $('input#q').typeahead({ source: school_names });
-              $('#name-search').click(function(e) {
-                $('.form-byname').submit();
-                return false;
-              });
-      
-              $('.btn-group.grades a').click(function(e) {
-                var kind = $(this).data('filter');
-                $('.top-title, ul.top').addClass('hide');
-                $(".top-title[data-kind='" + kind + "'], ul.top[data-kind='" + kind + "']").removeClass('hide');
-                return false;
-              });
-      
-            });  
-            
         #characteristics.tab-pane
           - @dropdowns.each do |menu|
             .dropdown
-              %a.trigger{'data-toggle' => 'dropdown', :href => '#'}
-                = menu[:title]
+              %a.trigger{:data => {:toggle => 'dropdown', :group => menu[:key], :title => menu[:title]}, :href => '#'}
+                %span.title= menu[:title]
                 %span.caret
               %ul.dropdown-menu
+                %li= link_to 'Clear selection', '#'
                 - menu[:options].each do |label, key, val|
                   %li= link_to label, '#', 'data-key' => key, 'data-value' => val
 
@@ -90,4 +73,39 @@
       .clear_floats
       %br/
       %br/
+
+:javascript
+  $(document).ready(function() {
+    var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
+    $('input#q').typeahead({ source: school_names });
+    $('#name-search').click(function(e) {
+      $('.form-byname').submit();
+      return false;
+    });
+
+    $('.btn-group.grades a').click(function(e) {
+      var kind = $(this).data('filter');
+      $('.top-title, ul.top').addClass('hide');
+      $(".top-title[data-kind='" + kind + "'], ul.top[data-kind='" + kind + "']").removeClass('hide');
+      return false;
+    });
+    
+    $('#characteristics .dropdown-menu li a').click(function(e) {
+      var dd = $(this).closest('.dropdown');
+      var trigger = $('a.trigger', dd), group = trigger.data('group');
+      var key = $(this).data('key'), value = $(this).data('value');
+      
+      if(key) {
+        // Save the key/val to filter JS object
+        $('.title', trigger).text($(this).text());
+      } else {
+        // Clear the selection
+        $('.title', trigger).text(trigger.data('title'));
+      }
+      trigger.dropdown('toggle');
+      return false;
+    });
+
+  });  
+  
 
