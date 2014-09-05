@@ -509,28 +509,25 @@ class School < ActiveRecord::Base
   end
   
   
-  def seal_image(category, rating)
+  def self.seal_image(category, rating)
     return 'el_icons/Overview.png' if category == :overview
-    if self.earlychild?
-      return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
-      cat = {
-        :overall    => 'Award',
-        :mini       => 'Mobile',
-        :community  => 'Sub_Comm',
-        :state      => 'Sub_State',
-        :staff      => 'Sub_Staff',
-      }[category]
-      
-      valid_metals = ['Bronze', 'Silver', 'Gold']
-      metal = valid_metals.include?(rating) ? rating : ((category == :overall and !rating.nil?)? 'Participant' : 'None')
-      
-      "el_icons/EL_#{cat}_#{metal}.png"
+    return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
+    cat = {
+      :overall    => 'Award',
+      :mini       => 'Mobile',
+      :community  => 'Sub_Comm',
+      :state      => 'Sub_State',
+      :staff      => 'Sub_Staff',
+    }[category]
     
-    else
-      cat = 'Sub_Comm'
-      metal = 'Silver'
-      "el_icons/EL_#{cat}_#{metal}.png"
-    end
+    valid_metals = ['Bronze', 'Silver', 'Gold']
+    metal = valid_metals.include?(rating) ? rating : ((category == :overall and !rating.nil?)? 'Participant' : 'None')
+    
+    "el_icons/EL_#{cat}_#{metal}.png"
+  end
+  
+  def seal_image(category, rating)
+    School.seal_image(category, rating)
   end
   
   def self.grade_image(letter, style=:normal)
