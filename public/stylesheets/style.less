@@ -15,8 +15,9 @@
 @mblue:  #78d5f7;
 @dgreen: #29b473; 
 
-@headerheight: 80px; 
+@headerheight: 60px; 
 @footerheight: 180px;
+@map_ratio: 35%;
 
 @e_red:    #ED2D26;
 @e_orange: #F05A28;
@@ -76,6 +77,7 @@ body.schools-index { height: 100%; }
 .lead { font-size: 23px; }
 table td, table th { vertical-align: top; }
 
+h1 { color: @dturq; }
 h3.bebas {
   font-size: 1.5em; color: @dturq; marign-top: 0.5em;
   &.underlined { display: block; border-bottom: 1px solid @dturq; padding-bottom: 5px; }
@@ -99,8 +101,13 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
     input[type=text] { display: inline-block; max-width: 85%; }
   }
   i { vertical-align: baseline; }
-  img.logo { height: 60px; width: auto; margin-top: -5px; margin-right: 3em; }
+  img.logo { height: @headerheight - 20px; width: auto; margin-top: -5px; margin-right: 3em; }
 }
+.home-index #nav {
+  height: 180px;
+  img.logo { height: 160px; }
+}
+
 
 .menu, .branding { text-align: left; }
 .nav.nav-pills, .nav.nav-tabs {
@@ -131,9 +138,10 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
 #outer_wrapper {
   position: absolute; top: @headerheight; bottom: 0px; left: 0px; width: 100%;
   #lefty {
-    position: absolute; left: 0px; width: 300px; top: 0px; bottom: 0px; box-sizing: border-box; padding: 1em; border-right: 1px solid #888;
+    position: absolute; left: 0px; width: @map_ratio; top: 0px; bottom: 0px; box-sizing: border-box; padding: 1em; border-right: 1px solid @turq;
     overflow-x: hidden; overflow-y: scroll; z-index: 10; border-right: 1px solid  $dblue;
     h1 { margin-top: 0; }
+    a.search { display: block; background-color: @lgreen; color: white; margin: 0.5em 0; }
     a.do-compare {
       position: fixed; bottom: 0px; left: 0px; width: 300px; display: block;
       background-color: @orange3; font-size: 1.4em; text-align: center; box-sizing: border-box;
@@ -141,8 +149,8 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
     }
   }
   .wrapper {
-    height: 100%; position: relative; border: 1px solid @dblue; padding-left: 300px;
-    .key { left: 300px; }
+    height: 100%; position: relative; border: 1px solid @dblue; padding-left: @map_ratio;
+    .key { left: @map_ratio; }
   }
 }
 #block-boxes-school-score-widget .boxes-box-content {
@@ -162,15 +170,6 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
   }
 }
 
-.l-content-left { width: 25%; }
-.l-content-right {
-  width: 72%;
-  h1 { background-color: @orange3; }
-}
-#lefty, #front-filter { 
-  .l-content-right { width: 100%; }
-  input[type=text] { max-width: 100%; }
-}
 #block-mailchimp-lists-get-email-updates .block__content {
  a:link, a:visited, input[type=submit] { border: none;  }
  h3 { margin: 0; }
@@ -241,7 +240,11 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
 
 ul.school_list {
   padding-left: 0;
-  li { list-style: none; margin-bottom: 0.7em; }
+  li.school {
+    list-style: none; margin-bottom: 1em; position: relative; padding-left: 50px; padding-top: 0px;
+    .mini-el-icon { position: absolute; left: 0px; top: 6px; height: auto; width: 40px; }
+    h3 { margin-top: 0; margin-bottom: 0; }
+  }
 }
 
 #block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-name .score-right {
@@ -368,6 +371,7 @@ ul.nav {
   img { margin-top: 1em; }
   .question { color: @dturq; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
   .question.hide { display: none; }
+  .stars { display: block; margin-top: 30%; font-size: 2em; }
   li.active .question { color: @turq; }
 }
 .overall-stars { font-size: 2em; }

@@ -25,20 +25,6 @@
     .grid_3.overall-seal
       - letter = @grades[:cumulative][:letter].to_s
       = image_tag School.grade_image(@grades[:cumulative][:letter].to_s, :normal), :class => 'el-icon'
-        
-      - if false
-        .grades_container.relative
-          = render 'shared/tip', :tip => @tips[:grade_overall], :placement => 'right'
-          = render
-          - if letter.blank? or School::NA_GRADES.include? letter
-            .grade.na{:title => 'No Grade'} N/A
-          - elsif letter.length < 3
-            .grade{:title => "Cumulative Grade"}= letter
-          - elsif letter == 'Promising'
-            .grade{:title => 'Promising'}= image_tag '/images/icon_thumbup_white.png', :alt => 'Promising'
-          - else
-            %p
-              %b= raw letter
 
     .grid_3.hours
       %h3 Grades

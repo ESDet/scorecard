@@ -488,14 +488,9 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1em 0 .5em 0; }
 
 .l-content h1 {
-  margin: 0;
-  padding: 20px 10px;
-  color: white;
   font-size: 35px;
   font-weight: normal;
-  background-color: #00aff0; }
-  .l-content h1 a {
-    color: white; }
+ }
 .l-content h2, .l-content h3, .l-content h4, .l-content h5, .l-content h6 {
   color: #134370;
   font-weight: normal; }

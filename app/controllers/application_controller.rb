@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :iphone?, :android?, :current_search, :school_type_options
-  layout 'main'
   
   protected
   

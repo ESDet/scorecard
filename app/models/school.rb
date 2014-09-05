@@ -94,6 +94,7 @@ class School < ActiveRecord::Base
   
   def my_properties
     kinds = []
+    kinds << 'earlychild' if earlychild?
     kinds << 'elementary' if elementary?
     kinds << 'middle' if middle?
     kinds << 'high' if high?
@@ -104,8 +105,12 @@ class School < ActiveRecord::Base
       :bcode      => self.bcode,
       :level      => k12 ? 'K12' : (self.high? ? 'HS' : (self.earlychild? ? 'EC' : 'K8')),
       :classes    => kinds.join(' '),
-      :cumulative => self.grades[:cumulative][:letter]
+      :cumulative => self.grades[:cumulative][:letter],
+      :seal       => earlychild? ?
+        seal_image(:mini, self.esd_el_2014.andand.overall_rating) :
+        School.grade_image(self.overall_grade, :small)
     }
+    # FIXME inefficient
     others = School.where(:centroid => self.centroid).select('id, name, address, school_type, grades_served, bcode, slug') - [self]
     result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
@@ -530,7 +535,7 @@ class School < ActiveRecord::Base
   
   def self.grade_image(letter, style=:normal)
     valid = %w[A Aplus B Bplus C Cplus D F]
-    mod = letter.gsub('+', 'plus')
+    mod = letter.andand.gsub('+', 'plus')
     mod = valid.include?(mod) ? mod : 'NA'
     return "el_icons/Sm_#{mod}.png" if style == :small
     "el_icons/K12_Grade_#{mod}.png"

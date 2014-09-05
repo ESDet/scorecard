@@ -20,9 +20,11 @@ class HomeController < ApplicationController
     @tips   = Tip.find_by_name('tips_tricks')
     @guides = Tip.find_by_name('parent_guides')
     @dropdowns = Definitions::FILTERS
-    render :layout => 'noside'
   end
 
+  def resources
+    @page = Tip.find_by_name('resources')
+  end
   
   def search
     redirect_to root_path and return if params[:q].blank?
@@ -56,7 +58,6 @@ class HomeController < ApplicationController
         'ec'        => 'Early Childhood',
         #'reset'     => "Erase database and reload everything",
       }.collect { |k,v| [v,k] }
-      render :layout => 'noside'
       
     elsif request.method == 'POST'
       case params[:what]
@@ -127,7 +128,6 @@ class HomeController < ApplicationController
 
   def tips
     @tips = Tip.all
-    render :layout => 'noside'
   end  
   
   def save_tips

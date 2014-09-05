@@ -7,13 +7,11 @@ class SchoolsController < ApplicationController
   
   def index
     filter = ['all', 'ec', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
-    #type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
     session[:filter]  = filter
-    #session[:type]    = type
     session[:loc]     = params[:loc]
     session[:complex] = nil
     
-    if params[:complex]
+    if params[:complex] and params[:complex] != 'null'
       @cq = params[:complex].is_a?(String) ? JSON.parse(params[:complex]) : params[:complex]
       #session[:complex] = @cq
     #else
@@ -50,7 +48,6 @@ class SchoolsController < ApplicationController
           :zoom => 12,
           :layer_control => false,
         })
-        render :layout => 'noside'
       end
       format.json do
         render :json => Bedrock::to_feature_collection(@schools.reject { |s| s.centroid.nil? })
@@ -158,7 +155,7 @@ class SchoolsController < ApplicationController
         4 => 'Program demonstrates quality across almost all standards',
         5 => 'Program demonstrates highest quality',
       }
-      render 'show_ec', layout: 'noside'
+      render 'show_ec'
       return
     end
     
@@ -218,7 +215,6 @@ class SchoolsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        render layout: 'noside'
       end
       #format.pdf { render :layout => false }
     end
@@ -302,8 +298,6 @@ class SchoolsController < ApplicationController
       'K8'    => 'k8',
       'HS'    => 'hs',
     }[types] || 'all'
-    
-    render layout: 'noside'
   end
   
   def increment

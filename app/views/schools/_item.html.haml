@@ -1,10 +1,12 @@
 %li.school{'data-bcode' => school.bcode}
-  = link_to school.name, school_path(school.slug)
-  %br/
-  Grades #{school.grades_served}
-  %br/
-  %label.float_right
+  - if school.earlychild?
+    = image_tag school.seal_image(:mini, school.esd_el_2014.andand.overall_rating), :class => "mini-el-icon"
+  - else
+    = image_tag School.grade_image(school.overall_grade, :small), :class => 'mini-el-icon'
+    
+  %h3= link_to school.name, school_path(school.slug)
+  - unless school.grades_served.blank?
+    %div Grades #{school.grades_served}
+  %label
     = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
     Compare
-  - unless school.grade.blank?
-    Overall: #{school.grade}
