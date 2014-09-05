@@ -450,8 +450,46 @@ module Definitions
                           "woodshop" => "Woodshop",
                "student_clubs_dance" => "Type of dance club",
             "student_clubs_language" => "Type language club",
-       "student_clubs_other_[1,2,3]" => "Other (we allow three)"
-     }
+       "student_clubs_other_1"       => "Other",
+       "student_clubs_other_2"       => "Other",
+       "student_clubs_other_3"       => "Other",
+
+      "arthistory" => "Art History",
+         "biology" => "Biology",
+          "calcab" => "Calculus AB",
+          "calcbc" => "Calculus BC",
+       "chemistry" => "Chemistry",
+         "chinese" => "Chinese Language and Culture",
+         "compsci" => "Computer Science A",
+     "englangcomp" => "English Language and Composition",
+      "englitcomp" => "English Literature and Composition",
+      "envscience" => "Environmental Science",
+     "eurohistory" => "European History",
+          "french" => "French Language and Culture",
+          "german" => "German Language and Culture",
+     "govpolicomp" => "Government and Politics: Comparative",
+       "govpolius" => "Government and Politics: United States",
+        "humangeo" => "Human Geography",
+         "italian" => "Italian Language and Culture",
+        "japanese" => "Japanese Language and Culture",
+           "latin" => "Latin",
+           "macro" => "Macroeconomics",
+           "micro" => "Microeconomics",
+     "musictheory" => "Music Theory",
+        "physicsb" => "Physics B",
+      "physicscem" => "Physics C: Electricity and Magnetism",
+    "physicscmech" => "Physics C: Mechanics",
+           "psych" => "Psychology",
+     "spanishlang" => "Spanish Language",
+      "spanishlit" => "Spanish Literature and Culture",
+           "stats" => "Statistics",
+        "studio2d" => "Studio Art: 2-D Design",
+        "studio3d" => "Studio Art: 3-D Design",
+      "studiodraw" => "Studio Art: Drawing",
+       "ushistory" => "United States History",
+    "worldhistory" => "World History",
+
+   }
      
      
     FILTERS = [
