@@ -26,10 +26,11 @@ class HomeController < ApplicationController
   
   def search
     redirect_to root_path and return if params[:q].blank?
-    @q = params[:q]
-    exact = School.find_by_name(@q)
-    redirect_to school_path(:id => exact.slug) and return if exact
-    redirect_to root_path, :notice => "Search isn't done yet, sorry!"
+    if @q = params[:q]
+      exact = School.find_by_name(@q)
+      redirect_to school_path(:id => exact.slug) and return if exact
+      redirect_to root_path, :notice => "Search isn't done yet, sorry!"
+    end
   end
   
   def robots

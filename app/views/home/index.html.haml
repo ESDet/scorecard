@@ -57,6 +57,9 @@
                 - menu[:options].each do |label, key, val|
                   %li= link_to label, '#', 'data-key' => key, 'data-value' => val
 
+          = form_tag '/schools', { :method => :post, :class => 'char-form' } do
+            = hidden_field_tag :filter, nil
+            = hidden_field_tag :complex, nil
           %a#char-search.btn.search.clear_floats{:href => '#'} Search &gt;
         
       
@@ -90,6 +93,8 @@
       return false;
     });
     
+    var charFilterGrade = null;
+    var charFilters = {};
     $('#characteristics .dropdown-menu li a').click(function(e) {
       var dd = $(this).closest('.dropdown');
       var trigger = $('a.trigger', dd), group = trigger.data('group');
@@ -97,13 +102,37 @@
       
       if(key) {
         // Save the key/val to filter JS object
+        trigger.addClass('active').data('last-key', key);
         $('.title', trigger).text($(this).text());
+        if(key == 'grades_served') {
+          $('.char-form input#filter').val(value);
+        } else {
+          charFilters[key] = value;
+        }
       } else {
         // Clear the selection
         $('.title', trigger).text(trigger.data('title'));
+        var lastKey = trigger.data('last-key');
+        if(lastKey == 'grades_served') {
+          $('.char-form input#filter').val(null);
+        } else {
+          delete charFilters[lastKey];
+        }
+        trigger.removeClass('active').data('last-key', null);
       }
       trigger.dropdown('toggle');
       return false;
+    });
+    
+    $('#characteristics .search').click(function(e) {
+      var j = JSON.stringify(charFilters);
+      var f = $('.char-form input#filter').val();
+      if($.isEmptyObject(j) && !f) {
+        return false;
+      }
+      $('.char-form input#complex').val(j);
+      $('.char-form').submit();
+      return true;
     });
 
   });  

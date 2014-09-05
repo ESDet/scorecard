@@ -6,16 +6,9 @@
     #container
       %header#nav.l-header
         = link_to image_tag('scorecard_logo.png', :class => 'logo float_left'), root_path
-        = link_to 'Home', root_path, :class => 'btn home'
-        = link_to 'View All Schools on Map', schools_path, :class => 'btn schools nomobile'
-        = form_tag '/search', { :method => :post, :class => 'form-byname search float_right' } do
-          = text_field_tag :q, nil, :placeholder => 'Search by school name', :autocomplete => 'off'
-          = submit_tag '>', :style => 'display: inline-block;'
-        :javascript
-          $(document).ready(function() {
-            var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
-            $('input#q').typeahead({ source: school_names });
-          });
+        = link_to 'Home', root_path, :class => 'btn home light'
+        = link_to 'Find a School', schools_path, :class => 'btn light schools nomobile'
+        = link_to 'Resources', '#', :class => 'btn light'
         
       #bodywrap.l-content
         = yield

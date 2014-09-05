@@ -3,7 +3,8 @@ ESD::Application.routes.draw do
   match 'map'               => 'home#map', :as => :map
   match 'search'            => 'home#search', :as => :search, :method => :post
   match 'schools/overview'  => 'schools#overview'
-  match 'compare(/*which)'    => 'schools#compare'
+  match 'compare(/*which)'  => 'schools#compare'
+  match 'schools'           => 'schools#index', :via => :post
   resources :schools
   
   match 'next/:id'          => 'schools#increment', :by => 1, :as => :next

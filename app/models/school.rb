@@ -73,7 +73,7 @@ class School < ActiveRecord::Base
   GRADES.slice(:ec, :k8, :k12, :suburban, :k8hs, :high).each do |k,v|
     scope k, where(:school_type => v)
   end
-  scope :elementary, where("grades_served REGEXP 'kp|KP|kf|KF|\b1\b|\b2\b|\b3\b|4|5'")
+  scope :elementary, where("grades_served REGEXP 'kp|KP|kf|KF|\\b1\\b|\\b2\\b|\\b3\\b|4|5'")
   scope :middle, where("grades_served REGEXP '6|7|8'")
   #scope :high, where("grades_served REGEXP '9|10|11|12'")
   

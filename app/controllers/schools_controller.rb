@@ -1,19 +1,26 @@
 class SchoolsController < ApplicationController
 
-  caches_action :index, :if => proc { request.format.json? }, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
+  #caches_action :index, :if => proc { request.format.json? }, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
   caches_action :overview, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
   
   helper_method :format_phone
   
   def index
-    filter = ['all', 'k8', 'high', 'ec', 'k8hs'].include?(params[:filter]) ? params[:filter] : nil
+    filter = ['all', 'ec', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
     type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
     session[:filter]  = filter
     session[:type]    = type
     session[:loc]     = params[:loc]
     
+    if params[:complex]
+      @cq = JSON.parse(params[:complex])
+      session[:complex] = @cq
+    else
+      @cq = session[:complex]
+    end
+    
     @title = current_search    
-    @schools = scope_from_filters(filter, type, params[:loc])
+    @schools = scope_from_filters(filter, type, params[:loc], @cq)
     @schools.sort! { |a,b| b.points.to_i <=> a.points.to_i }
 
     respond_to do |format|
@@ -344,11 +351,41 @@ class SchoolsController < ApplicationController
     end
   end
   
-  def scope_from_filters(filter, type, loc)
+  def scope_from_filters(filter, type, loc, complex=nil)
     logger.info "scope from filters: #{filter}, #{type}, #{loc}"
+    logger.ap complex if complex
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
-    #schools = schools.send(type) if type
-    if loc.andand.match /^[0-9]{5}$/
+    
+    if complex
+      grades = complex['grades_served']
+      schools = schools.send(grades) if grades
+
+      others = complex.reject { |k,v| k == 'grades_served' }
+      logger.ap "others: #{others}"
+      unless others.empty?
+        schools = schools.where('profile is not null')
+        others.each do |key, value|
+          vals = [value].flatten
+          logger.ap "searching profiles where #{key} == #{vals}"
+          logger.info "started with #{schools.count} schools"
+          if key.is_a?(String)
+            schools = schools.select do |s|
+              logger.info "  check #{s.bcode}: #{s.profile[key].inspect}"
+              school_vals = (s.profile[key] || '').split(',').collect { |i| i.squish }
+              intersection = vals & school_vals
+              !intersection.empty?
+            end
+            logger.info "now down to #{schools.count}"
+          
+          elsif key.is_a?(Array)
+            # Loopy over key and OR them together...
+            
+          end
+        end
+      end
+    
+    
+    elsif loc.andand.match /^[0-9]{5}$/
       schools = schools.where(:zip => loc)
     elsif !loc.blank?
       loc = loc.gsub("&", " and ")
