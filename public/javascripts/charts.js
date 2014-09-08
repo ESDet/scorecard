@@ -138,7 +138,7 @@ $(document).ready(function() {
       var chart = jQuery.jqplot (id, scores2,
         { 
           title: "Grade " + grade,
-          width: 400,
+          width: 300,
           seriesDefaults: {
             renderer: jQuery.jqplot.LineRenderer, 
             //color: '#00aff0',

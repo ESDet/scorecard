@@ -111,8 +111,8 @@ class School < ActiveRecord::Base
         School.k12_image(self.overall_grade, :small)
     }
     # FIXME inefficient
-    others = School.where(:centroid => self.centroid).select('id, name, address, school_type, grades_served, bcode, slug') - [self]
-    result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
+    #others = School.where(:centroid => self.centroid).select('id, name, address, school_type, grades_served, bcode, slug') - [self]
+    #result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
   end
   
@@ -220,7 +220,7 @@ class School < ActiveRecord::Base
 
     [:status, :progress, :climate].each { |s| h[s][:summary_table] = summary_table(s) }
     h[:status][:details] = details(:status)
-    h[:status][:history] = history(:status)
+    h[:progress][:history] = history(:status)
     h[:climate][:details] = details(:climate)
 
     return h

@@ -184,14 +184,14 @@
               We measure how much students are learning during a school year on computer-based growth assessments, and
               how much students improved year-over-year on state tests.
           
-            = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',  :tabs => [:summary, :details]
+            = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',  :tabs => [:summary, :details, :history]
+            .clear_floats
           
           #climate.tab-pane
             %p.turquoise
               We measure what students, teachers, and community volunteers think and feel about the school. We do this through
               community site visits and surveys.
               
-            %h3.bebas.underlined 5Essentials Student and Teacher Survey
             = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
       
             - if @school.esd_site_visit_2014
@@ -206,11 +206,12 @@
                   - if false
                     .explanation.arial= info[:explanation]
         
+            %br/
+            %h3.bebas.underlined 5Essentials Student and Teacher Survey
             - grade = @grades[:climate]
             - if grade[:details].empty?
               %p Sorry, we currently have no 5Essentials data to show for this school.
             - else
-              %br/
               %p.turquoise
                 For this survey, the student response rate was #{grade[:details]['Response rate on student survey']}%
                 and the teacher response rate was #{grade[:details]['Response rate on teacher survey']}%.

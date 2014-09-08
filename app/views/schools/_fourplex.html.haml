@@ -7,7 +7,7 @@
       %ul.dropdown-menu
         %li= link_to 'Clear selection', '#'
         - menu[:options].each do |label, key, val|
-          %li= link_to label, '#', 'data-key' => key, 'data-value' => val.is_a?(String) ? val : val.to_json
+          %li= link_to label, '#', 'data-key' => (key.is_a?(String) ? key : key.to_json), 'data-value' => (val.is_a?(String) ? val : val.to_json)
   
   = form_tag '/schools', { :method => :post, :class => 'char-form' } do
     = hidden_field_tag :filter, nil
@@ -16,14 +16,18 @@
     %a#char-search.btn.search.clear_floats{:href => '#'} Search &gt;
   
   :javascript
+    var charFilters = {};
     $(document).ready(function(e) {
-      var charFilterGrade = null;
-      var charFilters = {};
       $('.fourplex .dropdown-menu li a').click(function(e) {
         var dd = $(this).closest('.dropdown');
         var trigger = $('a.trigger', dd), group = trigger.data('group');
         var key = $(this).data('key'), value = $(this).data('value');
-        
+
+        var lastKey = trigger.data('last-key');
+        if(lastKey) {        
+          delete charFilters[lastKey];
+        }
+
         if(key) {
           // Save the key/val to filter JS object
           trigger.addClass('active').data('last-key', key);
@@ -36,11 +40,8 @@
         } else {
           // Clear the selection
           $('.title', trigger).text(trigger.data('title'));
-          var lastKey = trigger.data('last-key');
           if(lastKey == 'grades_served') {
             $('.char-form input#filter').val(null);
-          } else {
-            delete charFilters[lastKey];
           }
           trigger.removeClass('active').data('last-key', null);
         }

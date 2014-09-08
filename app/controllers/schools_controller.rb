@@ -396,18 +396,15 @@ class SchoolsController < ApplicationController
           vals = [value].flatten
           logger.ap "searching profiles where #{key} == #{vals}"
           logger.info "started with #{schools.count} schools"
-          if key.is_a?(String)
-            schools = schools.select do |s|
+          keys = key.split(',').collect { |i| i.squish }
+          schools = schools.select do |s|
+            if true 
               logger.info "  check #{s.bcode}: #{s.profile[key].inspect}" if s.profile[key]
               school_vals = (s.profile[key] || '').split(',').collect { |i| i.squish }
               intersection = vals & school_vals
               !intersection.empty?
             end
             logger.info "now down to #{schools.count}"
-          
-          elsif key.is_a?(Array)
-            # Loopy over key and OR them together...
-            
           end
         end
       end

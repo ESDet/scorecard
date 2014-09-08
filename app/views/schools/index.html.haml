@@ -26,22 +26,26 @@
 
 
 :javascript
+  var ajax = false;
   var listSpinner = null;
   var searching = false;
-  var charFilters = #{@cq.to_json};
+  //var charFilters = #{@cq.to_json};
   
   $(document).ready(function(e) {
 
-    $('#characteristics .search').click(function(e) {
+    $('.fourplex .search').click(function(e) {
       var j = JSON.stringify(charFilters);
       var f = $('.char-form input#filter').val();
       if($.isEmptyObject(j) && !f) {
         return false;
       }
       $('.char-form input#complex').val(j);
-      //$('.char-form').submit();
       
-      searchAsync();
+      if(ajax) {
+        searchAsync();
+      } else {
+        $('form.char-form').submit();
+      }
       return false;
     });
 

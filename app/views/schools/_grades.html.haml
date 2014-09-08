@@ -22,7 +22,7 @@
 
     
 - if tabs.include? :history
-  %h2.printonly History
+  %h3.bebas.underlined History
   = render 'shared/tip', :tip => @tips["history_#{section}".to_sym]
   - exists = grade[:history].collect { |n,subjects| subjects.values }.flatten.reject { |i| i.empty? }
   - if exists.empty?
@@ -30,4 +30,4 @@
   - else
     %p These charts show the percentage of students proficient in reading and math over the last four years.
   - grade[:history].each do |g,subjects|
-    .history{:id => "#{key}_history_#{g}", 'data-grade' => g, 'data-scores' => subjects.to_json, 'data-tab' => "a[href='#history']" }
+    .history{:id => "#{key}_history_#{g}", 'data-grade' => g, 'data-scores' => subjects.to_json, 'data-tab' => "a[href='#progress']" }
