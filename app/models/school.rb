@@ -107,8 +107,8 @@ class School < ActiveRecord::Base
       :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter],
       :seal       => earlychild? ?
-        seal_image(:mini, self.esd_el_2014.andand.overall_rating) :
-        School.grade_image(self.overall_grade, :small)
+        School.el_image(:mini, self.esd_el_2014.andand.overall_rating) :
+        School.k12_image(self.overall_grade, :small)
     }
     # FIXME inefficient
     others = School.where(:centroid => self.centroid).select('id, name, address, school_type, grades_served, bcode, slug') - [self]
@@ -511,9 +511,10 @@ class School < ActiveRecord::Base
   end
   
   
-  def self.seal_image(category, rating)
+  def self.el_image(category, rating)
     return 'el_icons/Overview.png' if category == :overview
-    return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
+    return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.include?('Not Rated')
+    #return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
       :mini       => 'Mobile',
@@ -522,17 +523,20 @@ class School < ActiveRecord::Base
       :staff      => 'Sub_Staff',
     }[category]
     
-    valid_metals = ['Bronze', 'Silver', 'Gold']
-    metal = valid_metals.include?(rating) ? rating : ((category == :overall and !rating.nil?)? 'Participant' : 'None')
-    
+    valid_metals = {
+      'Below Bronze'  => 'BelowBronze',
+      'Bronze'        => 'Bronze',
+      'Silver'        => 'Silver',
+      'Gold'          => 'Gold',
+      'Incomplete'    => 'NoRating',
+    }
+    metal = valid_metals[rating].andand.gsub(' ', '') || 'None'
+    #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')
     "el_icons/EL_#{cat}_#{metal}.png"
   end
   
-  def seal_image(category, rating)
-    School.seal_image(category, rating)
-  end
   
-  def self.grade_image(letter, style=:normal)
+  def self.k12_image(letter, style=:normal)
     valid = %w[A Aplus B Bplus C Cplus D F]
     mod = letter.andand.gsub('+', 'plus')
     mod = valid.include?(mod) ? mod : 'NA'

@@ -16,11 +16,10 @@
               - ktop.each do |s|
                 %li
                   - if kind == :ec
-                    = image_tag s.seal_image(:mini, s.esd_el_2014.andand.overall_rating), :class => 'mini-icon float_left'
-                    = link_to raw(s.esd_el_2014.andand.program_name || s.name), s
+                    = image_tag School.el_image(:mini, s.esd_el_2014.andand.overall_rating), :class => 'mini-icon float_left'
                   - else
-                    = image_tag School.grade_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
-                    = link_to s.name, s
+                    = image_tag School.k12_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
+                  = link_to s.name, s
                           
     
     .grid_8

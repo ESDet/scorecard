@@ -8,7 +8,7 @@
           = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
           = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
       %br/
-      %h2= raw(@school.esd_el_2014.andand.program_name || @school.name)
+      %h2= @school.name
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
       .noprint
         - if @school.school_url
@@ -125,6 +125,8 @@
                     #{val.to_i%12} months
                   - else
                     = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
+
+        = render 'legend'
     
       #community.tab-pane
         %p.turquoise
@@ -141,8 +143,6 @@
                 %span / 4.0
               %h3.statement= info[:statement]
               .explanation.arial= info[:explanation]
-
-        = render 'legend'
           
                 
       #state.tab-pane{:class => participant ? '' : 'active'}
@@ -187,8 +187,6 @@
         - if @el.andand.teacher_score_mean
           = render 'staff_rating', :score => @el.teacher_score_mean, :state => 3.64
 
-        = render 'legend'
-    
 
   %br/
   %br/

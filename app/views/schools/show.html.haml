@@ -30,7 +30,7 @@
   .container_12
     .grid_3.overall-seal
       - letter = @grades[:cumulative][:letter].to_s
-      = image_tag School.grade_image(@grades[:cumulative][:letter].to_s, :normal), :class => 'el-icon'
+      = image_tag School.k12_image(@grades[:cumulative][:letter].to_s, :normal), :class => 'el-icon'
 
     .grid_3.hours
       %h3 Grades

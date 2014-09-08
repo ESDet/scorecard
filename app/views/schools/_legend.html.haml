@@ -1,3 +1,9 @@
-.grade-legend.clear_floats
-  - { 'Gold' => '', 'Silver' => '', 'Bronze' => '', 'NA' => '' }.each do |metal, desc|
-    = image_tag School.seal_image(:overall, metal)
+%br/
+%br/
+%h3.bebas.underlined Grade Legend
+.grade-legend
+  - @legend.each do |metal, info|
+    .clear_floats
+      = image_tag School.el_image(:overall, metal)
+      %h3= info[1]
+      - #= info[1]

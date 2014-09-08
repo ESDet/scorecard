@@ -289,6 +289,7 @@ class Importer
       results.each do |r|
         # To join with the earlychild records, whic have a bcode like this
         pid = r['program_id'].gsub(/[^0-9]/, '')
+        r['program_name'] = CGI.unescapeHTML(r['program_name']) if r['program_name']
         
         if s = School.find_by_bcode(pid)
           s.update_attribute(dataset, OpenStruct.new(r))

@@ -5,5 +5,5 @@
   %br/
   %h1= grade[:letter].to_s.length < 3 ? grade[:letter] : '?'  
 - else
-  = image_tag School.grade_image(grade[:letter].to_s, :small), :class => 'el-icon'
+  = image_tag School.k12_image(grade[:letter].to_s, :small), :class => 'el-icon'
 

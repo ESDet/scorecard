@@ -120,6 +120,14 @@ class SchoolsController < ApplicationController
         :gsccontract    => 'Written Contract',
       }
       
+      @legend = {
+        'Gold'          => ['Gold', 'Superior Quality Program'],
+        'Silver'        => ['Silver', 'High Quality Program'],
+        'Bronze'        => ['Bronze', 'Quality Program'],
+        'Below Bronze'  => ['Did not medal', 'On the path to medal-level quality'],
+        'Not Rated'     => ['Incomplete', 'Not enough information to designate a rating'],
+        'None'          => ['No Rating', 'This program did not participate'],
+      }
       @community = {
         :clc_fairaverage => {
           :statement => 'This program does a good job of teaching children about different cultures.',
