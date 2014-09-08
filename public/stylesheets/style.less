@@ -392,21 +392,11 @@ ul.nav {
   .stars { display: block; margin-top: 30%; font-size: 2em; }
   li.active .question { color: @turq; }
 }
-.overall-stars { font-size: 2em; }
+.overall-stars { font-size: 2em; padding-top: 10px; }
 .turquoise { color: @dturq; }
 
 .earlychild {
-  .community_line {
-    border-bottom: 1px solid @turq; padding: 0.5em 0; position: relative; padding-bottom: 0.66em;
-    &:first-of-type { border-top: 1px solid @turq; }
-    .score {
-      position: absolute; left: 0px; top: 0.5em;
-    }
-    h3 { margin-top: 0; }
-    .statement, .explanation { padding-left: 80px; }
-    .statement { color: @turq; margin-bottom: 3px; }
-    .explanation { }
-  }
+  .community_line:first-of-type { border-top: 1px solid @turq; }
   #state {
     p { border-bottom: 1px solid @turq; padding-bottom: 1em; }
     table {
@@ -415,6 +405,7 @@ ul.nav {
       td, th { padding: 9px 20px; border-bottom: 1px solid @turq; }
       td:first-child, th:first-child { text-align: center; }
     }
+    .gs-logo { width: 200px; height: auto; position: absolute; right: 0px; top: 0px; }
   }
   #staff {
     .staff-rating {
@@ -440,7 +431,7 @@ ul.nav {
     }
   }
   .points { color: @turq; }
-  .stars { color: @turq; letter-spacing: -2px; font-size: 1.2em; margin-right: 9px; }
+  .stars { color: @turq; letter-spacing: -2px; font-size: 1.4em; margin-right: 9px; }
   .grade-legend {
     margin-top: 1em; clear: both;
     h3 { padding-top: 0.5em; }
@@ -456,6 +447,19 @@ ul.nav {
   .overall-seal {
     padding-top: 1em;
     .el-icon { width: 100%; height: auto; margin-top: 1em; }
+  }
+  .community_line {
+    border-bottom: 1px solid @turq; padding: 0.5em 0; position: relative; padding-bottom: 0.66em;
+    .score {
+      position: absolute; left: 0px; top: 0.5em;
+    }
+    h3 { margin-top: 0; }
+    .statement, .explanation { padding-left: 80px; }
+    .statement { color: @turq; margin-bottom: 3px; }
+    .explanation { }
+    &.level-0 { font-size: 1.2em; padding-left: 30px;}
+    &.level-1 { padding-left: 30px; }
+    &.level-2 { font-size: 0.9em; padding-left: 50px; }
   }
 }
 

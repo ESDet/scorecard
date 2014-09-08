@@ -152,7 +152,8 @@
           The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS),
           which is a state-run program. The points in each category are from the program's self-assessment.
   
-        .overall-stars        
+        .overall-stars.relative
+          = image_tag 'el_icons/gs_logo.png', :class => 'gs-logo'
           = render 'stars', :n => [@ec.andand.publishedrating.to_i, 0].max
         %table
           %thead
