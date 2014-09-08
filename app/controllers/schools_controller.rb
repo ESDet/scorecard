@@ -20,7 +20,15 @@ class SchoolsController < ApplicationController
     
     @title = current_search    
     @schools = scope_from_filters(filter, params[:loc], @cq)
-    @schools.sort! { |a,b| b.points.to_i <=> a.points.to_i }
+    @schools.sort! do |a,b|
+      if a.earlychild? and !b.earlychild?
+        1
+      elsif b.earlychild? and !a.earlychild?
+        -1
+      else
+        b.points.to_i <=> a.points.to_i
+      end
+    end
 
     respond_to do |format|
       format.html do

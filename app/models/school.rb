@@ -440,7 +440,7 @@ class School < ActiveRecord::Base
       2012 => meap_2012.andand.marshal_dump,
       2011 => meap_2011.andand.marshal_dump,
       2010 => meap_2010.andand.marshal_dump,
-      2009 => meap_2009.andand.marshal_dump
+      #2009 => meap_2009.andand.marshal_dump
     }
     h = {}
     (3..8).each do |grade|

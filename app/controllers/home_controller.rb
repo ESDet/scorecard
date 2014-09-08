@@ -4,11 +4,11 @@ class HomeController < ApplicationController
   def index
     session[:filter] = session[:loc] = nil
     @top = {
-      :all        => School.not_ec.order('points desc').limit(10),
+      :all        => School.not_ec.where("grade <> 'Promising'").order('points desc').limit(10),
       :ec         => School.ec.where('esd_el_2014 is not null').where("address2 like 'Detroit%'").order('points desc').limit(10),
-      :elementary => School.elementary.order('points desc').limit(10),
-      :middle     => School.middle.order('points desc').limit(10),
-      :high       => School.high.order('points desc').limit(10),
+      :elementary => School.elementary.where("grade <> 'Promising'").order('points desc').limit(10),
+      :middle     => School.middle.where("grade <> 'Promising'").order('points desc').limit(10),
+      :high       => School.high.where("grade <> 'Promising'").order('points desc').limit(10),
     }
     @top_labels = {
       :all        => "Top 10 Graded Schools",
