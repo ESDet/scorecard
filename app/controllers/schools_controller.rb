@@ -128,6 +128,10 @@ class SchoolsController < ApplicationController
         'Not Rated'     => ['Incomplete', 'Not enough information to designate a rating'],
         'None'          => ['No Rating', 'This program did not participate'],
       }
+      @legend_sub = @legend.dup
+      @legend_sub.delete 'None'
+      @legend_sub['Not Rated'] = ['No Rating', 'Not enough information to designate a rating or this program did not participate']
+      
       @community = {
         :clc_fairaverage => {
           :statement => 'This program does a good job of teaching children about different cultures.',

@@ -2,8 +2,7 @@
 %br/
 %h3.bebas.underlined Grade Legend
 .grade-legend
-  - @legend.each do |metal, info|
+  - legend.each do |metal, info|
     .clear_floats
-      = image_tag School.el_image(:overall, metal)
+      = image_tag School.el_image(tab, metal)
       %h3= info[1]
-      - #= info[1]

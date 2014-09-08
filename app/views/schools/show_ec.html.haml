@@ -126,7 +126,7 @@
                   - else
                     = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
 
-        = render 'legend'
+        = render 'legend', :legend => @legend, :tab => :overall
     
       #community.tab-pane
         %p.turquoise
@@ -143,6 +143,8 @@
                 %span / 4.0
               %h3.statement= info[:statement]
               .explanation.arial= info[:explanation]
+
+        = render 'legend', :legend => @legend_sub, :tab => :community
           
                 
       #state.tab-pane{:class => participant ? '' : 'active'}
@@ -173,6 +175,8 @@
           %div
             = render 'stars', :n => n
             = desc
+
+        = render 'legend', :legend => @legend_sub, :tab => :state
       
       #staff.tab-pane
         %p.turquoise
@@ -186,6 +190,8 @@
           
         - if @el.andand.teacher_score_mean
           = render 'staff_rating', :score => @el.teacher_score_mean, :state => 3.64
+
+        = render 'legend', :legend => @legend_sub, :tab => :staff
 
 
   %br/
