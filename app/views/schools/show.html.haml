@@ -191,6 +191,9 @@
               We measure what students, teachers, and community volunteers think and feel about the school. We do this through
               community site visits and surveys.
               
+            %h3.bebas.underlined 5Essentials Student and Teacher Survey
+            = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
+      
             - if @school.esd_site_visit_2014
               %h3.bebas.underlined Community-Led Site Visit
               - @sitevisit.each do |field, info|
@@ -202,11 +205,25 @@
                   %h3.statement= info[1]
                   - if false
                     .explanation.arial= info[:explanation]
-              
-            %h3.bebas.underlined 5Essentials Student and Teacher Survey
-            = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
-      
-
+        
+            - grade = @grades[:climate]
+            - if grade[:details].empty?
+              %p Sorry, we currently have no 5Essentials data to show for this school.
+            - else
+              %br/
+              %p.turquoise
+                For this survey, the student response rate was #{grade[:details]['Response rate on student survey']}%
+                and the teacher response rate was #{grade[:details]['Response rate on teacher survey']}%.
+              %p.turquoise
+                The following charts show what the school scored in each category.
+              %p.turquoise
+                Dark Green = Well Organized, Red = Not Yet Organized
+              .elements_wrapper
+                - grade[:details].delete 'Response rate on student survey'
+                - grade[:details].delete 'Response rate on teacher survey'
+                - grade[:details].each do |label,val|
+                  = render 'shared/fivee', :label => label, :val => val
+            .clear_floats
 
 
 - unless true or Rails.env == 'production'

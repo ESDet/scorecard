@@ -19,25 +19,7 @@
     - grade[:details].each do |k,v|
       .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='#status']" }
     .clear_floats
-      
-  - elsif section == :climate
-    - if grade[:details].empty?
-      %p Sorry, we currently have no 5Essentials data to show for this school.
-    - else
-      %br/
-      %p.turquoise
-        For this survey, the student response rate was #{grade[:details]['Response rate on student survey']}%
-        and the teacher response rate was #{grade[:details]['Response rate on teacher survey']}%.
-      %p.turquoise
-        The following charts show what the school scored in each category.
-      %p.turquoise
-        Dark Green = Well Organized, Red = Not Yet Organized
-      .elements_wrapper
-        - grade[:details].delete 'Response rate on student survey'
-        - grade[:details].delete 'Response rate on teacher survey'
-        - grade[:details].each do |label,val|
-          = render 'shared/fivee', :label => label, :val => val
-    .clear_floats
+
     
 - if tabs.include? :history
   %h2.printonly History
