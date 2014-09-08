@@ -1,6 +1,6 @@
 #outer_wrapper
   #lefty
-    = render :partial => 'shared/filters'
+    = render 'schools/fourplex'
     .clear_floats
     %br/
     
@@ -31,8 +31,58 @@
   var charFilters = #{@cq.to_json};
   
   $(document).ready(function(e) {
-    $('.l-footer-wrapper').hide();
-    
+
+    $('#characteristics .search').click(function(e) {
+      var j = JSON.stringify(charFilters);
+      var f = $('.char-form input#filter').val();
+      if($.isEmptyObject(j) && !f) {
+        return false;
+      }
+      $('.char-form input#complex').val(j);
+      //$('.char-form').submit();
+      
+      searchAsync();
+      return false;
+    });
+
+    var searchAsync = function() {
+      // Get ajax for da new search and update list/map
+      if(searching) {
+        return false;
+      }
+      searching = true;
+      var data = {
+        filter:   $('#filter').val(),
+        loc:      $('#loc').val(), 
+        complex:  charFilters
+      };
+      if(!listSpinner) {
+        listSpinner = new Spinner({zIndex: 4000});
+      }
+      listSpinner.spin($('#lefty').get(0));
+
+      $.ajax({
+        async:  true,
+        type:   'GET',
+        url:    '/schools.json',
+        data:   data,
+        cache:  false,
+        success: function(response) {
+          for(var i in map.overlays.schools._layers) {
+            var dot = map.overlays.schools._layers[i];
+            map.overlays.schools.removeLayer(dot);
+          }
+          map.overlays.schools.addData(response);
+          var template = $('script#list-template').html();
+          var html = Mustache.to_html(template, response);
+          $('.school_list').html(html);
+          listSpinner.stop();
+          searching = false;
+        },
+        error: function(response) { }
+      });
+    };
+        
     $('body').on('change', 'input.compare-check', function(e) {
       var count = $('input.compare-check:checked').length;
       if(count > 0) {
@@ -64,50 +114,5 @@
       return false;
     });
     
-    $('form.form-search').submit(function(e) {
-      // Get ajax for da new search and update list
-      if(searching) {
-        return false;
-      }
-      searching = true;
-      var data = {
-        filter: $('#filter', this).val(),
-        type: $('#type', this).val(),
-        loc: $('#loc', this).val(), 
-        complex: charFilters
-      };
-      if(!listSpinner) {
-        listSpinner = new Spinner({zIndex: 4000});
-      }
-      listSpinner.spin($('#lefty').get(0));
 
-      $.ajax({
-        async: true,
-        type: 'GET',
-        url: '/schools.json',
-        data: data,
-        cache: false,
-        success: function(response) {
-          if(false) {
-            map.map.removeLayer(map.overlays.schools);
-            map.overlays.schools = map.addLayer(Paraffin.GEOJSON, { object: response });
-              //options: { style: { color: '#909', opacity: 1, weight: 3, fillOpacity: 0, fillColor: 'none' } } });
-          } else {
-            for(var i in map.overlays.schools._layers) {
-              var dot = map.overlays.schools._layers[i];
-              map.overlays.schools.removeLayer(dot);
-            }
-            map.overlays.schools.addData(response);
-          }
-          var template = $('script#list-template').html();
-          var html = Mustache.to_html(template, response);
-          $('.school_list').html(html);
-          listSpinner.stop();
-          searching = false;
-        },
-        error: function(response) { }
-      });
-         
-      return false;
-    });
   });

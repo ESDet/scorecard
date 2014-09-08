@@ -19,7 +19,6 @@ class HomeController < ApplicationController
     }
     @tips   = Tip.find_by_name('tips_tricks')
     @guides = Tip.find_by_name('parent_guides')
-    @dropdowns = Definitions::FILTERS
   end
 
   def resources

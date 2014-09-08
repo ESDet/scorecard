@@ -194,11 +194,11 @@
             - if @school.esd_site_visit_2014
               %h3.bebas.underlined Community-Led Site Visit
               - @sitevisit.each do |field, info|
-                - pts = @sitevisit_values[info[2].to_sym].to_f.round(2)
+                - pts = @sitevisit_values[info[2].to_sym].to_f.round(1)
                 .community_line{:class => "level-#{info[0]}"}
                   %h3.score
                     %span.points= pts
-                    %span / #{field == :overall_rating ? '10.0' : '5.0'}
+                    %span / 4.0
                   %h3.statement= info[1]
                   - if false
                     .explanation.arial= info[:explanation]

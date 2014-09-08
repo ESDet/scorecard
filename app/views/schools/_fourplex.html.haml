@@ -1,0 +1,50 @@
+.fourplex
+  - Definitions::FILTERS.each do |menu|
+    .dropdown
+      %a.trigger{:data => {:toggle => 'dropdown', :group => menu[:key], :title => menu[:title]}, :href => '#'}
+        %span.title= menu[:title]
+        %span.caret
+      %ul.dropdown-menu
+        %li= link_to 'Clear selection', '#'
+        - menu[:options].each do |label, key, val|
+          %li= link_to label, '#', 'data-key' => key, 'data-value' => val.is_a?(String) ? val : val.to_json
+  
+  = form_tag '/schools', { :method => :post, :class => 'char-form' } do
+    = hidden_field_tag :filter, nil
+    = hidden_field_tag :complex, nil
+    = text_field_tag :loc, params[:loc], :placeholder => 'Enter address or 5 digit zip code'
+    %a#char-search.btn.search.clear_floats{:href => '#'} Search &gt;
+  
+  :javascript
+    $(document).ready(function(e) {
+      var charFilterGrade = null;
+      var charFilters = {};
+      $('.fourplex .dropdown-menu li a').click(function(e) {
+        var dd = $(this).closest('.dropdown');
+        var trigger = $('a.trigger', dd), group = trigger.data('group');
+        var key = $(this).data('key'), value = $(this).data('value');
+        
+        if(key) {
+          // Save the key/val to filter JS object
+          trigger.addClass('active').data('last-key', key);
+          $('.title', trigger).text($(this).text());
+          if(key == 'grades_served') {
+            $('.char-form input#filter').val(value);
+          } else {
+            charFilters[key] = value;
+          }
+        } else {
+          // Clear the selection
+          $('.title', trigger).text(trigger.data('title'));
+          var lastKey = trigger.data('last-key');
+          if(lastKey == 'grades_served') {
+            $('.char-form input#filter').val(null);
+          } else {
+            delete charFilters[lastKey];
+          }
+          trigger.removeClass('active').data('last-key', null);
+        }
+        trigger.dropdown('toggle');
+        return false;
+      });
+    });

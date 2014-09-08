@@ -205,7 +205,7 @@ class SchoolsController < ApplicationController
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
     
     @sitevisit = {
-      :overall_rating       => [0, 'Overall Rating', 'points earned, 10 point scale'],
+      :overall_rating       => [0, 'Overall Rating', 'average of domain scores'],
       :domain_community     => [1, 'Welcoming Community Score', 'welcoming community score - overall_score'],
       :visitor_resources    => [2, 'Visitor resources score', 'visitor resources score - domain_community'],
       :welcoming_culture    => [2, 'Welcoming culture score', 'welcoming culture score 0- domain_community'],
@@ -217,9 +217,6 @@ class SchoolsController < ApplicationController
       :college_promoted     => [2, 'College emphasis score', 'college emphasis score - domain_expectations'],
     }
     @sitevisit_values = @school.esd_site_visit_2014.andand.marshal_dump
-    #:average of domain scores: '2.79861111'
-    #:score on a 0-1 normalized scale: '0.48045268'
-    #:points earned, 10 point scale: '5.32'
     
     @extra_credit = {}
     if e = @school.esd
