@@ -513,7 +513,7 @@ class School < ActiveRecord::Base
   
   def self.el_image(category, rating)
     return 'el_icons/Overview.png' if category == :overview
-    return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.include?('Not Rated')
+    return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.include?('Not rated')
     #return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
