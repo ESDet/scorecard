@@ -17,9 +17,11 @@
                 %li
                   - if kind == :ec
                     = image_tag s.seal_image(:mini, s.esd_el_2014.andand.overall_rating), :class => 'mini-icon float_left'
+                    = link_to raw(s.esd_el_2014.andand.program_name || s.name), s
                   - else
                     = image_tag School.grade_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
-                  = link_to s.name, s
+                    = link_to s.name, s
+                          
     
     .grid_8
       %ul.nav.nav-tabs
@@ -67,6 +69,7 @@
       %br/
       
       .block
+        %p.orange Every year, Excellent Schools Detroit gathers a group of parents, experts, and teachers to grade schools throughout the city. We look at test scores, student progress, and the school environment. Use this Scorecard to find results for the schools you are interested in.
         %h3.bebas.underlined= @tips.title
         = raw(@tips.body)
         

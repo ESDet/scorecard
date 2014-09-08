@@ -292,6 +292,7 @@ class Importer
         
         if s = School.find_by_bcode(pid)
           s.update_attribute(dataset, OpenStruct.new(r))
+          s.update_attribute :name, r['program_name'] if r['program_name']
         else
           puts "No school found with bcode #{pid}"
           ap r

@@ -4,13 +4,20 @@
   - home = current_page?(root_path)
   %body{:class => "#{params[:controller]}-#{params[:action]}"}
     #container
-      %header#nav.l-header
-        = link_to image_tag(home ? 'scorecard_logo.png' : 'scorecard_thin.png', :class => 'logo float_left'), root_path
-        - unless home
-          .float_right
-            = link_to 'Home', root_path, :class => 'btn home light'
-            = link_to 'Find a School', schools_path, :class => 'btn light schools nomobile'
-            = link_to 'Resources', '/resources', :class => 'btn light'
+      %header#nav
+        .container_12
+          - if home
+            .grid_4.centered
+              = link_to image_tag('scorecard_logo.png', :class => 'logo'), root_path
+            .grid_8.relative
+              %h2 Find a School...
+          - else
+            .grid_12
+              = link_to image_tag('scorecard_thin.png', :class => 'logo float_left'), root_path
+              .float_right
+                = link_to 'Home', root_path, :class => 'btn'
+                = link_to 'Find a School', schools_path, :class => 'btn'
+                = link_to 'Resources', '/resources', :class => 'btn'
         
       #bodywrap.l-content
         = yield

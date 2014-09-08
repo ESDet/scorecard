@@ -3,17 +3,22 @@
 .summary.earlychild
   .container_12
     .grid_12{:style => 'margin-bottom: 1em;'}
-      .noprint
-        - if @school.school_url
-          = link_to raw('School Website'), @school.school_url, :class => 'btn light'
-        - if @school.facebook_url
-          = link_to raw('Facebook'), @school.facebook_url, :class => 'btn light'
-        - unless Rails.env.production?
+      - unless Rails.env.production?
+        .noprint
           = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
           = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
       %br/
       %h2= raw(@school.esd_el_2014.andand.program_name || @school.name)
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
+      .noprint
+        - if @school.school_url
+          %a.external{:href => @school.school_url, :target => '_blank'}
+            = image_tag 'external.png'
+            School Website
+        - if @school.facebook_url
+          %a.external{:href => @school.facebook_url, :target => '_blank'}
+            = image_tag 'external.png'
+            Facebook
 
   .container_12
     .grid_3.overall-seal
@@ -101,8 +106,7 @@
         = render 'shared/tip', :tip => @tips[:ec_profile]
         - if @el.nil?
           %p.orange
-            This program doesn't have an overall rating from Excellent Schools Detroit because it chose to opt out of 
-            the community and staff surveys.
+            This program doesn't have an overall rating from Excellent Schools Detroit because it did not participate in the community and staff surveys.
             
         - if @ec.andand.gscmessage
           %p= raw @ec.gscmessage

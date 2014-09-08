@@ -9,5 +9,5 @@
     .silver
     .gold
   - state_pct, score_pct = 100 * (@staff_state_avg-3).round(2), 100 * (score.to_f-3).round(2)
-  .pointer.state{:style => "right: #{100-state_pct}%;"} State Average = #{state}
+  .pointer.state{:style => "right: #{100-state_pct}%;"} Program Average = #{state}
   .pointer.score{:style => "right: #{100-score_pct}%;"} This Program = #{score.to_f.round(2)}
