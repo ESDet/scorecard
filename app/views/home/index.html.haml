@@ -66,6 +66,7 @@
       %br/
 
 :javascript
+  var charFilters = {};
   $(document).ready(function() {
     var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
     $('input#q').typeahead({ source: school_names });

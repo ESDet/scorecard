@@ -394,7 +394,7 @@ class School < ActiveRecord::Base
             #next if g == 3 and subject == :math  # Weird, it's 100% everywhere for now
             prof   = dump["grade_#{g}_#{subject}_proficient".to_sym].to_i
             tested = dump["grade_#{g}_#{subject}_tested".to_sym].to_i
-            logger.info "grade #{g} #{subject} - #{prof} and #{tested}"
+            #logger.info "grade #{g} #{subject} - #{prof} and #{tested}"
             #prof   = (prof == 9)   ? 0 : prof
             #tested = (tested == 9) ? 0 : tested
             next if tested == 0

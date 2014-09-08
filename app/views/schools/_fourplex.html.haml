@@ -7,7 +7,7 @@
       %ul.dropdown-menu
         %li= link_to 'Clear selection', '#'
         - menu[:options].each do |label, key, val|
-          %li= link_to label, '#', 'data-key' => (key.is_a?(String) ? key : key.to_json), 'data-value' => (val.is_a?(String) ? val : val.to_json)
+          %li= link_to label, '#', 'data-key' => (key.is_a?(String) ? key : key.join(',')), 'data-value' => (val.is_a?(String) ? val : val.join(','))
   
   = form_tag '/schools', { :method => :post, :class => 'char-form' } do
     = hidden_field_tag :filter, nil
@@ -16,7 +16,6 @@
     %a#char-search.btn.search.clear_floats{:href => '#'} Search &gt;
   
   :javascript
-    var charFilters = {};
     $(document).ready(function(e) {
       $('.fourplex .dropdown-menu li a').click(function(e) {
         var dd = $(this).closest('.dropdown');

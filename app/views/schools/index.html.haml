@@ -29,7 +29,8 @@
   var ajax = false;
   var listSpinner = null;
   var searching = false;
-  //var charFilters = #{@cq.to_json};
+  var gradeFilter = #{@grade_filter.to_json};
+  var charFilters = #{@complex.andand.to_json || {}};
   
   $(document).ready(function(e) {
 
@@ -86,6 +87,20 @@
         error: function(response) { }
       });
     };
+    
+    if(gradeFilter) {
+      console.log("Started with grade filter " + gradeFilter);
+      var el = $("a[data-key='grades_served'][data-value='" + gradeFilter + "']");
+      el.click();
+    }
+    console.log("Starting with search " + JSON.stringify(charFilters));
+    for(var k in charFilters) {
+      var val = charFilters[k];
+      var el = $("a[data-key='" + k + "'][data-value='" + val + "']");
+      console.log(el);
+      el.click();
+    }
+    
         
     $('body').on('change', 'input.compare-check', function(e) {
       var count = $('input.compare-check:checked').length;

@@ -7,12 +7,16 @@ class SchoolsController < ApplicationController
   
   def index
     filter = ['all', 'ec', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
-    session[:filter]  = filter
-    session[:loc]     = params[:loc]
-    session[:complex] = nil
+    loc    = params[:loc]
+    #session[:filter]  = filter
+    #session[:loc]     = params[:loc]
+    #session[:complex] = nil
+    
+    @complex = nil
+    @grade_filter = filter
     
     if params[:complex] and params[:complex] != 'null'
-      @cq = params[:complex].is_a?(String) ? JSON.parse(params[:complex]) : params[:complex]
+      @complex = params[:complex].is_a?(String) ? JSON.parse(params[:complex]) : params[:complex]
       #session[:complex] = @cq
     #else
     #  @cq = session[:complex]
@@ -34,7 +38,7 @@ class SchoolsController < ApplicationController
       format.html do
         @school_o = Bedrock::Overlay.from_config('schools',
           :ty         => :geojson,
-          :url        => schools_path(:format => :json, :filter => session[:filter], :loc => session[:loc], :type => session[:type]),
+          :url        => schools_path(:format => :json, :filter => filter, :loc => loc),
           :mouseover  => false,
           :key => {
             '#f48b68' => 'K8 Schools',
@@ -354,18 +358,18 @@ class SchoolsController < ApplicationController
   end
   
   # Ajax update the count of schools matching a filter set
-  def overview
-    filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
-    type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
-    session[:filter]  = filter
-    session[:type]    = type
-    session[:loc]     = params[:loc]
-    title = current_search    
-    schools = scope_from_filters(filter, params[:loc])
-    title = title.gsub('All ', '')
-    title = title.gsub('Schools', 'School') if schools.count == 1
-    render :text => "There #{schools.count==1?'is':'are'} #{schools.count} #{title} in Detroit"
-  end
+  #def overview
+  #  filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
+  #  type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
+  #  session[:filter]  = filter
+  #  session[:type]    = type
+  #  session[:loc]     = params[:loc]
+  #  title = current_search    
+  #  schools = scope_from_filters(filter, params[:loc])
+  #  title = title.gsub('All ', '')
+  #  title = title.gsub('Schools', 'School') if schools.count == 1
+  #  render :text => "There #{schools.count==1?'is':'are'} #{schools.count} #{title} in Detroit"
+  #end
   
   private
   
@@ -378,6 +382,7 @@ class SchoolsController < ApplicationController
       ph
     end
   end
+  
   
   def scope_from_filters(filter, loc, complex=nil)
     logger.info "scope from filters: #{filter}, #{loc}"
@@ -398,14 +403,14 @@ class SchoolsController < ApplicationController
           logger.info "started with #{schools.count} schools"
           keys = key.split(',').collect { |i| i.squish }
           schools = schools.select do |s|
-            if true 
-              logger.info "  check #{s.bcode}: #{s.profile[key].inspect}" if s.profile[key]
+            intersections = keys.collect do |key|
+              logger.info "  check #{s.bcode}: #{key} = #{s.profile[key].inspect}" if s.profile[key]
               school_vals = (s.profile[key] || '').split(',').collect { |i| i.squish }
               intersection = vals & school_vals
-              !intersection.empty?
-            end
-            logger.info "now down to #{schools.count}"
+            end.flatten
+            !intersections.empty?
           end
+          logger.info "now down to #{schools.count}"
         end
       end
     
