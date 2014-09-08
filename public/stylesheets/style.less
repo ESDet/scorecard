@@ -317,7 +317,7 @@ ul.school_list {
 }
 .home-index {
   input[type=text] {
-    font-size: 1.5em; padding: 5px 8px; margin: 1em 0; max-width: 100%;
+    font-size: 1.5em; padding: 5px 8px; margin: 1em 0; max-width: 100%; width: 100%;
     &#q { margin-top: 0; }
   }
   .btn.search { background-color: @lgreen; color: white; max-width: 100%; width: 100%; display: block; font-size: 1.5em; text-align: right; }
@@ -557,7 +557,7 @@ ul.nav {
   /*.details { background-color: @dturq; padding: 0.5em; }*/
   ul.nav.nav-tabs {
     li {
-      width: 100%; text-align: left; margin-bottom: 2px; padding: 0.5em 1em;
+      width: 100%; text-align: left; margin-bottom: 2px; padding: 0.5em 1em 1em 1em;
       a { border: none; }
       .question { padding: none; }
       a:hover { background-color: inherit; }
@@ -567,6 +567,11 @@ ul.nav {
     li.active a { border: none; }
     li:not(.active) { border-radius: 4px; }
   }
+  .home-index {
+    #top-tabs.nav-tabs > li.active > a { background-color: transparent; border-bottom: 0; .question { border-bottom: none; }}
+  }
+  #ground-wrapper #ground { top: 52px; }
+
   .tab-content {
     border: none;
     .tab-pane { padding: 0; }
@@ -584,11 +589,11 @@ ul.nav {
     }
   }
   
-  #front-filter .grades {
-    a { font-size: 1em; }
+  .grades {
+    line-height: 2;
   }
   .form-search {
-    #loc { max-width: 80% !important; font-size: 1.5em; padding: 8px; }
+    #loc { font-size: 1.5em; padding: 8px; }
   }
   #lefty, #front-filter { 
     .l-content-right { width: 80%; }
@@ -641,6 +646,12 @@ ul.nav {
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .home-index {
+    .dropdown { width: 100%; margin-right: 0; }
+    .logo-container { }
+  }
+}
 
 
 
