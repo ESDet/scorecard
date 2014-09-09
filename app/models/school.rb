@@ -253,19 +253,19 @@ class School < ActiveRecord::Base
         h += [
           { :name     => "ACT Composite Score (2 Year Average)",
             :key      => :act2_comp,
-            :value    => e.act2_comp.to_f.round(1),
+            :value    => e.act2_comp.andand.to_f.andand.round(1),
             :points   => e.act2_comp_pts,
             :possible => e.act2_comp_psspts },
           { :name     => "Percent College Ready Measured by ACT Scores",
             :key      => :act2_pcr,
-            :value    => e.act2_pcr.to_f.round(2),
+            :value    => e.act2_pcr.andand.to_f.andand.round(2),
             :points   => e.act2_pcr_pts,
             :possible => e.act2_pcr_psspts },
         ]
         h += [
           { :name     => "4-Year Graduation Rate, Class 2013",
             :key      => :gradrate,
-            :value    => e.gradrate.to_f.round(2),
+            :value    => e.gradrate.andand.to_f.andand.round(2),
             :points   => e.gradrate_pts,
             :possible => e.gradrate_psspts },
         ] unless e.gradrate.blank?
@@ -413,7 +413,7 @@ class School < ActiveRecord::Base
         # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2014
         [:allsub, :reading, :math, :english, :science].each do |subject|
           key = "#{subject}percentmeeting".to_sym
-          a[subject] = act.andand[key].to_i
+          a[subject] = act.andand[key].andand.to_i
         end
         h[:act] = a
       end
