@@ -97,8 +97,10 @@
     for(var k in charFilters) {
       var val = charFilters[k];
       var el = $("a[data-key='" + k + "'][data-value='" + val + "']");
+      var ctr = el.closest('.dropdown'), trigger = $('.trigger', ctr);
       console.log(el);
       el.click();
+      trigger.dropdown('toggle');
     }
     
         
