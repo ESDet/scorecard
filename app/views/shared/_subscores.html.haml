@@ -16,7 +16,7 @@
           %h3= h[:name]
         - unless h[:value].nil?
           %td
-            - if h[:value] == '0'
+            - if h[:value].to_f == 0
               = "-"
             - else
               = (h[:value].is_a?(Float) and h[:value] <= 1.0) ? "#{(h[:value] * 100).to_i}%" : h[:value]
