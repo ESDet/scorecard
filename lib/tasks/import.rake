@@ -16,6 +16,7 @@ namespace :import do
     Importer.get_scores 'esd_site_visit_2014'
     Importer.get_earlychild
     Importer.get_el_2014
+    Importer.update_relations
   end
   
   desc "Create school table schema from feed"
@@ -40,6 +41,7 @@ namespace :import do
     Importer.get_scores 'esd_site_visit_2014'
     Importer.get_earlychild
     Importer.get_el_2014
+    Importer.update_relations
     puts "Done!"
   end
 
@@ -79,6 +81,10 @@ namespace :import do
     Importer.get_scores 'esd_site_visit_2014'
   end
   
+  
+  task :relations => :environment do
+    Importer.update_relations
+  end
   
 
   desc "Locate unlocated schools"

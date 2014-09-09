@@ -35,6 +35,18 @@ class Importer
       School.reset_column_information
     end
   end
+  
+  def self.update_relations
+    # Calculate and store the "k12" and "others" columns for the schools (assumes they have all been loaded and geolocated)
+    # so that we don't calculate on every search / geojsonification
+    School.find_each do |s|
+      k12 = (School.where(:bcode => s.bcode).count > 1)
+      s.update_attribute(:k12, k12)
+      others = School.where(:centroid => s.centroid).where('id <> ?', s.id).select('id, name, address, school_type, grades_served, bcode, slug')
+      s.update_attribute(:others, others.empty? ? nil :
+        others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } })
+    end
+  end
 
   def self.get_profiles
     p = Portal.new

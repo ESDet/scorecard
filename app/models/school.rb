@@ -17,6 +17,7 @@ class School < ActiveRecord::Base
     :earlychild, :esd_el_2014, :esd_k8_2014, :esd_hs_2014, :esd_site_visit_2014, :fiveessentials_2014].each do |k|
     serialize k, OpenStruct
   end
+  serialize :others, Array
   before_save :set_slug
   before_save :set_totals
   
@@ -99,7 +100,6 @@ class School < ActiveRecord::Base
     kinds << 'middle' if middle?
     kinds << 'high' if high?
     
-    k12 = (School.where(:bcode => self.bcode).count == 2)
     result = {
       :name       => self.name,
       :bcode      => self.bcode,
@@ -108,11 +108,9 @@ class School < ActiveRecord::Base
       :cumulative => self.grades[:cumulative][:letter],
       :seal       => earlychild? ?
         School.el_image(:mini, self.esd_el_2014.andand.overall_rating) :
-        School.k12_image(self.overall_grade, :small)
+        School.k12_image(self.overall_grade, :small),
+      :others     => self.others,
     }
-    # FIXME inefficient
-    #others = School.where(:centroid => self.centroid).select('id, name, address, school_type, grades_served, bcode, slug') - [self]
-    #result[:others] = others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } } unless others.empty?
     return result
   end
   
