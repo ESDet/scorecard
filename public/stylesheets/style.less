@@ -15,7 +15,7 @@
 @mblue:  #78d5f7;
 @dgreen: #29b473; 
 
-@headerheight: 60px; 
+@headerheight: 50px; 
 @footerheight: 180px;
 @map_ratio: 35%;
 
@@ -38,7 +38,7 @@
 @bar4: #ffc75d;
 
 html { overflow-y: scroll; height: 100%; }
-body { height: auto; padding: 0; margin: 0; background-color: transparent; color: black; }
+body { height: auto; padding: 0; margin: 0; background-color: transparent; color: black; overflow-x: hidden; }
 body.schools-index { height: 100%; }
 #container { min-height:100%; position:relative; }
 #bodywrap { padding: 1em 0 @footerheight 0; margin-bottom: 0; }
@@ -81,7 +81,7 @@ table td, table th { vertical-align: top; }
 
 h1 { color: @dturq; }
 h3.bebas {
-  font-size: 1.5em; color: @dturq; marign-top: 0.5em;
+  font-size: 1.5em; color: @dturq; margin-top: 0.5em;
   &.underlined { display: block; border-bottom: 1px solid @dturq; padding-bottom: 5px; }
 }
 h4 { color: @dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
@@ -94,7 +94,7 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
 #nav {
   height: @headerheight; padding: 16px 0; font-weight: bold; font-size: 1.2em; box-sizing: border-box; margin-bottom: 0;
   .title { margin-top: 5px; }
-  a.btn { padding: 0.5em 1em; }
+  a.btn { padding: 15px 1em; }
   a.btn:hover { text-decoration: none; }
   .menu { text-align: right; }
   .search {
@@ -116,7 +116,7 @@ body:not(.home-index) {
     background-color: @lgrey;
     img.logo { margin: 0.5em 0 0.5em -27px; }
     a.btn {
-      background-color: transparent; color: @dturq; display: inline-block; height: 100%; padding: 20px 1em;
+      background-color: transparent; color: @dturq; display: inline-block; height: 100%; padding: 15px 1em;
       &:hover { background-color: @robin; }
     }
   }
@@ -452,8 +452,8 @@ ul.nav {
   .el-icon.overview { margin-top: 0; }
   .mini-el-icon { width: 40px; height: auto; float: right; margin-left: 0.5em; }
   .overall-seal {
-    padding-top: 1em;
-    .el-icon { width: 100%; height: auto; margin-top: 1em; }
+    padding-top: 1em; text-align: center; 
+    .el-icon { width: 100%; height: auto; margin-top: 1em;  max-width: 200px;  }
   }
   .community_line {
     border-bottom: 1px solid @turq; padding: 0.5em 0; position: relative; padding-bottom: 0.66em;
@@ -589,24 +589,30 @@ ul.nav {
   /*.details { background-color: @dturq; padding: 0.5em; }*/
   ul.nav.nav-tabs {
     li {
-      width: 100%; text-align: left; margin-bottom: 2px; padding: 0.5em 1em 1em 1em;
-      a { border: none; }
+      width: 100%; text-align: left; margin-bottom: 2px; padding: 0.5em 1em 1em 1em; position: relative; 
+      a { border: none; min-height: 0; }
       .question { padding: none; }
       a:hover { background-color: inherit; }
-      .question { border-bottom: none; font-size: 2.2em; padding: 0; }
+      .question { border-bottom: none; font-size: 2.2em; padding: 0; margin-top: 6px; }
       .mini-el-icon { margin-top: -25px; }
+      .el-icon { position: absolute; right: 5px; top: 5px; height: auto; width: 40px; margin-top: 0; }
     }
     li.active a { border: none; }
     li:not(.active) { border-radius: 4px; }
   }
   .home-index {
+    #nav .container_12 {
+      text-align: center;
+      .logo { margin-top: 1em; }
+      .grid_4 { margin: 0 auto; }
+    }
     #top-tabs.nav-tabs > li.active > a { background-color: transparent; border-bottom: 0; .question { border-bottom: none; }}
   }
   #ground-wrapper #ground { top: 52px; }
 
   .tab-content {
     border: none;
-    .tab-pane { padding: 0; }
+    .tab-pane { padding: 0.5em 1em; }
   }
   .earlychild {
     ul.nav.nav-tabs {
@@ -664,11 +670,11 @@ ul.nav {
     td:nth-child(1) { display: block; text-align: left; padding-bottom: 0; }
   }
   #footer.l-footer-wrapper {
-    height: auto; position: static; text-align: center; padding-bottom: 0.5em;
+    height: auto; position: static; text-align: center; padding-bottom: 0.5em; background-color: transparent;
     img { margin: 10px; height: auto; width: 100%; }
     .l-footer {
       padding-left: 0; 
-      .grid_4 { float: left; width: 25%; }
+      .grid_3 { float: left; width: 20%; }
     }
   }
   #outer_wrapper {
