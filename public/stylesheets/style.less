@@ -504,6 +504,22 @@ ul.nav {
 }
 
 
+.share {
+  margin: 0.5em 0;
+  .share-button {
+    display: inline-block; width: 24px; height: 24px; background-position: 0px 0px; background-repeat: no-repeat; margin-right: 5px;
+  }
+  #fb-share {
+    background-image: url(/images/el_icons/facebook_sprite.png);
+    &:hover { background-position: 0 -74px; }
+  }
+  #tw-share {
+    background-image: url(/images/el_icons/twitter_sprite.png); background-position: 0px 2px;
+    &:hover { background-position: 0 -68px; }  
+  }
+}
+
+
 @media only screen and (min-width: 960px) {
   .mobile_only { display: none; }
   .home-index .fourplex #loc { display: none; }

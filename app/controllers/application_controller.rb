@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
     if @school
       "Get more information about #{@school.name}. Includes overall rating, test scores, student growth data, school climate info and more."
     else
-      ''
+      "Use this Scorecard to find schools that fit your needs. Be sure to check out the resources below as they were designed with parents for parents."
     end
   end
   
