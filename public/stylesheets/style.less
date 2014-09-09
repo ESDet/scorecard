@@ -507,15 +507,23 @@ ul.nav {
 .share {
   margin: 0.5em 0;
   .share-button {
-    display: inline-block; width: 24px; height: 24px; background-position: 0px 0px; background-repeat: no-repeat; margin-right: 5px;
+    display: inline-block; width: 24px; height: 30px; background-position: 0px 0px; background-repeat: no-repeat; margin-right: 0px;
   }
   #fb-share {
-    background-image: url(/images/el_icons/facebook_sprite.png);
-    &:hover { background-position: 0 -74px; }
+    background-image: url(/images/el_icons/facebook_sprite.png); background-position: 5px 0px;
+    &:hover { background-position: 5px -74px; }
   }
   #tw-share {
     background-image: url(/images/el_icons/twitter_sprite.png); background-position: 0px 2px;
     &:hover { background-position: 0 -68px; }  
+  }
+  #plus-share {
+    background-image: url(/images/el_icons/googleplus_sprite.png); background-position: 0px 2px;
+    &:hover { background-position: 0 -72px; }  
+  }
+  #pin-share {
+    background-image: url(/images/el_icons/pinterest_sprite.png); background-position: 0px 2px;
+    &:hover { background-position: 0 -73px; }  
   }
 }
 
