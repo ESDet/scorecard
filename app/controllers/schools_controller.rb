@@ -17,13 +17,14 @@ class SchoolsController < ApplicationController
     
     if params[:complex] and params[:complex] != 'null'
       @complex = params[:complex].is_a?(String) ? JSON.parse(params[:complex]) : params[:complex]
+      logger.ap @complex
       #session[:complex] = @cq
     #else
     #  @cq = session[:complex]
     end
     
     @title = current_search    
-    @schools = scope_from_filters(filter, params[:loc], @cq)
+    @schools = scope_from_filters(filter, params[:loc], @complex)
     @schools.sort! do |a,b|
       if a.earlychild? and !b.earlychild?
         1
