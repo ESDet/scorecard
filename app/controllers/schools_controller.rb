@@ -85,6 +85,9 @@ class SchoolsController < ApplicationController
     end
     
     @subtitle = @school.name
+    level = @school.type_s
+    @subtitle += " - #{level}" if level
+    
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
       :elements => [@school])

@@ -134,7 +134,7 @@
                   %table
                     - fields.each do |field,label|
                       - val = @school.profile.send(field)
-                      - unless val.blank?
+                      - unless val.blank? or val.downcase == 'none' or val.downcase == 'na'
                         %tr
                           %td
                             %h3 #{label}:

@@ -14,15 +14,14 @@
       %tr
         %td
           %h3= h[:name]
-        - unless h[:value].nil?
-          %td
-            - if h[:value].to_f == 0
-              = "-"
-            - else
-              = (h[:value].is_a?(Float) and h[:value] <= 1.0) ? "#{(h[:value] * 100).to_i}%" : h[:value]
-        %td= h[:points].to_i == 0 ? '-' : h[:points]
+        %td
+          - if h[:value].blank?
+            = "-"
+          - else
+            = (h[:value].is_a?(Float) and h[:value] <= 1.0) ? "#{(h[:value] * 100).to_i}%" : h[:value].to_f.round(1)
+        %td= h[:points].blank? ? '-' : h[:points].to_f.round(1)
         %td
           .relative
-            = h[:possible].to_i == 0 ? '-' : h[:possible]
+            = h[:possible].blank? ? '-' : h[:possible].to_f.round(1)
   
         

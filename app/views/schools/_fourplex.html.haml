@@ -12,7 +12,7 @@
   = form_tag '/schools', { :method => :post, :class => 'char-form' } do
     = hidden_field_tag :filter, nil
     = hidden_field_tag :complex, nil
-    = text_field_tag :loc, params[:loc], :placeholder => 'Enter address or 5 digit zip code'
+    = text_field_tag :loc, params[:loc], :placeholder => 'Enter your address or 5 digit zip code'
     %a#char-search.btn.search.clear_floats{:href => '#'} Search &gt;
   
   :javascript

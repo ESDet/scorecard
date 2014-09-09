@@ -10,4 +10,7 @@
     .gold
   - state_pct, score_pct = 100 * (@staff_state_avg-3).round(2), 100 * (score.to_f-3).round(2)
   .pointer.state{:style => "right: #{100-state_pct}%;"} Program Average = #{state}
-  .pointer.score{:style => "right: #{100-score_pct}%;"} This Program = #{score.to_f.round(2)}
+  - if @school.esd_el_2014.teacher_survey_rating.downcase.include? 'not rated'
+    %p.not-rated This program did not receive enough responses.
+  - else
+    .pointer.score{:style => "right: #{100-score_pct}%;"} This Program = #{score.to_f.round(2)}

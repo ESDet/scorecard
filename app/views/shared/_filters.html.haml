@@ -1,4 +1,4 @@
-.btn-group.grades{:style => 'margin-right: 1em; margin-bottom: 0.5em;'}
+.btn-group.grades{:style => 'margin-right: 1em; margin-bottom: 1em;'}
   - names = (local_assigns.has_key?(:long_names) and long_names) ? ['All', 'Pre-school', 'Elementary', 'Middle', 'High'] : ['All', 'Pre-K', 'ES', 'MS', 'HS']
   = link_to names[0],  '#', 'data-filter' => 'all', :class => 'light'
   = link_to names[1],  '#', 'data-filter' => 'ec', :class => 'light'
@@ -10,7 +10,7 @@
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
   = hidden_field_tag :complex, '{}'
-  = text_field_tag :loc, params[:loc], :placeholder => 'Enter address or 5 digit zip code'
+  = text_field_tag :loc, params[:loc], :placeholder => 'Enter your address or 5 digit zip code'
   
   %a.btn#filter-search.search{:href => '#'} Search &gt;
 

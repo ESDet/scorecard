@@ -84,14 +84,24 @@ class School < ActiveRecord::Base
   
   scope :not_ec, where("school_type <> 'EC'")
   
-  def elementary?;  k8? or k12?; end
-  def middle?;      k8? or k12?; end
+  def elementary?;  grades_served.andand.match(/kp|KP|kf|KF|\b1\b|\b2\b|\b3\b|4|5/); end
+  def middle?;      grades_served.andand.match(/6|7|8/); end
   def high?;        school_type == GRADES[:high] or k12?; end
   def k8?;          school_type == GRADES[:k8]; end
   def k12?;         school_type == GRADES[:k12]; end
   def earlychild?;  school_type == 'EC'; end
   
   def display?;     self.basic.scorecard_display == '1'; end
+  def type_s
+   case self.school_type
+    when 'EC' then 'Pre-School'
+    when 'HS' then 'High School'
+    when 'K8'
+      self.middle? ? 'Middle School' : 'Elementary School'
+    else
+      nil
+    end
+  end
   
   def my_properties
     kinds = []
@@ -232,17 +242,17 @@ class School < ActiveRecord::Base
         h += [
           { :name     => "Percent of Students Proficient in Math (2-Year Average)",
             :key      => :pr2_math,
-            :value    => e.pr2_math.to_f.round(2),
+            :value    => e.pr2_math, #.andand.to_f.andand.round(2),
             :points   => e.pr2_math_pts,
             :possible => e.pr2_math_ptsps },
           { :name     => "Percent of Students Proficient in Reading & Writing (2-Year Average)",
             :key      => :pr2_ela,
-            :value    => e.pr2_ela.to_f.round(2),
+            :value    => e.pr2_ela, #.to_f.round(2),
             :points   => e.pr2_ela_pts,
             :possible => e.pr2_ela_ptsps },
           { :name     => "Percent of Students Proficient in Science & Social Studies (2-Year Average)",
             :key      => :pr2_other,
-            :value    => e.pr2_other.to_f.round(2),
+            :value    => e.pr2_other, #.to_f.round(2),
             :points   => e.pr2_other_pts,
             :possible => e.pr2_other_ptsps }
         ] 
@@ -251,19 +261,19 @@ class School < ActiveRecord::Base
         h += [
           { :name     => "ACT Composite Score (2 Year Average)",
             :key      => :act2_comp,
-            :value    => e.act2_comp.andand.to_f.andand.round(1),
+            :value    => e.act2_comp, #.andand.to_f.andand.round(1),
             :points   => e.act2_comp_pts,
             :possible => e.act2_comp_psspts },
           { :name     => "Percent College Ready Measured by ACT Scores",
             :key      => :act2_pcr,
-            :value    => e.act2_pcr.andand.to_f.andand.round(2),
+            :value    => e.act2_pcr, #.andand.to_f.andand.round(2),
             :points   => e.act2_pcr_pts,
             :possible => e.act2_pcr_psspts },
         ]
         h += [
           { :name     => "4-Year Graduation Rate, Class 2013",
             :key      => :gradrate,
-            :value    => e.gradrate.andand.to_f.andand.round(2),
+            :value    => e.gradrate, #.andand.to_f.andand.round(2),
             :points   => e.gradrate_pts,
             :possible => e.gradrate_psspts },
         ] unless e.gradrate.blank?
@@ -511,7 +521,7 @@ class School < ActiveRecord::Base
   
   def self.el_image(category, rating)
     return 'el_icons/Overview.png' if category == :overview
-    return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.include?('Not rated')
+    return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
     #return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
@@ -535,7 +545,7 @@ class School < ActiveRecord::Base
   
   
   def self.k12_image(letter, style=:normal)
-    valid = %w[A Aplus B Bplus C Cplus D F]
+    valid = %w[A Aplus B Bplus C Cplus D F Promising]
     mod = letter.andand.gsub('+', 'plus')
     mod = valid.include?(mod) ? mod : 'NA'
     return "el_icons/Sm_#{mod}.png" if style == :small

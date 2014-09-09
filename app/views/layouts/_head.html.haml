@@ -6,6 +6,7 @@
   %link{:rel => "icon", :href => "/images/scorecard_favicon.png", :type => 'image/x-icon'}
   %link{:rel => "apple-touch-icon", :href => "/images/scorecard_favicon.png"}
   = render :partial => 'shared/fb_meta'
+  %meta{:name => 'keywords', :content => meta_keywords}/
   = csrf_meta_tag
   
   - if Rails.env == 'development'

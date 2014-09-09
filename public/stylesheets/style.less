@@ -44,9 +44,10 @@ body.schools-index { height: 100%; }
 #bodywrap { padding: 1em 0 @footerheight 0; margin-bottom: 0; }
 #footer.l-footer-wrapper {
   height: @footerheight; width: 100%; padding: 2em 0; position: absolute; bottom: 0px; left: 0px;
-  img { height: 100px; width: auto; }
+  img { width: 100%; height: auto; max-width: 100%; }
 }
 
+a, a:visited, a:hover { color: @turq; }
 .float_right { float: right; }
 .float_left { float: left; }
 .clear_floats { clear: both; }
@@ -130,9 +131,10 @@ body:not(.home-index) {
   .active a, .active a:hover { border-color: @turq; border-bottom-color: transparent; }
 }
 .tab-content { 
-  border: 1px solid @turq; border-top: 0; margin-bottom: 2em; position: relative;
+  border: 1px solid @turq; border-top: 0; margin-bottom: 20px; position: relative;
   .tab-pane { padding: 1em; position: relative; background-color: white; }
 }
+
 
 #ground-wrapper {
   position: relative;
@@ -312,15 +314,15 @@ ul.school_list {
 }
 
 .grades a, .dropdown > a {
-  font-size: 1.5em; background-color: white; color: @lgreen; padding: 5px 8px; border: 2px solid @lgreen;
+  font-size: 1.3em; background-color: white; color: @lgreen; padding: 5px 8px; border: 2px solid @lgreen;
   &.active { background-color: @lgreen; color: white; }
 }
 .home-index, .schools-index {
   input[type=text] {
-    font-size: 1.5em; padding: 5px 8px; margin: 0em 0; max-width: 100%; width: 100%;
+    font-size: 1.3em; padding: 5px 8px; margin: 0em 0; max-width: 100%; width: 100%;
     &#q { margin-top: 0; }
   }
-  .btn.search { background-color: @lgreen; color: white; max-width: 100%; width: 100%; display: block; font-size: 1.5em; text-align: right; }
+  .btn.search { background-color: @lgreen; color: white; max-width: 100%; width: 100%; display: block; font-size: 1.3em; text-align: right; }
   .dropdown {
     margin-bottom: 1em; width: 48%;  float: left;
     &:nth-child(odd) { margin-right: 4%; }
@@ -391,7 +393,7 @@ ul.nav {
   li.active { background-color: white; }
   li:last-of-type { margin-right: 0; }
   img { margin-top: 1em; }
-  .question { color: @dturq; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; }
+  .question { color: @dturq; border-bottom: 1px solid @turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; text-align: left; }
   .question.hide { display: none; }
   .stars { display: block; margin-top: 30%; font-size: 2em; }
   li.active .question { color: @turq; }
@@ -427,6 +429,7 @@ ul.nav {
         .silver { background-color: @bar3; width: 20%; }
         .gold { background-color: @bar4; width: 10%; }
       }
+      .not-rated { color: @orange; font-size: 14px; text-align: center; }
       .pointer {
         position: absolute; border-right: 2px solid @lgreen; padding-right: 0.5em; 
         &.state { top: 0px; padding-bottom: 45px; color: @lgreen; font-size: 90%; }
@@ -480,7 +483,7 @@ ul.nav {
     &.left li { width: 100%; margin-right: 0; }
   }
   .tab-content .tab-pane { padding: 1em; padding-top: 1.5em; }
-  .block { background-color: white; padding: 1em 2em; }
+  .block { background-color: white; padding: 1em 2em; border: 1px solid @turq; }
   #top-tabs {
     &.nav-tabs > li.active > a {
       background-color: @lgrey;
@@ -598,7 +601,7 @@ ul.nav {
     line-height: 2;
   }
   .form-search {
-    #loc { font-size: 1.5em; padding: 8px; }
+    #loc { font-size: 1.3em; padding: 8px; }
   }
   #lefty, #front-filter { 
     .l-content-right { width: 80%; }

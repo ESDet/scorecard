@@ -1,8 +1,8 @@
 %link{:rel => "image_src", :type => "image/jpeg", :href => "http://#{request.host}/images/icon.png"}
 %link{:rel => "apple-touch-icon", :href => "/images/icon.png"}
-%meta{:property => "og:image", :content => "http://#{request.host}/images/icon.png"}
-%meta{:property => "og:title", :content => 'ESD'}
-%meta{:property => "og:site_name", :content => "ESD"}
+%meta{:property => "og:image", :content => "http://#{request.host}#{og_image}"}
+%meta{:property => "og:title", :content => og_title}
+%meta{:property => "og:site_name", :content => "Excellent Schools Detroit Scorecard"}
 %meta{:property => "og:type", :content => (current_page?(root_path) ? 'website' : 'article')}
 %meta{:property => "og:url", :content => request.url}
-%meta{:property => "og:description", :content => "ESD"}
+%meta{:property => "og:description", :content => og_description}
