@@ -394,7 +394,7 @@ class SchoolsController < ApplicationController
     logger.ap complex if complex
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
     
-    unless complex.blank?
+    if !complex.blank?
       grades = complex['grades_served']
       schools = schools.send(grades) if grades
 
