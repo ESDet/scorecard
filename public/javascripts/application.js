@@ -16,6 +16,11 @@ $(document).ready(function(e) {
     window.location.hash = tgt + '-tab';
     return true;
   });
+  
+  $('a#hamburger').click(function(e) {
+    $('.menu').toggleClass('active');
+    return false;
+  });
 
   $('.help').popover({
     html: true,

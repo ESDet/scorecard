@@ -101,6 +101,7 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
     display: inline-block; margin-left: 2em; margin-bottom: 0; width: 330px;
     input[type=text] { display: inline-block; max-width: 85%; }
   }
+  .menu { float: right; }
   i { vertical-align: baseline; }
   img.logo { height: @headerheight - 20px; width: auto; margin-top: -5px; }
 }
@@ -567,6 +568,14 @@ ul.nav {
     text-align: left;
   }
   
+  body:not(.home-index) #nav {
+    .menu {
+      display: none; float: none; text-align: left;
+      &.active { display: block; }
+      a.btn { display: block; clear: both; padding: 0.5em 1em; }
+    }
+  }
+  
   h2 { margin-top: 0; }
   aside p { text-align: center; }
 
@@ -608,6 +617,7 @@ ul.nav {
     }
     #top-tabs.nav-tabs > li.active > a { background-color: transparent; border-bottom: 0; .question { border-bottom: none; }}
   }
+  body:not(.home-index) #nav img.logo { margin-left: 0; }
   #ground-wrapper #ground { top: 52px; }
 
   .tab-content {
