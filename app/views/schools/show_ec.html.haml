@@ -51,6 +51,8 @@
           - unless @ec.phone.blank?
             %span.day Phone:
             #{format_phone(@ec.phone)}
+      %h3 Share
+      = render 'shared/share'
 
 
     .grid_6.minimap_container

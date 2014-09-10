@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   def meta_keywords
     words = ''
     if @school
-      words = "#{@school.name}, #{@school.type_s}, #{@school.address2}, #{@school.basic.governance}, "
+      words = "#{@school.name}, #{@school.type_s}, #{@school.address2}, #{@school.basic.andand.governance}, "
     end
     words += "excellent schools, excellent schools detroit, scorecard, report card, school overview"
     words

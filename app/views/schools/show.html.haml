@@ -48,6 +48,10 @@
       - if copy
         %p.arial #{copy[0]}: #{copy[1]}
 
+      %h3 Share
+      = render 'shared/share'
+
+
     .grid_6.minimap_container
       .grid_3.alpha
         %a.btn.light.arial.print.noprint.nomobile{:href => "javascript:window.print();"}
@@ -66,8 +70,6 @@
           is too new for enough data to be available. We recommend that you visit with the school's leadership to better understand
           how the school performs against a college ready standard.
           
-      = render 'shared/share'
-
       
       - unless true or @school.PDF_FILE_NAME.blank?
         .float_right
