@@ -409,8 +409,9 @@ class SchoolsController < ApplicationController
           keys = key.split(',').collect { |i| i.squish }
           schools = schools.select do |s|
             intersections = keys.collect do |key|
-              logger.info "  check #{s.bcode}: #{key} = #{s.profile[key].inspect}" if s.profile[key]
-              school_vals = (s.profile[key] || '').split(',').collect { |i| i.squish }
+              val = s.profile.send(key)
+              logger.info "  check #{s.bcode}: #{key} = #{val.inspect}" if val
+              school_vals = (val || '').split(',').collect { |i| i.squish }
               intersection = vals & school_vals
             end.flatten
             !intersections.empty?
