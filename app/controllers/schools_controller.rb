@@ -16,7 +16,12 @@ class SchoolsController < ApplicationController
     @grade_filter = filter
     
     if params[:complex] and params[:complex] != 'null'
-      @complex = (params[:complex].is_a?(String) and !params[:complex].blank?) ? JSON.parse(params[:complex]) : params[:complex]
+      begin
+        @complex = (params[:complex].is_a?(String) and !params[:complex].blank?) ? JSON.parse(params[:complex]) : params[:complex]
+      rescue => e
+        logger.info e.inspect
+        @complex = nil
+      end
       logger.ap @complex
       #session[:complex] = @cq
     #else
