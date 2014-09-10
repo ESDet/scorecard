@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :iphone?, :android?, :current_search, :school_type_options
-  helper_method :meta_keywords, :og_image, :og_title, :og_description
+  helper_method :meta_keywords, :og_image, :og_title, :og_description, :twitter_link, :facebook_link
   
   protected
   
@@ -55,6 +55,22 @@ class ApplicationController < ActionController::Base
     end
     words += "excellent schools, excellent schools detroit, scorecard, report card, school overview"
     words
+  end
+  
+  
+  def twitter_link
+    opts = {
+      :text => @subtitle,
+      :url => request.url,
+    }
+    "http://twitter.com/share?#{opts.to_query}"
+  end
+  
+  def facebook_link
+    opts = {
+      :u => request.url,
+    }
+    "https://www.facebook.com/sharer.php?#{opts.to_query}"
   end
   
 end
