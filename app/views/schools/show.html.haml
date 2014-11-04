@@ -188,7 +188,8 @@
               We measure how much students are learning during a school year on computer-based growth assessments, and
               how much students improved year-over-year on state tests.
           
-            = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',  :tabs => [:summary, :details, :history]
+            = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',
+              :tabs => @school.elementary? ? [:summary, :details, :history] : [:summary, :details]
             .clear_floats
           
           #climate.tab-pane

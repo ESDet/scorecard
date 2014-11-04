@@ -47,6 +47,13 @@ class Importer
         others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } })
     end
   end
+  
+  # grades is a String, kind = :k8 or :hs
+  def self.filter_grades_served(grades, kind)
+    gs = grades.split(',').collect { |i| i.squish }
+    valid = (kind == :k8) ? %w[KF 1 2 3 4 5 6 7 8] : %w[9 10 11 12]
+    (gs & valid).join(', ')
+  end
 
   def self.get_profiles
     p = Portal.new
@@ -181,8 +188,8 @@ class Importer
           # Migrate from old version
           School.delete_all(:bcode => bcode)
         end
-        k8a = attrs.merge({ :school_type => 'K8', :name => "#{attrs[:name]} (K8)" })
-        hsa = attrs.merge({ :school_type => 'HS', :name => "#{attrs[:name]} (HS)" })
+        k8a = attrs.merge({ :school_type => 'K8', :name => "#{attrs[:name]} (K8)", :grades_served => filter_grades_served(attrs[:grades_served], :k8) })
+        hsa = attrs.merge({ :school_type => 'HS', :name => "#{attrs[:name]} (HS)", :grades_served => filter_grades_served(attrs[:grades_served], :hs) })
         if School.where(:bcode => bcode).count == 2
           # Ok update them both
           School.where(:bcode => bcode, :school_type => 'K8').first.update_attributes(k8a)

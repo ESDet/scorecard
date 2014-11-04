@@ -97,6 +97,14 @@ namespace :import do
     end
   end
 
+  task :fix_k12 => :environment do
+    #School.where("name like '%(HS)' or name like '%(K8)'").find_each do |s|
+    School.where(:k12 => 1).find_each do |s|
+      puts "Doing #{s.name}"
+      s.grades_served = Importer.filter_grades_served(s.grades_served, (s.school_type == 'K8' ? :k8 : :hs))
+      s.save
+    end
+  end
   
   
 end  
