@@ -325,13 +325,13 @@ class School < ActiveRecord::Base
         h += [
           { :name     => " Percent of Students Making Progress on MEAP",
             :key      => :plc_comp,
-            :value    =>  e.plc_comp.to_f.round(2),
+            :value    =>  e.plc_comp.andand.to_f.andand.round(2),
             :points   =>  e.plc_comp_pts,
             :possible =>  e.plc_comp_ptsps,
             :display  => :percent },
           { :name     => "Percent of Students Reaching their 1-Year Growth Target (Math & Reading)",
             :key      => :bench_comp,
-            :value    =>  e.bench_comp.to_f.round(2),
+            :value    =>  e.bench_comp.andand.to_f.andand.round(2),
             :points   =>  e.bench_comp_pts,
             :possible =>  e.bench_comp_ptsps,
             :display  => :percent },
@@ -342,7 +342,7 @@ class School < ActiveRecord::Base
         h += [
           { :name     => "Year-over-Year ACT Composite Score Gain (2 Year Average, 2010-11 to 2011-12, 2011-12 to 2012-13)",
             :key      => :act_grwth,
-            :value    => e.act_grwth.to_f.round(2),
+            :value    => e.act_grwth.andand.to_f.andand.round(2),
             :points   => e.act_grwth_pts,
             :possible => e.act_grwth_psspts },
         ] unless e.act_grwth.blank?
@@ -354,7 +354,7 @@ class School < ActiveRecord::Base
           h += [
             { :name     => "Community-Led Site Visit Score",
               :key      => :site_s,
-              :value    => e.site_s.to_f.round(2),
+              :value    => e.site_s.blank? ? nil : e.site_s.to_f.round(2),
               :points   => e.site_s_pts,
               :possible => e.site_s_ptsps },
             { :name     => "Net 5Essentials Score (2013-14)",
@@ -372,7 +372,7 @@ class School < ActiveRecord::Base
         h += [
           { :name     => "Community-Led Site Visit Score",
             :key      => :site_s,
-            :value    => e.site_s.to_f.round(2),
+            :value    => e.site_s.blank? ? nil : e.site_s.to_f.round(2),
             :points   => e.site_s_pts,
             :possible => e.site_s_psspts },
           { :name     => "Net 5Essentials Score (2013-14)",
