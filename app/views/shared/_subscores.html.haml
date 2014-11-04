@@ -17,8 +17,10 @@
         %td
           - if h[:value].blank?
             = "-"
+          - elsif h[:display] == :percent
+            = "#{(h[:value] * 100).to_i}%"
           - else
-            = (h[:value].is_a?(Float) and h[:value] <= 1.0) ? "#{(h[:value] * 100).to_i}%" : h[:value].to_f.round(1)
+            = h[:value].to_f.round(1)
         %td= h[:points].blank? ? '-' : h[:points].to_f.round(1)
         %td
           .relative

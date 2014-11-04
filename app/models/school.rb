@@ -242,40 +242,45 @@ class School < ActiveRecord::Base
         h += [
           { :name     => "Percent of Students Proficient in Math (2-Year Average)",
             :key      => :pr2_math,
-            :value    => e.pr2_math, #.andand.to_f.andand.round(2),
+            :value    => e.pr2_math.andand.to_f.andand.round(2),
             :points   => e.pr2_math_pts,
-            :possible => e.pr2_math_ptsps },
+            :possible => e.pr2_math_ptsps,
+            :display  => :percent },
           { :name     => "Percent of Students Proficient in Reading & Writing (2-Year Average)",
             :key      => :pr2_ela,
-            :value    => e.pr2_ela, #.to_f.round(2),
+            :value    => e.pr2_ela.andand.to_f.andand.round(2),
             :points   => e.pr2_ela_pts,
-            :possible => e.pr2_ela_ptsps },
+            :possible => e.pr2_ela_ptsps,
+            :display  => :percent },
           { :name     => "Percent of Students Proficient in Science & Social Studies (2-Year Average)",
             :key      => :pr2_other,
-            :value    => e.pr2_other, #.to_f.round(2),
+            :value    => e.pr2_other.andand.to_f.andand.round(2),
             :points   => e.pr2_other_pts,
-            :possible => e.pr2_other_ptsps }
-        ] 
+            :possible => e.pr2_other_ptsps,
+            :display  => :percent },
+        ]
       end
       if high? and e = self.esd_hs_2014
         h += [
           { :name     => "ACT Composite Score (2 Year Average)",
             :key      => :act2_comp,
-            :value    => e.act2_comp, #.andand.to_f.andand.round(1),
+            :value    => e.act2_comp.andand.to_f.andand.round(1),
             :points   => e.act2_comp_pts,
             :possible => e.act2_comp_psspts },
           { :name     => "Percent College Ready Measured by ACT Scores",
             :key      => :act2_pcr,
-            :value    => e.act2_pcr, #.andand.to_f.andand.round(2),
+            :value    => e.act2_pcr.andand.to_f.andand.round(2),
             :points   => e.act2_pcr_pts,
-            :possible => e.act2_pcr_psspts },
+            :possible => e.act2_pcr_psspts,
+            :display  => :percent },
         ]
         h += [
           { :name     => "4-Year Graduation Rate, Class 2013",
             :key      => :gradrate,
-            :value    => e.gradrate, #.andand.to_f.andand.round(2),
+            :value    => e.gradrate.andand.to_f.andand.round(2),
             :points   => e.gradrate_pts,
-            :possible => e.gradrate_psspts },
+            :possible => e.gradrate_psspts,
+            :display  => :percent },
         ] unless e.gradrate.blank?
       end
       
@@ -322,12 +327,14 @@ class School < ActiveRecord::Base
             :key      => :plc_comp,
             :value    =>  e.plc_comp.to_f.round(2),
             :points   =>  e.plc_comp_pts,
-            :possible =>  e.plc_comp_ptsps },
+            :possible =>  e.plc_comp_ptsps,
+            :display  => :percent },
           { :name     => "Percent of Students Reaching their 1-Year Growth Target (Math & Reading)",
             :key      => :bench_comp,
             :value    =>  e.bench_comp.to_f.round(2),
             :points   =>  e.bench_comp_pts,
-            :possible =>  e.bench_comp_ptsps }
+            :possible =>  e.bench_comp_ptsps,
+            :display  => :percent },
         ]
       end
               
