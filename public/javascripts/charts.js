@@ -133,7 +133,7 @@ $(document).ready(function() {
     var scores2 = _.map(scores, function(years, subj) { return _.values(years); });
     scores2 = _.filter(scores2, function(s) { return s.length > 0; });
     var subjects = _.keys(scores);
-    var ticks = [2009, 2010, 2011, 2012];
+    var ticks = [2010, 2011, 2012, 2013];
     if(scores2.length > 0) {
       var chart = jQuery.jqplot (id, scores2,
         { 
