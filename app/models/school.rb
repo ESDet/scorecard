@@ -455,7 +455,6 @@ class School < ActiveRecord::Base
       2012 => meap_2012.andand.marshal_dump,
       2011 => meap_2011.andand.marshal_dump,
       2010 => meap_2010.andand.marshal_dump,
-      #2009 => meap_2009.andand.marshal_dump
     }
     h = {}
     (3..8).each do |grade|
@@ -466,7 +465,7 @@ class School < ActiveRecord::Base
         dump.each do |year, dump|
           next if dump.blank?
           percent = meap_percent(year, grade, subject, dump)
-          h[grade][subject][year] = percent unless percent.nil?
+          h[grade][subject][year] = percent # unless percent.nil?
         end
       end
     end
@@ -482,7 +481,7 @@ class School < ActiveRecord::Base
     tested = dump[tf].to_i
     prof   = 0 if prof == 9
     tested = 0 if tested == 9
-    return nil if tested == 0
+    return nil if prof == 0 or tested == 0
     return (100.0 * prof.to_f / tested.to_f).to_i
   end
   
