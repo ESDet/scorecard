@@ -198,7 +198,7 @@ class SchoolsController < ApplicationController
     @profile_fields = School::PROFILE_FIELDS
     #@profile_fields_flat = @profile_fields.values.collect { |h| h.to_a }.flatten(1)
 
-    ethnicities = %w(american_indian asian african_american hispanic hawaiian white two_or_more_races)
+    ethnicities = %w(total female male american_indian asian african_american hispanic hawaiian white two_or_more_races)
     if @school.meap_2013
       @demographics = ethnicities.collect do |e|
         num = @school.meap_2013.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
