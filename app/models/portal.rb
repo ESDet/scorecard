@@ -1,36 +1,31 @@
 class Portal
+  BASE = 'https://portal.excellentschoolsdetroit.org/api/1.0/'
 
-  BASE = 'http://portal.excellentschoolsdetroit.org/api/1.0/'
-  
   def list_vocabularies
-    o = fetch 'taxonomy_vocabulary.json/'
-    return o
+    fetch 'taxonomy_vocabulary.json/'
   end
-  
+
   def show_vocabulary(vid)
-    o = fetch 'taxonomy_vocabulary/getTree.json/', { vid: vid, load_entities: 1 }, :post
+    fetch 'taxonomy_vocabulary/getTree.json/', { vid: vid, load_entities: 1 }, :post
   end
-  
+
   def get_related(tid)
     result = fetch 'taxonomy_term/selectNodes.json', { tid: tid }, :post
     result.first
   end
-  
+
   # Possible views: meap_2012*, esd_k8_2014, esd_hs_2014, act_2014...
   # opts = { :limit => x, :offset => y }
   def get_dataset(view, bcode=nil, opts={})
-    data = bcode.nil? ? {} : { 'filters[bcode]' => bcode } 
+    data = bcode.nil? ? {} : { 'filters[bcode]' => bcode }
     data.merge!(opts)
-    o = fetch "views/#{view}.json/", data
+    fetch "views/#{view}.json/", data
   end
-  
-  
-  
-  
+
   def url_for(path)
     "#{BASE}#{path}"
   end
-  
+
   def fetch(path, data={}, method=:get)
     url = url_for(path)
     #puts "Fetching #{url} with #{data.inspect}"
@@ -45,8 +40,6 @@ class Portal
     end
     #puts response.inspect
     #puts response.body
-    o = JSON.parse(response.body)
-    return o
+    JSON.parse(response.body)
   end
-
 end

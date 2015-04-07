@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'rake'
 gem 'rack', '1.2.1'
 gem 'rails', '3.0.9'
@@ -18,7 +20,7 @@ gem 'haml', '<4.0'
 gem 'httparty'
 gem 'less'
 gem 'therubyracer'
-gem 'sass'
+gem 'sass', '<3.4'
 gem 'json'
 gem 'jammit'
 #gem 'kaminari'
