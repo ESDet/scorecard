@@ -3,7 +3,7 @@ local: &local
   pool: 5
   timeout: 5000
   username: root
-  password: 
+  password:
   host: localhost
   encoding: utf8
 
@@ -18,11 +18,11 @@ sage: &sage
 development:
   <<: *local
   database: esd2_local
-  
+
 test:
   <<: *local
   database: esd2_test
-  
+
 staging:
   <<: *sage
   database: esd2_stage

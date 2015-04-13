@@ -1,12 +1,14 @@
 require File.expand_path('../boot', __FILE__)
 
-
 require 'rails/all'
 require 'rgeo/geo_json'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-Dotenv.load
+if Rails.env == :development || Rails.env == :test
+  require 'dotenv'
+  Dotenv.load
+end
 
 module ESD
   class Application < Rails::Application
