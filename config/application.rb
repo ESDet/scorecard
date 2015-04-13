@@ -1,9 +1,12 @@
 require File.expand_path('../boot', __FILE__)
 
+
 require 'rails/all'
 require 'rgeo/geo_json'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
+
+Dotenv.load
 
 module ESD
   class Application < Rails::Application
@@ -20,7 +23,7 @@ module ESD
 
     config.generators do |g|
       g.template_engine :haml
-    end    
+    end
 
   end
 end
