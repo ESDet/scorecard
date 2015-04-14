@@ -8,11 +8,11 @@ module Bedrock
   mattr_accessor :cloudmade_key, :cloudmade_style
   mattr_accessor :default_city, :default_state
   mattr_accessor :autocomplete_table, :autocomplete_column
-  
+
   def self.setup
     yield self
   end
-  
+
   @@city_extents = {
     'detroit'     => [ { :lat => 42.254038, :lon => -83.28793 }, { :lat => 42.4620, :lon => -82.897 } ],
     'wayne'       => [ { :lat => 42.01665183556825, :lon => -83.56887817382812 }, { :lat => 42.47108395294282, :lon => -82.84790039062499 } ],
@@ -25,26 +25,26 @@ module Bedrock
   def self.city_extents(city)
     @@city_extents[city.to_s]
   end
-  
+
   def self.extent(env)
     if env.nil?
       ::Rails.logger.info "Bedrock.extent returning nil cause it got nil envelope"
       return nil
     end
     return [ { :lon => env.min_x, :lat => env.min_y }, { :lon => env.max_x, :lat => env.max_y } ] if env.is_a? RGeo::Cartesian::BoundingBox
-    
+
     if env.is_a? Array or env.is_a?(ActiveRecord::Relation)
       return nil if env.empty?
       bb = RGeo::Cartesian::BoundingBox.new(env[0].geometry.factory)
       env.each { |f| bb.add f.geometry }
       return [ { :lon => bb.min_x, :lat => bb.min_y }, { :lon => bb.max_x, :lat => bb.max_y } ]
     end
-    
+
     pts = env.exterior_ring.points
     [ { :lon => pts[0].x, :lat => pts[0].y },
       { :lon => pts[2].x, :lat => pts[2].y } ]
   end
-  
+
   def self.merge_extents(a, b)
     return a if b.nil?
     return b if a.nil?
