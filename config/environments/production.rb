@@ -15,13 +15,19 @@ ESD::Application.configure do
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
 
-  config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), { :namespace => 'esd2_production', :expires_in => 3600, :compress => true }
+  config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), {
+    :namespace => ENV['CACHE_NAMESPACE'],
+    :expires_in => 3600,
+    :compress => true
+  }
 
-  config.action_mailer.default_url_options = { :host => "scorecard.excellentschoolsdetroit.org" }
+  ActionMailer::Base.delivery_method = :smtp
+
+  config.action_mailer.default_url_options = { :host => ENV['SMTP_DOMAIN'] }
 
   config.middleware.use ExceptionNotifier,
-    :email_prefix => "[ESD2 production] ",
-    :sender_address => %{"Exception Notifier" <info@makeloveland.com>},
-    :exception_recipients => %w{larry@makeloveland.com}
+    :email_prefix => "#{ENV['EMAIL_PREFIX']} ",
+    :sender_address => %{"Exception Notifier" <noreply@alfajango.com>},
+    :exception_recipients => %w{excellentschools@alfajango.com}
 
 end
