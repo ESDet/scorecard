@@ -2,6 +2,7 @@
 # project in your rails apps through git.
 Gem::Specification.new do |s|
   s.name = "bedrock"
+  s.author = "ESD"
   s.summary = "Bedrock."
   s.description = "Insert Bedrock description."
   s.files = Dir["lib/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]

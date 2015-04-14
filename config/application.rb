@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'rgeo-activerecord'
 require 'rgeo/geo_json'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
