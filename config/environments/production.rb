@@ -16,7 +16,9 @@ ESD::Application.configure do
   config.active_support.deprecation = :notify
 
   config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), {
-    :namespace => ENV['CACHE_NAMESPACE'],
+    :namespace => ENV['MEMCACHE_NAMESPACE'],
+    :username => ENV['MEMCACHE_USER'],
+    :password => ENV['MEMCACHE_PASS'],
     :expires_in => 3600,
     :compress => true
   }
