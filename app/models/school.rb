@@ -3,13 +3,13 @@ class School < ActiveRecord::Base
   require 'bedrock/acts_as_geocoded'
   require 'definitions'
   include Definitions
-  
+
   acts_as_feature :geometry => 'centroid', :fields => [:id, :name, :address, :address2, :grades_served, :slug, :grade, :points],
     :add_properties => :my_properties
   #acts_as_geocoded :address => :address, :point => :centroid, :sleep => 0.15
   utm_factory = RGeo::Geographic.projected_factory(:projection_proj4 => "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   set_rgeo_factory_for_column(:centroid, utm_factory)
-  
+
   require 'mogrify'
   include Mogrify
   [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_k8_2013_r1, :esd_hs_2013,
@@ -20,7 +20,7 @@ class School < ActiveRecord::Base
   serialize :others, Array
   before_save :set_slug
   before_save :set_totals
-  
+
 
   def self.square_array(arr)
     result = []
@@ -43,7 +43,7 @@ class School < ActiveRecord::Base
     :middle     => ['K8', 'K12'],
     :high       => 'HS',
   }
-  
+
   TYPES = {
     :charter          => 'Charter',
     :dps              => 'DPS',
@@ -56,20 +56,20 @@ class School < ActiveRecord::Base
     :parochial        => 'Parochial',
     :traditional      => 'Traditional public',
   }
-  
+
   FIVE_E_LABELS = {
     :"response rate on student survey"    => 'Response rate on student survey',
     :"response rate on teacher survey"    => 'Response rate on teacher survey',
     :"essential: effective leaders"       => 'Effective Leaders',
-    :"essential: collaborative teachers"  => 'Collaborative Teachers', 
+    :"essential: collaborative teachers"  => 'Collaborative Teachers',
     :"essential: involved families"       => 'Involved Families',
     :"essential: supportive environment"  => 'Supportive Environment',
     :"essential: ambitious instruction"   => 'Ambitious Instruction',
   }
-  
+
   NA_GRADES = ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined',
     'No Status/Progress Data', 'No Status Data']
-    
+
 
   GRADES.slice(:ec, :k8, :k12, :suburban, :k8hs, :high).each do |k,v|
     scope k, where(:school_type => v)
@@ -77,20 +77,20 @@ class School < ActiveRecord::Base
   scope :elementary, where("grades_served REGEXP 'kp|KP|kf|KF|\\b1\\b|\\b2\\b|\\b3\\b|4|5'")
   scope :middle, where("grades_served REGEXP '6|7|8'")
   #scope :high, where("grades_served REGEXP '9|10|11|12'")
-  
+
   TYPES.each do |k,v|
     scope k,         where(:sch => v)
   end
-  
+
   scope :not_ec, where("school_type <> 'EC'")
-  
+
   def elementary?;  grades_served.andand.match(/kp|KP|kf|KF|\b1\b|\b2\b|\b3\b|4|5/); end
   def middle?;      grades_served.andand.match(/6|7|8/); end
   def high?;        school_type == GRADES[:high] or k12?; end
   def k8?;          school_type == GRADES[:k8]; end
   def k12?;         school_type == GRADES[:k12]; end
   def earlychild?;  school_type == 'EC'; end
-  
+
   def display?;     self.basic.scorecard_display == '1'; end
   def type_s
    case self.school_type
@@ -102,14 +102,14 @@ class School < ActiveRecord::Base
       nil
     end
   end
-  
+
   def my_properties
     kinds = []
     kinds << 'earlychild' if earlychild?
     kinds << 'elementary' if elementary?
     kinds << 'middle' if middle?
     kinds << 'high' if high?
-    
+
     result = {
       :name       => self.name,
       :bcode      => self.bcode,
@@ -123,15 +123,15 @@ class School < ActiveRecord::Base
     }
     return result
   end
-  
+
   def esd
     return self.esd_hs_2014 if self.high?
     return self.esd_k8_2014 if self.k8?
     nil
   end
-  
+
   # For really simple sorting
-  def total_points 
+  def total_points
     if earlychild?
       mul = {
         'Gold' => 4,
@@ -141,7 +141,7 @@ class School < ActiveRecord::Base
       }[self.esd_el_2014.andand.overall_rating] || 0
       return mul * 100 + self.earlychild.andand.gscpts.to_i
     end
-      
+
     percent = nil
     if high? and defined?(self.esd_hs_2014) and self.esd_hs_2014
       percent = self.esd_hs_2014.total_pct.to_f
@@ -150,7 +150,7 @@ class School < ActiveRecord::Base
     end
     return percent.nil? ? nil : (percent * 100).to_i
   end
-  
+
   def overall_grade
     if high? and defined?(self.esd_hs_2014) and self.esd_hs_2014
       return self.esd_hs_2014.total_ltrgrade
@@ -159,15 +159,15 @@ class School < ActiveRecord::Base
     end
     return nil
   end
-  
-  
-  
+
+
+
   def grades
     cat = esd.andand.schoolcategory.andand.titleize
-    
+
     h = { :cumulative => {}, :status => {}, :progress => {}, :climate => {}, :other => {} }
     return h if esd.nil? and !earlychild?
-    
+
     if self.high? and self.esd_hs_2014
       # Common to all HS varieties:
       h[:status] = {
@@ -193,7 +193,7 @@ class School < ActiveRecord::Base
           :possible => esd.total_psspts,
           :percent  => esd.total_pct }
       end
-      
+
     elsif self.k8? and esd_k8_2014
       # Common to all the K8 varieties..
       h[:status] = {
@@ -219,11 +219,11 @@ class School < ActiveRecord::Base
           :possible => esd.pts_possible,
           :percent  => esd.total_pct }
       end
-      
+
     elsif self.earlychild
       h[:status][:summary_table] = summary_table(:status)
       return h
-      
+
     end
 
     [:status, :progress, :climate].each { |s| h[s][:summary_table] = summary_table(s) }
@@ -233,8 +233,8 @@ class School < ActiveRecord::Base
 
     return h
   end
-  
-  
+
+
   def summary_table(cat)
     h = []
     if cat == :status
@@ -283,7 +283,7 @@ class School < ActiveRecord::Base
             :display  => :percent },
         ] unless e.gradrate.blank?
       end
-      
+
       if earlychild? and ec = self.earlychild
         h += [
           #{ :name => 'Total Score',
@@ -319,7 +319,7 @@ class School < ActiveRecord::Base
         ]
       end
     end
-    
+
     if cat == :progress
       if elementary? and e = self.esd_k8_2014
         h += [
@@ -337,7 +337,7 @@ class School < ActiveRecord::Base
             :display  => :percent },
         ]
       end
-              
+
       if high? and e = esd_hs_2014
         h += [
           { :name     => "Year-over-Year ACT Composite Score Gain (2 Year Average, 2010-11 to 2011-12, 2011-12 to 2012-13)",
@@ -348,7 +348,7 @@ class School < ActiveRecord::Base
         ] unless e.act_grwth.blank?
       end
     end
-    
+
     if cat == :climate
       if elementary? and e = self.esd_k8_2014
           h += [
@@ -388,13 +388,13 @@ class School < ActiveRecord::Base
         ]
       end
     end
-    
+
     h
   end
-  
+
   # So far only Academic Status & Climate tabs implemented
   def details(tab)
-    
+
     h = {}
     if tab == :status
       dump = meap_2013.andand.marshal_dump
@@ -418,12 +418,12 @@ class School < ActiveRecord::Base
           end
         end
       end
-      
+
       if high?
         a = {}
         act = act_2014.andand.marshal_dump
         return {} if act.nil?
-        
+
         #logger.ap act
         # Bar charts with % meeting for All Subjects, Reading, Math, Science, and English (exclude Null values) from ACT 2014
         [:allsub, :reading, :math, :english, :science].each do |subject|
@@ -432,7 +432,7 @@ class School < ActiveRecord::Base
         end
         h[:act] = a
       end
-      
+
     elsif tab == :climate
       dump = fiveessentials_2014.andand.marshal_dump
       return {} if dump.nil?
@@ -440,14 +440,14 @@ class School < ActiveRecord::Base
         val = dump[key].to_i
         h[label] = val unless val.blank? or val == 0
       end
-      
+
     else
       throw "Tab not implemented yet"
     end
     h
   end
-  
-  
+
+
   def history(tab)
     throw "Not implemented yet" unless tab == :status
     dump = {
@@ -471,7 +471,7 @@ class School < ActiveRecord::Base
     end
     return h
   end
-  
+
   def meap_percent(year, grade, subject, dump=nil)
     h = dump.nil? ? self.send("meap_#{year}").andand.marshal_dump : dump
     return h if h.nil?
@@ -484,8 +484,8 @@ class School < ActiveRecord::Base
     return nil if prof == 0 or tested == 0
     return (100.0 * prof.to_f / tested.to_f).to_i
   end
-  
-  
+
+
   # To make link_to use slugs
   def to_param
     slug
@@ -495,12 +495,12 @@ class School < ActiveRecord::Base
     self.name ||= "School #{self.bcode}"
     self.slug = transliterate(self.name)
   end
-  
+
   def set_totals
     self.points = self.total_points
     self.grade = self.overall_grade
   end
-  
+
   def gmaps_url
     opts = {
         :q => "#{self.address}, #{self.address2}",
@@ -508,23 +508,23 @@ class School < ActiveRecord::Base
       }
     "http://maps.google.com?#{opts.to_query}"
   end
-  
+
   def school_url
     normalize_url(self.profile.andand.school_url || self.earlychild.andand.website)
   end
-  
+
   def facebook_url
     normalize_url(self.profile.andand.facebook_url)
   end
-  
+
   def normalize_url(u)
     return u if u.nil?
     x = u.gsub(/^(http|https):\/\//, '')
     return nil if x.blank?
     "http://#{x}"
   end
-  
-  
+
+
   def self.el_image(category, rating)
     return 'el_icons/Overview.png' if category == :overview
     return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
@@ -536,7 +536,7 @@ class School < ActiveRecord::Base
       :state      => 'Sub_State',
       :staff      => 'Sub_Staff',
     }[category]
-    
+
     valid_metals = {
       'Below Bronze'  => 'BelowBronze',
       'Bronze'        => 'Bronze',
@@ -548,8 +548,8 @@ class School < ActiveRecord::Base
     #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')
     "el_icons/EL_#{cat}_#{metal}.png"
   end
-  
-  
+
+
   def self.k12_image(letter, style=:normal)
     valid = %w[A Aplus B Bplus C Cplus D F Promising]
     mod = letter.andand.gsub('+', 'plus')
@@ -557,5 +557,5 @@ class School < ActiveRecord::Base
     return "el_icons/Sm_#{mod}.png" if style == :small
     "el_icons/K12_Grade_#{mod}.png"
   end
-  
+
 end

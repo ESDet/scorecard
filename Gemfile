@@ -22,9 +22,10 @@ gem 'jammit'
 gem 'less'
 gem 'newrelic_rpm'
 gem 'puma'
+gem 'pry-rails'
+gem 'pry-byebug'
 gem 'psych', '1.3.4'
 gem 'sass', '<3.4'
 gem 'therubyracer'
 
 gem 'rails_12factor', group: :production
-
