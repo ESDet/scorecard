@@ -1,5 +1,5 @@
 
-#ground-wrapper  
+#ground-wrapper
   #ground
   .container_12.clear_floats
     .grid_4.nomobile
@@ -7,12 +7,12 @@
         %li.active
           %a{:href => '#top', 'data-toggle' => 'tab'}
             - @top_labels.each do |kind,label|
-              .top-title.question.bebas{'data-kind' => kind, :class => kind == :all ? '' : 'hide'}= label
+              .top-title.question.bebas{'data-kind' => kind, :class => kind == :ec ? '' : 'hide'}= label
       .tab-content
         #top.tab-pane.active
           - @top.keys.each_with_index do |kind, i|
             - ktop = @top[kind]
-            %ul.top{'data-kind' => kind, :class => i>0 ? 'hide' : ''}
+            %ul.top{'data-kind' => kind, :class => i != 1 ? 'hide' : ''}
               - ktop.each do |s|
                 %li
                   - if kind == :ec
@@ -20,8 +20,8 @@
                   - else
                     = image_tag School.k12_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
                   = link_to s.name, s
-                          
-    
+
+
     .grid_8
       %ul.nav.nav-tabs
         %li.active
@@ -33,37 +33,37 @@
         %li
           %a{:href => '#characteristics', 'data-toggle' => 'tab'}
             .question.bebas By Characteristics
-            
-      
+
+
       .tab-content
         #location.tab-pane.active
           = render 'shared/filters', :long_names => true
           .clear_floats
-      
-        
+
+
         #name.tab-pane
           = form_tag '/search', { :method => :post, :class => 'form-byname search' } do
             = text_field_tag :q, nil, :placeholder => 'Search by school name', :autocomplete => 'off'
             %a#name-search.btn.search{:href => '#'} Search &gt;
           .clear_floats
-            
+
         #characteristics.tab-pane
           = render 'schools/fourplex'
-      
+
       .clear_floats
-      
+
       .block
         %p.orange
           Use this Scorecard to find schools that fit your needs. Be sure to check out the resources below as they were designed with parents
           %em for
-          parents. 
-        
+          parents.
+
         %h3.bebas.underlined= @tips.title
         = raw(@tips.body)
-        
+
         %h3.bebas.underlined= @guides.title
         = raw(@guides.body)
-        
+
       .clear_floats
       %br/
       %br/
@@ -84,7 +84,7 @@
       $(".top-title[data-kind='" + kind + "'], ul.top[data-kind='" + kind + "']").removeClass('hide');
       return false;
     });
-    
+
     $('#characteristics .search').click(function(e) {
       var j = JSON.stringify(charFilters);
       var f = $('.char-form input#filter').val();
@@ -96,6 +96,6 @@
       return true;
     });
 
-  });  
-  
+  });
+
 

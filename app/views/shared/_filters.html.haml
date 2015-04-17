@@ -5,13 +5,13 @@
   = link_to names[2],  '#', 'data-filter' => 'elementary', :class => 'light'
   = link_to names[3],  '#', 'data-filter' => 'middle', :class => 'light'
   = link_to names[4],  '#', 'data-filter' => 'high', :class => 'light'
-  
-  
+
+
 %form.form-search.search{:method => :get, :action => schools_path}
   = hidden_field_tag :filter, params[:filter]
   = hidden_field_tag :complex, '{}'
   = text_field_tag :loc, params[:loc], :placeholder => 'Enter your address or 5 digit zip code'
-  
+
   %a.btn#filter-search.search{:href => '#'} Search &gt;
 
 
@@ -20,17 +20,17 @@
   $(document).ready(function() {
     args = $.deparam.querystring();
     if(!args.filter) {
-      args.filter = 'all';
+      args.filter = 'ec';
     }
 
     updateControls();
     //updateCount();
-    
+
     $('#filter-search').click(function(e) {
       $('.form-search').submit();
       return false;
     });
-    
+
     $('.grades a').click(function(e) {
       args.filter = $(this).attr('data-filter');
       updateForm();
@@ -48,19 +48,19 @@
       return true;
     });
   });
-  
+
   function updateControls()
   {
     $('.grades a').removeClass('active');
     $('.grades a[data-filter=' + args.filter + ']').addClass('active');
   }
-  
+
   function updateForm()
   {
     $('input#filter').val(args.filter);
     $('input#loc').val(args.loc);
   }
-  
+
   function updateCount()
   {
     $('.count').css('color', '#b66');
@@ -81,4 +81,4 @@
       }
     });
   }
-  
+
