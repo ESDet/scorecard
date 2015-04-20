@@ -2,19 +2,19 @@ class SchoolsController < ApplicationController
 
   caches_action :index, :if => proc { request.format.json? }, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
   caches_action :overview, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
-  
+
   helper_method :format_phone
-  
+
   def index
     filter = ['all', 'ec', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
     loc    = params[:loc]
     #session[:filter]  = filter
     #session[:loc]     = params[:loc]
     #session[:complex] = nil
-    
+
     @complex = nil
     @grade_filter = filter
-    
+
     if params[:complex] and params[:complex] != 'null'
       begin
         @complex = (params[:complex].is_a?(String) and !params[:complex].blank?) ? JSON.parse(params[:complex]) : params[:complex]
@@ -27,8 +27,8 @@ class SchoolsController < ApplicationController
     #else
     #  @cq = session[:complex]
     end
-    
-    @title = current_search    
+
+    @title = current_search
     @schools = scope_from_filters(filter, params[:loc], @complex)
     @schools.sort! do |a,b|
       if a.earlychild? and !b.earlychild?
@@ -73,8 +73,8 @@ class SchoolsController < ApplicationController
       end
     end
   end
-  
-  
+
+
   def show
     begin
       @school = School.find_by_slug(params[:id]) || School.find(params[:id])
@@ -88,11 +88,11 @@ class SchoolsController < ApplicationController
       render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
       redirect_to root_path and return
     end
-    
+
     @subtitle = @school.name
     level = @school.type_s
     @subtitle += " - #{level}" if level
-    
+
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
       :elements => [@school])
@@ -116,10 +116,18 @@ class SchoolsController < ApplicationController
       :center         => { :lat => @school.centroid.y, :lon => @school.centroid.x },
       :layer_control  => false,
     })
-    
+
     if @school.earlychild?
       @ec = @school.earlychild
-      @el = @school.esd_el_2014
+      if @school.esd_el_2015
+        @el = @school.esd_el_2015
+        if @el.staffsurveyratingyear == "2014"
+          @teacher_score_mean = @el.teacher_score_mean_2014.to_f
+        end
+      else
+        @el = @school.esd_el_2014
+        @teacher_score_mean = @el.teacher_score_mean.to_f
+      end
       @ech = @ec.marshal_dump
       @staff_state_avg = 3.62
       @grades = @school.grades
@@ -129,7 +137,7 @@ class SchoolsController < ApplicationController
         :gscschedule    => 'Schedule Type',
         :agefrom        => 'Accepts Ages from',
         :ageto          => 'Accepts Ages to',
-        :gsccapacity    => 'Total Licensed Capacity',        
+        :gsccapacity    => 'Total Licensed Capacity',
         :gsceligibility => 'Program Eligibility Criteria',
         :gscsubsidy     => 'Financial Assistance',
         :gscspecial     => 'Special Needs Experience',
@@ -141,7 +149,7 @@ class SchoolsController < ApplicationController
         :transportation => 'Provides Transportation?',
         :gsccontract    => 'Written Contract',
       }
-      
+
       @legend = {
         'Gold'          => ['Gold', 'Superior Quality Program'],
         'Silver'        => ['Silver', 'High Quality Program'],
@@ -153,7 +161,29 @@ class SchoolsController < ApplicationController
       @legend_sub = @legend.dup
       @legend_sub.delete 'None'
       @legend_sub['Not Rated'] = ['No Rating', 'Not enough information to designate a rating or this program did not participate']
-      
+
+      @staff_average_2015 = [
+        {
+          :title => 'Program Environment',
+          :explanation => 'The Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.',
+          :points => @el.andand.physicalenviron_staff_average.to_f
+        },
+        {
+          :title => 'Family and Community Partnerships',
+          :explanation => 'Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.',
+          :points => @el.andand.familycommunity_staff_average.to_f,
+        },
+        {
+          :title => 'Cultural and Linguistic Competence',
+          :explanation => 'Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.',
+          :points => @el.andand.culturallinguistic_staff_average.to_f,
+        },
+        {
+          :title => 'General Culture and Climate',
+          :points => @el.andand.cultureclimate_staff_average.to_f
+        }
+      ]
+
       @community = {
         :clc_fairaverage => {
           :statement => 'This program does a good job of teaching children about different cultures.',
@@ -192,9 +222,9 @@ class SchoolsController < ApplicationController
       render 'show_ec'
       return
     end
-    
+
     @grades = @school.grades
-    
+
     @profile_fields = School::PROFILE_FIELDS
     #@profile_fields_flat = @profile_fields.values.collect { |h| h.to_a }.flatten(1)
 
@@ -206,7 +236,7 @@ class SchoolsController < ApplicationController
         num == 0 ? nil : [ "#{e.titleize}: #{num} students", num]
       end
       @demographics.reject! { |a| a.nil? }
-      
+
       @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
         num = @school.meap_2013.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
         num = 0 if num == 9
@@ -217,7 +247,7 @@ class SchoolsController < ApplicationController
       @enrollment = []
     end
     @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
-    
+
     @sitevisit = {
       :overall_rating       => [0, 'Overall Rating', 'average of domain scores'],
       :domain_community     => [1, 'Welcoming Community Score', 'welcoming community score - overall_score'],
@@ -231,12 +261,12 @@ class SchoolsController < ApplicationController
       :college_promoted     => [2, 'College emphasis score', 'college emphasis score - domain_expectations'],
     }
     @sitevisit_values = @school.esd_site_visit_2014.andand.marshal_dump
-    
+
     @extra_credit = {}
     if e = @school.esd
       @extra_credit['Overall Student Characteristics Points'] = e.studchrs_pts
       if old = (@school.k8? ? @school.esd_k8_2014 : e)
-        @extra_credit.merge!({ 
+        @extra_credit.merge!({
           'Socio-economic Status' => "#{(old.econdis_pct.to_f*100).to_i}%",
           'Special Education' => "#{(old.sped_pct.to_f*100).to_i}%",
           'English Language Learners' => "#{(old.ell_pct.to_f*100).to_i}%",
@@ -255,7 +285,7 @@ class SchoolsController < ApplicationController
       'New' => ['New school',
         "This school has been open since 2009 or sooner and as a result of being new, doesn't have the cumulative information
         needed for ESD to assign a grade."],
-      'Specialty' => ['Specialty school', 
+      'Specialty' => ['Specialty school',
         "A specialty school serves students that have unique learning needs or skills.
         Examples can include: adult education and alternative learning programs."]
       }
@@ -266,8 +296,8 @@ class SchoolsController < ApplicationController
       #format.pdf { render :layout => false }
     end
   end
-  
-  
+
+
   def compare
     str = params[:which] || ''
     if str == 'clear'
@@ -281,7 +311,7 @@ class SchoolsController < ApplicationController
     else
       list = str.split(',')
     end
-    
+
     # Limit
     list = list.collect { |i| i.to_i }.uniq
     list.shift while list.size > AppConfig.max_compared
@@ -295,7 +325,7 @@ class SchoolsController < ApplicationController
     @grades.each_with_index do |g,i|
       s = @schools[i]
       tx = {}
-      
+
       if s.earlychild?
         eg = s.earlychild
         tx['Overall Rating']            = eg.publishedrating
@@ -312,21 +342,21 @@ class SchoolsController < ApplicationController
         tx['Environment']               = eg.environment
         tx['Meals Provided']            = eg.meals
         tx['Provides Transportation?']  = eg.transportation
-        
+
       else
         tx['Overall Grade']     = g[:cumulative][:letter] || 'N/A'
         tx['Academic Status']   = g[:status][:letter]     || 'N/A'
         tx['Academic Progress'] = g[:progress][:letter]   || 'N/A'
         tx['School Climate']    = g[:climate][:letter]    || 'N/A'
-        
+
         tx['Address']           = "#{s.address}<br/>#{s.address2}"
         tx['Grades Served']     = s.grades_served || 'Unknown'
         tx['Governance']        = s.basic.governance || 'Unknown'
       end
-      
+
       @transposed[i] = tx
     end
-    
+
     # Turn an array of hashes to a hash of arrays..
     @chart = {}
     @transposed.each_with_index do |h,i|
@@ -335,7 +365,7 @@ class SchoolsController < ApplicationController
         @chart[label][i] = val
       end
     end
-    
+
     # When you go to add others to compare, we want to show only compatible
     # if only preschools
     types = @schools.collect { |s| s.school_type }.uniq.reject { |s| s.nil? }.sort.join('_')
@@ -346,7 +376,7 @@ class SchoolsController < ApplicationController
       'HS'    => 'hs',
     }[types] || 'all'
   end
-  
+
   def increment
     s = scope_from_filters(session[:filter], session[:loc])
     if params[:by] == 1
@@ -366,7 +396,7 @@ class SchoolsController < ApplicationController
     end
     redirect_to (s.nil? ? schools_path : school_path(s.slug)+"?from=#{params[:by]}")
   end
-  
+
   # Ajax update the count of schools matching a filter set
   #def overview
   #  filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
@@ -374,15 +404,15 @@ class SchoolsController < ApplicationController
   #  session[:filter]  = filter
   #  session[:type]    = type
   #  session[:loc]     = params[:loc]
-  #  title = current_search    
+  #  title = current_search
   #  schools = scope_from_filters(filter, params[:loc])
   #  title = title.gsub('All ', '')
   #  title = title.gsub('Schools', 'School') if schools.count == 1
   #  render :text => "There #{schools.count==1?'is':'are'} #{schools.count} #{title} in Detroit"
   #end
-  
+
   private
-  
+
   def format_phone(ph)
     if ph.length == 10
       "#{ph[0..2]}-#{ph[3..5]}-#{ph[6..-1]}"
@@ -392,13 +422,13 @@ class SchoolsController < ApplicationController
       ph
     end
   end
-  
-  
+
+
   def scope_from_filters(filter, loc, complex=nil)
     logger.info "scope from filters: #{filter}, #{loc}"
     logger.ap complex if complex
     schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
-    
+
     if !complex.blank?
       grades = complex['grades_served']
       schools = schools.send(grades) if grades
@@ -424,8 +454,8 @@ class SchoolsController < ApplicationController
           logger.info "now down to #{schools.count}"
         end
       end
-    
-    
+
+
     elsif loc.andand.match /^[0-9]{5}$/
       schools = schools.where(:zip => loc)
     elsif !loc.blank?
@@ -446,5 +476,5 @@ class SchoolsController < ApplicationController
     schools = schools.all if schools.is_a?(Class)
     return schools
   end
-  
+
 end

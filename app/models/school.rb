@@ -14,7 +14,7 @@ class School < ActiveRecord::Base
   include Mogrify
   [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_k8_2013_r1, :esd_hs_2013,
     :act_2013, :fiveessentials_2013, :meap_2013, :act_2014,
-    :earlychild, :esd_el_2014, :esd_k8_2014, :esd_hs_2014, :esd_site_visit_2014, :fiveessentials_2014].each do |k|
+    :earlychild, :esd_el_2014, :esd_el_2015, :esd_k8_2014, :esd_hs_2014, :esd_site_visit_2014, :fiveessentials_2014].each do |k|
     serialize k, OpenStruct
   end
   serialize :others, Array

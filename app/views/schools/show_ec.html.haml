@@ -66,12 +66,12 @@
           Compare This School
       .clear_floats/
       .minimap= render :partial => 'shared/map', :object => @map
-  
+
 
   %br.noprint/
   %br.noprint/
 
-#ground-wrapper  
+#ground-wrapper
   #ground
   .container_12.clear_floats.details.earlychild
     %ul.nav.nav-tabs
@@ -102,17 +102,17 @@
             %span.nomobile What does the staff think?
             %span.mobile_only Staff's Rating
           = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating, :school => @school
-      
+
     .tab-content
       #overview.tab-pane.self_reported{:class => participant ? 'active' : ''}
         = render 'shared/tip', :tip => @tips[:ec_profile]
         - if @el.nil?
           %p.orange
             This program doesn't have an overall rating from Excellent Schools Detroit because it did not participate in the community and staff surveys.
-            
+
         - if @ec.andand.gscmessage
           %p= raw @ec.gscmessage
-          
+
         %table
           - @profile_fields.each do |field,label|
             - val = @ech[field.to_sym]
@@ -129,14 +129,14 @@
                     = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
 
         = render 'legend', :legend => @legend, :tab => :overall
-    
+
       #community.tab-pane
         %p.turquoise
           The Community rating is based on surveys conducted on-site at the program by a group of trained reviewers from the community.
           After spending four hours observing and taking notes, reviewers answer questions on a four-point scale that measures how much they
           agree with the statements below (I do not agree at all, I somewhat agree, I mostly agree, and I completely agree). A score
           of 4.0 out of 4.0 is considered an "excellent" rating.
-        
+
         - if @el
           - @community.each do |field, info|
             .community_line
@@ -147,13 +147,13 @@
               .explanation.arial= info[:explanation]
 
         = render 'legend', :legend => @legend_sub, :tab => :community
-          
-                
+
+
       #state.tab-pane{:class => participant ? '' : 'active'}
         %p.turquoise
           The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS),
           which is a state-run program. The points in each category are from the program's self-assessment.
-  
+
         .overall-stars.relative
           = image_tag 'el_icons/gs_logo.png', :class => 'gs-logo'
           = render 'stars', :n => [@ec.andand.publishedrating.to_i, 0].max
@@ -171,7 +171,7 @@
                   %span.points= item[:points]
                   %span / #{item[:possible]}
                 %td= item[:name]
-      
+
         %br/
         %h3 Here is what the star ratings mean:
         - @stars.each do |n, desc|
@@ -180,19 +180,26 @@
             = desc
 
         = render 'legend', :legend => @legend_sub, :tab => :state
-      
+
       #staff.tab-pane
         %p.turquoise
           Teachers and staff here were asked to complete  a survey about their program. The survey
           included items about community engagement, family engagement, cultural and linguistic competence,
           and climate and culture. Teachers and staff answered questions on a four-point scale. Those answers
           were then averaged to create the number below.
-          
-        %hr
+
         %br/
-          
-        - if @el.andand.teacher_score_mean
-          = render 'staff_rating', :score => @el.teacher_score_mean, :state => 3.64
+
+        - if @teacher_score_mean
+          = render 'staff_rating', :score => @teacher_score_mean, :state => 3.64
+        - else
+          - @staff_average_2015.each do |h|
+            .community_line
+              %h3.score
+                %span.points= h[:points].round(2) if h[:points]
+                %span / 5.0
+              %h3.statement= h[:title]
+              .explanation.arial= h[:explanation]
 
         = render 'legend', :legend => @legend_sub, :tab => :staff
 
