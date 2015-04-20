@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :password_protect, :only => [:refresh, :tips]
-  
+
   def index
     session[:filter] = session[:loc] = nil
     @top = {
@@ -24,7 +24,7 @@ class HomeController < ApplicationController
   def resources
     @page = Tip.find_by_name('resources')
   end
-  
+
   def search
     redirect_to root_path and return if params[:q].blank?
     if @q = params[:q]
@@ -33,14 +33,12 @@ class HomeController < ApplicationController
       redirect_to root_path, :notice => "Search isn't done yet, sorry!"
     end
   end
-  
+
   def robots
     response = (Rails.env == 'production') ? '' : "User-Agent: *\nDisallow: /"
     render :text => response
   end
 
-
-  
   def refresh
     if request.method == 'GET'
       # Show a menu page
@@ -57,7 +55,7 @@ class HomeController < ApplicationController
         'ec'        => 'Early Childhood',
         #'reset'     => "Erase database and reload everything",
       }.collect { |k,v| [v,k] }
-      
+
     elsif request.method == 'POST'
       case params[:what]
       when 'reset'
@@ -86,10 +84,10 @@ class HomeController < ApplicationController
         Importer.get_scores 'act_2014'
         Importer.get_scores 'fiveessentials_2014'
         Importer.get_earlychild
-        
+
       when 'profiles'
         Importer.get_profiles
-        
+
       when 'meap_2013'
         Importer.get_scores 'meap_2013'
 
@@ -99,48 +97,48 @@ class HomeController < ApplicationController
         Importer.get_scores 'meap_2011'
         Importer.get_scores 'meap_2010'
         Importer.get_scores 'meap_2009'
-        
+
       when 'act'
         Importer.get_scores 'act_2014'
-      
+
       when 'k8'
         Importer.get_scores 'esd_k8_2014'
 
       when 'hs'
         Importer.get_scores 'esd_hs_2013'
-        
+
       when '5e'
         Importer.get_scores 'fiveessentials_2014'
-        
+
       when 'sitevisit'
         Importer.get_scores 'esd_site_visit_2014'
-      
+
       when 'ec'
         Importer.get_earlychild
-        Importer.get_el_2014
+        Importer.get_el(2014)
+        Importer.get_el(2015)
       end
-      
+
       redirect_to :refresh, :notice => "Ok, we've refreshed that data!"
     end
   end
-  
 
   def tips
     @tips = Tip.all
-  end  
-  
+  end
+
   def save_tips
     tips = params[:tips]
-    
+
     tips.each do |t|
       tip = Tip.find(t[:id])
       tip.update_attributes(t)
     end
-    
+
     flash[:notice] = 'Saved your changes.'
     redirect_to '/tips'
   end
-  
+
   protected
 
   def password_protect
@@ -148,6 +146,4 @@ class HomeController < ApplicationController
       user == 'esd' && password == 'd3tr01t'
     end
   end
-  
-  
 end

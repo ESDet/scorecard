@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+puts "Seeding db with required data not present in API..."
+`mysql -u root esd2_local < seeds.sql`

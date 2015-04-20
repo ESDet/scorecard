@@ -28,7 +28,6 @@ class Portal
 
   def fetch(path, data={}, method=:get)
     url = url_for(path)
-    #puts "Fetching #{url} with #{data.inspect}"
     query = data.blank? ? "" : "?#{data.to_query}"
     if method == :get
       puts "Getting: #{url + query}"
