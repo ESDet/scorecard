@@ -192,7 +192,7 @@
 
         - if @teacher_score_mean
           = render 'staff_rating', :score => @teacher_score_mean, :state => 3.64
-        - else
+        - elsif @school.esd_el_2015
           - @staff_average_2015.each do |h|
             .community_line
               %h3.score

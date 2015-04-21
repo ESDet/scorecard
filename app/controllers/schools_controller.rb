@@ -122,11 +122,11 @@ class SchoolsController < ApplicationController
       if @school.esd_el_2015
         @el = @school.esd_el_2015
         if @el.staffsurveyratingyear == "2014"
-          @teacher_score_mean = @el.teacher_score_mean_2014.to_f
+          @teacher_score_mean = @el.andand.teacher_score_mean_2014
         end
       else
         @el = @school.esd_el_2014
-        @teacher_score_mean = @el.teacher_score_mean.to_f
+        @teacher_score_mean = @el.andand.teacher_score_mean
       end
       @ech = @ec.marshal_dump
       @staff_state_avg = 3.62
