@@ -571,11 +571,11 @@ class School < ActiveRecord::Base
   end
 
   def ec_age_from
-    ecs.field_age_from['und'].first['value'].to_i
+    ecs.andand.field_age_from['und'].first['value'].to_i
   end
 
   def ec_age_to
-    ecs.field_age_to['und'].first['value'].to_i
+    ecs.andand.field_age_to['und'].first['value'].to_i
   end
 
   def ec_capacity
@@ -635,7 +635,7 @@ class School < ActiveRecord::Base
   end
 
   def ec_published_rating
-    ecs.PublishedRating || earlychild.andand.publishedrating
+    ecs.andand.PublishedRating || earlychild.andand.publishedrating
   end
 
   def ec_message
@@ -643,27 +643,27 @@ class School < ActiveRecord::Base
   end
 
   def ec_points_total
-    ecs.ptsTotal || earlychild.andand.gscpts
+    ecs.andand.ptsTotal || earlychild.andand.gscpts
   end
 
   def ec_points_staff
-    ecs.ptsStaff || earlychild.andand.gscptsstaff
+    ecs.andand.ptsStaff || earlychild.andand.gscptsstaff
   end
 
   def ec_points_family
-    ecs.ptsFamily || earlychild.andand.gscptsfamily
+    ecs.andand.ptsFamily || earlychild.andand.gscptsfamily
   end
 
   def ec_points_admin
-    ecs.ptsAdmin || earlychild.andand.gscptsadmin
+    ecs.andand.ptsAdmin || earlychild.andand.gscptsadmin
   end
 
   def ec_points_env
-    ecs.ptsEnv || earlychild.andand.gscptsenv
+    ecs.andand.ptsEnv || earlychild.andand.gscptsenv
   end
 
   def ec_points_curriculum
-    ecs.ptsCurr || earlychild.andand.gscptscurr
+    ecs.andand.ptsCurr || earlychild.andand.gscptscurr
   end
 
   private
