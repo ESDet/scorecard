@@ -284,36 +284,36 @@ class School < ActiveRecord::Base
         ] unless e.gradrate.blank?
       end
 
-      if earlychild? and ec = self.ecs
+      if earlychild?
         h += [
           #{ :name => 'Total Score',
           #  :key  => :gscpts,
-          #  :points => ec.ptsTotal,
+          #  :points => ec_points_total,
           #  :possible => 50,
           #},
           { :name => 'Staff Qualifications and Professional Development',
             :key => :gscptsstaff,
-            :points => ec.ptsStaff,
+            :points => ec_points_staff,
             :possible => 16,
           },
           { :name => 'Family and Community Partnerships',
             :key => :gscptsfamily,
-            :points => ec.ptsFamily,
+            :points => ec_points_family,
             :possible => 8,
           },
           { :name => 'Administration and Management',
             :key => :gscptsadmin,
-            :points => ec.ptsAdmin,
+            :points => ec_points_admin,
             :possible => 6,
           },
           { :name => 'Environment',
             :key => :gscptsenv,
-            :points => ec.ptsEnv,
+            :points => ec_points_env,
             :possible => 8,
           },
           { :name => 'Curriculum and Instruction',
             :key => :gscptscurr,
-            :points => ec.ptsCurr,
+            :points => ec_points_curriculum,
             :possible => 12,
           },
         ]
