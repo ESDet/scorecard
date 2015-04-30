@@ -558,4 +558,130 @@ class School < ActiveRecord::Base
     "el_icons/K12_Grade_#{mod}.png"
   end
 
+  def early_child
+    ecs || earlychild
+  end
+
+  def ec_specialty
+    get_api_value(ecs.field_ec_specialty) || earlychild.andand.gscspecialty
+  end
+
+  def ec_schedule
+    get_api_value(ecs.field_ec_schedule) || earlychild.andand.gscschedule
+  end
+
+  def ec_age_from
+    ecs.field_age_from['und'].first['value'].to_i
+  end
+
+  def ec_age_to
+    ecs.field_age_to['und'].first['value'].to_i
+  end
+
+  def ec_capacity
+    get_api_value(ecs.field_capacity) || earlychild.andand.gsccapacity
+  end
+
+  def ec_eligibility
+    get_api_value(ecs.field_ec_eligibility) || earlychild.andand.gsceligibility
+  end
+
+  def ec_subsidy
+    get_api_value(ecs.field_ec_subsidy) || earlychild.andand.gscsubsidy
+  end
+
+  def ec_special
+    get_api_value(ecs.field_ec_special) || earlychild.andand.gscspecial
+  end
+
+  def ec_setting
+    get_api_value(ecs.field_ec_setting) || earlychild.andand.gscsetting
+  end
+
+  def ec_environment
+    get_api_value(ecs.field_ec_environment) || earlychild.andand.environment
+  end
+
+  def ec_meals
+    get_api_value(ecs.field_ec_meals) || earlychild.andand.meals
+  end
+
+  def ec_pay_schedule
+    get_api_value(ecs.field_ec_payschedule) || earlychild.andand.gscpayschedule
+  end
+
+  def ec_fee
+    get_api_value(ecs.field_ec_fee).to_f || earlychild.andand.gscfee
+  end
+
+  def ec_transportation
+    get_api_value(ecs.field_ec_transportation) || earlychild.andand.transportation
+  end
+
+  def ec_contract
+    get_api_value(ecs.field_ec_contract) || earlychild.andand.gsccontract
+  end
+
+  def ec_months_of_operation
+    get_api_value(ecs.field_months_of_operation) || earlychild.andand.monthsofoperation
+  end
+
+  def ec_email
+    get_api_value(ecs.field_ec_email) || earlychild.andand.gscemail
+  end
+
+  def ec_phone
+    ecs.field_address ? ecs.field_address['und'].first['phone_number'] : earlychild.andand.gscemail
+  end
+
+  def ec_published_rating
+    ecs.PublishedRating || earlychild.andand.publishedrating
+  end
+
+  def ec_message
+    get_api_value(ecs.field_ec_message) || earlychild.andand.gscmessage
+  end
+
+  def ec_points_total
+    ecs.ptsTotal || earlychild.andand.gscpts
+  end
+
+  def ec_points_staff
+    ecs.ptsStaff || earlychild.andand.gscptsstaff
+  end
+
+  def ec_points_family
+    ecs.ptsFamily || earlychild.andand.gscptsfamily
+  end
+
+  def ec_points_admin
+    ecs.ptsAdmin || earlychild.andand.gscptsadmin
+  end
+
+  def ec_points_env
+    ecs.ptsEnv || earlychild.andand.gscptsenv
+  end
+
+  def ec_points_curriculum
+    ecs.ptsCurr || earlychild.andand.gscptscurr
+  end
+
+  private
+
+  def get_api_value(field)
+    if field.is_a?(Hash)
+      n = field['und']
+      if n.is_a?(Hash)
+        n.map do |k, v|
+          v.map { |k, v| v if k == 'name'}
+        end.flatten.select { |k| !k.blank? }.join(", ")
+      else
+        n.first['value']
+      end
+    elsif field.is_a?(Array)
+      field.first
+    end
+  end
+
+
 end

@@ -38,20 +38,19 @@
           No hours of operation listed.
         %p
           %span.day Months of operation:
-          - months = !@ec.field_months_of_operation.blank? ? @ec.field_months_of_operation['und'].first['value'] : @school.earlychild.andand.monthsofoperation
-          #{months}
+          #{@school.ec_months_of_operation}
         %p
-          - contact = !@ec.field_ec_contact.blank? ? @ec.field_ec_contact['und'].first['value'] : @school.earlychild.andand.gsccontact
+          - contact = @school.ec_contract
           - unless contact.blank?
             %span.day Contact person:
             #{contact}
             %br/
-          - email = @ec.field_ec_email ? @ec.field_ec_email['und']['value'] : @school.earlychild.andand.gscemail
+          - email = @school.ec_email
           - unless email.blank?
             %span.day Email:
             #{email}
             %br/
-          - phone = @ec.field_address ? @ec.field_address['und'].first['phone_number'] : @school.earlychild.gscemail
+          - phone = @school.ec_phone
           - unless phone.blank?
             %span.day Phone:
             #{format_phone(phone)}
@@ -99,7 +98,7 @@
           - if participant
             = render 'seal', :category => :state, :rating => @el.andand.sas_score_rating, :school => @school
           - else
-            = render 'stars', :n => [@ec.andand.publishedrating.to_i, 0].max
+            = render 'stars', :n => [@school.ec_published_rating.to_i, 0].max
       %li
         %a{:href => '#staff', 'data-toggle' => 'tab'}
           .question.bebas
@@ -113,7 +112,7 @@
         - if @el.nil?
           %p.orange
             This program doesn't have an overall rating from Excellent Schools Detroit because it did not participate in the community and staff surveys.
-        - message = !@ec.field_ec_message.blank? ? @ec.field_ec_message['und'].first['value'] : @school.earlychild.andand.gscmessage
+        - message = @school.ec_message
         - if message
           %p= raw message
 
@@ -154,12 +153,12 @@
 
         .overall-stars.relative
           = image_tag 'el_icons/gs_logo.png', :class => 'gs-logo'
-          = render 'stars', :n => [@ec.andand.publishedrating.to_i, 0].max
+          = render 'stars', :n => [@school.ec_published_rating.to_i, 0].max
         %table
           %thead
             %tr
               %th
-                %span.points= @ec.andand.ptsTotal
+                %span.points= @school.ec_points_total
                 %span / 50
               %th Overall Score
           %tbody
