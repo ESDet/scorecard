@@ -14,7 +14,7 @@ class School < ActiveRecord::Base
   include Mogrify
   [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_k8_2013_r1, :esd_hs_2013,
     :act_2013, :fiveessentials_2013, :meap_2013, :act_2014,
-    :earlychild, :esd_el_2014, :esd_el_2015, :esd_k8_2014, :esd_hs_2014, :esd_site_visit_2014, :fiveessentials_2014].each do |k|
+    :earlychild, :ecs, :esd_el_2014, :esd_el_2015, :esd_k8_2014, :esd_hs_2014, :esd_site_visit_2014, :fiveessentials_2014].each do |k|
     serialize k, OpenStruct
   end
   serialize :others, Array
@@ -117,7 +117,7 @@ class School < ActiveRecord::Base
       :classes    => kinds.join(' '),
       :cumulative => self.grades[:cumulative][:letter],
       :seal       => earlychild? ?
-        School.el_image(:mini, self.esd_el_2014.andand.overall_rating) :
+        School.el_image(:mini, self.esd_el_2015.andand.overall_rating) :
         School.k12_image(self.overall_grade, :small),
       :others     => self.others,
     }
@@ -138,8 +138,8 @@ class School < ActiveRecord::Base
         'Silver' => 3,
         'Bronze' => 2,
         'Below Bronze' => 1,
-      }[self.esd_el_2014.andand.overall_rating] || 0
-      return mul * 100 + self.earlychild.andand.gscpts.to_i
+      }[self.esd_el_2015.andand.overall_rating] || 0
+      return mul * 100 + self.ecs.andand.ptsTotal.to_i
     end
 
     percent = nil
@@ -220,7 +220,7 @@ class School < ActiveRecord::Base
           :percent  => esd.total_pct }
       end
 
-    elsif self.earlychild
+    elsif self.ecs
       h[:status][:summary_table] = summary_table(:status)
       return h
 
@@ -284,36 +284,36 @@ class School < ActiveRecord::Base
         ] unless e.gradrate.blank?
       end
 
-      if earlychild? and ec = self.earlychild
+      if earlychild? and ec = self.ecs
         h += [
           #{ :name => 'Total Score',
           #  :key  => :gscpts,
-          #  :points => ec.gscpts,
+          #  :points => ec.ptsTotal,
           #  :possible => 50,
           #},
           { :name => 'Staff Qualifications and Professional Development',
             :key => :gscptsstaff,
-            :points => ec.gscptsstaff,
+            :points => ec.ptsStaff,
             :possible => 16,
           },
           { :name => 'Family and Community Partnerships',
             :key => :gscptsfamily,
-            :points => ec.gscptsfamily,
+            :points => ec.ptsFamily,
             :possible => 8,
           },
           { :name => 'Administration and Management',
             :key => :gscptsadmin,
-            :points => ec.gscptsadmin,
+            :points => ec.ptsAdmin,
             :possible => 6,
           },
           { :name => 'Environment',
             :key => :gscptsenv,
-            :points => ec.gscptsenv,
+            :points => ec.ptsEnv,
             :possible => 8,
           },
           { :name => 'Curriculum and Instruction',
             :key => :gscptscurr,
-            :points => ec.gscptscurr,
+            :points => ec.ptsCurr,
             :possible => 12,
           },
         ]
@@ -510,7 +510,7 @@ class School < ActiveRecord::Base
   end
 
   def school_url
-    normalize_url(self.profile.andand.school_url || self.earlychild.andand.website)
+    normalize_url(self.profile.andand.school_url || self.ecs.andand.website)
   end
 
   def facebook_url

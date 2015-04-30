@@ -63,6 +63,7 @@ namespace :import do
   task :earlychild => :environment do |t, args|
     puts "Fetching Early Childhood"
     Importer.get_earlychild
+    Importer.get_ecs
     Importer.get_el(2014)
     Importer.get_el(2015)
   end

@@ -118,7 +118,7 @@ class SchoolsController < ApplicationController
     })
 
     if @school.earlychild?
-      @ec = @school.earlychild
+      @ec = @school.ecs or @school.earlychild
       if @school.esd_el_2015
         @el = @school.esd_el_2015
         if @el.staffsurveyratingyear == "2014"
@@ -131,24 +131,91 @@ class SchoolsController < ApplicationController
       @ech = @ec.marshal_dump
       @staff_state_avg = 3.62
       @grades = @school.grades
-      @profile_fields = {
-        #:gscmessage     => 'Message to Families',
-        :gscspecialty   => 'Program Specialty',
-        :gscschedule    => 'Schedule Type',
-        :agefrom        => 'Accepts Ages from',
-        :ageto          => 'Accepts Ages to',
-        :gsccapacity    => 'Total Licensed Capacity',
-        :gsceligibility => 'Program Eligibility Criteria',
-        :gscsubsidy     => 'Financial Assistance',
-        :gscspecial     => 'Special Needs Experience',
-        :gscsetting     => 'Care Setting',
-        :environment    => 'Environment',
-        :meals          => 'Meals Provided',
-        :gscpayschedule => 'Payment Schedule',
-        :gscfee         => 'Application / Registration Fee',
-        :transportation => 'Provides Transportation?',
-        :gsccontract    => 'Written Contract',
+      age_from = @ec.field_age_from['und'].first['value'].to_i
+      age_from = age_from > 11 ? "#{age_from/12} years" : "#{age_from%12} months"
+      age_to = @ec.field_age_to['und'].first['value'].to_i
+      age_to = age_to > 11 ? "#{age_to / 12} years" : "#{age_to % 12} months"
+
+      format_field = lambda { |val|
+        val == '0' ? 'No' : (val == '1' ? 'Yes' : val)
       }
+      get_value = lambda { |field|
+        val = if field.is_a?(Hash)
+          n = field['und']
+          if n.is_a?(Hash)
+            n.map do |k, v|
+              v.map { |k, v| v if k == 'name'}
+            end.flatten.select { |k| !k.blank? }.join(", ")
+          else
+            n.first['value']
+          end
+        elsif field.is_a?(Array)
+          field.first
+        end
+        format_field.call(val)
+      }
+      @profile_fields = [
+        {
+          label: 'Program Specialty',
+          value: (get_value.call(@ec.field_ec_specialty) || @school.earlychild.andand.gscspecialty)
+        },
+        {
+          label: 'Schedule Type',
+          value: (get_value.call(@ec.field_ec_schedule) || @school.earlychild.andand.gscschedule)
+        },
+        {
+          label: 'Accepts Ages from',
+          value: age_from
+        },
+        {
+          label: 'Accepts Ages to',
+          value: age_to
+        },
+        {
+          label: 'Total Licensed Capacity',
+          value: (get_value.call(@ec.field_capacity) || @school.earlychild.andand.gsccapacity)
+        },
+        {
+          label: 'Program Eligibility Criteria',
+          value: (get_value.call(@ec.field_ec_eligibility) || @school.earlychild.andand.gsceligibility)
+        },
+        {
+          label: 'Financial Assistance',
+          value: (get_value.call(@ec.field_ec_subsidy) || @school.earlychild.andand.gscsubsidy)
+        },
+        {
+          label: 'Special Needs Experience',
+          value: (get_value.call(@ec.field_ec_special) || @school.earlychild.andand.gscspecial)
+        },
+        {
+          label: 'Care Setting',
+          value: (get_value.call(@ec.field_ec_setting) || @school.earlychild.andand.gscsetting)
+        },
+        {
+          label: 'Environment',
+          value: (get_value.call(@ec.field_ec_environment) || @school.earlychild.andand.environment)
+        },
+        {
+          label: 'Meals Provided',
+          value: (get_value.call(@ec.field_ec_meals) || @school.earlychild.andand.meals)
+        },
+        {
+          label: 'Payment Schedule',
+          value: (get_value.call(@ec.field_ec_payschedule) || @school.earlychild.andand.gscpayschedule)
+        },
+        {
+          label: 'Application / Registration Fee',
+          value: sprintf("$%.2f", (get_value.call(@ec.field_ec_fee).to_f || @school.earlychild.andand.gscfee))
+        },
+        {
+          label: 'Provides Transportation?',
+          value: (get_value.call(@ec.field_ec_transportation) || @school.earlychild.andand.transportation)
+        },
+        {
+          label: 'Written Contract',
+          value: (get_value.call(@ec.field_ec_contract) || @school.earlychild.andand.gsccontract)
+        }
+      ]
 
       @legend = {
         'Gold'          => ['Gold', 'Superior Quality Program'],
@@ -330,18 +397,18 @@ class SchoolsController < ApplicationController
         eg = s.earlychild
         tx['Overall Rating']            = eg.publishedrating
         tx['Address']                   = "#{s.address}<br/>#{s.address2}"
-        tx['Total Points']              = eg.gscpts
-        tx['Staff Qualifications']      = eg.gscptsstaff
-        tx['Family/Community Partnerships'] = eg.gscptsfamily
-        tx['Administration']            = eg.gscptsadmin
-        tx['Environment Pts']           = eg.gscptsenv
-        tx['Curriculum']                = eg.gscptscurr
-        tx['Financial Assistance']      = eg.gscsubsidy
-        tx['Special Needs Experience']  = eg.gscspecial
-        tx['Care Setting']              = eg.gscsetting
-        tx['Environment']               = eg.environment
-        tx['Meals Provided']            = eg.meals
-        tx['Provides Transportation?']  = eg.transportation
+        tx['Total Points']              = eg.ptsTotal
+        tx['Staff Qualifications']      = eg.ptsStaff
+        tx['Family/Community Partnerships'] = eg.ptsFamily
+        tx['Administration']            = eg.ptsAdmin
+        tx['Environment Pts']           = eg.ptsEnv
+        tx['Curriculum']                = eg.ptsCurr
+        tx['Financial Assistance']      = eg.field_ec_subsidy
+        tx['Special Needs Experience']  = eg.field_ec_special
+        tx['Care Setting']              = eg.field_ec_setting
+        tx['Environment']               = eg.field_ec_environment
+        tx['Meals Provided']            = eg.field_ec_meals
+        tx['Provides Transportation?']  = eg.field_ec_transportation
 
       else
         tx['Overall Grade']     = g[:cumulative][:letter] || 'N/A'

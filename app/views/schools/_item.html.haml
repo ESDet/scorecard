@@ -1,9 +1,9 @@
 %li.school{'data-bcode' => school.bcode}
   - if school.earlychild?
-    = image_tag School.el_image(:mini, school.esd_el_2014.andand.overall_rating), :class => "mini-el-icon"
+    = image_tag School.el_image(:mini, school.esd_el_2015.andand.overall_rating), :class => "mini-el-icon"
   - else
     = image_tag School.k12_image(school.overall_grade, :small), :class => 'mini-el-icon'
-    
+
   %h3= link_to school.name, school_path(school.slug)
   - unless school.grades_served.blank?
     %div Grades #{school.grades_served}

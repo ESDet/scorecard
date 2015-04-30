@@ -1,5 +1,6 @@
 class Portal
   BASE = 'https://portal.excellentschoolsdetroit.org/api/1.0/'
+  BASE_15 = 'https://2015scorecard-3mhev6qb5ihtc.us.platform.sh/api/1.0/'
 
   def list_vocabularies
     fetch 'taxonomy_vocabulary.json/'
@@ -19,11 +20,19 @@ class Portal
   def get_dataset(view, bcode=nil, opts={})
     data = bcode.nil? ? {} : { 'filters[bcode]' => bcode }
     data.merge!(opts)
-    fetch "views/#{view}.json/", data
+    if view =~ /ecs/
+      fetch "#{view}.json/", data
+    else
+      fetch "views/#{view}.json/", data
+    end
   end
 
   def url_for(path)
-    "#{BASE}#{path}"
+    if path =~ /ecs/
+      "#{BASE_15}#{path}"
+    else
+      "#{BASE}#{path}"
+    end
   end
 
   def fetch(path, data={}, method=:get)

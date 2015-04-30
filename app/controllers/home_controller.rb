@@ -5,7 +5,13 @@ class HomeController < ApplicationController
     session[:filter] = session[:loc] = nil
     @top = {
       :all        => School.not_ec.where("grade <> 'Promising'").order('points desc').limit(10),
-      :ec         => School.ec.where('esd_el_2014 is not null').where("address2 like 'Detroit%'").order('points desc').limit(10),
+      :ec         => School.ec.where('esd_el_2015 is not null').order('points desc').
+                       select do |s|
+                        rating = s.esd_el_2015.overall_rating
+                        s.esd_el_2015.total_points.to_i >= 11 &&
+                        (rating == 'Gold' || rating == 'Silver' ||
+                          rating == 'Bronze' || rating == 'Bronze - Rating in progess')
+                       end,
       :elementary => School.elementary.where("grade <> 'Promising'").order('points desc').limit(10),
       :middle     => School.middle.where("grade <> 'Promising'").order('points desc').limit(10),
       :high       => School.high.where("grade <> 'Promising'").order('points desc').limit(10),

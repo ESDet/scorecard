@@ -29,28 +29,32 @@
       .arial
         - num = 0
         - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |day|
-          - next if @ech[(day + 'dayopen').to_sym].blank? or @ech[(day + 'dayclose').to_sym].blank?
+          - next if @ech[('field_' + day + '_open').to_sym].blank? or @ech[('field_' + day + '_close').to_sym].blank?
           - num += 1
           %span.day #{day.titleize}:
-          #{@ech[(day + 'dayopen').to_sym]} &mdash; #{@ech[(day + 'dayclose').to_sym]}
+          #{@ech[('field_' + day + '_open').to_sym]['und'].first['value']} &mdash; #{@ech[('field_' + day + '_close').to_sym]['und'].first['value']}
           %br/
         - if num == 0
           No hours of operation listed.
         %p
           %span.day Months of operation:
-          #{@ec.monthsofoperation}
+          - months = !@ec.field_months_of_operation.blank? ? @ec.field_months_of_operation['und'].first['value'] : @school.earlychild.andand.monthsofoperation
+          #{months}
         %p
-          - unless @ec.gsccontact.blank?
+          - contact = !@ec.field_ec_contact.blank? ? @ec.field_ec_contact['und'].first['value'] : @school.earlychild.andand.gsccontact
+          - unless contact.blank?
             %span.day Contact person:
-            #{@ec.gsccontact}
+            #{contact}
             %br/
-          - unless @ec.gsemail.blank?
+          - email = @ec.field_ec_email ? @ec.field_ec_email['und']['value'] : @school.earlychild.andand.gscemail
+          - unless email.blank?
             %span.day Email:
-            #{@ec.gsemail}
+            #{email}
             %br/
-          - unless @ec.phone.blank?
+          - phone = @ec.field_address ? @ec.field_address['und'].first['phone_number'] : @school.earlychild.gscemail
+          - unless phone.blank?
             %span.day Phone:
-            #{format_phone(@ec.phone)}
+            #{format_phone(phone)}
       %h3 Share
       = render 'shared/share'
 
@@ -109,24 +113,18 @@
         - if @el.nil?
           %p.orange
             This program doesn't have an overall rating from Excellent Schools Detroit because it did not participate in the community and staff surveys.
-
-        - if @ec.andand.gscmessage
-          %p= raw @ec.gscmessage
+        - message = !@ec.field_ec_message.blank? ? @ec.field_ec_message['und'].first['value'] : @school.earlychild.andand.gscmessage
+        - if message
+          %p= raw message
 
         %table
-          - @profile_fields.each do |field,label|
-            - val = @ech[field.to_sym]
-            - unless val.blank?
+          - @profile_fields.each do |h|
+            - unless h[:value].blank?
               %tr
                 %td
-                  %h3 #{label}:
+                  %h3 #{h[:label]}:
                 %td.arial
-                  - if [:agefrom, :ageto].include? field
-                    - if val.to_i > 11
-                      #{(val.to_i/12).to_i} years,
-                    #{val.to_i%12} months
-                  - else
-                    = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
+                  = h[:value]
 
         = render 'legend', :legend => @legend, :tab => :overall
 
@@ -161,7 +159,7 @@
           %thead
             %tr
               %th
-                %span.points= @ec.andand.gscpts
+                %span.points= @ec.andand.ptsTotal
                 %span / 50
               %th Overall Score
           %tbody
