@@ -131,14 +131,19 @@ class SchoolsController < ApplicationController
       @ech = @ec.marshal_dump
       @staff_state_avg = 3.62
       @grades = @school.grades
-      age_from = @ec.field_age_from['und'].first['value'].to_i
-      age_from = age_from > 11 ? "#{age_from/12} years" : "#{age_from%12} months"
-      age_to = @ec.field_age_to['und'].first['value'].to_i
-      age_to = age_to > 11 ? "#{age_to / 12} years" : "#{age_to % 12} months"
+
+      age_format = lambda { |months|
+        if months > 11
+          "#{months / 12} years, #{months % 12} months"
+        else
+          "#{months % 12} months"
+        end
+      }
 
       format_field = lambda { |val|
         val == '0' ? 'No' : (val == '1' ? 'Yes' : val)
       }
+
       get_value = lambda { |field|
         val = if field.is_a?(Hash)
           n = field['und']
@@ -154,6 +159,7 @@ class SchoolsController < ApplicationController
         end
         format_field.call(val)
       }
+
       @profile_fields = [
         {
           label: 'Program Specialty',
@@ -165,11 +171,11 @@ class SchoolsController < ApplicationController
         },
         {
           label: 'Accepts Ages from',
-          value: age_from
+          value: age_format.call(@ec.field_age_from['und'].first['value'].to_i)
         },
         {
           label: 'Accepts Ages to',
-          value: age_to
+          value: age_format.call(@ec.field_age_to['und'].first['value'].to_i)
         },
         {
           label: 'Total Licensed Capacity',
