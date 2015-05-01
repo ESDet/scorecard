@@ -14,6 +14,7 @@ namespace :import do
     Importer.get_scores 'fiveessentials_2014'
     Importer.get_scores 'esd_site_visit_2014'
     Importer.get_earlychild
+    Importer.get_ecs
     Importer.get_el 2014
     Importer.get_el 2015
     Importer.update_relations

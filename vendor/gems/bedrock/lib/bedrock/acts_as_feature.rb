@@ -59,7 +59,7 @@ module Bedrock
 
         # Possible WKB for later: bin = geom.as_binary; hex = bin.unpack("H#{bin.length*2}")
 
-        method = (opts[:method] == :intersects) ? 'ST_Intersects' : 'ST_Contains'
+        method = (opts[:method] == :intersects) ? 'Intersects' : 'Contains'
         q = self.from(from).where(["#{method}(GeometryFromText(?), `#{table_name}`.#{gc})", geom.as_text])
 
         opts[:select] += ",#{gc.to_s}" unless opts[:select].blank? or opts[:select].include?(gc.to_s)

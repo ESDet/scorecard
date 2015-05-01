@@ -133,13 +133,26 @@ class School < ActiveRecord::Base
   # For really simple sorting
   def total_points
     if earlychild?
-      mul = {
+      medals = {
         'Gold' => 4,
         'Silver' => 3,
         'Bronze' => 2,
         'Below Bronze' => 1,
-      }[self.esd_el_2015.andand.overall_rating] || 0
-      return mul * 100 + self.ecs.andand.ptsTotal.to_i
+      }
+      mul = if respond_to?(:esd_el_2015)
+        medals[self.esd_el_2015.andand.overall_rating] || 0
+      elsif respond_to?(:esd_el_2014)
+        medals[self.esd_el_2014.andand.overall_rating] || 0
+      else
+        0
+      end
+      if respond_to?(:ecs)
+        return mul * 100 + self.ecs.andand.ptsTotal.to_i
+      elsif respond_to?(:earlychild)
+        return mul * 100 + self.earlychild.andand.gscpts.to_i
+      else
+        return 0
+      end
     end
 
     percent = nil
