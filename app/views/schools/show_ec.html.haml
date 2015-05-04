@@ -68,7 +68,8 @@
           = image_tag 'el_icons/compare-icon.png'
           Compare This School
       .clear_floats/
-      .minimap= render :partial => 'shared/map', :object => @map
+      - if @map
+        .minimap= render :partial => 'shared/map', :object => @map
 
 
   %br.noprint/
@@ -180,10 +181,7 @@
 
       #staff.tab-pane
         %p.turquoise
-          Teachers and staff here were asked to complete  a survey about their program. The survey
-          included items about community engagement, family engagement, cultural and linguistic competence,
-          and climate and culture. Teachers and staff answered questions on a four-point scale. Those answers
-          were then averaged to create the number below.
+          Teachers and staff were asked to complete a survey about their program. They answered questions on a five-point scale. Those answers were averaged to create the numbers below.
 
         %br/
 

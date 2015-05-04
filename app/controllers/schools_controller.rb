@@ -101,7 +101,7 @@ class SchoolsController < ApplicationController
       :elements => [District.find(580)]
     )
     extent = Bedrock::city_extents(:detroit)
-    extent = Bedrock.merge_extents(extent, @school.extent)
+    extent = Bedrock.merge_extents(extent, @school.extent) if @school.geometry
 
     @tips = Hash[Tip.all.collect { |t| [t.name.to_sym, t] }]
 
@@ -115,7 +115,7 @@ class SchoolsController < ApplicationController
       #:extent         => extent,
       :center         => { :lat => @school.centroid.y, :lon => @school.centroid.x },
       :layer_control  => false,
-    })
+    }) if @school.geometry
 
     if @school.earlychild?
       if @school.esd_el_2015
@@ -221,48 +221,49 @@ class SchoolsController < ApplicationController
       @staff_average_2015 = [
         {
           :title => 'Program Environment',
-          :explanation => 'The Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.',
+          :explanation => 'Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.',
           :points => @el.andand.physicalenviron_staff_average.to_f
         },
         {
-          :title => 'Family and Community Partnerships',
+          :title => 'Collaboration',
           :explanation => 'Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.',
           :points => @el.andand.familycommunity_staff_average.to_f,
         },
         {
-          :title => 'Cultural and Linguistic Competence',
+          :title => 'Cultural Awareness',
           :explanation => 'Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.',
           :points => @el.andand.culturallinguistic_staff_average.to_f,
         },
         {
           :title => 'General Culture and Climate',
+          :explanation => "General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.",
           :points => @el.andand.cultureclimate_staff_average.to_f
         }
       ]
 
       @community = {
         :clc_fairaverage => {
-          :statement => 'This program does a good job of teaching children about different cultures.',
+          :statement => 'Cultural Awareness',
           :explanation => 'The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.',
           :points => @el.andand.clc_fairaverage.to_f,
         },
         :professionalism_fairaverage => {
-          :statement => 'The staff is professional.',
+          :statement => 'Professionalism',
           :explanation => 'The rating is based on how teachers and staff treated themselves and each other while in the room with children.',
           :points => @el.andand.professionalism_fairaverage.to_f,
         },
         :safety_fairaverage => {
-          :statement => 'The classroom is safe, clean and organized.',
+          :statement => 'Program Environment',
           :explanation => 'This rating is based on the conditions of the classroom.',
           :points => @el.andand.safety_fairaverage.to_f,
         },
         :interactions_fairaverage => {
-          :statement => 'The teachers respect and support children and other adults.',
+          :statement => 'Relationships & Interactions',
           :explanation => 'The rating is based on how well teachers manage the classroom.',
           :points => @el.andand.interactions_fairaverage.to_f,
         },
         :familycommunity_fairaverage => {
-          :statement => 'This program builds family and community partnerships.',
+          :statement => 'Collaboration',
           :explanation => 'The rating is based on how the family, community and school work together.',
           :points => @el.andand.familycommunity_fairaverage.to_f,
         },
