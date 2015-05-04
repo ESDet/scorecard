@@ -1,6 +1,5 @@
 class Portal
   BASE = 'https://portal.excellentschoolsdetroit.org/api/1.0/'
-  BASE_15 = 'https://2015scorecard-3mhev6qb5ihtc.us.platform.sh/api/1.0/'
 
   def list_vocabularies
     fetch 'taxonomy_vocabulary.json/'
@@ -28,11 +27,7 @@ class Portal
   end
 
   def url_for(path)
-    if path =~ /ecs/
-      "#{BASE_15}#{path}"
-    else
-      "#{BASE}#{path}"
-    end
+    "#{BASE}#{path}"
   end
 
   def fetch(path, data={}, method=:get)

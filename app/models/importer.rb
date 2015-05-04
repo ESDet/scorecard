@@ -283,52 +283,57 @@ class Importer
       results = p.get_dataset dataset, nil, {
         :limit => per,
         :offset => ofs,
-        :includes => "most_recent_ec_state_rating,ec_profiles"
+        :flatten_fields => 1,
+        :includes => "most_recent_ec_state_rating,ec_profile"
       }
       ofs += per
 
       results['data'] = [] if results['data'].nil?
 
       results['data'].each do |r|
-        next unless r['links']['ec_profiles']
 
-        state_rating_id = r['links']['most_recent_ec_state_rating']['linkage']['id']
-        if state_rating_id
-          state_rating_info = results['included'].select do |l|
-            l['type'] == 'ec_state_ratings' && l['id'] == state_rating_id
+        if !(rating_links = r['links']['most_recent_ec_state_rating']).empty?
+          state_rating_id = rating_links['linkage']['id']
+          if state_rating_id
+            state_rating_info = results['included'].select do |l|
+              l['type'] == 'ec_state_ratings' && l['id'] == state_rating_id
+            end.first
+          end
+        end
+
+        if profile_links = r['links']['ec_profile']
+          profile_id = profile_links['linkage']['id']
+          profile = results['included'].select do |l|
+            l['type'] == 'ec_profiles' && l['id'] == profile_id
           end.first
         end
 
-        profile_id = r['links']['ec_profiles']['linkage'].first['id']
-        profile = results['included'].select do |l|
-          l['type'] == 'ec_profiles' && l['id'] == profile_id
-        end.first
-        next unless profile
-
         published_rating = state_rating_info['PublishedRating'] if state_rating_info
-        next if published_rating == 'Empty Star' || published_rating.to_i < 3
 
-        geo = if !r['field_geo'].empty?
-          r['field_geo']['und'].first
-        end
+        geo = r['field_geo'] if r['field_geo']
+        puts "#{r["name"]}: #{geo}" if r['name'] == "Smith, Jaletha"
         loc = RGeo::Geographic.spherical_factory.point(geo['lon'].to_f, geo['lat'].to_f) if geo
-        r['publishedrating'] = published_rating.to_i
+
+        r['publishedrating'] = published_rating.to_i if published_rating
 
         id = state_rating_info['esd_ec_id'] if state_rating_info
-        license = r['field_state_license_id']['und'].first['value']
+        license = r['field_state_license_id']
 
-        address = r['field_address']['und'].first
+        address = r['field_address']
         points = state_rating_info['ptsTotal'].to_i if state_rating_info
-        name = profile['title'].gsub('&#039;', "'").gsub('&amp;', '&')
+        name = profile['title'].gsub('&#039;', "'").gsub('&amp;', '&') if profile
+
         h = { }
         h[:bcode]       = id if id
         h[:name]        = name if name
         h[:school_type] = 'EC'
         h[:points]      = points if points
-        h[:address]     = address['thoroughfare'] if !address['thoroughfare'].blank?
-        h[:address2]    = "#{address['locality']}, MI #{address['postal_code']}" if !address[:locality].blank? && !address[:postal_code].blank?
+        h[:address]     = address['thoroughfare'] if address['thoroughfare']
+        h[:address2]    = "#{address['locality']}, MI #{address['postal_code']}" if address[:locality] && address[:postal_code]
         h[:zip]         = address['postal_code'] if address['postal_code']
-        h[:ecs]         = OpenStruct.new(r.merge(state_rating_info).merge(profile))
+        r.merge(state_rating_info) if state_rating_info
+        r.merge(profile) if profile
+        h[:ecs]         = OpenStruct.new(r)
         h[:centroid]    = loc if loc
         s = School.find_by_bcode(license)
         s ||= School.find_by_bcode(id)
