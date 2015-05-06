@@ -367,6 +367,10 @@ class Importer
         end
       end
     end while !results['data'].empty?
+    School.where(school_type: 'EC').
+      select do |s|
+        s.esd_el_2015.instance_values["table"].empty?
+    end.each(&:delete)
   end
 
 

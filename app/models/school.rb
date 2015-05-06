@@ -72,7 +72,7 @@ class School < ActiveRecord::Base
 
 
   GRADES.slice(:ec, :k8, :k12, :suburban, :k8hs, :high).each do |k,v|
-    scope k, where(:school_type => v)
+    scope k, where(:school_type => v).order("points desc")
   end
   scope :elementary, where("grades_served REGEXP 'kp|KP|kf|KF|\\b1\\b|\\b2\\b|\\b3\\b|4|5'")
   scope :middle, where("grades_served REGEXP '6|7|8'")
@@ -587,6 +587,54 @@ class School < ActiveRecord::Base
     "el_icons/K12_Grade_#{mod}.png"
   end
 
+  def special_ed_level
+  end
+
+  def arts_media
+    []
+  end
+
+  def arts_visual
+    []
+  end
+
+  def arts_music
+    []
+  end
+
+  def arts_performing_written
+    []
+  end
+
+  def boys_sports
+    []
+  end
+
+  def girls_sports
+    []
+  end
+
+  def transportation_options
+  end
+
+  def before_after_care
+  end
+
+  def application_process
+  end
+
+  def college_prep
+  end
+
+  def facilities
+  end
+
+  def extra_learning_resources
+  end
+
+  def staff_resources
+  end
+
   def early_child
     ecs || earlychild
   end
@@ -783,6 +831,10 @@ class School < ActiveRecord::Base
     get_api_value(ecs.andand.field_ec_licensed_enrollment)
   end
 
+  def ec_license_type
+    get_api_value(ecs.andand.field_ec_license_type)
+  end
+
   def ec_special_enrollment
     get_api_value(ecs.andand.field_ec_special_enrollment)
   end
@@ -790,13 +842,22 @@ class School < ActiveRecord::Base
   def ec_subsidy_enrollment
     get_api_value(ecs.andand.field_ec_subsidy_enrollment)
   end
+
   private
 
   def get_api_value(field)
     if field.is_a?(Array)
       field.map do |v|
-        v.is_a?(Hash) ? v['name'] : v
-      end.select { |k| !k.blank? }.join(", ")
+        if v.is_a?(Hash)
+          if v.has_key?('name')
+            v['name']
+          elsif v.has_key?('value')
+            v['value']
+          end
+        else
+          v
+        end
+      end.select { |k| !k.blank? }
     else
       field
     end

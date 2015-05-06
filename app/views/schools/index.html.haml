@@ -1,10 +1,12 @@
 #outer_wrapper
   #lefty
-    = render 'schools/fourplex'
+    = render 'shared/search'
     .clear_floats
     %br/
-    
+
     %ul.school_list
+      - if @schools.empty?
+        %h3 There are no schools that fit your selection(s) right now.
       - @schools.each do |s|
         = render 'item', { :school => s }
 
@@ -29,81 +31,8 @@
   var ajax = false;
   var listSpinner = null;
   var searching = false;
-  var gradeFilter = #{@grade_filter.to_json};
-  var charFilters = #{@complex.andand.to_json || {}};
-  
+
   $(document).ready(function(e) {
-
-    $('.fourplex .search').click(function(e) {
-      var j = JSON.stringify(charFilters);
-      var f = $('.char-form input#filter').val();
-      if($.isEmptyObject(j) && !f) {
-        return false;
-      }
-      $('.char-form input#complex').val(j);
-      
-      if(ajax) {
-        searchAsync();
-      } else {
-        $('form.char-form').submit();
-      }
-      return false;
-    });
-
-    var searchAsync = function() {
-      // Get ajax for da new search and update list/map
-      if(searching) {
-        return false;
-      }
-      searching = true;
-      var data = {
-        filter:   $('#filter').val(),
-        loc:      $('#loc').val(), 
-        complex:  charFilters
-      };
-      if(!listSpinner) {
-        listSpinner = new Spinner({zIndex: 4000});
-      }
-      listSpinner.spin($('#lefty').get(0));
-
-      $.ajax({
-        async:  true,
-        type:   'GET',
-        url:    '/schools.json',
-        data:   data,
-        cache:  false,
-        success: function(response) {
-          for(var i in map.overlays.schools._layers) {
-            var dot = map.overlays.schools._layers[i];
-            map.overlays.schools.removeLayer(dot);
-          }
-          map.overlays.schools.addData(response);
-          var template = $('script#list-template').html();
-          var html = Mustache.to_html(template, response);
-          $('.school_list').html(html);
-          listSpinner.stop();
-          searching = false;
-        },
-        error: function(response) { }
-      });
-    };
-    
-    if(gradeFilter) {
-      console.log("Started with grade filter " + gradeFilter);
-      var el = $("a[data-key='grades_served'][data-value='" + gradeFilter + "']");
-      el.click();
-    }
-    console.log("Starting with search " + JSON.stringify(charFilters));
-    for(var k in charFilters) {
-      var val = charFilters[k];
-      var el = $("a[data-key='" + k + "'][data-value='" + val + "']");
-      var ctr = el.closest('.dropdown'), trigger = $('.trigger', ctr);
-      console.log(el);
-      el.click();
-      trigger.dropdown('toggle');
-    }
-    
-        
     $('body').on('change', 'input.compare-check', function(e) {
       var count = $('input.compare-check:checked').length;
       if(count > 0) {
@@ -113,7 +42,7 @@
       }
       return true;
     });
-    
+
     $('.school_list .school').mouseover(function(e) {
       var bcode = $(this).data('bcode');
       for(var i in map.overlays.schools._layers) {
@@ -125,7 +54,7 @@
       }
       return true;
     });
-    
+
     $('a.do-compare').click(function(e) {
       ids = [];
       $('input.compare-check:checked').each(function(idx, el) {
@@ -134,6 +63,4 @@
       window.location = "/compare/+" + ids.join(',');
       return false;
     });
-    
-
   });

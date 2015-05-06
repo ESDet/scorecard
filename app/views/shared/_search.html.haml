@@ -1,0 +1,175 @@
+= form_tag '/schools', { :method => :post, :autocomplete => 'off', :id => 'school-search-form' } do
+  = text_field_tag :loc, params[:loc], :placeholder => 'Zip code or school name (optional)'
+  = hidden_field_tag :grade, nil
+  .dropdown
+    %a.trigger(data-group="grade" data-title="Grade Level" data-toggle="dropdown" href="#")
+      %span.title Grade Level
+      %span.caret
+    %ul.dropdown-menu
+      %li= link_to 'Clear selection', '#'
+      %li= link_to "Early Childhood Education", '#', 'data-key' => 'grades_served', 'data-value' => 'ec'
+      %li= link_to "K-8", '#', 'data-key' => 'grades_served', 'data-value' => 'k8'
+      %li= link_to "High School", '#', 'data-key' => 'grades_served', 'data-value' => 'high'
+  #ec-filters.hide
+    .filter
+      %a.trigger(data-value="free_reduced" href="#")
+        %span.title free or reduced cost
+    .filter
+      %a.trigger(data-value="transportation" href="#")
+        %span.title transportation
+    .filter
+      %a.trigger(data-value="special_needs" href="#")
+        %span.title special needs experience
+    .filter
+      %a.trigger(data-value="meals" href="#")
+        %span.title meals
+    .filter
+      %a.trigger(data-value="home_based" href="#")
+        %span.title home-based
+    .filter
+      %a.trigger(data-value="center_based" href="#")
+        %span.title center-based
+    .filter
+      %a.trigger(data-value="accreditation" href="#")
+        %span.title accreditation
+  #k8-filters.hide
+    .filter
+      %a.trigger(data-value="special_education" href="#")
+        %span.title special education experience
+    .filter
+      %a.trigger(data-value="arts" href="#")
+        %span.title arts
+    .filter
+      %a.trigger(data-value="sports" href="#")
+        %span.title sports
+    .filter
+      %a.trigger(data-value="transportation" href="#")
+        %span.title transportation
+    .filter
+      %a.trigger(data-value="before_after_care" href="#")
+        %span.title before/after care
+    .filter
+      %a.trigger(data-value="app_required" href="#")
+        %span.title application required
+  #high-filters.hide
+    .filter
+      %a.trigger(data-value="special_education" href="#")
+        %span.title special education experience
+    .filter
+      %a.trigger(data-value="arts" href="#")
+        %span.title arts
+    .filter
+      %a.trigger(data-value="sports" href="#")
+        %span.title sports
+    .filter
+      %a.trigger(data-value="transportation" href="#")
+        %span.title transportation
+    .filter
+      %a.trigger(data-value="college_readiness" href="#")
+        %span.title college readiness focus
+    .filter
+      %a.trigger(data-value="app_required" href="#")
+        %span.title application required
+  %a#search-btn.btn.search{:href => '#'} Explore options &gt;
+
+  .clear_floats
+
+:javascript
+  var gradeFilter = #{@grade.to_json};
+  var charFilters = #{@filters.to_json};
+
+  var showGradeFilters = function(grade) {
+    if (grade == 'ec') {
+      $('#ec-filters').show();
+      $('#k8-filters').hide();
+      $('#high-filters').hide();
+    } else if (grade == 'k8') {
+      $('#ec-filters').hide();
+      $('#k8-filters').show();
+      $('#high-filters').hide();
+    } else if (grade == 'high') {
+      $('#ec-filters').hide();
+      $('#k8-filters').hide();
+      $('#high-filters').show();
+    }
+    $('#grade').attr('value', grade);
+
+    var dd = $('.dropdown');
+    var trigger = $('a.trigger', dd);
+    trigger.addClass('active');
+    $('.title', trigger).text($('li a[data-value="' + grade + '"]').text());
+  };
+
+  var enableGradeFilter = function(triggerElement) {
+    triggerElement.addClass('active');
+    triggerElement.append('<span class="plus"></span>');
+    $('#school-search-form').append(
+      '<input id="filters_" ' +
+      'name="filters[]" ' +
+      'type="hidden" value="'
+      + triggerElement.data('value') + '">'
+    );
+  };
+
+  $(document).ready(function() {
+    if(gradeFilter) {
+      showGradeFilters(gradeFilter);
+
+      for(var k in charFilters) {
+        enableGradeFilter($('#' + gradeFilter + '-filters .filter a.trigger[data-value="' + charFilters[k] + '"]'));
+      }
+    }
+
+
+    $('#search-btn').click(function(e) {
+      $('#school-search-form').submit();
+      return false;
+    });
+
+    $('.dropdown-menu li a').click(function(e) {
+      var dd = $(this).closest('.dropdown');
+      var trigger = $('a.trigger', dd),
+          group = trigger.data('group');
+      var key = $(this).data('key'),
+          value = $(this).data('value');
+
+      if(key) {
+        // Save the key/val to filter JS object
+        trigger.addClass('active')
+        $('.title', trigger).text($(this).text());
+        if(key == 'grades_served') {
+          $('.char-form input#filter').val(value);
+        } else {
+          charFilters[key] = value;
+        }
+
+        showGradeFilters(value);
+
+        $('.filter a.trigger').removeClass('active')
+        $('#filters_').remove();
+      } else {
+        // Clear the selection
+        $('.title', trigger).text(trigger.data('title'));
+        if(lastKey == 'grades_served') {
+          $('.char-form input#filter').val(null);
+        }
+        trigger.removeClass('active')
+        $('#grade').removeAttr('value');
+      }
+      trigger.dropdown('toggle');
+      dd.dropdown('toggle');
+      return false;
+    });
+
+    $('.filter > a.trigger').click(function() {
+      var el = $(this)
+      if (el.hasClass('active')) {
+        el.removeClass('active');
+        el.find('.plus').remove();
+        $('#filters_[value="' + el.data('value') + '"]').remove();
+      } else {
+        enableGradeFilter(el);
+      }
+      return false;
+    });
+  });

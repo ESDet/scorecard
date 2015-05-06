@@ -6,35 +6,95 @@ class SchoolsController < ApplicationController
   helper_method :format_phone
 
   def index
-    filter = ['all', 'ec', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
-    loc    = params[:loc]
-    #session[:filter]  = filter
-    #session[:loc]     = params[:loc]
-    #session[:complex] = nil
-
-    @complex = nil
-    @grade_filter = filter
-    @loc = loc
-
-    if params[:complex] and params[:complex] != 'null'
-      begin
-        @complex = (params[:complex].is_a?(String) and !params[:complex].blank?) ? JSON.parse(params[:complex]) : params[:complex]
-      rescue => e
-        logger.info e.inspect
-        @complex = nil
+    @grade = params[:grade]
+    @filters = params[:filters] || []
+    @schools = School.send(@grade) if !@grade.blank?
+    case @grade
+    when 'ec'
+      @filters.each do |f|
+        @schools = case f
+        when 'free_reduced'
+          @schools.select do |s|
+            s.ec_subsidy == 'Accepts State Subsidy' ||
+            s.ec_specialty == 'Early Head Start' ||
+            s.ec_specialty == 'Head Start' ||
+            s.ec_specialty == 'Great Start Readiness Program'
+          end
+        when 'transportation'
+          @schools.select do |s|
+            s.ec_transportation == true
+          end
+        when 'special_needs'
+          @schools.select do |s|
+            s.ec_special && s.ec_special.size > 5
+          end
+        when 'meals'
+          @schools.select do |s|
+            s.ec_meals =~ /Lunch/ &&
+            s.ec_meals =~ /Afternoon Snack/
+          end
+        when 'home_based'
+          @schools.select do |s|
+            s.ec_license_type == 'licensed group homes' ||
+            s.ec_license_type == 'registered family homes'
+          end
+        when 'center_based'
+          @schools.select do |s|
+            s.ec_license_type == 'licensed centers'
+          end
+        when 'accreditation'
+          @schools
+        else
+          @schools
+        end
       end
-      logger.ap @complex
-      #session[:complex] = @cq
-    #else
-    #  @cq = session[:complex]
-    end
-
-    @title = current_search
-    @schools = if @grade_filter.blank? && @loc.blank? && @complex.blank?
-      School.ec.where('esd_el_2015 is not null').
-        order('points desc').limit(50)
+    when 'k8', 'high'
+      @filters.each do |f|
+        @schools = case f
+        when 'special_education'
+          @schools.select do |s|
+            s.special_ed_level == 'moderate' ||
+            s.special_ed_level == 'intensive'
+          end
+        when 'arts'
+          @schools.select do |s|
+            (s.arts_media + s.arts_visual + s.arts_music +
+            s.arts_performing_written).size > 8
+          end
+        when 'sports'
+          @schools.select do |s|
+            s.boys_sports.size > 4 &&
+            s.girls_sports > 4
+          end
+        when 'transportation'
+          @schools.select do |s|
+            s.transportation_options == 'passes' ||
+            s.transportation_options == 'busses' ||
+            s.transportation_options == 'shared_bus'
+          end
+        when 'before_after_care'
+          @schools.select do |s|
+            s.before_after_care == 'after' ||
+            s.before_after_care == 'before'
+          end
+        when 'app_required'
+          @schools.select do |s|
+            s.application_process == 'yes'
+          end
+        when 'college_readiness'
+          @schools.select do |s|
+            s.college_prep != 'none' &&
+              (s.facilities == 'college_center'||
+              s.extra_learning_resources == 'career_counseling' ||
+              s.staff_resources == 'college_counselor')
+          end
+        else
+          @schools
+        end
+      end
     else
-      scope_from_filters(@grade_filter, @loc, @complex)
+      @schools = School.ec.where('esd_el_2015 is not null').
+        order('points desc').limit(50)
     end
 
     respond_to do |format|
@@ -136,18 +196,15 @@ class SchoolsController < ApplicationController
         end
       }
 
-      format_field = lambda { |val|
-        val == '0' ? 'No' : (val == '1' ? 'Yes' : val)
-      }
 
       @profile_fields = [
         {
           label: 'Program Specialty',
-          value: format_field.call(@school.ec_specialty)
+          value: format_field(@school.ec_specialty)
         },
         {
           label: 'Schedule Type',
-          value: format_field.call(@school.ec_schedule)
+          value: format_field(@school.ec_schedule)
         },
         {
           label: 'Accepts Ages from',
@@ -159,31 +216,31 @@ class SchoolsController < ApplicationController
         },
         {
           label: 'Total Licensed Capacity',
-          value: format_field.call(@school.ec_capacity)
+          value: format_field(@school.ec_capacity)
         },
         {
           label: 'Financial Assistance',
-          value: format_field.call(@school.ec_subsidy)
+          value: format_field(@school.ec_subsidy)
         },
         {
           label: 'Special Needs Experience',
-          value: format_field.call(@school.ec_special)
+          value: format_field(@school.ec_special)
         },
         {
           label: 'Care Setting',
-          value: format_field.call(@school.ec_setting)
+          value: format_field(@school.ec_setting)
         },
         {
           label: 'Environment',
-          value: format_field.call(@school.ec_environment)
+          value: format_field(@school.ec_environment)
         },
         {
           label: 'Meals Provided',
-          value: format_field.call(@school.ec_meals)
+          value: format_field(@school.ec_meals)
         },
         {
           label: 'Payment Schedule',
-          value: format_field.call(@school.ec_pay_schedule)
+          value: format_field(@school.ec_pay_schedule)
         },
         {
           label: 'Application / Registration Fee',
@@ -191,99 +248,99 @@ class SchoolsController < ApplicationController
         },
         {
           label: 'Provides Transportation?',
-          value: format_field.call(@school.ec_transportation)
+          value: format_field(@school.ec_transportation)
         },
         {
           label: 'Additional program information',
-          value: format_field.call(@school.ec_additional_info)
+          value: format_field(@school.ec_additional_info)
         },
         {
           label: 'Age Groups',
-          value: format_field.call(@school.ec_age_groups)
+          value: format_field(@school.ec_age_groups)
         },
         {
           label: 'Enrichment opportunities',
-          value: format_field.call(@school.ec_enrichment)
+          value: format_field(@school.ec_enrichment)
         },
         {
           label: 'Teacher Evaluations',
-          value: format_field.call(@school.ec_evaluation)
+          value: format_field(@school.ec_evaluation)
         },
         {
           label: 'Field trips and other extended programming',
-          value: format_field.call(@school.ec_extended)
+          value: format_field(@school.ec_extended)
         },
         {
           label: 'Facilities Available',
-          value: format_field.call(@school.ec_facilities)
+          value: format_field(@school.ec_facilities)
         },
         {
           label: 'Frequency of feedback provided to parents on child’s progress',
-          value: format_field.call(@school.ec_feedback_freq)
+          value: format_field(@school.ec_feedback_freq)
         },
         {
           label: 'Type of feedback provided to parents on child\'s progress',
-          value: format_field.call(@school.ec_feedback_type)
+          value: format_field(@school.ec_feedback_type)
         },
         {
           label: 'Languages spoken by program staff',
-          value: format_field.call(@school.ec_language)
+          value: format_field(@school.ec_language)
         },
         {
           label: 'Health/Dental/Vision Care',
-          value: format_field.call(@school.ec_medical)
+          value: format_field(@school.ec_medical)
         },
         {
           label: 'Access to mental health services',
-          value: format_field.call(@school.ec_mental)
+          value: format_field(@school.ec_mental)
         },
         {
           label: 'Partner name - 1',
-          value: format_field.call(@school.ec_partner_one)
+          value: format_field(@school.ec_partner_one)
         },
         {
           label: 'Details of partnership - 1',
-          value: format_field.call(@school.ec_partner_one_detail)
+          value: format_field(@school.ec_partner_one_detail)
         },
         {
           label: 'Partner name - 2',
-          value: format_field.call(@school.ec_partner_two)
+          value: format_field(@school.ec_partner_two)
         },
         {
           label: 'Details of partnership - 2',
-          value: format_field.call(@school.ec_partner_two_detail)
+          value: format_field(@school.ec_partner_two_detail)
         },
         {
           label: 'Partner name - 3',
-          value: format_field.call(@school.ec_partner_three)
+          value: format_field(@school.ec_partner_three)
         },
         {
           label: 'Details of partnership - 3',
-          value: format_field.call(@school.ec_partner_three_detail)
+          value: format_field(@school.ec_partner_three_detail)
         },
         {
           label: 'Playground and/or physical activity space on site',
-          value: format_field.call(@school.ec_physical_activity)
+          value: format_field(@school.ec_physical_activity)
         },
         {
           label: 'Family and community support',
-          value: format_field.call(@school.ec_support)
+          value: format_field(@school.ec_support)
         },
         {
           label: 'Actual Enrollment',
-          value: format_field.call(@school.ec_actual_enrollment)
+          value: format_field(@school.ec_actual_enrollment)
         },
         {
           label: 'Licensed Enrollment',
-          value: format_field.call(@school.ec_licensed_enrollment)
+          value: format_field(@school.ec_licensed_enrollment)
         },
         {
           label: 'Number of children with special needs',
-          value: format_field.call(@school.ec_special_enrollment)
+          value: format_field(@school.ec_special_enrollment)
         },
         {
           label: 'Number of children receiving subsidy',
-          value: format_field.call(@school.ec_subsidy_enrollment)
+          value: format_field(@school.ec_subsidy_enrollment)
         }
 
       ]
@@ -474,12 +531,12 @@ class SchoolsController < ApplicationController
         tx['Administration']            = s.ec_points_admin
         tx['Environment Pts']           = s.ec_points_env
         tx['Curriculum']                = s.ec_points_curriculum
-        tx['Financial Assistance']      = s.ec_subsidy
-        tx['Special Needs Experience']  = s.ec_special
+        tx['Financial Assistance']      = format_field(s.ec_subsidy)
+        tx['Special Needs Experience']  = format_field(s.ec_special)
         tx['Care Setting']              = s.ec_setting
-        tx['Environment']               = s.ec_environment
-        tx['Meals Provided']            = s.ec_meals
-        tx['Provides Transportation?']  = s.ec_transportation
+        tx['Environment']               = format_field(s.ec_environment)
+        tx['Meals Provided']            = format_field(s.ec_meals)
+        tx['Provides Transportation?']  = format_field(s.ec_transportation)
 
       else
         tx['Overall Grade']     = g[:cumulative][:letter] || 'N/A'
@@ -550,6 +607,14 @@ class SchoolsController < ApplicationController
   #end
 
   private
+
+  def format_field(val)
+    if val.is_a?(Array)
+      val.join(", ")
+    else
+      val == '0' ? 'No' : (val == '1' ? 'Yes' : val)
+    end
+  end
 
   def format_phone(ph)
     if ph.length == 10

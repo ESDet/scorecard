@@ -6,21 +6,15 @@
     #container
       %header#nav
         .container_12
-          - if home
-            .grid_4.centered.logo-container
-              = link_to image_tag('scorecard_logo.png', :class => 'logo'), root_path
-            .grid_8.relative.nomobile{:style => 'height: 175px;'}
-              %h1.orange{:style => 'position: absolute; bottom: 0px; left: 0px; margin-bottom: 0;'} Find a School...
-          - else
-            .grid_12
-              = link_to image_tag('scorecard_thin.png', :class => 'logo float_left'), root_path
-              %a#hamburger.btn.mobile_only.float_right{:href => '#'}
-                = image_tag 'hamburger.png'
-              .menu
-                = link_to 'Home', root_path, :class => 'btn'
-                = link_to 'Find a School', schools_path, :class => 'btn'
-                = link_to 'Resources', '/resources', :class => 'btn'
-        
+          .grid_12
+            = link_to image_tag('scorecard_thin.png', :class => 'logo float_left'), root_path
+            %a#hamburger.btn.mobile_only.float_right{:href => '#'}
+              = image_tag 'hamburger.png'
+            .menu
+              = link_to 'Home', root_path, :class => 'btn'
+              = link_to 'Find a School', schools_path, :class => 'btn'
+              = link_to 'Resources', '/resources', :class => 'btn'
+
       #bodywrap.l-content
         = yield
 

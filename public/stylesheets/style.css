@@ -29,12 +29,15 @@
     height: 145px;
   }
 }
+h2.grey {
+  color: #556677;
+}
 html {
   overflow-y: scroll;
   height: 100%;
 }
 body {
-  height: auto;
+  height: 100%;
   padding: 0;
   margin: 0;
   background-color: transparent;
@@ -226,19 +229,10 @@ hr {
   width: auto;
   margin-top: -5px;
 }
-.home-index #nav {
-  height: 180px;
-}
-.home-index #nav .grid_4 {
-  padding-top: 1em;
-}
-.home-index #nav img.logo {
-  height: 160px;
-}
-body:not(.home-index) {
+body {
   margin-top: 62px;
 }
-body:not(.home-index) #nav {
+body #nav {
   position: fixed;
   left: 0;
   top: 0;
@@ -249,17 +243,17 @@ body:not(.home-index) #nav {
   padding: 0;
   background-color: #dae1e4;
 }
-body:not(.home-index) #nav img.logo {
+body #nav img.logo {
   margin: 0.5em 0 0.5em -27px;
 }
-body:not(.home-index) #nav a.btn {
+body #nav a.btn {
   background-color: transparent;
   color: #466778;
   display: inline-block;
   height: 100%;
   padding: 15px 1em;
 }
-body:not(.home-index) #nav a.btn:hover {
+body #nav a.btn:hover {
   background-color: #a5dff7;
 }
 .menu,
@@ -299,6 +293,18 @@ body:not(.home-index) #nav a.btn:hover {
   position: relative;
   background-color: white;
 }
+#search {
+  width: 100%;
+  border-top: 0;
+  margin-bottom: 20px;
+  position: relative;
+  background-color: white;
+}
+@media only screen and (min-width: 960px) {
+  #search {
+    padding: 50px;
+  }
+}
 #ground-wrapper {
   position: relative;
 }
@@ -326,7 +332,6 @@ a.external:visited img {
   background-color: #134370;
   color: white;
   padding: 0.5em;
-  margin-right: 1em;
 }
 .btn img {
   max-height: 1em;
@@ -364,7 +369,7 @@ a.external:visited img {
 }
 #outer_wrapper #lefty a.search {
   display: block;
-  background-color: #27b373;
+  background-color: #f05a28;
   color: white;
   margin: 0.5em 0;
 }
@@ -719,23 +724,42 @@ ul.school_list li.school h3 {
   display: inline-block;
 }
 .grades a,
-.dropdown > a {
+.dropdown > a,
+.filter > a {
   font-size: 1.3em;
   background-color: white;
-  color: #27b373;
+  margin-bottom: 1em;
   padding: 5px 8px;
-  border: 2px solid #27b373;
 }
 .grades a.active,
-.dropdown > a.active {
-  background-color: #27b373;
+.dropdown > a.active,
+.filter > a.active {
   color: white;
+}
+.dropdown > a {
+  color: #556677;
+  border: 2px solid #556677;
+}
+.dropdown > a.active {
+  color: #556677;
+  background-color: #a7d8bf;
+}
+.filter > a {
+  color: #27b373;
+  border: 2px solid #27b373;
+}
+.filter > a.active {
+  background-color: #27b373;
+}
+.home-index select,
+.schools-index select {
+  width: 100%;
 }
 .home-index input[type=text],
 .schools-index input[type=text] {
   font-size: 1.3em;
   padding: 5px 8px;
-  margin: 0em 0;
+  margin-bottom: 1em;
   max-width: 100%;
   width: 100%;
 }
@@ -745,26 +769,25 @@ ul.school_list li.school h3 {
 }
 .home-index .btn.search,
 .schools-index .btn.search {
-  background-color: #27b373;
+  background-color: #f05a28;
   color: white;
-  max-width: 100%;
   width: 100%;
-  display: block;
   font-size: 1.3em;
-  text-align: right;
-}
-.home-index .dropdown,
-.schools-index .dropdown {
-  margin-bottom: 1em;
-  width: 48%;
+  text-align: left;
   float: left;
 }
-.home-index .dropdown:nth-child(odd),
-.schools-index .dropdown:nth-child(odd) {
-  margin-right: 4%;
+.home-index .dropdown,
+.schools-index .dropdown,
+.home-index .filter,
+.schools-index .filter {
+  width: 100%;
+  float: left;
 }
 .home-index .dropdown a.trigger,
-.schools-index .dropdown a.trigger {
+.schools-index .dropdown a.trigger,
+.home-index .filter a.trigger,
+.schools-index .filter a.trigger {
+  cursor: pointer;
   display: block;
 }
 #lefty .grades a {
@@ -1231,7 +1254,7 @@ ul.nav li.active .question {
   .home-index .fourplex #loc {
     display: none;
   }
-  body:not(.home-index) #nav a#hamburger {
+  body #nav a#hamburger {
     display: none;
   }
 }
@@ -1269,22 +1292,22 @@ ul.nav li.active .question {
   .align_right {
     text-align: left;
   }
-  body:not(.home-index) #nav #hamburger {
+  body #nav #hamburger {
     margin-right: 0;
-    padding-top: 12px;
+    padding-top: 20px;
   }
-  body:not(.home-index) #nav #hamburger img {
+  body #nav #hamburger img {
     margin-right: 0;
   }
-  body:not(.home-index) #nav .menu {
+  body #nav .menu {
     display: none;
     float: none;
     text-align: left;
   }
-  body:not(.home-index) #nav .menu.active {
+  body #nav .menu.active {
     display: block;
   }
-  body:not(.home-index) #nav .menu a.btn {
+  body #nav .menu a.btn {
     display: block;
     clear: both;
     padding: 0.5em 1em;
@@ -1385,7 +1408,7 @@ ul.nav li.active .question {
   .home-index #top-tabs.nav-tabs > li.active > a .question {
     border-bottom: none;
   }
-  body:not(.home-index) #nav img.logo {
+  body #nav img.logo {
     margin-left: 0;
   }
   #ground-wrapper #ground {
@@ -1564,6 +1587,16 @@ ul.nav li.active .question {
   opacity: 0.3;
   filter: alpha(opacity=30);
   content: "\2193";
+  float: right;
+}
+.plus:after {
+  display: inline-block;
+  *text-indent: 0;
+  vertical-align: top;
+  filter: alpha(opacity=30);
+  content: "\002B";
+  color: white;
+  float: right;
 }
 .dropdown .caret {
   margin-top: 8px;

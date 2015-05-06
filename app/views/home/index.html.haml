@@ -1,81 +1,27 @@
+.container_12
+  .grid_2.nomobile &nbsp;
+  .grid_8.relative{:style => 'height: 175px;'}
+    %h1.orange Find the best Detroit schools for your family.
+    %h2.grey What is important to you? Select what you need your school to offer:
+
+%br/
 
 #ground-wrapper
-  #ground
-  .container_12.clear_floats
-    .grid_4.nomobile
-      %ul#top-tabs.nav.nav-tabs.left
-        %li.active
-          %a{:href => '#top', 'data-toggle' => 'tab'}
-            - @top_labels.each do |kind,label|
-              .top-title.question.bebas{'data-kind' => kind, :class => kind == :ec ? '' : 'hide'}= label
-      .tab-content
-        #top.tab-pane.active
-          - @top.each do |k, v|
-            %ul.top{'data-kind' => k, :class => k != :ec ? 'hide' : ''}
-              - v.each do |s|
-                %li
-                  - if k == :ec
-                    = image_tag School.el_image(:mini, s.esd_el_2015.andand.overall_rating), :class => 'mini-icon float_left'
-                  - else
-                    = image_tag School.k12_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
-                  = link_to s.display_name, school_path(s)
-
-
+  #ground.nomobile
+  .container_12
+    .grid_2.nomobile &nbsp;
     .grid_8
-      %ul.nav.nav-tabs
-        %li.active
-          %a{:href => '#location', 'data-toggle' => 'tab'}
-            .question.bebas By Location
-        %li
-          %a{:href => '#name', 'data-toggle' => 'tab'}
-            .question.bebas By Name
-        %li
-          %a{:href => '#characteristics', 'data-toggle' => 'tab'}
-            .question.bebas By Characteristics
+      #search
+        = render 'shared/search'
 
-
-      .tab-content
-        #location.tab-pane.active
-          = render 'shared/filters', :long_names => true
-          .clear_floats
-
-
-        #name.tab-pane
-          = form_tag '/search', { :method => :post, :class => 'form-byname search' } do
-            = text_field_tag :q, nil, :placeholder => 'Search by school name', :autocomplete => 'off'
-            %a#name-search.btn.search{:href => '#'} Search &gt;
-          .clear_floats
-
-        #characteristics.tab-pane
-          = render 'schools/fourplex'
-
-      .clear_floats
-
-      .block
-        %p.orange
-          Use this Scorecard to find schools that fit your needs. Be sure to check out the resources below as they were designed with parents
-          %em for
-          parents.
-
-        %h3.bebas.underlined= @tips.title
-        = raw(@tips.body)
-
-        %h3.bebas.underlined= @guides.title
-        = raw(@guides.body)
-
-      .clear_floats
-      %br/
-      %br/
+    %br/
+    %br/
 
 :javascript
   var charFilters = {};
   $(document).ready(function() {
     var school_names = #{School.select('name').collect { |s| s.name }};
     $('input#q').typeahead({ source: school_names });
-    $('#name-search').click(function(e) {
-      $('.form-byname').submit();
-      return false;
-    });
 
     $('.btn-group.grades a').click(function(e) {
       var kind = $(this).data('filter');
@@ -94,7 +40,6 @@
       $('.char-form').submit();
       return true;
     });
-
   });
 
 
