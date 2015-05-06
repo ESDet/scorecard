@@ -233,7 +233,7 @@ class School < ActiveRecord::Base
           :percent  => esd.total_pct }
       end
 
-    elsif self.ecs
+    elsif self.earlychild?
       h[:status][:summary_table] = summary_table(:status)
       return h
 
@@ -679,6 +679,97 @@ class School < ActiveRecord::Base
     ecs.andand.ptsCurr || earlychild.andand.gscptscurr
   end
 
+  def ec_additional_info
+    get_api_value(ecs.andand.field_ec_additional)
+  end
+
+  def ec_age_groups
+    get_api_value(ecs.andand.field_ec_agegroups)
+  end
+
+  def ec_enrichment
+    get_api_value(ecs.andand.field_ec_enrichment)
+  end
+
+  def ec_evaluation
+    get_api_value(ecs.andand.field_ec_evaluation)
+  end
+
+  def ec_extended
+    get_api_value(ecs.andand.field_ec_extended)
+  end
+
+  def ec_facilities
+    get_api_value(ecs.andand.field_ec_facilities)
+  end
+
+  def ec_feedback_freq
+    get_api_value(ecs.andand.field_ec_feedbackfreq)
+  end
+
+  def ec_feedback_type
+    get_api_value(ecs.andand.field_ec_feedbacktype)
+  end
+
+  def ec_language
+    get_api_value(ecs.andand.field_ec_language)
+  end
+
+  def ec_medical
+    get_api_value(ecs.andand.field_ec_medical)
+  end
+
+  def ec_mental
+    get_api_value(ecs.andand.field_ec_mental)
+  end
+
+  def ec_partner_one
+    get_api_value(ecs.andand.field_ec_partner1)
+  end
+
+  def ec_partner_one_detail
+    get_api_value(ecs.andand.field_ec_partner1_detail)
+  end
+
+  def ec_partner_two
+    get_api_value(ecs.andand.field_ec_partner2)
+  end
+
+  def ec_partner_two_detail
+    get_api_value(ecs.andand.field_ec_partner2_detail)
+  end
+
+  def ec_partner_three
+    get_api_value(ecs.andand.field_ec_partner3)
+  end
+
+  def ec_partner_three_detail
+    get_api_value(ecs.andand.field_ec_partner3_detail)
+  end
+
+  def ec_physical_activity
+    get_api_value(ecs.andand.field_ec_physactivity)
+  end
+
+  def ec_support
+    get_api_value(ecs.andand.field_ec_supports)
+  end
+
+  def ec_actual_enrollment
+    get_api_value(ecs.andand.field_ec_actual_enrollment)
+  end
+
+  def ec_licensed_enrollment
+    get_api_value(ecs.andand.field_ec_licensed_enrollment)
+  end
+
+  def ec_special_enrollment
+    get_api_value(ecs.andand.field_ec_special_enrollment)
+  end
+
+  def ec_subsidy_enrollment
+    get_api_value(ecs.andand.field_ec_subsidy_enrollment)
+  end
   private
 
   def get_api_value(field)

@@ -203,7 +203,100 @@ class SchoolsController < ApplicationController
         {
           label: 'Written Contract',
           value: format_field.call(@school.ec_contract)
+        },
+        {
+          label: 'Additional program information',
+          value: format_field.call(@school.ec_additional_info)
+        },
+        {
+          label: 'Age Groups',
+          value: format_field.call(@school.ec_age_groups)
+        },
+        {
+          label: 'Enrichment opportunities',
+          value: format_field.call(@school.ec_enrichment)
+        },
+        {
+          label: 'Teacher Evaluations',
+          value: format_field.call(@school.ec_evaluation)
+        },
+        {
+          label: 'Field trips and other extended programming',
+          value: format_field.call(@school.ec_extended)
+        },
+        {
+          label: 'Facilities Available',
+          value: format_field.call(@school.ec_facilities)
+        },
+        {
+          label: 'Frequency of feedback provided to parents on child’s progress',
+          value: format_field.call(@school.ec_feedback_freq)
+        },
+        {
+          label: 'Type of feedback provided to parents on child\'s progress',
+          value: format_field.call(@school.ec_feedback_type)
+        },
+        {
+          label: 'Languages spoken by program staff',
+          value: format_field.call(@school.ec_language)
+        },
+        {
+          label: 'Health/Dental/Vision Care',
+          value: format_field.call(@school.ec_medical)
+        },
+        {
+          label: 'Access to mental health services',
+          value: format_field.call(@school.ec_mental)
+        },
+        {
+          label: 'Partner name - 1',
+          value: format_field.call(@school.ec_partner_one)
+        },
+        {
+          label: 'Details of partnership - 1',
+          value: format_field.call(@school.ec_partner_one_detail)
+        },
+        {
+          label: 'Partner name - 2',
+          value: format_field.call(@school.ec_partner_two)
+        },
+        {
+          label: 'Details of partnership - 2',
+          value: format_field.call(@school.ec_partner_two_detail)
+        },
+        {
+          label: 'Partner name - 3',
+          value: format_field.call(@school.ec_partner_three)
+        },
+        {
+          label: 'Details of partnership - 3',
+          value: format_field.call(@school.ec_partner_three_detail)
+        },
+        {
+          label: 'Playground and/or physical activity space on site',
+          value: format_field.call(@school.ec_physical_activity)
+        },
+        {
+          label: 'Family and community support',
+          value: format_field.call(@school.ec_support)
+        },
+        {
+          label: 'Actual Enrollment',
+          value: format_field.call(@school.ec_actual_enrollment)
+        },
+        {
+          label: 'Licensed Enrollment',
+          value: format_field.call(@school.ec_licensed_enrollment)
+        },
+        {
+          label: 'Number of children with special needs',
+          value: format_field.call(@school.ec_special_enrollment)
+        },
+        {
+          label: 'Number of children receiving subsidy',
+          value: format_field.call(@school.ec_subsidy_enrollment)
         }
+
       ]
 
       @legend = {

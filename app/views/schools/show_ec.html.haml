@@ -32,7 +32,7 @@
           - next if @ech[('field_' + day + '_open').to_sym].blank? or @ech[('field_' + day + '_close').to_sym].blank?
           - num += 1
           %span.day #{day.titleize}:
-          #{@ech[('field_' + day + '_open').to_sym]['und'].first['value']} &mdash; #{@ech[('field_' + day + '_close').to_sym]['und'].first['value']}
+          #{@ech[('field_' + day + '_open').to_sym]} &mdash; #{@ech[('field_' + day + '_close').to_sym]}
           %br/
         - if num == 0
           No hours of operation listed.

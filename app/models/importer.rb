@@ -311,7 +311,6 @@ class Importer
         published_rating = state_rating_info['PublishedRating'] if state_rating_info
 
         geo = r['field_geo'] if r['field_geo']
-        puts "#{r["name"]}: #{geo}" if r['name'] == "Smith, Jaletha"
         loc = RGeo::Geographic.spherical_factory.point(geo['lon'].to_f, geo['lat'].to_f) if geo
 
         r['publishedrating'] = published_rating.to_i if published_rating
@@ -331,8 +330,8 @@ class Importer
         h[:address]     = address['thoroughfare'] if address['thoroughfare']
         h[:address2]    = "#{address['locality']}, MI #{address['postal_code']}" if address[:locality] && address[:postal_code]
         h[:zip]         = address['postal_code'] if address['postal_code']
-        r.merge(state_rating_info) if state_rating_info
-        r.merge(profile) if profile
+        r = r.merge(state_rating_info) if state_rating_info
+        r = r.merge(profile) if profile
         h[:ecs]         = OpenStruct.new(r)
         h[:centroid]    = loc if loc
         s = School.find_by_bcode(license)
