@@ -29,7 +29,12 @@ class SchoolsController < ApplicationController
     end
 
     @title = current_search
-    @schools = scope_from_filters(filter, params[:loc], @complex)
+    @schools = if (filter.nil? || filter.blank?) && (loc.nil? || loc.blank?) && (@complex.nil? || @complex.blank?)
+      School.where(school_type: 'EC').limit(50)
+    else
+      scope_from_filters(filter, params[:loc], @complex)
+    end
+    p @schools.count
     @schools.sort! do |a,b|
       if a.earlychild? and !b.earlychild?
         1
