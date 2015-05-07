@@ -568,21 +568,6 @@ class SchoolsController < ApplicationController
 
   private
 
-  def get_api_value(field)
-    if field.is_a?(Hash)
-      n = field['und']
-      if n.is_a?(Hash)
-        n.map do |k, v|
-          v.map { |k, v| v if k == 'name'}
-        end.flatten.select { |k| !k.blank? }.join(", ")
-      else
-        n.first['value']
-      end
-    elsif field.is_a?(Array)
-      field.first
-    end
-  end
-
   def format_phone(ph)
     if ph.length == 10
       "#{ph[0..2]}-#{ph[3..5]}-#{ph[6..-1]}"
