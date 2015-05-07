@@ -30,7 +30,7 @@ class SchoolsController < ApplicationController
     end
 
     @title = current_search
-    @schools = if @filter.blank? && @loc.blank? && @complex.blank?
+    @schools = if @grade_filter.blank? && @loc.blank? && @complex.blank?
       School.ec.where('esd_el_2015 is not null').
         order('points desc').limit(50)
     else
