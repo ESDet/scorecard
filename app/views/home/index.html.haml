@@ -71,7 +71,7 @@
 :javascript
   var charFilters = {};
   $(document).ready(function() {
-    var school_names = #{School.select('id, name').collect { |s| s.name }.to_json};
+    var school_names = #{School.select('name').collect { |s| s.name }};
     $('input#q').typeahead({ source: school_names });
     $('#name-search').click(function(e) {
       $('.form-byname').submit();

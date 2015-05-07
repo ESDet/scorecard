@@ -56,7 +56,7 @@ module Bedrock
   def self.to_feature_collection(elements)
     elements = elements.to_a if elements.is_a? ActiveRecord::Relation
     elements = [elements] unless elements.is_a? Array
-    features = elements.reject { |e| e.nil? or e.geometry.nil? }.collect { |e| e.to_feature }
+    features = elements.collect { |e| e.to_feature }
     fc = RGeo::GeoJSON::FeatureCollection.new(features)
     begin
       return RGeo::GeoJSON.encode(fc)
