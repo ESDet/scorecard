@@ -10,7 +10,7 @@ class HomeController < ApplicationController
                         rating = s.esd_el_2015.overall_rating
                         s.esd_el_2015.total_points.to_i >= 11 &&
                         (rating == 'Gold' || rating == 'Silver' ||
-                          rating == 'Bronze' || rating == 'Bronze - Rating in progess')
+                          rating == 'Bronze' || rating == 'Bronze - Rating in proges')
                        end,
       :elementary => School.elementary.where("grade <> 'Promising'").order('points desc').limit(10),
       :middle     => School.middle.where("grade <> 'Promising'").order('points desc').limit(10),

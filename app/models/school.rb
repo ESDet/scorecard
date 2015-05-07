@@ -553,9 +553,12 @@ class School < ActiveRecord::Base
     valid_metals = {
       'Below Bronze'  => 'BelowBronze',
       'Bronze'        => 'Bronze',
+      'Bronze - Rating in progres' => 'Bronze',
+      'Bronze - Rating in progress' => 'Bronze',
       'Silver'        => 'Silver',
+      'Silver - Rating in progress' => 'Silver',
       'Gold'          => 'Gold',
-      'Incomplete'    => 'NoRating',
+      'Incomplete'    => 'NoRating'
     }
     metal = valid_metals[rating].andand.gsub(' ', '') || 'None'
     #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')

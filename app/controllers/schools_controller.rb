@@ -34,7 +34,6 @@ class SchoolsController < ApplicationController
     else
       scope_from_filters(filter, params[:loc], @complex)
     end
-    p @schools.count
     @schools.sort! do |a,b|
       if a.earlychild? and !b.earlychild?
         1
