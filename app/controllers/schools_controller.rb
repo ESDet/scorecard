@@ -14,6 +14,7 @@ class SchoolsController < ApplicationController
 
     @complex = nil
     @grade_filter = filter
+    @loc = loc
 
     if params[:complex] and params[:complex] != 'null'
       begin
@@ -29,8 +30,9 @@ class SchoolsController < ApplicationController
     end
 
     @title = current_search
-    @schools = if (filter.nil? || filter.blank?) && (loc.nil? || loc.blank?) && (@complex.nil? || @complex.blank?)
-      School.where(school_type: 'EC').limit(50)
+    @schools = if @filter.blank? && @loc.blank? && @complex.blank?
+      School.ec.where('esd_el_2015 is not null').
+        order('points desc').limit(50)
     else
       scope_from_filters(filter, params[:loc], @complex)
     end
@@ -590,7 +592,6 @@ class SchoolsController < ApplicationController
       ph
     end
   end
-
 
   def scope_from_filters(filter, loc, complex=nil)
     logger.info "scope from filters: #{filter}, #{loc}"
