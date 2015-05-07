@@ -40,7 +40,7 @@
           %span.day Months of operation:
           #{@school.ec_months_of_operation}
         %p
-          - contact = @school.ec_contract
+          - contact = @school.ec_contact
           - unless contact.blank?
             %span.day Contact person:
             #{contact}

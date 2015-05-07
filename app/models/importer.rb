@@ -320,7 +320,7 @@ class Importer
 
         address = r['field_address']
         points = state_rating_info['ptsTotal'].to_i if state_rating_info
-        name = profile['title'].gsub('&#039;', "'").gsub('&amp;', '&') if profile
+        name = profile['title'] if profile
 
         h = { }
         h[:bcode]       = id if id

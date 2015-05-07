@@ -162,10 +162,6 @@ class SchoolsController < ApplicationController
           value: format_field.call(@school.ec_capacity)
         },
         {
-          label: 'Program Eligibility Criteria',
-          value: format_field.call(@school.ec_eligibility)
-        },
-        {
           label: 'Financial Assistance',
           value: format_field.call(@school.ec_subsidy)
         },
@@ -196,10 +192,6 @@ class SchoolsController < ApplicationController
         {
           label: 'Provides Transportation?',
           value: format_field.call(@school.ec_transportation)
-        },
-        {
-          label: 'Written Contract',
-          value: format_field.call(@school.ec_contract)
         },
         {
           label: 'Additional program information',

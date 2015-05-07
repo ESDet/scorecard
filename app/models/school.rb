@@ -103,6 +103,10 @@ class School < ActiveRecord::Base
     end
   end
 
+  def name
+    self.andand.ecs.andand.title || self.read_attribute(:name)
+  end
+
   def my_properties
     kinds = []
     kinds << 'earlychild' if earlychild?
@@ -637,6 +641,10 @@ class School < ActiveRecord::Base
 
   def ec_transportation
     get_api_value(ecs.andand.field_ec_transportation) || earlychild.andand.transportation
+  end
+
+  def ec_contact
+    get_api_value(ecs.andand.field_ec_contact) || earlychild.andand.gsccontact
   end
 
   def ec_contract
