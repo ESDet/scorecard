@@ -553,6 +553,7 @@ class School < ActiveRecord::Base
     valid_metals = {
       'Below Bronze'  => 'BelowBronze',
       'Bronze'        => 'Bronze',
+      'Below Bronze - Rating in progress' => 'BelowBronze',
       'Bronze - Rating in progres' => 'Bronze',
       'Bronze - Rating in progress' => 'Bronze',
       'Silver'        => 'Silver',
