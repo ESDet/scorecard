@@ -104,7 +104,11 @@ class School < ActiveRecord::Base
   end
 
   def name
-    self.andand.ecs.andand.title || self.read_attribute(:name)
+    if Class.instance_methods.include?(:ecs)
+      ecs.andand.title
+    else
+      self.read_attribute(:name)
+    end
   end
 
   def my_properties
