@@ -34,7 +34,7 @@ class SchoolsController < ApplicationController
       School.ec.where('esd_el_2015 is not null').
         order('points desc').limit(50)
     else
-      scope_from_filters(filter, params[:loc], @complex)
+      scope_from_filters(@grade_filter, @loc, @complex)
     end
     @schools.sort! do |a,b|
       if a.earlychild? and !b.earlychild?
