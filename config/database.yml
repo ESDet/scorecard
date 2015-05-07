@@ -7,14 +7,6 @@ local: &local
   host: localhost
   encoding: utf8
 
-sage: &sage
-  adapter: mysql2spatial
-  pool: 5
-  timeout: 5000
-  username: rails
-  password: huju5Azafu
-  host: sage_private
-
 development:
   <<: *local
   database: esd2_local
@@ -23,12 +15,8 @@ test:
   <<: *local
   database: esd2_test
 
-staging:
-  <<: *sage
-  database: esd2_stage
-
 production:
-  <<: *sage
+  <<: *local
   database: esd2_prod
 
 

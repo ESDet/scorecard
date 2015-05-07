@@ -19,9 +19,11 @@ ESD::Application.configure do
 
   config.action_mailer.default_url_options = { :host => "esd2.makeloveland.com" }
 
-  config.middleware.use ExceptionNotifier,
-    :email_prefix => "[ESD2 staging] ",
-    :sender_address => %{"Exception Notifier" <info@makeloveland.com>},
-    :exception_recipients => %w{larry@makeloveland.com}
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    email: {
+      :email_prefix => "[ESD2 staging] ",
+      :sender_address => %{"Exception Notifier" <info@makeloveland.com>},
+      :exception_recipients => %w{larry@makeloveland.com}
+    }
 
 end

@@ -27,9 +27,11 @@ ESD::Application.configure do
 
   config.action_mailer.default_url_options = { :host => ENV['SMTP_DOMAIN'] }
 
-  config.middleware.use ExceptionNotifier,
-    :email_prefix => "#{ENV['EMAIL_PREFIX']} ",
-    :sender_address => %{"Exception Notifier" <noreply@alfajango.com>},
-    :exception_recipients => %w{excellentschools@alfajango.com}
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    email: {
+      :email_prefix => "#{ENV['EMAIL_PREFIX']} ",
+      :sender_address => %{"Exception Notifier" <noreply@alfajango.com>},
+      :exception_recipients => %w{excellentschools@alfajango.com}
+    }
 
 end
