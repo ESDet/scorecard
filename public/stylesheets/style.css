@@ -2,6 +2,15 @@
 /* k8 */
 /* high */
 /* 2014 summer update */
+.under-construction {
+  height: 70px;
+  width: 100%;
+  background-color: #f05a29;
+}
+.under-construction h2 {
+  padding: 0.5em 1.5em;
+  color: white;
+}
 html {
   overflow-y: scroll;
   height: 100%;
@@ -22,7 +31,7 @@ body.schools-index {
   position: relative;
 }
 #bodywrap {
-  padding: 1em 0 180px 0;
+  padding: 0 0 180px 0;
   margin-bottom: 0;
 }
 #footer.l-footer-wrapper {

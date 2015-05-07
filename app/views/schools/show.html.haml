@@ -1,3 +1,6 @@
+.under-construction
+  %h2
+    Our K-12 grades were last updated September 2014. Our new grades, methodology, and website are coming soon.
 .summary.k12
   .container_12
     .grid_12{:style => 'margin-bottom: 1em;'}
@@ -7,7 +10,7 @@
           = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
         %br/
         %br/
-          
+
       %h2
         = @school.name
         - copy = @category_copy[@school.esd.andand.schoolcategory.andand.titleize]
@@ -25,7 +28,7 @@
           %a.external{:href => @school.facebook_url, :target => '_blank'}
             = image_tag 'external.png'
             Facebook
-      
+
 
   .container_12
     .grid_3.overall-seal
@@ -64,30 +67,30 @@
       .clear_floats/
       .minimap= render :partial => 'shared/map', :object => @map
       - if letter.blank? or ['N/A', 'Incomplete Status &amp; No Progress Data', 'No Progress Data', 'Incomplete Status Data', 'Undetermined'].include? letter
-        %p 
+        %p
           There is not enough data available at this time to accurately assign an overall grade. This happens because the
           school uses different assessments to measure student academic status and/or progress than most schools, or the school
           is too new for enough data to be available. We recommend that you visit with the school's leadership to better understand
           how the school performs against a college ready standard.
-          
-      
+
+
       - unless true or @school.PDF_FILE_NAME.blank?
         .float_right
           %a.btn{:href => "/pdfs/#{@school.PDF_FILE_NAME}", :target => '_blank'}
             %i.icon-download-alt
             Download PDF
 
-    
+
   .clear_floats
   %br.noprint/
   %br.noprint/
-  
+
 - if @school.esd
-  #ground-wrapper  
+  #ground-wrapper
     #ground
     .container_12.clear_floats.details.k12
       .grid_12
-  
+
         %ul.nav.nav-tabs
           %li.active
             %a{:href => '#overview', 'data-toggle' => 'tab'}
@@ -113,8 +116,8 @@
                 %span.nomobile What is the environment like?
                 %span.mobile_only School Climate
               = render 'tab_grade', :grade => @grades[:climate]
-  
-  
+
+
         .tab-content
           #overview.tab-pane.active
             %p.turquoise
@@ -128,8 +131,8 @@
               %hr/
               .orange= raw(simple_format(@school.profile.andand.message))
               %hr/
-            
-      
+
+
             #other_profile
               = render 'shared/tip', :tip => @tips[:self_reported]
               - @profile_fields.each do |group,fields|
@@ -146,59 +149,59 @@
                             - vals = val.split(",").collect { |v| v.squish }
                             - labels = vals.collect { |v| School::VALUE_LABELS[v] || v }
                             = labels.join(', ')
-      
+
             - if false
               #other_details
                 %h3.bebas.underlined Extra Credit
                 = render 'shared/tip', :tip => @tips[:other_details]
-        
+
                 - if e = @school.esd
                   %p.turquoise
                     We acknowledge  challenges faced by schools that serve high populations of low-income students, English
                     language learners and special education students. We give schools extra credit if they face these challenges
                     or if they have many students that complete the Free Application for Federal Student Aid (FAFSA).
-                    
+
                   %table
                     - @extra_credit.each do |label,val|
                       %tr
                         %td
                           %h3 #{label}:
                         %td= (val == '0') ? 'No' : (val == '1' ? 'Yes' : val)
-  
+
             %h3.bebas.underlined Demographics
             - @demographics.each do |arr|
               %div= arr[0]
-                
+
             %br/
             %br/
             %h3.bebas.underlined Enrollment By Grade
             #enroll{:style => 'float: left; width: 360px; height: 160px;'}
-            
+
             .clear_floats
-                  
-          #status.tab-pane  
+
+          #status.tab-pane
             %p.turquoise
-              We measure school performance using state-mandated tests and high school graduation rates. 
+              We measure school performance using state-mandated tests and high school graduation rates.
               This is excluded from the "Fresh Start" schools.
-              
+
             = render 'grades', :section => :status, :grades => @grades,   :title => 'Academic Status', :tabs => [:summary, :details]
-            
+
           #progress.tab-pane
             %p.turquoise
               We measure how much students are learning during a school year on computer-based growth assessments, and
               how much students improved year-over-year on state tests.
-          
+
             = render 'grades', :section => :progress, :grades => @grades, :title => 'Academic Progress',
               :tabs => @school.elementary? ? [:summary, :details, :history] : [:summary, :details]
             .clear_floats
-          
+
           #climate.tab-pane
             %p.turquoise
               We measure what students, teachers, and community volunteers think and feel about the school. We do this through
               community site visits and surveys.
-              
+
             = render 'grades', :section => :climate, :grades => @grades,  :title => 'School Climate', :tabs => [:summary, :details]
-      
+
             - if @school.esd_site_visit_2014
               %h3.bebas.underlined Community-Led Site Visit
               - @sitevisit.each do |field, info|
@@ -210,7 +213,7 @@
                   %h3.statement= info[1]
                   - if false
                     .explanation.arial= info[:explanation]
-        
+
             %br/
             %h3.bebas.underlined 5Essentials Student and Teacher Survey
             - grade = @grades[:climate]
@@ -230,7 +233,7 @@
                 - grade[:details].each do |label,val|
                   = render 'shared/fivee', :label => label, :val => val
             .clear_floats
-            
+
             - if @school.fiveessentials_2014
               = link_to "View this school's full 5Essentials report here", "https://detroit.5-essentials.org/2014/s/#{@school.fiveessentials_2014.send('5essentials internal school identifier').gsub(',', '')}/", :target => '_blank'
 
@@ -288,7 +291,7 @@
             %b #{k}:
             = v
             %br/
-  
+
 %br/
 %br/
 
@@ -297,7 +300,7 @@
   var dem_data = #{@demographics.to_json};
   var enroll = #{@enrollment.to_json};
   var enroll_ticks = #{@enroll_ticks.to_json};
-  
+
   // Highschool academics
   var high    = #{@school.high?.to_json};
   var high_ac = #{@high_ac.to_json};
@@ -309,18 +312,18 @@
   var elementary = #{@school.elementary?.to_json};
   var middle = #{@school.middle?.to_json};
   var elem_ac = #{@elem_academics.to_json};
-  
+
   // Historical trends
   var history = #{@history.to_json};
-  
-  
+
+
   $(document).ready(function(e) {
     /*var x = #{@school.centroid.x.to_json}, y = #{@school.centroid.y.to_json};
     var p = new L.LatLng(y, x);
     var b = new L.LatLngBounds(p, p);
     map.map.panInsidebounds(b);*/
   });
-  
+
 = javascript_include_tag 'charts'
 
 
