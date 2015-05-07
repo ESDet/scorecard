@@ -90,7 +90,11 @@
           .question.bebas
             %span.nomobile What does the community think?
             %span.mobile_only Community's Rating
-          = render 'seal', :category => :community, :rating => @el.andand.overall_site_visit_rating, :school => @school
+          - visit_year = '2015' if @el.andand.sitevisitratingyear == '2015'
+          = render 'seal', :category => :community,
+            :rating => @el.andand.overall_site_visit_rating,
+            :school => @school,
+            :year => visit_year
       %li{:class => participant ? '' : 'active'}
         %a{:href => '#state', 'data-toggle' => 'tab'}
           .question.bebas
@@ -105,7 +109,11 @@
           .question.bebas
             %span.nomobile What does the staff think?
             %span.mobile_only Staff's Rating
-          = render 'seal', :category => :staff, :rating => @el.andand.teacher_survey_rating, :school => @school
+          - staff_year = '2015' if @el.andand.staffsurveyratingyear == '2015'
+          = render 'seal', :category => :staff,
+            :rating => @el.andand.teacher_survey_rating,
+            :school => @school,
+            :year => staff_year
 
     .tab-content
       #overview.tab-pane.self_reported{:class => participant ? 'active' : ''}

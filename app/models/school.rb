@@ -538,7 +538,7 @@ class School < ActiveRecord::Base
   end
 
 
-  def self.el_image(category, rating)
+  def self.el_image(category, rating, year = nil)
     return 'el_icons/Overview.png' if category == :overview
     return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
     #return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
@@ -563,7 +563,11 @@ class School < ActiveRecord::Base
     }
     metal = valid_metals[rating].andand.gsub(' ', '') || 'None'
     #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')
-    "el_icons/EL_#{cat}_#{metal}.png"
+    if year
+      "el_icons/EL_#{cat}_#{metal}_#{year}.png"
+    else
+      "el_icons/EL_#{cat}_#{metal}.png"
+    end
   end
 
 
