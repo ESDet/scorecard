@@ -36,15 +36,6 @@ class SchoolsController < ApplicationController
     else
       scope_from_filters(@grade_filter, @loc, @complex)
     end
-    @schools.sort! do |a,b|
-      if a.earlychild? and !b.earlychild?
-        1
-      elsif b.earlychild? and !a.earlychild?
-        -1
-      else
-        b.points.to_i <=> a.points.to_i
-      end
-    end
 
     respond_to do |format|
       format.html do
