@@ -19,6 +19,7 @@ module ESD
     # config.autoload_paths += %W(#{config.root}/extras)
 
     config.time_zone = 'Eastern Time (US & Canada)'
+    config.assets.initialize_on_precompile = false
 
     # JavaScript files you want as :defaults (application.js is always included).
     config.action_view.javascript_expansions[:defaults] = %w()
