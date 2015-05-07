@@ -10,12 +10,11 @@
               .top-title.question.bebas{'data-kind' => kind, :class => kind == :ec ? '' : 'hide'}= label
       .tab-content
         #top.tab-pane.active
-          - @top.keys.each_with_index do |kind, i|
-            - ktop = @top[kind]
-            %ul.top{'data-kind' => kind, :class => i != 1 ? 'hide' : ''}
-              - ktop.each do |s|
+          - @top.each do |k, v|
+            %ul.top{'data-kind' => k, :class => k != :ec ? 'hide' : ''}
+              - v.each do |s|
                 %li
-                  - if kind == :ec
+                  - if k == :ec
                     = image_tag School.el_image(:mini, s.esd_el_2015.andand.overall_rating), :class => 'mini-icon float_left'
                   - else
                     = image_tag School.k12_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
