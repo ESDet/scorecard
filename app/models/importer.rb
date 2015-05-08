@@ -20,7 +20,9 @@ class Importer
     School.find_each do |s|
       k12 = (School.where(:bcode => s.bcode).count > 1)
       s.update_attribute(:k12, k12)
-      others = School.where(:centroid => s.centroid).where('id <> ?', s.id).select('id, name, address, school_type, grades_served, bcode, slug')
+      others = School.where(:centroid => s.centroid).
+        where('id <> ?', s.id).
+        select('id, name, address, school_type, grades_served, bcode, slug')
       s.update_attribute(:others, others.empty? ? nil :
         others.collect { |o| { :id => o.id, :name => o.name, :slug => o.slug, :grades => o.grades_served } })
     end
@@ -59,8 +61,6 @@ class Importer
       tid = s['tid']
       name = s['name']
       bcode = s['field_bcode']
-      next if bcode.empty?
-      bcode = bcode['und'].andand.first.andand['value']
       #puts "Doing #{name} (#{bcode})..."
       next if bcode.nil?
 
@@ -69,16 +69,18 @@ class Importer
       basic = {}
       ['email', 'school_scorecard_status', 'school_status', 'loc_email', 'scorecard_display'].each do |f|
         val = s["field_#{f}"]
-        if val.empty?
-          val = nil
-        else
-          val = val['und'].andand.first.andand['value']
+        val = if val
+          if val.is_a?(Hash)
+            val['name']
+          else
+            val
+          end
         end
         basic[f.to_sym] = val
       end
 
       # Don't store the ones to not display
-      if basic[:scorecard_display].to_i == 0
+      if basic[:scorecard_display] == true
         existing = School.find_by_bcode(bcode)
         existing.andand.destroy
         next
@@ -102,12 +104,11 @@ class Importer
       end
 
       # Address
-      addr = s['field_address']['und'].first
+      addr = s['field_address']
       basic[:address] = addr
       basic[:links] = s['field_links'].empty? ? nil : s['field_links']['und'].collect { |l| l['url'] }
       address = addr['thoroughfare']
       address2 = "#{addr['locality']}, #{addr['administrative_area']} #{addr['postal_code']}"
-      basic[:address]
 
       # Geography
       if geo = s['field_geo'].andand['und'].andand.first
@@ -152,7 +153,11 @@ class Importer
           next unless (m = k.match field_re)
           key = m[1]
           next if v.empty? or v['und'].empty?
-          val = (v['und'].size == 1) ? v['und'].first.andand['value'] : v['und'].collect { |i| i['value'] }.join(', ')
+          val = if v['und'].is_a?(Array)
+            (v['und'].size == 1) ? v['und'].first.andand['value'] : v['und'].collect { |i| i['value'] }.join(', ')
+          elsif v['und'].is_a?(Hash)
+            v['und'].first[1]['name']
+          end
           val = val.encode Encoding.find('ASCII'), encoding_options unless val.nil?
           #puts "  #{key} = #{val.inspect}"
           h[key] = val
@@ -320,7 +325,7 @@ class Importer
 
         address = r['field_address']
         points = state_rating_info['ptsTotal'].to_i if state_rating_info
-        name = profile['title'] if profile
+        name = profile['title'].gsub('&#039;', "'").gsub('&amp;', '&') if profile
 
         h = { }
         h[:bcode]       = id if id
