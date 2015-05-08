@@ -104,10 +104,10 @@ class School < ActiveRecord::Base
   end
 
   def name
-    if Class.instance_methods.include?(:ecs)
+    if ecs?
       ecs.andand.title
     else
-      self.read_attribute(:name)
+      read_attribute(:name)
     end
   end
 
