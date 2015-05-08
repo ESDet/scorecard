@@ -15,7 +15,7 @@
         %br/
 
       %h2
-        = @school.name
+        = @school.display_name
         - copy = @category_copy[@school.esd.andand.schoolcategory.andand.titleize]
         - if copy
           (#{copy[0].titleize})

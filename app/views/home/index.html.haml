@@ -18,7 +18,7 @@
                     = image_tag School.el_image(:mini, s.esd_el_2015.andand.overall_rating), :class => 'mini-icon float_left'
                   - else
                     = image_tag School.k12_image(s.grades[:cumulative][:letter].to_s, :small), :class => 'mini-icon float_left'
-                  = link_to s.name, s
+                  = link_to s.display_name, "/schools/#{s.slug}"
 
 
     .grid_8

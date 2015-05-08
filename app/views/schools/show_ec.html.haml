@@ -8,7 +8,7 @@
           = link_to raw('&lt; Previous School'), previous_path(@school.id), :class => 'btn light'
           = link_to raw('Next School &gt;'), next_path(@school.id), :class => 'btn light'
       %br/
-      %h2= @school.name
+      %h2= @school.display_name
       %a.address{:href => @school.gmaps_url, :target => '_blank'} #{raw @school.address} &middot; #{@school.address2}
       .noprint
         - if @school.school_url

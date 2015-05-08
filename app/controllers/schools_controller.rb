@@ -86,7 +86,7 @@ class SchoolsController < ApplicationController
       redirect_to root_path and return
     end
 
-    @subtitle = @school.name
+    @subtitle = @school.display_name
     level = @school.type_s
     @subtitle += " - #{level}" if level
 

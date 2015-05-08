@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   def og_description
     if @school
-      "Get more information about #{@school.name}. Includes overall rating, test scores, student growth data, school climate info and more."
+      "Get more information about #{@school.display_name}. Includes overall rating, test scores, student growth data, school climate info and more."
     else
       "Use this Scorecard to find schools that fit your needs. Be sure to check out the resources below as they were designed with parents for parents."
     end
@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   def meta_keywords
     words = ''
     if @school
-      words = "#{@school.name}, #{@school.type_s}, #{@school.address2}, #{@school.basic.andand.governance}, "
+      words = "#{@school.display_name}, #{@school.type_s}, #{@school.address2}, #{@school.basic.andand.governance}, "
     end
     words += "excellent schools, excellent schools detroit, scorecard, report card, school overview"
     words

@@ -103,9 +103,9 @@ class School < ActiveRecord::Base
     end
   end
 
-  def name
-    if ecs?
-      ecs.andand.title
+  def display_name
+    if ecs? && ecs.title
+      ecs.title
     else
       read_attribute(:name)
     end

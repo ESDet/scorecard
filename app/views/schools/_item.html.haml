@@ -4,7 +4,7 @@
   - else
     = image_tag School.k12_image(school.overall_grade, :small), :class => 'mini-el-icon'
 
-  %h3= link_to school.name, school_path(school.slug)
+  %h3= link_to school.display_name, school_path(school.slug)
   - unless school.grades_served.blank?
     %div Grades #{school.grades_served}
   %label
