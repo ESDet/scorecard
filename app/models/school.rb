@@ -571,7 +571,7 @@ class School < ActiveRecord::Base
     }
     metal = valid_metals[rating].andand.gsub(' ', '') || 'None'
     #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')
-    if year
+    if year && category != :mini
       "el_icons/EL_#{cat}_#{metal}_#{year}.png"
     else
       "el_icons/EL_#{cat}_#{metal}.png"
