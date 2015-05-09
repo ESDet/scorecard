@@ -331,7 +331,7 @@ class SchoolsController < ApplicationController
         },
         :professionalism_fairaverage => {
           :statement => 'Professionalism',
-          :explanation => 'The rating is based on how teachers and staff treated themselves and each other while in the room with children.',
+          :explanation => 'The rating is based on how teachers and staff behave and treat each other while in the room with children.',
           :points => @el.andand.professionalism_fairaverage.to_f,
         },
         :safety_fairaverage => {
