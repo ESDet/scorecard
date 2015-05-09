@@ -72,6 +72,8 @@ class Importer
         val = if val
           if val.is_a?(Hash)
             val['name']
+          elsif val.is_a?(Array)
+            val.first['name']
           else
             val
           end
@@ -80,7 +82,7 @@ class Importer
       end
 
       # Don't store the ones to not display
-      if basic[:scorecard_display] == true
+      if basic[:scorecard_display] == false
         existing = School.find_by_bcode(bcode)
         existing.andand.destroy
         next
@@ -98,7 +100,11 @@ class Importer
         dict = vocabs[vocab]
         val = s["field_#{field}"]
         next if val.blank?
-        val = val['und'].andand.first.andand['tid']
+        if val.is_a?(Hash)
+          val = val['tid']
+        elsif val.is_a?(Array)
+          val = val.first['tid']
+        end
         #puts "#{field} tid=#{val} and looked-up = #{dict[val]}"
         basic[field] = dict[val]
       end
@@ -172,8 +178,18 @@ class Importer
           # Migrate from old version
           School.delete_all(:bcode => bcode)
         end
-        k8a = attrs.merge({ :school_type => 'K8', :name => "#{attrs[:name]} (K8)", :grades_served => filter_grades_served(attrs[:grades_served], :k8) })
-        hsa = attrs.merge({ :school_type => 'HS', :name => "#{attrs[:name]} (HS)", :grades_served => filter_grades_served(attrs[:grades_served], :hs) })
+        if attrs[:grades_served]
+          k8a = attrs.merge({
+            :school_type => 'K8',
+            :name => "#{attrs[:name]} (K8)",
+            :grades_served => filter_grades_served(attrs[:grades_served], :k8)
+          })
+          hsa = attrs.merge({
+            :school_type => 'HS',
+            :name => "#{attrs[:name]} (HS)",
+            :grades_served => filter_grades_served(attrs[:grades_served], :hs)
+          })
+        end
         if School.where(:bcode => bcode).count == 2
           # Ok update them both
           School.where(:bcode => bcode, :school_type => 'K8').first.update_attributes(k8a)

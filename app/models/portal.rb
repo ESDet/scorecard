@@ -44,5 +44,7 @@ class Portal
     #puts response.inspect
     #puts response.body
     JSON.parse(response.body)
+  rescue Net::ReadTimeout
+    retry
   end
 end
