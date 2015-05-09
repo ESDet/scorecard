@@ -117,7 +117,7 @@ class Importer
       address2 = "#{addr['locality']}, #{addr['administrative_area']} #{addr['postal_code']}"
 
       # Geography
-      if geo = s['field_geo'].andand['und'].andand.first
+      if geo = s['field_geo']
         #puts "Found geographic position: #{geo.inspect}"
         centroid = RGeo::Geographic.spherical_factory.point(geo['lon'].to_f, geo['lat'].to_f)
       elsif !addr['thoroughfare'].blank?
