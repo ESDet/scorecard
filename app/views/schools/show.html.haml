@@ -238,7 +238,10 @@
             .clear_floats
 
             - if @school.fiveessentials_2014
-              = link_to "View this school's full 5Essentials report here", "https://detroit.5-essentials.org/2014/s/#{@school.fiveessentials_2014.send('5essentials internal school identifier').gsub(',', '')}/", :target => '_blank'
+              - identifier = @school.fiveessentials_2014.send('5essentials internal school identifier')
+              - if identifier
+                = link_to "View this school's full 5Essentials report here",
+                  "https://detroit.5-essentials.org/2014/s/#{identifier.gsub(',', '')}/", :target => '_blank'
 
 
 - unless true or Rails.env == 'production'
