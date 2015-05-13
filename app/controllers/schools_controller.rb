@@ -6,9 +6,34 @@ class SchoolsController < ApplicationController
   helper_method :format_phone
 
   def index
+    @loc = params[:loc]
     @grade = params[:grade]
     @filters = params[:filters] || []
-    @schools = School.send(@grade) if !@grade.blank?
+
+    @schools = if @loc.andand.match /^[0-9]{5}$/
+      School.where(:zip => loc)
+    elsif !@loc.blank?
+      @loc = @loc.gsub("&", " and ")
+      geo = Bedrock::Geocoder.bing_geocode({
+        :address => @loc,
+        :city => 'Detroit',
+        :state => 'MI',
+      })
+      if geo
+        #f = School.rgeo_factory_for_column :centroid
+        miles = AppConfig.radius_mi
+        f = RGeo::Geographic.projected_factory(:projection_proj4 => AppConfig.detroit_proj)
+        p = f.point(geo[:location][:lon], geo[:location][:lat])
+        School.inside(p.buffer(1609 * miles))
+      end
+    end
+
+    @schools = if @schools
+      @grade.blank? ? @schools : @schools.send(@grade)
+    else
+      School.send(@grade) if !@grade.blank?
+    end
+
     case @grade
     when 'ec'
       @filters.each do |f|
@@ -94,7 +119,7 @@ class SchoolsController < ApplicationController
       end
     else
       @schools = School.ec.where('esd_el_2015 is not null').
-        order('points desc').limit(50)
+        order('points desc').limit(50) unless @schools
     end
 
     respond_to do |format|
