@@ -48,7 +48,7 @@
           - email = @school.ec_email
           - unless email.blank?
             %span.day Email:
-            #{email}
+            = mail_to email, email
             %br/
           - phone = @school.ec_phone
           - unless phone.blank?
