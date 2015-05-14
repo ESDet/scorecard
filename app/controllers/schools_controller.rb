@@ -13,19 +13,7 @@ class SchoolsController < ApplicationController
     @schools = if @loc.andand.match /^[0-9]{5}$/
       School.where(:zip => loc)
     elsif !@loc.blank?
-      @loc = @loc.gsub("&", " and ")
-      geo = Bedrock::Geocoder.bing_geocode({
-        :address => @loc,
-        :city => 'Detroit',
-        :state => 'MI',
-      })
-      if geo
-        #f = School.rgeo_factory_for_column :centroid
-        miles = AppConfig.radius_mi
-        f = RGeo::Geographic.projected_factory(:projection_proj4 => AppConfig.detroit_proj)
-        p = f.point(geo[:location][:lon], geo[:location][:lat])
-        School.inside(p.buffer(1609 * miles))
-      end
+      School.where("name like '%#{@loc}%'")
     end
 
     @schools = if @schools
