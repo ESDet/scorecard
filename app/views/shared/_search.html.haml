@@ -91,6 +91,10 @@
       $('#ec-filters').hide();
       $('#k8-filters').hide();
       $('#high-filters').show();
+    } else if (grade == 'none') {
+      $('#ec-filters').hide();
+      $('#k8-filters').hide();
+      $('#high-filters').hide();
     }
     $('#grade').attr('value', grade);
 
@@ -149,10 +153,8 @@
         $('#filters_').remove();
       } else {
         // Clear the selection
+        showGradeFilters('none');
         $('.title', trigger).text(trigger.data('title'));
-        if(lastKey == 'grades_served') {
-          $('.char-form input#filter').val(null);
-        }
         trigger.removeClass('active')
         $('#grade').removeAttr('value');
       }
