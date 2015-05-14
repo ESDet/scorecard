@@ -55,8 +55,8 @@ class SchoolsController < ApplicationController
           end
         when 'meals'
           @schools.select do |s|
-            s.ec_meals =~ /Lunch/ &&
-            s.ec_meals =~ /Afternoon Snack/
+            s.ec_meals.include?("Lunch") &&
+            s.ec_meals.include?("Afternoon Snack")
           end
         when 'home_based'
           @schools.select do |s|
