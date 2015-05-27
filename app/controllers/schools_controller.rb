@@ -144,20 +144,56 @@ class SchoolsController < ApplicationController
     end
   end
 
-
   def show
-    begin
-      @school = School.find_by_slug(params[:id]) || School.find(params[:id])
-      if !@school.earlychild? and @school.basic.scorecard_display == '0'
-        redirect_to next_path(@school.id) and return if params[:from] == '1'
-        redirect_to previous_path(@school.id) and return if params[:from] == '-1'
-        redirect_to root_path and return
+    render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
+
+    @school = School.find_by_slug(params[:id]) || School.find(params[:id])
+
+    redirect_to root_path and return unless @school
+
+    url = if @school.earlychild?
+      "ecs/#{@school.ecs.tid}.json"
+    else
+      "schools/#{@school.tid}.json/?flatten_fields=true&includes=school_profile,act_2013,act_2012,act_2011meap_2013,meap_2012,meap_2011"
+    end
+
+    school_data = Portal.new.fetch(url)
+
+    if school_data.first !~ /does not exist/
+      if @school.earlychild?
+      else
+        profile = school_data['included'].
+          select { |d| d['type'] == 'school_profiles' }.first
+
+        @school_photo = profile['field_photos'].
+          select { |p| p.has_key?('filename') }.first.andand['filename']
+        act_data = school_data['included'].
+          select { |d| d['type'] == 'act_2013s' }.first
+
+        @math_ready = act_data['mathPercentMeeting'].to_f
+        @reading_ready = act_data['readingPercentMeeting'].to_f
+        @science_ready = act_data['sciencePercentMeeting'].to_f
+        @english_ready = act_data['englishPercentMeeting'].to_f
+
+        @math_growth = act_data[''] || 0
+        @reading_growth = act_data[''] || 2
+        @science_growth = act_data[''] || 0
+        @english_growth = act_data[''] || 0
+
+        @graduate = 30
+        @enroll = 25
+        @college = 20
       end
-      redirect_to root_path and return if @school.nil?
-    rescue
-      render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
+    else
       redirect_to root_path and return
     end
+
+    if !@school.earlychild? and @school.basic.scorecard_display == '0'
+      redirect_to next_path(@school.id) and return if params[:from] == '1'
+      redirect_to previous_path(@school.id) and return if params[:from] == '-1'
+      redirect_to root_path and return
+    end
+    redirect_to root_path and return if @school.nil?
 
     @subtitle = @school.display_name
     level = @school.type_s
@@ -174,17 +210,15 @@ class SchoolsController < ApplicationController
     extent = Bedrock.merge_extents(extent, @school.extent) if @school.geometry
 
     @tips = Hash[Tip.all.collect { |t| [t.name.to_sym, t] }]
-
     @map = Bedrock::Map.new({
       :base_layers    => ['street'],
       :layers         => [ @det_o, @school_o ],
-      :layer_control  => true,
-      :min_zoom       => 10,
-      :max_zoom       => 18,
-      :zoom           => 10,
+      :layer_control  => false,
+      :min_zoom       => 15,
+      :max_zoom       => 15,
+      :zoom           => 15,
       #:extent         => extent,
       :center         => { :lat => @school.centroid.y, :lon => @school.centroid.x },
-      :layer_control  => false,
     }) if @school.geometry
 
     if @school.earlychild?
@@ -355,7 +389,6 @@ class SchoolsController < ApplicationController
           label: 'Number of children receiving subsidy',
           value: format_field(@school.ec_subsidy_enrollment)
         }
-
       ]
 
       @legend = {
@@ -428,8 +461,6 @@ class SchoolsController < ApplicationController
         4 => 'Program demonstrates quality across almost all standards',
         5 => 'Program demonstrates highest quality',
       }
-      render 'show_ec'
-      return
     end
 
     @grades = @school.grades

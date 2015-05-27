@@ -1,15 +1,15 @@
 .wrapper
   - # map ||= local_assigns[:map]
   .map{:id => map.div_id}
-  - if map.andand.key and !map.key.empty?
-    .key
-      - map.layers.each do |l|
-        - next unless l.key
-        %span{:class => "key_#{l.id} #{l.hide ? 'hide' : ''}"}
-          - l.key.each do |k,v|
-            %span.item
-              .square{:style => "background-color: #{k};"}>
-              %span.lbl= raw(v)
+    - if map.andand.key and !map.key.empty?
+      .key
+        - map.layers.each do |l|
+          - next unless l.key
+          %span{:class => "key_#{l.id} #{l.hide ? 'hide' : ''}"}
+            - l.key.each do |k,v|
+              %span.item
+                .square{:style => "background-color: #{k};"}>
+                %span.lbl= raw(v)
 
   :javascript
     var map = null;
@@ -17,7 +17,7 @@
       var m = null;
       var baseLayers = #{map.base_layers.to_json};
       var layers     = #{map.layers_hash.to_json};
-      
+
       $(document).ready(function() {
         var opts = {
           divId:  '#{map.div_id}',
@@ -32,21 +32,21 @@
           geolocate: (typeof(gps_disabled) === 'undefined' || !gps_disabled) ? #{map.geolocate.to_json} : false,
           hash: #{map.hash.nil? ? true : map.hash},
         };
-    
-        m = new Paraffin.Map(opts);    
+
+        m = new Paraffin.Map(opts);
         m.initializeLayers(baseLayers, layers);
-        
+
         $('#reset').click(function(e) {
           m.setExtent(#{map.extent.to_json});
         });
-        
+
         m.map.on('layeradd', function(e) {
           $('.key_' + e.layer.id, $('##{map.div_id}').parent()).show();
         });
         m.map.on('layerremove', function(e) {
           $('.key_' + e.layer.id, $('##{map.div_id}').parent()).hide();
         });
-    
+
         if(opts.geolocate == 'manual') {
           $('#gps').show();
           $('#gps').click(function(e) {
@@ -56,13 +56,9 @@
             });
           });
         }
-        
+
         // For backwards compat, assign the global "map" to the last one created. Most pages only have one map so this is fine.
         // Other javascripts (app.js, sc.js) refer to the "map" var instead of allowing for multiple maps on a page
         map = m;
       });
     }();
-  
-      
-
-

@@ -1,21 +1,17 @@
 .container_12
-  .grid_2.nomobile &nbsp;
-  .grid_8.relative{:style => 'height: 175px;'}
-    %h1.orange Find the best Detroit schools for your family.
-    %h2.grey What is important to you? Select what you need your school to offer:
+  .middle
+    %h1 Find the best Detroit schools for your family.
+    %h2 What is important to you? Select what you need your school to offer:
 
 %br/
 
-#ground-wrapper
-  #ground.nomobile
-  .container_12
-    .grid_2.nomobile &nbsp;
-    .grid_8
-      #search
-        = render 'shared/search'
+.container_12
+  .middle
+    #search
+      = render 'shared/search'
 
-    %br/
-    %br/
+  %br/
+  %br/
 
 :javascript
   var charFilters = {};

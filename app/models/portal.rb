@@ -41,9 +41,7 @@ class Portal
       response = HTTParty.post(url, { :body => data.to_json, :headers => headers })
       #response, data = http.post(uri.path, data.to_json, headers)
     end
-    #puts response.inspect
-    #puts response.body
-    JSON.parse(response.body)
+    JSON.parse(response.body) if response.body != ""
   rescue Net::ReadTimeout
     retry
   end

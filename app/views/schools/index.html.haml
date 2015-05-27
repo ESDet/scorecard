@@ -1,18 +1,17 @@
-#outer_wrapper
-  #lefty
-    = render 'shared/search'
-    .clear_floats
-    %br/
+= render 'shared/map', :map => @map
 
-    %ul.school_list
-      - if @schools.empty?
-        %h3 There are no schools that fit your selection(s) right now.
-      - @schools.each do |s|
-        = render 'item', { :school => s }
+.results
+  = render 'shared/search'
+  .clear_floats
+  %br/
 
-    %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
+  %ul.school_list
+    - if @schools.empty?
+      %h3 There are no schools that fit your selection(s) right now.
+    - @schools.each do |s|
+      = render 'item', { :school => s }
 
-  = render 'shared/map', :map => @map
+  %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
 
 :erb
   <script id='list-template' type='text/html'>

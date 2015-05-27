@@ -12,11 +12,14 @@ class School < ActiveRecord::Base
 
   require 'mogrify'
   include Mogrify
-  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010, :meap_2009, :esd_k8_2013, :esd_k8_2013_r1, :esd_hs_2013,
-    :act_2013, :fiveessentials_2013, :meap_2013, :act_2014,
-    :earlychild, :ecs, :esd_el_2014, :esd_el_2015, :esd_k8_2014, :esd_hs_2014, :esd_site_visit_2014, :fiveessentials_2014].each do |k|
-    serialize k, OpenStruct
-  end
+  [:basic, :profile, :meap_2012, :meap_2011, :meap_2010,
+   :meap_2009, :esd_k8_2013, :esd_k8_2013_r1,
+   :esd_hs_2013, :act_2013, :fiveessentials_2013,
+   :meap_2013, :act_2014, :earlychild, :ecs,
+   :esd_el_2014, :esd_el_2015, :esd_k8_2014,
+   :esd_hs_2014, :esd_site_visit_2014,
+   :fiveessentials_2014
+  ].each { |k| serialize k, OpenStruct }
   serialize :others, Array
   before_save :set_slug
   before_save :set_totals
@@ -578,13 +581,36 @@ class School < ActiveRecord::Base
     end
   end
 
-
   def self.k12_image(letter, style=:normal)
     valid = %w[A Aplus B Bplus C Cplus D F Promising]
     mod = letter.andand.gsub('+', 'plus')
     mod = valid.include?(mod) ? mod : 'NA'
     return "el_icons/Sm_#{mod}.png" if style == :small
     "el_icons/K12_Grade_#{mod}.png"
+  end
+
+  def email
+    self.andand.profile.andand.email
+  end
+
+  def phone
+    self.andand.basic.andand.phone_number
+  end
+
+  def governance
+    self.andand.basic.andand.governance
+  end
+
+  def authorizer
+    self.andand.basic.andand.authorizer
+  end
+
+  def operator
+    self.andand.basic.andand.operator
+  end
+
+  def overview_text
+    self.andand.profile.andand.message
   end
 
   def special_ed_level

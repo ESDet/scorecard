@@ -3,19 +3,21 @@
   = render 'layouts/head'
   - home = current_page?(root_path)
   %body{:class => "#{params[:controller]}-#{params[:action]}"}
-    #container
+    .container
       %header#nav
         .container_12
-          .grid_12
-            = link_to image_tag('scorecard_thin.png', :class => 'logo float_left'), root_path
-            %a#hamburger.btn.mobile_only.float_right{:href => '#'}
-              = image_tag 'hamburger.png'
-            .menu
-              = link_to 'Home', root_path, :class => 'btn'
-              = link_to 'Find a School', schools_path, :class => 'btn'
-              = link_to 'Resources', '/resources', :class => 'btn'
+          %a#hamburger{:href => '#'}
+            %span ED
+            %div
+            %div
+            %div
+          = link_to 'Enroll Detroit', root_path, class: 'brand'
+        .menu
+          = link_to 'Home', root_path, :class => 'btn'
+          = link_to 'Find a School', schools_path, :class => 'btn'
+          = link_to 'Resources', '/resources', :class => 'btn'
 
-      #bodywrap.l-content
+      .bodywrap
         = yield
 
       = render 'layouts/footer'
