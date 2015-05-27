@@ -1132,7 +1132,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
 
   .links {
-    text-align: left;
     display: inline-block;
     padding: 10px;
     background-color: @white_smoke;
@@ -1221,10 +1220,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   .decreasing-growth { margin-left: 100%; }
   .footer { font-size: 35px; padding: 10px 10px; }
   .stat-region .links {
+    text-align: left;
     font-size: 13px;
-    .compare {
-      display: inherit;
-    }
+    .compare { display: inherit; }
     .field { font-size: 17px; }
   }
   .content .subjects .subject { font-size: 17px; }
@@ -1239,6 +1237,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 @media only screen and (min-width: 399px) {
   .increasing-growth { margin-left: 100%; }
   .decreasing-growth { margin-left: 100%; }
+  .stat-region .links { text-align: left; }
 }
 
 @media only screen and (min-width: 480px) {
@@ -1268,7 +1267,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     border-bottom: 2px solid @dim_grey;
     padding: 30px 0;
   }
-  .links { margin: 30px 20%; }
+  .links {
+    margin: 30px 20%;
+  }
   .stat-region .content .visual > div {
     width: 250px;
     height: 234px;
@@ -1320,6 +1321,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 @media only screen and (min-width: 1005px) {
+  .stat-region .links { text-align: center; }
   .links .compare, .links .message {
     display: inline-block;
   }

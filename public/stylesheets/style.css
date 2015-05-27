@@ -1526,7 +1526,6 @@ a.external:visited {
   background-color: #540a90;
 }
 .stat-region .links {
-  text-align: left;
   display: inline-block;
   padding: 10px;
   background-color: #f3f3f9;
@@ -1630,6 +1629,7 @@ a.external:visited {
     padding: 10px 10px;
   }
   .stat-region .links {
+    text-align: left;
     font-size: 13px;
   }
   .stat-region .links .compare {
@@ -1666,6 +1666,9 @@ a.external:visited {
   }
   .decreasing-growth {
     margin-left: 100%;
+  }
+  .stat-region .links {
+    text-align: left;
   }
 }
 @media only screen and (min-width: 480px) {
@@ -1782,6 +1785,9 @@ a.external:visited {
   }
 }
 @media only screen and (min-width: 1005px) {
+  .stat-region .links {
+    text-align: center;
+  }
   .links .compare,
   .links .message {
     display: inline-block;
@@ -1859,7 +1865,7 @@ a.external:visited {
     width: 25%;
     float: none;
     display: inline-block;
-    cursor: none;
+    cursor: auto;
   }
   .stat-region .content .subjects .subject .title {
     text-align: center;

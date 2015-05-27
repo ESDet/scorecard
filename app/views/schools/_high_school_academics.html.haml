@@ -25,12 +25,9 @@
           .subject(data-target="english-ready")
             .title English
     .links
-      .compare
-        .compare-arrow-icon
-        <span>Compare</span> to <span>Detroit</span> averages
-      .compare
-        .compare-arrow-icon
-        <span>Compare</span> to <span>State</span> averages
+      .compare(style="color: #14b2ae") State Average
+      .compare(style="color: #ec5932") Detroit Average
+      .compare(style="color: #bde35f") School Average
       .message
         .act-icon
         Results based on ACT scores
@@ -86,16 +83,16 @@
   $(document).ready(function(e) {
     var drawDonut = function(element, data) {
       var w = 200,
-          h = 200,
-          r = Math.max(w, h) / 2,
-          labelr = r + 20,
-          color = d3.scale.category20(),
-          donut = d3.scale.linear().domain([0, 100]).range([0, 2 * Math.PI]),
-          arc = d3.svg.arc()
-            .innerRadius(r * .45)
-            .outerRadius(r)
-            .startAngle(function(d) { return donut(d.start); })
-            .endAngle(function(d) { return donut(d.end); });
+        h = 200,
+        r = Math.max(w, h) / 2,
+        labelr = r + 20,
+        color = d3.scale.category20(),
+        donut = d3.scale.linear().domain([0, 100]).range([0, 2 * Math.PI]),
+        arc = d3.svg.arc()
+          .innerRadius(function(d) { return d.innerRadius; })
+          .outerRadius(function(d) { return d.outerRadius; })
+          .startAngle(function(d) { return donut(d.start); })
+          .endAngle(function(d) { return donut(d.end); });
 
       var vis = d3.select(element)
         .append("svg:svg")
@@ -116,38 +113,48 @@
         .append("text")
         .attr("font-size", "12px")
         .attr("transform", function(d) {
-          return "translate(" + (labelr) +  ',' + 30 +  ")";
+          return "translate(" + (60 + d.outerRadius) +  ',' + (100 - d.innerRadius) +  ")";
         })
-        .text(function(d, i) { return d.label; });
+        .text(function(d) { return d.label; });
     };
 
-    var donutOpts = function(label, color, start, end) {
+    var donutOpts = function(label, color, start, end, outer, inner) {
       return {
         label: label,
         color: color,
         start: start,
-        end: end
-      }
+        end: end,
+        outerRadius: outer,
+        innerRadius: inner
+      };
     };
 
     drawDonut("#math-ready", [
-      donutOpts("#{@math_ready}% IN MATH", "#bde35f", 0, #{@math_ready}),
-      donutOpts(null, "#fff", #{@math_ready}, 100)
+      donutOpts(null, "#fff", 0, 100, 100, 25),
+      donutOpts("#{@math_ready}%", "#bde35f", 0, #{@math_ready}, 100, 75),
+      donutOpts("#{@detroit_math_ready}%", "#ec5932", 0, #{@detroit_math_ready}, 75, 50),
+      donutOpts("#{@state_math_ready}%", "#14b2ae", 0, #{@state_math_ready}, 50, 25)
     ]);
 
     drawDonut("#reading-ready", [
-      donutOpts("#{@reading_ready}% IN READING", "#bde35f", 0, #{@reading_ready}),
-      donutOpts(null, "#fff", #{@reading_ready}, 100)
+      donutOpts(null, "#fff", 0, 100, 100, 25),
+      donutOpts("#{@reading_ready}%", "#bde35f", 0, #{@reading_ready}, 100, 75),
+      donutOpts("#{@detroit_reading_ready}%", "#ec5932", 0, #{@detroit_reading_ready}, 75, 50),
+      donutOpts("#{@state_reading_ready}%", "#14b2ae", 0, #{@state_reading_ready}, 50, 25)
     ]);
 
     drawDonut("#science-ready", [
-      donutOpts("#{@science_ready}% IN SCIENCE", "#bde35f", 0, #{@science_ready}),
-      donutOpts(null, "#fff", #{@science_ready}, 100)
+      donutOpts(null, "#fff", 0, 100, 100, 25),
+      donutOpts("#{@science_ready}%", "#bde35f", 0, #{@science_ready}, 100, 75),
+      donutOpts("#{@detroit_science_ready}%", "#ec5932", 0, #{@detroit_science_ready}, 75, 50),
+      donutOpts("#{@state_science_ready}%", "#14b2ae", 0, #{@state_science_ready}, 50, 25)
     ]);
 
     drawDonut("#english-ready", [
-      donutOpts("#{@english_ready}% IN ENGLISH", "#bde35f", 0, #{@english_ready}),
-      donutOpts(null, "#fff", #{@english_ready}, 100)
+      donutOpts(null, "#fff", 0, 100, 100, 25),
+      donutOpts("#{@english_ready}%", "#bde35f", 0, #{@english_ready}, 100, 75),
+      donutOpts("#{@detroit_english_ready}%", "#ec5932", 0, #{@detroit_english_ready}, 75, 50),
+      donutOpts("#{@state_english_ready}%", "#14b2ae", 0, #{@state_english_ready}, 50, 25)
     ]);
 
     var drawBar = function(element, data) {

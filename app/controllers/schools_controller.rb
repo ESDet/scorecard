@@ -180,6 +180,16 @@ class SchoolsController < ApplicationController
         @science_growth = act_data[''] || 0
         @english_growth = act_data[''] || 0
 
+        @state_math_ready = 50
+        @state_reading_ready = 60
+        @state_science_ready = 65
+        @state_english_ready = 70
+
+        @detroit_math_ready = 15
+        @detroit_reading_ready = 20
+        @detroit_science_ready = 25
+        @detroit_english_ready = 30
+
         @graduate = 30
         @enroll = 25
         @college = 20
