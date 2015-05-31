@@ -1,10 +1,6 @@
 = render 'shared/map', :map => @map
 
 .results
-  = render 'shared/search'
-  .clear_floats
-  %br/
-
   %ul.school_list
     - if @schools.empty?
       %h3 There are no schools that fit your selection(s) right now.

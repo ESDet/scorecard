@@ -58,6 +58,7 @@ h2.grey { color: @greyish; }
 html { height: 100%; }
 
 body {
+  font-family: 'Didact Gothic', sans-serif;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -138,7 +139,9 @@ hr { height: 1px; border: none; color: @turq; background-color: @turq; }
 .branding { text-align: left; }
 
 #search {
+  display: inline-block;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 a.external, a.external:visited {
@@ -378,7 +381,7 @@ ul.school_list {
     color: white;
     width: 100%;
     font-size: 1.3em;
-    text-align: left;
+    text-align: center;
     float: left;
   }
   .dropdown, .filter {
@@ -393,7 +396,7 @@ ul.school_list {
 #lefty .grades a { font-size: 13px; }
 
 .schools-index {
-  .l-footer-wrapper { display: none; }
+  .footer { display: none; }
 }
 
 .site-logo img { max-width: 100%; height: auto; }
@@ -518,36 +521,6 @@ ul.nav {
 .k12 {
   .el-icon { marign-top: 0; }
 }
-
-.home-index {
-  ul.nav {
-    li {
-      width: 30%; margin-right: 2%;
-      a { min-height: 0; padding-bottom: 0; .question { border-bottom: none; } }
-    }
-    &.left li { width: 100%; margin-right: 0; }
-  }
-  .tab-content .tab-pane { padding: 1em; padding-top: 1.5em; }
-  .block { background-color: white; padding: 1em 2em; border: 1px solid @turq; }
-  #top-tabs {
-    &.nav-tabs > li.active > a {
-      background-color: @lgrey;
-      .question { border-bottom: 1px solid @turq; color: @dturq; }
-    }
-  }
-  #top {
-    background-color: @lgrey;
-    ul.top {
-      list-style: none; padding-left: 0; margin-top: 0;
-      li {
-        margin-bottom: 1em;
-        a, a:visited { color: @dturq; }
-      }
-      .mini-icon { height: 25px; width: auto; margin-right: 1em; }
-    }
-  }
-}
-
 
 .share {
   margin: 0.5em 0;
@@ -690,6 +663,7 @@ ul.nav {
 }
 
 a, a:visited, a:active, a:hover, a.external, a.external:visited {
+  text-decoration: none;
   color: @light_sea_green;
   font-family: 'Didact Gothic', sans-serif;
 }
@@ -902,7 +876,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-top: 30px;
   float: left;
   width: 35%;
-  max-height: 500px;
+  max-height: 560px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -910,7 +884,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .schools-index .wrapper {
   float: right;
   width: 65%;
-  height: 510px;
+  height: 550px;
 }
 
 .schools-index .wrapper .map .key {
@@ -1200,7 +1174,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 @media only screen and (max-width: 499px) {
   .brand { padding-left: 5%; }
-  .breadcrumbs { width: 350px; }
+  .breadcrumbs { width: 315px; }
   .links { margin: 20px 30px; }
   .bar-graph { width: 70%; }
 }
@@ -1227,17 +1201,26 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
   .content .subjects .subject { font-size: 17px; }
   .header { font-size: 25px; }
-  .brand { font-size: 35px; }
+  .brand { font-size: 33px; }
   .section-title h2 { font-size: 27px; }
   .breadcrumbs h2 { font-size: 21px; }
   .school-title h1 { font-size: 35px; }
   .contact { font-size: 17px; }
+  .home { margin: 5px 10px 20px 10px; }
+  #nav #hamburger { top: 3px; }
+  .results {
+    padding: 0 10px;
+  }
 }
 
 @media only screen and (min-width: 399px) {
   .increasing-growth { margin-left: 100%; }
   .decreasing-growth { margin-left: 100%; }
   .stat-region .links { text-align: left; }
+  .home {
+    margin: auto auto 20px auto;
+    width: 90%;
+  }
 }
 
 @media only screen and (min-width: 480px) {
@@ -1278,6 +1261,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 @media only screen and (min-width: 663px) {
   .links { margin: 30px 25%; }
+  .home {
+    margin: auto auto 20px auto;
+    width: 80%;
+  }
 }
 
 @media only screen and (min-width: 800px) {
@@ -1301,6 +1288,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     height: inherit;
   }
   .brand { padding-left: 20%; }
+  .home {
+    margin: auto auto 20px auto;
+    width: 70%;
+  }
 }
 
 @media only screen and (min-width: 960px) {
@@ -1364,6 +1355,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   .stat-region.three-columns .subjects .subject {
     width: 33%;
   }
+  .home {
+    margin: auto auto 20px auto;
+    width: 60%;
+  }
 }
 
 @media only screen and (min-width: 1219px) {
@@ -1401,5 +1396,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   .stat-region.three-columns .visual div,
   .stat-region.three-columns .subjects .subject {
     width: 33%;
+  }
+  .home {
+    margin: auto auto 20px auto;
+    width: 50%;
   }
 }

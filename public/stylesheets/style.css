@@ -11,6 +11,7 @@ html {
   height: 100%;
 }
 body {
+  font-family: 'Didact Gothic', sans-serif;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -163,7 +164,9 @@ hr {
   text-align: left;
 }
 #search {
+  display: inline-block;
   margin-bottom: 20px;
+  width: 100%;
 }
 a.external,
 a.external:visited {
@@ -579,7 +582,7 @@ ul.school_list li.school h3 {
   color: white;
   width: 100%;
   font-size: 1.3em;
-  text-align: left;
+  text-align: center;
   float: left;
 }
 .home-index .dropdown,
@@ -599,7 +602,7 @@ ul.school_list li.school h3 {
 #lefty .grades a {
   font-size: 13px;
 }
-.schools-index .l-footer-wrapper {
+.schools-index .footer {
   display: none;
 }
 .site-logo img {
@@ -903,57 +906,6 @@ ul.nav li.active .question {
 .k12 .el-icon {
   marign-top: 0;
 }
-.home-index ul.nav li {
-  width: 30%;
-  margin-right: 2%;
-}
-.home-index ul.nav li a {
-  min-height: 0;
-  padding-bottom: 0;
-}
-.home-index ul.nav li a .question {
-  border-bottom: none;
-}
-.home-index ul.nav.left li {
-  width: 100%;
-  margin-right: 0;
-}
-.home-index .tab-content .tab-pane {
-  padding: 1em;
-  padding-top: 1.5em;
-}
-.home-index .block {
-  background-color: white;
-  padding: 1em 2em;
-  border: 1px solid #35bff2;
-}
-.home-index #top-tabs.nav-tabs > li.active > a {
-  background-color: #dae1e4;
-}
-.home-index #top-tabs.nav-tabs > li.active > a .question {
-  border-bottom: 1px solid #35bff2;
-  color: #466778;
-}
-.home-index #top {
-  background-color: #dae1e4;
-}
-.home-index #top ul.top {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 0;
-}
-.home-index #top ul.top li {
-  margin-bottom: 1em;
-}
-.home-index #top ul.top li a,
-.home-index #top ul.top li a:visited {
-  color: #466778;
-}
-.home-index #top ul.top .mini-icon {
-  height: 25px;
-  width: auto;
-  margin-right: 1em;
-}
 .share {
   margin: 0.5em 0;
 }
@@ -1134,6 +1086,7 @@ a:active,
 a:hover,
 a.external,
 a.external:visited {
+  text-decoration: none;
   color: #14b2ae;
   font-family: 'Didact Gothic', sans-serif;
 }
@@ -1318,14 +1271,14 @@ a.external:visited {
   margin-top: 30px;
   float: left;
   width: 35%;
-  max-height: 500px;
+  max-height: 560px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 .schools-index .wrapper {
   float: right;
   width: 65%;
-  height: 510px;
+  height: 550px;
 }
 .schools-index .wrapper .map .key {
   padding: 10px;
@@ -1594,7 +1547,7 @@ a.external:visited {
     padding-left: 5%;
   }
   .breadcrumbs {
-    width: 350px;
+    width: 315px;
   }
   .links {
     margin: 20px 30px;
@@ -1645,7 +1598,7 @@ a.external:visited {
     font-size: 25px;
   }
   .brand {
-    font-size: 35px;
+    font-size: 33px;
   }
   .section-title h2 {
     font-size: 27px;
@@ -1659,6 +1612,15 @@ a.external:visited {
   .contact {
     font-size: 17px;
   }
+  .home {
+    margin: 5px 10px 20px 10px;
+  }
+  #nav #hamburger {
+    top: 3px;
+  }
+  .results {
+    padding: 0 10px;
+  }
 }
 @media only screen and (min-width: 399px) {
   .increasing-growth {
@@ -1669,6 +1631,10 @@ a.external:visited {
   }
   .stat-region .links {
     text-align: left;
+  }
+  .home {
+    margin: auto auto 20px auto;
+    width: 90%;
   }
 }
 @media only screen and (min-width: 480px) {
@@ -1726,6 +1692,10 @@ a.external:visited {
   .links {
     margin: 30px 25%;
   }
+  .home {
+    margin: auto auto 20px auto;
+    width: 80%;
+  }
 }
 @media only screen and (min-width: 800px) {
   .school-header {
@@ -1752,6 +1722,10 @@ a.external:visited {
   }
   .brand {
     padding-left: 20%;
+  }
+  .home {
+    margin: auto auto 20px auto;
+    width: 70%;
   }
 }
 @media only screen and (min-width: 960px) {
@@ -1836,6 +1810,10 @@ a.external:visited {
   .stat-region.three-columns .subjects .subject {
     width: 33%;
   }
+  .home {
+    margin: auto auto 20px auto;
+    width: 60%;
+  }
 }
 @media only screen and (min-width: 1219px) {
   .stat-region {
@@ -1876,5 +1854,9 @@ a.external:visited {
   .stat-region.three-columns .visual div,
   .stat-region.three-columns .subjects .subject {
     width: 33%;
+  }
+  .home {
+    margin: auto auto 20px auto;
+    width: 50%;
   }
 }
