@@ -3,7 +3,7 @@ class HomeController < ApplicationController
 
   def index
     session[:filter] = session[:loc] = nil
-    @school_names = School.pluck(:name)
+    @school_names = []
     @resources = Tip.find_by_name('resources')
   end
 

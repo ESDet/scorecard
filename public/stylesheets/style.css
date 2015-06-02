@@ -1188,7 +1188,7 @@ a.external:visited {
   padding: 10px 5px 10px 20px;
 }
 .breadcrumbs h2 {
-  margin-left: 40px;
+  margin: 0 0 0 40px;
   color: #404040;
   font-family: 'Crimson Text', serif;
   font-size: 25px;
@@ -1241,9 +1241,8 @@ a.external:visited {
 .field a {
   display: inline-block;
 }
-.field_key {
+.field-key {
   float: left;
-  width: 50%;
 }
 .field-value {
   float: right;
@@ -1251,6 +1250,33 @@ a.external:visited {
   color: #141414;
   font-family: 'Crimson Text', serif;
   text-align: right;
+}
+.field-value li {
+  text-align: left;
+}
+.field-value li span {
+  position: relative;
+  left: -5px;
+}
+.list > .field-key,
+.list > .field-value {
+  width: 100%;
+  float: none;
+  display: block;
+  text-align: center;
+}
+.list > .field-value {
+  margin-top: 10px;
+  padding: 10px;
+}
+.key-value {
+  position: relative;
+  min-height: 40px;
+}
+.field > p {
+  margin-top: -5px;
+  color: #141414;
+  font-family: 'Crimson Text', serif;
 }
 .overview-text {
   padding: 20px 15px 0 15px;
@@ -1311,7 +1337,7 @@ a.external:visited {
   float: left;
   height: 18px;
   width: 23px;
-  margin: 15px 15px 0 0;
+  margin: 7px 15px 0 0;
   background-image: url(/images/icons/png/arrow_left.png);
   background-repeat: no-repeat;
 }
@@ -1585,9 +1611,6 @@ a.external:visited {
     text-align: left;
     font-size: 13px;
   }
-  .stat-region .links .compare {
-    display: inherit;
-  }
   .stat-region .links .field {
     font-size: 17px;
   }
@@ -1706,7 +1729,7 @@ a.external:visited {
   .overview-text {
     padding: 0;
   }
-  .fields,
+  #overview .fields,
   .school-image {
     width: 40%;
     float: right;

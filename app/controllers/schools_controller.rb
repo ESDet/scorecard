@@ -1,8 +1,5 @@
 class SchoolsController < ApplicationController
 
-  caches_action :index, :if => proc { request.format.json? }, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
-  caches_action :overview, :cache_path => Proc.new { |controller| controller.params.merge({ :v => AppConfig.cache_key }) }
-
   helper_method :format_phone
 
   def index
@@ -11,15 +8,15 @@ class SchoolsController < ApplicationController
     @filters = params[:filters] || []
 
     @schools = if @loc.andand.match /^[0-9]{5}$/
-      School.where(:zip => loc)
+      OldSchool.where(:zip => loc)
     elsif !@loc.blank?
-      School.where("name like '%#{@loc}%'")
+      OldSchool.where("name like '%#{@loc}%'")
     end
 
     @schools = if @schools
       @grade.blank? ? @schools : @schools.send(@grade)
     else
-      School.send(@grade) if !@grade.blank?
+      OldSchool.send(@grade) if !@grade.blank?
     end
 
     case @grade
@@ -28,32 +25,32 @@ class SchoolsController < ApplicationController
         @schools = case f
         when 'free_reduced'
           @schools.select do |s|
-            s.ec_subsidy == 'Accepts State Subsidy' ||
-            s.ec_specialty == 'Early Head Start' ||
-            s.ec_specialty == 'Head Start' ||
-            s.ec_specialty == 'Great Start Readiness Program'
+            s.subsidy == 'Accepts State Subsidy' ||
+            s.specialty == 'Early Head Start' ||
+            s.specialty == 'Head Start' ||
+            s.specialty == 'Great Start Readiness Program'
           end
         when 'transportation'
           @schools.select do |s|
-            s.ec_transportation == true
+            s.transportation == true
           end
         when 'special_needs'
           @schools.select do |s|
-            s.ec_special && s.ec_special.size > 5
+            s.special && s.ec_special.size > 5
           end
         when 'meals'
           @schools.select do |s|
-            s.ec_meals.include?("Lunch") &&
-            s.ec_meals.include?("Afternoon Snack")
+            s.meals.include?("Lunch") &&
+            s.meals.include?("Afternoon Snack")
           end
         when 'home_based'
           @schools.select do |s|
-            s.ec_license_type == 'licensed group homes' ||
-            s.ec_license_type == 'registered family homes'
+            s.license_type == 'licensed group homes' ||
+            s.license_type == 'registered family homes'
           end
         when 'center_based'
           @schools.select do |s|
-            s.ec_license_type == 'licensed centers'
+            s.license_type == 'licensed centers'
           end
         when 'accreditation'
           @schools
@@ -106,7 +103,7 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      @schools = School.ec.where('esd_el_2015 is not null').
+      @schools = OldSchool.ec.where('esd_el_2015 is not null').
         order('points desc').limit(50) unless @schools
     end
 
@@ -131,7 +128,7 @@ class SchoolsController < ApplicationController
           :base_layers    => ['street'],
           :layers         => [ @district_o, @school_o ],
           :layer_control  => true,
-          :center => { :lon => -83.09577941894531, :lat => 42.364885996366525 },
+          :center => Bedrock::city_extents(:detroit).first,
           :min_zoom => 11,
           :max_zoom => 18,
           :zoom => 12,
@@ -147,67 +144,31 @@ class SchoolsController < ApplicationController
   def show
     render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
 
-    @school = School.find_by_slug(params[:id]) || School.find(params[:id])
+    school_id = ActiveRecord::Base.connection.execute(
+      "select tid from old_schools where slug = '#{params[:id]}'"
+    ).first.first
 
-    redirect_to root_path and return unless @school
+    redirect_to root_path and return unless school_id
 
-    url = if @school.earlychild?
-      "ecs/#{@school.ecs.tid}.json"
+    school_type = params[:type]
+
+    url = if school_type == 'ecs'
+      "ecs/#{school_id}.json/?flatten_fields=true&includes=most_recent_ec_state_rating,ec_profile"
     else
-      "schools/#{@school.tid}.json/?flatten_fields=true&includes=school_profile,act_2013,act_2012,act_2011meap_2013,meap_2012,meap_2011"
+      "schools/#{school_id}.json/?flatten_fields=true&includes=school_profile,act_2013,act_2012,act_2011meap_2013,meap_2012,meap_2011"
     end
 
     school_data = Portal.new.fetch(url)
 
-    if school_data.first !~ /does not exist/
-      if @school.earlychild?
-      else
-        profile = school_data['included'].
-          select { |d| d['type'] == 'school_profiles' }.first
+    (redirect_to root_path and return) if school_data.first =~ /does not exist/
 
-        @school_photo = profile['field_photos'].
-          select { |p| p.has_key?('filename') }.first.andand['filename']
-        act_data = school_data['included'].
-          select { |d| d['type'] == 'act_2013s' }.first
+    @school = SchoolData.new school_data['data'].merge(included: school_data['included'])
 
-        @math_ready = act_data['mathPercentMeeting'].to_f
-        @reading_ready = act_data['readingPercentMeeting'].to_f
-        @science_ready = act_data['sciencePercentMeeting'].to_f
-        @english_ready = act_data['englishPercentMeeting'].to_f
-
-        @math_growth = act_data[''] || 0
-        @reading_growth = act_data[''] || 2
-        @science_growth = act_data[''] || 0
-        @english_growth = act_data[''] || 0
-
-        @state_math_ready = 50
-        @state_reading_ready = 60
-        @state_science_ready = 65
-        @state_english_ready = 70
-
-        @detroit_math_ready = 15
-        @detroit_reading_ready = 20
-        @detroit_science_ready = 25
-        @detroit_english_ready = 30
-
-        @graduate = 30
-        @enroll = 25
-        @college = 20
-      end
+    if @school.earlychild?
+      @school.extend(EarlyChildhood)
     else
-      redirect_to root_path and return
+      @school.extend(School)
     end
-
-    if !@school.earlychild? and @school.basic.scorecard_display == '0'
-      redirect_to next_path(@school.id) and return if params[:from] == '1'
-      redirect_to previous_path(@school.id) and return if params[:from] == '-1'
-      redirect_to root_path and return
-    end
-    redirect_to root_path and return if @school.nil?
-
-    @subtitle = @school.display_name
-    level = @school.type_s
-    @subtitle += " - #{level}" if level
 
     @school_o = Bedrock::Overlay.from_config('schools',
       :ty       => :geojson,
@@ -217,19 +178,29 @@ class SchoolsController < ApplicationController
       :elements => [District.find(580)]
     )
     extent = Bedrock::city_extents(:detroit)
-    extent = Bedrock.merge_extents(extent, @school.extent) if @school.geometry
+    extent = Bedrock.merge_extents(extent, [
+      {
+        :lon => @school.field_geo.lon.to_f,
+        :lat => @school.field_geo.lat.to_f
+      },
+      { :lon => @school.field_geo.lon.to_f,
+        :lat => @school.field_geo.lat.to_f
+      }
+    ])
 
-    @tips = Hash[Tip.all.collect { |t| [t.name.to_sym, t] }]
     @map = Bedrock::Map.new({
       :base_layers    => ['street'],
       :layers         => [ @det_o, @school_o ],
       :layer_control  => false,
-      :min_zoom       => 15,
+      :min_zoom       => 5,
       :max_zoom       => 15,
       :zoom           => 15,
       #:extent         => extent,
-      :center         => { :lat => @school.centroid.y, :lon => @school.centroid.x },
-    }) if @school.geometry
+      :center         => {
+        :lon => @school.field_geo.lon.to_f,
+        :lat => @school.field_geo.lat.to_f
+      }
+    })
 
     if @school.earlychild?
       if @school.esd_el_2015
@@ -241,9 +212,7 @@ class SchoolsController < ApplicationController
         @el = @school.esd_el_2014
         @teacher_score_mean = @el.andand.teacher_score_mean
       end
-      @ech = @school.early_child.marshal_dump
       @staff_state_avg = 3.62
-      @grades = @school.grades
 
       age_format = lambda { |months|
         if months > 11
@@ -252,293 +221,72 @@ class SchoolsController < ApplicationController
           "#{months % 12} months"
         end
       }
-
-
-      @profile_fields = [
-        {
-          label: 'Program Specialty',
-          value: format_field(@school.ec_specialty)
-        },
-        {
-          label: 'Schedule Type',
-          value: format_field(@school.ec_schedule)
-        },
-        {
-          label: 'Accepts Ages from',
-          value: age_format.call(@school.ec_age_from)
-        },
-        {
-          label: 'Accepts Ages to',
-          value: age_format.call(@school.ec_age_to)
-        },
-        {
-          label: 'Total Licensed Capacity',
-          value: format_field(@school.ec_capacity)
-        },
-        {
-          label: 'Financial Assistance',
-          value: format_field(@school.ec_subsidy)
-        },
-        {
-          label: 'Special Needs Experience',
-          value: format_field(@school.ec_special)
-        },
-        {
-          label: 'Care Setting',
-          value: format_field(@school.ec_setting)
-        },
-        {
-          label: 'Environment',
-          value: format_field(@school.ec_environment)
-        },
-        {
-          label: 'Meals Provided',
-          value: format_field(@school.ec_meals)
-        },
-        {
-          label: 'Payment Schedule',
-          value: format_field(@school.ec_pay_schedule)
-        },
-        {
-          label: 'Application / Registration Fee',
-          value: sprintf("$%.2f", @school.ec_fee)
-        },
-        {
-          label: 'Provides Transportation?',
-          value: format_field(@school.ec_transportation)
-        },
-        {
-          label: 'Additional program information',
-          value: format_field(@school.ec_additional_info)
-        },
-        {
-          label: 'Age Groups',
-          value: format_field(@school.ec_age_groups)
-        },
-        {
-          label: 'Enrichment opportunities',
-          value: format_field(@school.ec_enrichment)
-        },
-        {
-          label: 'Teacher Evaluations',
-          value: format_field(@school.ec_evaluation)
-        },
-        {
-          label: 'Field trips and other extended programming',
-          value: format_field(@school.ec_extended)
-        },
-        {
-          label: 'Facilities Available',
-          value: format_field(@school.ec_facilities)
-        },
-        {
-          label: 'Frequency of feedback provided to parents on child’s progress',
-          value: format_field(@school.ec_feedback_freq)
-        },
-        {
-          label: 'Type of feedback provided to parents on child\'s progress',
-          value: format_field(@school.ec_feedback_type)
-        },
-        {
-          label: 'Languages spoken by program staff',
-          value: format_field(@school.ec_language)
-        },
-        {
-          label: 'Health/Dental/Vision Care',
-          value: format_field(@school.ec_medical)
-        },
-        {
-          label: 'Access to mental health services',
-          value: format_field(@school.ec_mental)
-        },
-        {
-          label: 'Partner name - 1',
-          value: format_field(@school.ec_partner_one)
-        },
-        {
-          label: 'Details of partnership - 1',
-          value: format_field(@school.ec_partner_one_detail)
-        },
-        {
-          label: 'Partner name - 2',
-          value: format_field(@school.ec_partner_two)
-        },
-        {
-          label: 'Details of partnership - 2',
-          value: format_field(@school.ec_partner_two_detail)
-        },
-        {
-          label: 'Partner name - 3',
-          value: format_field(@school.ec_partner_three)
-        },
-        {
-          label: 'Details of partnership - 3',
-          value: format_field(@school.ec_partner_three_detail)
-        },
-        {
-          label: 'Playground and/or physical activity space on site',
-          value: format_field(@school.ec_physical_activity)
-        },
-        {
-          label: 'Family and community support',
-          value: format_field(@school.ec_support)
-        },
-        {
-          label: 'Actual Enrollment',
-          value: format_field(@school.ec_actual_enrollment)
-        },
-        {
-          label: 'Licensed Enrollment',
-          value: format_field(@school.ec_licensed_enrollment)
-        },
-        {
-          label: 'Number of children with special needs',
-          value: format_field(@school.ec_special_enrollment)
-        },
-        {
-          label: 'Number of children receiving subsidy',
-          value: format_field(@school.ec_subsidy_enrollment)
-        }
-      ]
-
-      @legend = {
-        'Gold'          => ['Gold', 'Superior Quality Program'],
-        'Silver'        => ['Silver', 'High Quality Program'],
-        'Bronze'        => ['Bronze', 'Quality Program'],
-        'Below Bronze'  => ['Did not medal', 'On the path to medal-level quality'],
-        'Not Rated'     => ['Incomplete', 'Not enough information to designate a rating'],
-        'None'          => ['No Rating', 'This program did not participate'],
-      }
-      @legend_sub = @legend.dup
-      @legend_sub.delete 'None'
-      @legend_sub['Not Rated'] = ['No Rating', 'Not enough information to designate a rating or this program did not participate']
-
-      @staff_average_2015 = [
-        {
-          :title => 'Program Environment',
-          :explanation => 'Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.',
-          :points => @el.andand.physicalenviron_staff_average.to_f
-        },
-        {
-          :title => 'Collaboration',
-          :explanation => 'Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.',
-          :points => @el.andand.familycommunity_staff_average.to_f,
-        },
-        {
-          :title => 'Cultural Awareness',
-          :explanation => 'Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.',
-          :points => @el.andand.culturallinguistic_staff_average.to_f,
-        },
-        {
-          :title => 'General Culture and Climate',
-          :explanation => "General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.",
-          :points => @el.andand.cultureclimate_staff_average.to_f
-        }
-      ]
-
-      @community = {
-        :clc_fairaverage => {
-          :statement => 'Cultural Awareness',
-          :explanation => 'The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.',
-          :points => @el.andand.clc_fairaverage.to_f,
-        },
-        :professionalism_fairaverage => {
-          :statement => 'Professionalism',
-          :explanation => 'The rating is based on how teachers and staff behave and treat each other while in the room with children.',
-          :points => @el.andand.professionalism_fairaverage.to_f,
-        },
-        :safety_fairaverage => {
-          :statement => 'Program Environment',
-          :explanation => 'This rating is based on the conditions of the classroom.',
-          :points => @el.andand.safety_fairaverage.to_f,
-        },
-        :interactions_fairaverage => {
-          :statement => 'Relationships & Interactions',
-          :explanation => 'The rating is based on how well teachers manage the classroom.',
-          :points => @el.andand.interactions_fairaverage.to_f,
-        },
-        :familycommunity_fairaverage => {
-          :statement => 'Collaboration',
-          :explanation => 'The rating is based on how the family, community and school work together.',
-          :points => @el.andand.familycommunity_fairaverage.to_f,
-        },
-      }
-      @stars = {
-        0 => 'Program meets state licensing requirements',
-        1 => 'Program meets state licensing requirements and is participating in Great Start to Quality',
-        2 => 'Program demonstrates quality across some standards',
-        3 => 'Program demonstrates quality across several standards',
-        4 => 'Program demonstrates quality across almost all standards',
-        5 => 'Program demonstrates highest quality',
-      }
+      render 'show_ec' and return
     end
 
-    @grades = @school.grades
+    #@profile_fields = School::PROFILE_FIELDS
+    ##@profile_fields_flat = @profile_fields.values.collect { |h| h.to_a }.flatten(1)
 
-    @profile_fields = School::PROFILE_FIELDS
-    #@profile_fields_flat = @profile_fields.values.collect { |h| h.to_a }.flatten(1)
+    #ethnicities = %w(total female male american_indian asian african_american hispanic hawaiian white two_or_more_races)
+    #if @school.meap_2013
+    #  @demographics = ethnicities.collect do |e|
+    #    num = @school.meap_2013.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
+    #    num = 0 if num == 9
+    #    num == 0 ? nil : [ "#{e.titleize}: #{num} students", num]
+    #  end
+    #  @demographics.reject! { |a| a.nil? }
 
-    ethnicities = %w(total female male american_indian asian african_american hispanic hawaiian white two_or_more_races)
-    if @school.meap_2013
-      @demographics = ethnicities.collect do |e|
-        num = @school.meap_2013.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
-        num = 0 if num == 9
-        num == 0 ? nil : [ "#{e.titleize}: #{num} students", num]
-      end
-      @demographics.reject! { |a| a.nil? }
+    #  @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
+    #    num = @school.meap_2013.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
+    #    num = 0 if num == 9
+    #    num
+    #  end
+    #else
+    #  @demographics = []
+    #  @enrollment = []
+    #end
+    #@enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
 
-      @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
-        num = @school.meap_2013.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
-        num = 0 if num == 9
-        num
-      end
-    else
-      @demographics = []
-      @enrollment = []
-    end
-    @enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
+    #@sitevisit = {
+    #  :overall_rating       => [0, 'Overall Rating', 'average of domain scores'],
+    #  :domain_community     => [1, 'Welcoming Community Score', 'welcoming community score - overall_score'],
+    #  :visitor_resources    => [2, 'Visitor resources score', 'visitor resources score - domain_community'],
+    #  :welcoming_culture    => [2, 'Welcoming culture score', 'welcoming culture score 0- domain_community'],
+    #  :domain_environment   => [1, 'Safe and Caring Environment Score', 'safe and caring environment score - overall_score'],
+    #  :caring_environment   => [2, 'Caring environment score', 'caring environment score - domain_environment'],
+    #  :safe_environment     => [2, 'Safe environment score', 'safe environment score - domain_environment'],
+    #  :domain_expectations  => [1, 'High Expectations Score', 'high expectations score - overall_score'],
+    #  :academic_displays    => [2, 'Academic displays score', 'academic displays score - domain_expectations'],
+    #  :college_promoted     => [2, 'College emphasis score', 'college emphasis score - domain_expectations'],
+    #}
+    #@sitevisit_values = @school.esd_site_visit_2014.andand.marshal_dump
 
-    @sitevisit = {
-      :overall_rating       => [0, 'Overall Rating', 'average of domain scores'],
-      :domain_community     => [1, 'Welcoming Community Score', 'welcoming community score - overall_score'],
-      :visitor_resources    => [2, 'Visitor resources score', 'visitor resources score - domain_community'],
-      :welcoming_culture    => [2, 'Welcoming culture score', 'welcoming culture score 0- domain_community'],
-      :domain_environment   => [1, 'Safe and Caring Environment Score', 'safe and caring environment score - overall_score'],
-      :caring_environment   => [2, 'Caring environment score', 'caring environment score - domain_environment'],
-      :safe_environment     => [2, 'Safe environment score', 'safe environment score - domain_environment'],
-      :domain_expectations  => [1, 'High Expectations Score', 'high expectations score - overall_score'],
-      :academic_displays    => [2, 'Academic displays score', 'academic displays score - domain_expectations'],
-      :college_promoted     => [2, 'College emphasis score', 'college emphasis score - domain_expectations'],
-    }
-    @sitevisit_values = @school.esd_site_visit_2014.andand.marshal_dump
+    #@extra_credit = {}
+    #if e = @school.esd
+    #  @extra_credit['Overall Student Characteristics Points'] = e.studchrs_pts
+    #  if old = (@school.k8? ? @school.esd_k8_2014 : e)
+    #    @extra_credit.merge!({
+    #      'Socio-economic Status' => "#{(old.econdis_pct.to_f*100).to_i}%",
+    #      'Special Education' => "#{(old.sped_pct.to_f*100).to_i}%",
+    #      'English Language Learners' => "#{(old.ell_pct.to_f*100).to_i}%",
+    #    })
+    #  end
+    #  if @school.high?
+    #    @extra_credit['FAFSA Completion Rate'] = "#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%"
+    #  end
+    #end
 
-    @extra_credit = {}
-    if e = @school.esd
-      @extra_credit['Overall Student Characteristics Points'] = e.studchrs_pts
-      if old = (@school.k8? ? @school.esd_k8_2014 : e)
-        @extra_credit.merge!({
-          'Socio-economic Status' => "#{(old.econdis_pct.to_f*100).to_i}%",
-          'Special Education' => "#{(old.sped_pct.to_f*100).to_i}%",
-          'English Language Learners' => "#{(old.ell_pct.to_f*100).to_i}%",
-        })
-      end
-      if @school.high?
-        @extra_credit['FAFSA Completion Rate'] = "#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%"
-      end
-    end
-
-
-    @category_copy = {
-      'Turnaround' => ['Fresh start school',
-        "These are schools that Michigan has identified as the lowest achieving five percent of schools in the state.
-          They are mandated to perform a rapid turnaround to improve. As part of the mandate, the school has a new operator."],
-      'New' => ['New school',
-        "This school has been open since 2009 or sooner and as a result of being new, doesn't have the cumulative information
-        needed for ESD to assign a grade."],
-      'Specialty' => ['Specialty school',
-        "A specialty school serves students that have unique learning needs or skills.
-        Examples can include: adult education and alternative learning programs."]
-      }
+    #@category_copy = {
+    #  'Turnaround' => ['Fresh start school',
+    #    "These are schools that Michigan has identified as the lowest achieving five percent of schools in the state.
+    #      They are mandated to perform a rapid turnaround to improve. As part of the mandate, the school has a new operator."],
+    #  'New' => ['New school',
+    #    "This school has been open since 2009 or sooner and as a result of being new, doesn't have the cumulative information
+    #    needed for ESD to assign a grade."],
+    #  'Specialty' => ['Specialty school',
+    #    "A specialty school serves students that have unique learning needs or skills.
+    #    Examples can include: adult education and alternative learning programs."]
+    #  }
 
     respond_to do |format|
       format.html do
@@ -577,20 +325,20 @@ class SchoolsController < ApplicationController
       tx = {}
 
       if s.earlychild?
-        tx['Overall Rating']            = s.ec_published_rating
+        tx['Overall Rating']            = s.published_rating
         tx['Address']                   = "#{s.address}<br/>#{s.address2}"
-        tx['Total Points']              = s.ec_points_total
-        tx['Staff Qualifications']      = s.ec_points_staff
-        tx['Family/Community Partnerships'] = s.ec_points_family
-        tx['Administration']            = s.ec_points_admin
-        tx['Environment Pts']           = s.ec_points_env
-        tx['Curriculum']                = s.ec_points_curriculum
-        tx['Financial Assistance']      = format_field(s.ec_subsidy)
-        tx['Special Needs Experience']  = format_field(s.ec_special)
-        tx['Care Setting']              = s.ec_setting
-        tx['Environment']               = format_field(s.ec_environment)
-        tx['Meals Provided']            = format_field(s.ec_meals)
-        tx['Provides Transportation?']  = format_field(s.ec_transportation)
+        tx['Total Points']              = s.points_total
+        tx['Staff Qualifications']      = s.points_staff
+        tx['Family/Community Partnerships'] = s.points_family
+        tx['Administration']            = s.points_admin
+        tx['Environment Pts']           = s.points_env
+        tx['Curriculum']                = s.points_curriculum
+        tx['Financial Assistance']      = format_field(s.subsidy)
+        tx['Special Needs Experience']  = format_field(s.special)
+        tx['Care Setting']              = s.setting
+        tx['Environment']               = format_field(s.environment)
+        tx['Meals Provided']            = format_field(s.meals)
+        tx['Provides Transportation?']  = format_field(s.transportation)
 
       else
         tx['Overall Grade']     = g[:cumulative][:letter] || 'N/A'
@@ -605,6 +353,7 @@ class SchoolsController < ApplicationController
 
       @transposed[i] = tx
     end
+
 
     # Turn an array of hashes to a hash of arrays..
     @chart = {}
@@ -626,40 +375,6 @@ class SchoolsController < ApplicationController
     }[types] || 'all'
   end
 
-  def increment
-    s = scope_from_filters(session[:filter], session[:loc])
-    if params[:by] == 1
-      if s.is_a? Array
-        avail = s.select { |i| i.id > params[:id].to_i }
-        s = (avail.empty? ? s : avail).first
-      else
-        s = s.first(:conditions => ["id > ?", params[:id].to_i]) || s.first
-      end
-    elsif params[:by] == -1
-      if s.is_a? Array
-        avail = s.select { |i| i.id < params[:id].to_i }
-        s = (avail.empty? ? s : avail).last
-      else
-        s = s.last(:conditions => ["id < ?", params[:id].to_i]) || s.last
-      end
-    end
-    redirect_to (s.nil? ? schools_path : school_path(s.slug)+"?from=#{params[:by]}")
-  end
-
-  # Ajax update the count of schools matching a filter set
-  #def overview
-  #  filter = ['all', 'elementary', 'middle', 'high'].include?(params[:filter]) ? params[:filter] : nil
-  #  type = School::TYPES.keys.include?(params[:type].andand.to_sym) ? params[:type] : nil
-  #  session[:filter]  = filter
-  #  session[:type]    = type
-  #  session[:loc]     = params[:loc]
-  #  title = current_search
-  #  schools = scope_from_filters(filter, params[:loc])
-  #  title = title.gsub('All ', '')
-  #  title = title.gsub('Schools', 'School') if schools.count == 1
-  #  render :text => "There #{schools.count==1?'is':'are'} #{schools.count} #{title} in Detroit"
-  #end
-
   private
 
   def format_field(val)
@@ -678,59 +393,6 @@ class SchoolsController < ApplicationController
     else
       ph
     end
-  end
-
-  def scope_from_filters(filter, loc, complex=nil)
-    logger.info "scope from filters: #{filter}, #{loc}"
-    logger.ap complex if complex
-    schools = (filter.nil? or filter == 'all') ? School : School.send(filter)
-
-    if !complex.blank?
-      grades = complex['grades_served']
-      schools = schools.send(grades) if grades
-
-      others = complex.reject { |k,v| k == 'grades_served' }
-      logger.ap "others: #{others}"
-      unless others.empty?
-        schools = schools.where('profile is not null')
-        others.each do |key, value|
-          vals = [value].flatten
-          logger.ap "searching profiles where #{key} == #{vals}"
-          logger.info "started with #{schools.count} schools"
-          keys = key.split(',').collect { |i| i.squish }
-          schools = schools.select do |s|
-            intersections = keys.collect do |key|
-              val = s.profile.send(key)
-              logger.info "  check #{s.bcode}: #{key} = #{val.inspect}" if val
-              school_vals = (val || '').split(',').collect { |i| i.squish }
-              intersection = vals & school_vals
-            end.flatten
-            !intersections.empty?
-          end
-          logger.info "now down to #{schools.count}"
-        end
-      end
-
-
-    elsif loc.andand.match /^[0-9]{5}$/
-      schools = schools.where(:zip => loc)
-    elsif !loc.blank?
-      loc = loc.gsub("&", " and ")
-      geo = Bedrock::Geocoder.bing_geocode({
-        :address => loc,
-        :city => 'Detroit',
-        :state => 'MI',
-      })
-      if geo
-        #f = School.rgeo_factory_for_column :centroid
-        miles = AppConfig.radius_mi
-        f = RGeo::Geographic.projected_factory(:projection_proj4 => AppConfig.detroit_proj)
-        p = f.point(geo[:location][:lon], geo[:location][:lat])
-        schools = schools.inside(p.buffer(1609 * miles))
-      end
-    end
-    schools = schools.all if schools.is_a?(Class)
-    return schools
   end
 
 end

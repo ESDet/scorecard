@@ -3,25 +3,25 @@
   .content
     .container_12
       .visual
-        - if @math_ready
+        - if @school.math_ready_average
           %div(id="math-ready")
-        - if @reading_ready
+        - if @school.reading_ready_average
           %div.hide(id="reading-ready")
-        - if @science_ready
+        - if @school.science_ready_average
           %div.hide(id="science-ready")
-        - if @english_ready
+        - if @school.english_ready_average
           %div.hide(id="english-ready")
       .subjects
-        - if @math_ready
+        - if @school.math_ready_average
           .subject.active(data-target="math-ready")
             .title Math
-        - if @reading_ready
+        - if @school.reading_ready_average
           .subject(data-target="reading-ready")
             .title Reading
-        - if @science_ready
+        - if @school.science_ready_average
           .subject(data-target="science-ready")
             .title Science
-        - if @english_ready
+        - if @school.english_ready_average
           .subject(data-target="english-ready")
             .title English
     .links
@@ -36,13 +36,13 @@
   .content
     .visual
       %div(id="math-growth")
-        = render 'subject_growth', growth: @math_growth
+        = render 'subject_growth', growth: @school.math_growth_average
       %div.hide(id="reading-growth")
-        = render 'subject_growth', growth: @reading_growth
+        = render 'subject_growth', growth: @school.reading_growth_average
       %div.hide(id="science-growth")
-        = render 'subject_growth', growth: @science_growth
+        = render 'subject_growth', growth: @school.science_growth_average
       %div.hide(id="english-growth")
-        = render 'subject_growth', growth: @english_growth
+        = render 'subject_growth', growth: @school.english_growth_average
     .subjects
       .subject.active(data-target="math-growth")
         .title Math
@@ -131,30 +131,30 @@
 
     drawDonut("#math-ready", [
       donutOpts(null, "#fff", 0, 100, 100, 25),
-      donutOpts("#{@math_ready}%", "#bde35f", 0, #{@math_ready}, 100, 75),
-      donutOpts("#{@detroit_math_ready}%", "#ec5932", 0, #{@detroit_math_ready}, 75, 50),
-      donutOpts("#{@state_math_ready}%", "#14b2ae", 0, #{@state_math_ready}, 50, 25)
+      donutOpts("#{@school.math_ready_average}%", "#bde35f", 0, #{@school.math_ready_average}, 100, 75),
+      donutOpts("#{@school.detroit_math_ready_average}%", "#ec5932", 0, #{@school.detroit_math_ready_average}, 75, 50),
+      donutOpts("#{@school.state_math_ready_average}%", "#14b2ae", 0, #{@school.state_math_ready_average}, 50, 25)
     ]);
 
     drawDonut("#reading-ready", [
       donutOpts(null, "#fff", 0, 100, 100, 25),
-      donutOpts("#{@reading_ready}%", "#bde35f", 0, #{@reading_ready}, 100, 75),
-      donutOpts("#{@detroit_reading_ready}%", "#ec5932", 0, #{@detroit_reading_ready}, 75, 50),
-      donutOpts("#{@state_reading_ready}%", "#14b2ae", 0, #{@state_reading_ready}, 50, 25)
+      donutOpts("#{@school.reading_ready_average}%", "#bde35f", 0, #{@school.reading_ready_average}, 100, 75),
+      donutOpts("#{@school.detroit_reading_ready_average}%", "#ec5932", 0, #{@school.detroit_reading_ready_average}, 75, 50),
+      donutOpts("#{@school.state_reading_ready_average}%", "#14b2ae", 0, #{@school.state_reading_ready_average}, 50, 25)
     ]);
 
     drawDonut("#science-ready", [
       donutOpts(null, "#fff", 0, 100, 100, 25),
-      donutOpts("#{@science_ready}%", "#bde35f", 0, #{@science_ready}, 100, 75),
-      donutOpts("#{@detroit_science_ready}%", "#ec5932", 0, #{@detroit_science_ready}, 75, 50),
-      donutOpts("#{@state_science_ready}%", "#14b2ae", 0, #{@state_science_ready}, 50, 25)
+      donutOpts("#{@school.science_ready_average}%", "#bde35f", 0, #{@school.science_ready_average}, 100, 75),
+      donutOpts("#{@school.detroit_science_ready_average}%", "#ec5932", 0, #{@school.detroit_science_ready_average}, 75, 50),
+      donutOpts("#{@school.state_science_ready_average}%", "#14b2ae", 0, #{@school.state_science_ready_average}, 50, 25)
     ]);
 
     drawDonut("#english-ready", [
       donutOpts(null, "#fff", 0, 100, 100, 25),
-      donutOpts("#{@english_ready}%", "#bde35f", 0, #{@english_ready}, 100, 75),
-      donutOpts("#{@detroit_english_ready}%", "#ec5932", 0, #{@detroit_english_ready}, 75, 50),
-      donutOpts("#{@state_english_ready}%", "#14b2ae", 0, #{@state_english_ready}, 50, 25)
+      donutOpts("#{@school.english_ready_average}%", "#bde35f", 0, #{@school.english_ready_average}, 100, 75),
+      donutOpts("#{@school.detroit_english_ready_average}%", "#ec5932", 0, #{@school.detroit_english_ready_average}, 75, 50),
+      donutOpts("#{@school.state_english_ready_average}%", "#14b2ae", 0, #{@school.state_english_ready_average}, 50, 25)
     ]);
 
     var drawBar = function(element, data) {
@@ -217,16 +217,16 @@
 
     drawBar('#graduate', [
       barOpts("", '#fff', 100),
-      barOpts("#{@graduate}%", '#bde35f', #{@graduate})
+      barOpts("#{@school.high_school_graduate_average}%", '#bde35f', #{@school.high_school_graduate_average})
     ]);
 
     drawBar('#enroll', [
       barOpts("", '#fff', 100),
-      barOpts("#{@enroll}%", '#bde35f', #{@enroll})
+      barOpts("#{@school.enroll_in_college_average}%", '#bde35f', #{@school.enroll_in_college_average})
     ]);
 
     drawBar('#college', [
       barOpts("", '#fff', 100),
-      barOpts("#{@college}%", '#bde35f', #{@college})
+      barOpts("#{@school.finish_some_college_average}%", '#bde35f', #{@school.finish_some_college_average})
     ]);
   });
