@@ -25,9 +25,9 @@
           .subject(data-target="english-ready")
             .title English
     .links
-      .compare(style="color: #14b2ae") State Average
-      .compare(style="color: #ec5932") Detroit Average
       .compare(style="color: #bde35f") School Average
+      .compare(style="color: #ec5932") Detroit Average
+      .compare(style="color: #14b2ae") State Average
       .message
         .act-icon
         Results based on ACT scores
@@ -130,28 +130,24 @@
     };
 
     drawDonut("#math-ready", [
-      donutOpts(null, "#fff", 0, 100, 100, 25),
       donutOpts("#{@school.math_ready_average}%", "#bde35f", 0, #{@school.math_ready_average}, 100, 75),
       donutOpts("#{@school.detroit_math_ready_average}%", "#ec5932", 0, #{@school.detroit_math_ready_average}, 75, 50),
       donutOpts("#{@school.state_math_ready_average}%", "#14b2ae", 0, #{@school.state_math_ready_average}, 50, 25)
     ]);
 
     drawDonut("#reading-ready", [
-      donutOpts(null, "#fff", 0, 100, 100, 25),
       donutOpts("#{@school.reading_ready_average}%", "#bde35f", 0, #{@school.reading_ready_average}, 100, 75),
       donutOpts("#{@school.detroit_reading_ready_average}%", "#ec5932", 0, #{@school.detroit_reading_ready_average}, 75, 50),
       donutOpts("#{@school.state_reading_ready_average}%", "#14b2ae", 0, #{@school.state_reading_ready_average}, 50, 25)
     ]);
 
     drawDonut("#science-ready", [
-      donutOpts(null, "#fff", 0, 100, 100, 25),
       donutOpts("#{@school.science_ready_average}%", "#bde35f", 0, #{@school.science_ready_average}, 100, 75),
       donutOpts("#{@school.detroit_science_ready_average}%", "#ec5932", 0, #{@school.detroit_science_ready_average}, 75, 50),
       donutOpts("#{@school.state_science_ready_average}%", "#14b2ae", 0, #{@school.state_science_ready_average}, 50, 25)
     ]);
 
     drawDonut("#english-ready", [
-      donutOpts(null, "#fff", 0, 100, 100, 25),
       donutOpts("#{@school.english_ready_average}%", "#bde35f", 0, #{@school.english_ready_average}, 100, 75),
       donutOpts("#{@school.detroit_english_ready_average}%", "#ec5932", 0, #{@school.detroit_english_ready_average}, 75, 50),
       donutOpts("#{@school.state_english_ready_average}%", "#14b2ae", 0, #{@school.state_english_ready_average}, 50, 25)
