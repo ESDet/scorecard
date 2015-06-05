@@ -1,5 +1,4 @@
 class SchoolsController < ApplicationController
-
   helper_method :format_phone
 
   def index
@@ -7,155 +6,93 @@ class SchoolsController < ApplicationController
     @grade = params[:grade]
     @filters = params[:filters] || []
 
-    @schools = if @loc.andand.match /^[0-9]{5}$/
-      OldSchool.where(:zip => loc)
-    elsif !@loc.blank?
-      OldSchool.where("name like '%#{@loc}%'")
-    end
-
-    @schools = if @schools
-      @grade.blank? ? @schools : @schools.send(@grade)
-    else
-      OldSchool.send(@grade) if !@grade.blank?
-    end
-
+    special_filters = []
     case @grade
     when 'ec'
+      url = "ecs.json?flatten_fields=true"
+      if @loc.andand.match /^[0-9]{5}$/
+        url << "&filter[postal_code]=#{@loc}"
+      elsif !@loc.blank?
+        url << "&filter[name]=#{@loc}"
+      end
       @filters.each do |f|
-        @schools = case f
+        case f
         when 'free_reduced'
-          @schools.select do |s|
-            s.subsidy == 'Accepts State Subsidy' ||
-            s.specialty == 'Early Head Start' ||
-            s.specialty == 'Head Start' ||
-            s.specialty == 'Great Start Readiness Program'
-          end
+          special_filters << "ec_profile_is_free_or_reduced_cost"
         when 'transportation'
-          @schools.select do |s|
-            s.transportation == true
-          end
+          special_filters << "ec_profile_has_transportation"
         when 'special_needs'
-          @schools.select do |s|
-            s.special && s.ec_special.size > 5
-          end
+          special_filters << "ec_profile_has_special_needs_experience"
         when 'meals'
-          @schools.select do |s|
-            s.meals.include?("Lunch") &&
-            s.meals.include?("Afternoon Snack")
-          end
+          special_filters << "ec_profile_has_meals"
         when 'home_based'
-          @schools.select do |s|
-            s.license_type == 'licensed group homes' ||
-            s.license_type == 'registered family homes'
-          end
+          url << "&filter[field_ec_license_type]=2424,2419&filter_op[field_ec_license_type]=IN"
         when 'center_based'
-          @schools.select do |s|
-            s.license_type == 'licensed centers'
-          end
-        when 'accreditation'
-          @schools
-        else
-          @schools
+          url << "&filter[field_ec_license_type]=2415"
         end
       end
     when 'k8', 'high'
+      url = "schools.json?flatten_fields=true"
+
+      if @grade == 'k8'
+        url << "&filter[field_authorized_grades]=923,924,925,926,927,928,929,930,931"
+      else
+        url << "&filter[field_authorized_grades]=932,933,934,935"
+      end
+      url << "&filter_op[field_authorized_grades]=IN"
+
+      if @loc.andand.match /^[0-9]{5}$/
+        url << "&filter[postal_code]=#{@loc}"
+      elsif !@loc.blank?
+        url << "&filter[name]=#{@loc}&filter_op[name]=LIKE"
+      end
       @filters.each do |f|
         @schools = case f
         when 'special_education'
-          @schools.select do |s|
-            s.special_ed_level == 'moderate' ||
-            s.special_ed_level == 'intensive'
-          end
+          special_filters << "school_profile_has_specialed"
         when 'arts'
-          @schools.select do |s|
-            (s.arts_media + s.arts_visual + s.arts_music +
-            s.arts_performing_written).size > 8
-          end
+          special_filters << "school_profile_has_arts"
         when 'sports'
-          @schools.select do |s|
-            s.boys_sports.size > 4 &&
-            s.girls_sports > 4
-          end
+          special_filters << "school_profile_has_sports"
         when 'transportation'
-          @schools.select do |s|
-            s.transportation_options == 'passes' ||
-            s.transportation_options == 'busses' ||
-            s.transportation_options == 'shared_bus'
-          end
+          special_filters << "school_profile_has_transportation"
         when 'before_after_care'
-          @schools.select do |s|
-            s.before_after_care == 'after' ||
-            s.before_after_care == 'before'
-          end
+          special_filters << "school_profile_has_before_after_care"
         when 'app_required'
-          @schools.select do |s|
-            s.application_process == 'yes'
-          end
+          special_filters << "school_profile_application_required"
         when 'college_readiness'
-          @schools.select do |s|
-            s.college_prep != 'none' &&
-              (s.facilities == 'college_center'||
-              s.extra_learning_resources == 'career_counseling' ||
-              s.staff_resources == 'college_counselor')
-          end
-        else
-          @schools
+          special_filters << "school_profile_collegereadiness"
         end
       end
     else
-      @schools = OldSchool.ec.where('esd_el_2015 is not null').
-        order('points desc').limit(50) unless @schools
+      url = "ecs.json?limit=50&flatten_fields=true&includes=ec_profile"
     end
 
-    respond_to do |format|
-      format.html do
-        @school_o = Bedrock::Overlay.from_config('schools',
-          :ty         => :geojson,
-          #:url        => schools_path(:format => :json, :filter => filter, :loc => loc),
-          :elements   => @schools,
-          :mouseover  => false,
-          :key => {
-            '#f48b68' => 'K8 Schools',
-            '#00aff0' => 'High Schools',
-            '#ff00ff' => 'K12 Schools',
-            '#134370' => 'Preschools',
-          })
-        @district_o = Bedrock::Overlay.from_config('districts',
-          :ty => :geojson,
-          :elements => [District.find(580)])
-        @map = Bedrock::Map.new({
-          #:extent         => Bedrock::city_extents(:detroit),
-          :base_layers    => ['street'],
-          :layers         => [ @district_o, @school_o ],
-          :layer_control  => true,
-          :center => Bedrock::city_extents(:detroit).first,
-          :min_zoom => 11,
-          :max_zoom => 18,
-          :zoom => 12,
-          :layer_control => false,
-        })
-      end
-      format.json do
-        render :json => Bedrock::to_feature_collection(@schools.reject { |s| s.centroid.nil? })
-      end
+    if !special_filters.empty?
+      url << "filter_special=#{special_filters.join(",")}"
     end
+
+    @schools = Portal.new.fetch(url)['data'].map { |s| SchoolData.new(s) }
   end
 
   def show
     render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
 
-    school_id = ActiveRecord::Base.connection.execute(
-      "select tid from old_schools where slug = '#{params[:id]}'"
-    ).first.first
+    redirect_to root_path and return unless params[:id]
 
-    redirect_to root_path and return unless school_id
-
-    school_type = params[:type]
-
-    url = if school_type == 'ecs'
-      "ecs/#{school_id}.json/?flatten_fields=true&includes=most_recent_ec_state_rating,ec_profile"
+    url = if params[:type] == 'ecs'
+      "ecs/#{params[:id]}.json/?flatten_fields=true" <<
+        "&includes=most_recent_ec_state_rating," <<
+        "ec_profile,esd_el_2014,esd_el_2015"
     else
-      "schools/#{school_id}.json/?flatten_fields=true&includes=school_profile,act_2013,act_2012,act_2011meap_2013,meap_2012,meap_2011"
+      "schools/#{params[:id]}.json/?flatten_fields=true" <<
+        "&includes=school_profile,act_2011,act_2012," <<
+        "act_2013,act_2014,esd_hs_2013,esd_hs_2014," <<
+        "esd_hs_2015,esd_k8_2013, esd_k8_2013_r1," <<
+        "esd_k8_2014, esd_k8_2015,fiveessentials_2013," <<
+        "fiveessentials_2014, fiveessentials_2015," <<
+        "meap_2009,meap_2010,meap_2011," <<
+        "meap_2012,meap_2013"
     end
 
     school_data = Portal.new.fetch(url)

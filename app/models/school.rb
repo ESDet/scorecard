@@ -44,7 +44,9 @@ module School
   end
 
   def photo
-    photos.andand.first['filename']
+    if !photos.empty?
+      photos.andand.first['filename']
+    end
   end
 
   def photos
