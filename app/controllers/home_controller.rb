@@ -2,22 +2,12 @@ class HomeController < ApplicationController
   before_filter :password_protect, :only => [:tips]
 
   def index
-    session[:filter] = session[:loc] = nil
-    @school_names = []
+    @school_names = Portal.new("")
     @resources = Tip.find_by_name('resources')
   end
 
   def resources
     @page = Tip.find_by_name('resources')
-  end
-
-  def search
-    redirect_to root_path and return if params[:q].blank?
-    if @q = params[:q]
-      exact = School.find_by_name(@q)
-      redirect_to school_path(:id => exact.slug) and return if exact
-      redirect_to root_path, :notice => "Search isn't done yet, sorry!"
-    end
   end
 
   def robots
