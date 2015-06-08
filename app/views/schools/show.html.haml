@@ -1,333 +1,334 @@
-.container_12.breadcrumbs
-  %a.back-arrow-icon(href="/")
-  %h2
-    = @school.display_name
-.container_12.clear_floats.section-title(data-target="overview")
-  %h2 Overview
-.container_12.info-region
-  #overview
-    .school-header
+- cache(@school.cache_key, condition: @school.can_cache?) do
+  .container_12.breadcrumbs
+    %a.back-arrow-icon(href="/")
+    %h2
+      = @school.display_name
+  .container_12.clear_floats.section-title(data-target="overview")
+    %h2 Overview
+  .container_12.info-region
+    #overview
+      .school-header
+        .middle
+          - if @school.photo
+            .school-image
+              %img(src="https://portal.excellentschoolsdetroit.org/files/#{@school.photo}")
+          .school-title
+            %h1= @school.display_name
       .middle
-        - if @school.photo
-          .school-image
-            %img(src="https://portal.excellentschoolsdetroit.org/files/#{@school.photo}")
-        .school-title
-          %h1= @school.display_name
-    .middle
-      .fields.clear_floats
-        .field.border-bottom
-          .field-key Excellent Schools Detroit rating
-          .rating.field-value B
-        .field.border-bottom
-          %a(href="/compare/+#{@school.tid}")
-            .compare-arrow-icon
-            Compare
-          to other schools
-        .field.border-bottom
-          .field-key Grades served
-          .field-value= @school.grades_served.join(", ")
-        .field.border-bottom
-          .transportation-icon
-            .icon-text
-              No transportation
-          .schedule-icon
-            .icon-text
-              Year-round schedule
-        .field.border-bottom
-          .field_key Principal
-          .field-value
-        .field.border-bottom
-          .field-key Governance
-          .field-value= @school.governance
-        .field.border-bottom
-          .field-key Authorization
-          .field-value= @school.authorizer
-        .field
-          .field-key Operator
-          .field-value= @school.operator
-      .map.clear_floats= render :partial => 'shared/map', :object => @map
-      .overview-text
-        =raw simple_format(@school.overview_text)
-      .contact
-        .envelope-icon
-        %a{href: "mailto:#{@school.email}"} Email
-        this school
-      .contact
-        .phone-icon
-        %a{href: "tel:#{@school.phone}"} Call
-        this school
-      .contact
-        .website-icon
-        %a.external{:href => @school.school_url, :target => '_blank'} Visit
-        this school's website
-      .contact
-        .facebook-icon
-        %a.external{:href => @school.facebook_url, :target => '_blank'} Check
-        out this school's Facebook
-.container_12.closed.section-title(data-target="enrollment")
-  %h2 Enrollment
-.container_12.info-region
-  #enrollment.hide
-    .middle
-      .fields
-        .field.border-bottom
-          .field-key Application Process
-          .field-value= @school.application_process? ? "Yes" : "No"
-        .field.border-bottom
-          .field-key Admissions URL
-          .field-value= @school.admissions_url
-        .field.border-bottom
-          .field-key Application Fee
-          .field-value= @school.application_fee? ? "Yes" : "No"
-        - if @school.application_fee?
+        .fields.clear_floats
           .field.border-bottom
-            .field-key Application Fee Amount
-            .field-value= @school.application_fee_amount
-        .field.border-bottom
-          .field-key Applications Received
-          .field-value= @school.applications_received
-.container_12.closed.section-title(data-target="academics")
-  %h2 Academics
-.container_12.info-region
-  #academics.hide
-    = render "high_school_academics"
-    .field.border-bottom
-      %a(href="/compare/+#{@school.id}")
-        .compare-arrow-icon
-        Compare
-      to other schools
-    .header Other Links
-    .field
-      %span
-        %a(href="#")
-          .plus-icon
-          Download
-        financial transparency PDF
-      %span
-        %a(href="#")
-          .plus-icon
-          Download
-        staff transparency PDF
-.container_12.closed.section-title(data-target="culture")
-  %h2 Culture
-.container_12.info-region
-  #culture.hide
-    .middle
-      .fields
-        .field.border-bottom
-          .field-key Dress Code
-          .field-value= @school.dress_code
-        .field.border-bottom
-          .field-key Bullying Policy
-          .field-value= @school.bullying_policy? ? "Yes" : "No"
-        .field.border-bottom
-          .field-key Parent Involvement
-          .field-value= @school.parent_involvement? ? "Yes" : "No"
-.container_12.closed.section-title(data-target="classes")
-  %h2 Classes
-.container_12.info-region
-  #classes.hide
-    .middle
-      .fields
-        .field.border-bottom.list
-          .field-key Academic Focus
-          .field-value
-            - @school.academic_focus.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Instructional Model
-          .field-value
-            - @school.instructional_model.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Arts - Visual
-          .field-value
-            - @school.arts_visual.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Arts - Media
-          .field-value
-            - @school.arts_media.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Arts - Music
-          .field-value
-            - @school.arts_music.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Arts - Performing & Written
-          .field-value
-            - @school.arts_performing_written.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom
-          .field-key Immersion
-          .field-value= @school.immersion? ? "Yes" : "No"
-        .field.border-bottom.list
-          .field-key Foreign Lanuage
-          .field-value
-            - @school.foreign_language.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key AP Classes
-          .field-value
-            - @school.ap_classes.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom
-          .field-key Dual Enrollment
-          .field-value= @school.dual_enrollment? ? "Yes": "No"
-        .field.border-bottom
-          .field-key Dual Enrollment Institution
-          .field-value= @school.dual_enrollment_institution
-.container_12.closed.section-title(data-target="support")
-  %h2 Support
-.container_12.info-region
-  #support.hide
-    .middle
-      .fields
-        .field.border-bottom
-          .field-key Special Education Level
-          .field-value= @school.special_ed_level
-        .field.border-bottom.list
-          .field-key Special Education Programs
-          .field-value
-            - @school.special_ed_programs.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom
-          .field-key ELL Level
-          .field-value= @school.ell_level
-        .field.border-bottom.list
-          .field-key ELL Languages
-          .field-value
-            - @school.ell_languages.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key College Prep
-          .field-value
-            - @school.college_prep.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Extra Learning Resources
-          .field-value
-            - @school.extra_learning_resources.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Facilities
-          .field-value
-            - @school.facilities.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Skills Training
-          .field-value
-            - @school.skills_training.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Before/After Care
-          .field-value
-            - @school.before_after_care.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Staff Resources
-          .field-value
-            - @school.staff_resources.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-.container_12.closed.section-title(data-target="activities")
-  %h2 Activities
-.container_12.info-region
-  #activities.hide
-    .middle
-      .fields
-        .field.border-bottom.list
-          .field-key Boys Sports
-          .field-value
-            - @school.boys_sports.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Girls Sports
-          .field-value
-            - @school.girls_sports.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom.list
-          .field-key Student Clubs
-          .field-value
-            - @school.student_clubs.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-        .field.border-bottom
-          .field-key Student Clubs - Dance
-          .field-value= @school.student_clubs_dance
-        .field.border-bottom
-          .field-key Student Clubs - Language
-          .field-value= @school.student_clubs_language
-        .field.border-bottom.list
-          .field-key Student Clubs - Other
-          .field-value
-            - @school.student_clubs_other.each do |i|
-              %li
-                %span= i.sub('_', ' ')
-.container_12.closed.section-title(data-target="other-ratings")
-  %h2 Other ratings
-.container_12.info-region
-  #other-ratings.hide
+            .field-key Excellent Schools Detroit rating
+            .rating.field-value B
+          .field.border-bottom
+            %a(href="/compare/+#{@school.tid}")
+              .compare-arrow-icon
+              Compare
+            to other schools
+          .field.border-bottom
+            .field-key Grades served
+            .field-value= @school.grades_served.join(", ")
+          .field.border-bottom
+            .transportation-icon
+              .icon-text
+                No transportation
+            .schedule-icon
+              .icon-text
+                Year-round schedule
+          .field.border-bottom
+            .field_key Principal
+            .field-value
+          .field.border-bottom
+            .field-key Governance
+            .field-value= @school.governance
+          .field.border-bottom
+            .field-key Authorization
+            .field-value= @school.authorizer
+          .field
+            .field-key Operator
+            .field-value= @school.operator
+        .map.clear_floats= render :partial => 'shared/map', :object => @map
+        .overview-text
+          =raw simple_format(@school.overview_text)
+        .contact
+          .envelope-icon
+          %a{href: "mailto:#{@school.email}"} Email
+          this school
+        .contact
+          .phone-icon
+          %a{href: "tel:#{@school.phone}"} Call
+          this school
+        .contact
+          .website-icon
+          %a.external{:href => @school.school_url, :target => '_blank'} Visit
+          this school's website
+        .contact
+          .facebook-icon
+          %a.external{:href => @school.facebook_url, :target => '_blank'} Check
+          out this school's Facebook
+  .container_12.closed.section-title(data-target="enrollment")
+    %h2 Enrollment
+  .container_12.info-region
+    #enrollment.hide
+      .middle
+        .fields
+          .field.border-bottom
+            .field-key Application Process
+            .field-value= @school.application_process? ? "Yes" : "No"
+          .field.border-bottom
+            .field-key Admissions URL
+            .field-value= @school.admissions_url
+          .field.border-bottom
+            .field-key Application Fee
+            .field-value= @school.application_fee? ? "Yes" : "No"
+          - if @school.application_fee?
+            .field.border-bottom
+              .field-key Application Fee Amount
+              .field-value= @school.application_fee_amount
+          .field.border-bottom
+            .field-key Applications Received
+            .field-value= @school.applications_received
+  .container_12.closed.section-title(data-target="academics")
+    %h2 Academics
+  .container_12.info-region
+    #academics.hide
+      = render "high_school_academics"
+      .field.border-bottom
+        %a(href="/compare/+#{@school.id}")
+          .compare-arrow-icon
+          Compare
+        to other schools
+      .header Other Links
+      .field
+        %span
+          %a(href="#")
+            .plus-icon
+            Download
+          financial transparency PDF
+        %span
+          %a(href="#")
+            .plus-icon
+            Download
+          staff transparency PDF
+  .container_12.closed.section-title(data-target="culture")
+    %h2 Culture
+  .container_12.info-region
+    #culture.hide
+      .middle
+        .fields
+          .field.border-bottom
+            .field-key Dress Code
+            .field-value= @school.dress_code
+          .field.border-bottom
+            .field-key Bullying Policy
+            .field-value= @school.bullying_policy? ? "Yes" : "No"
+          .field.border-bottom
+            .field-key Parent Involvement
+            .field-value= @school.parent_involvement? ? "Yes" : "No"
+  .container_12.closed.section-title(data-target="classes")
+    %h2 Classes
+  .container_12.info-region
+    #classes.hide
+      .middle
+        .fields
+          .field.border-bottom.list
+            .field-key Academic Focus
+            .field-value
+              - @school.academic_focus.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Instructional Model
+            .field-value
+              - @school.instructional_model.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Arts - Visual
+            .field-value
+              - @school.arts_visual.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Arts - Media
+            .field-value
+              - @school.arts_media.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Arts - Music
+            .field-value
+              - @school.arts_music.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Arts - Performing & Written
+            .field-value
+              - @school.arts_performing_written.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom
+            .field-key Immersion
+            .field-value= @school.immersion? ? "Yes" : "No"
+          .field.border-bottom.list
+            .field-key Foreign Lanuage
+            .field-value
+              - @school.foreign_language.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key AP Classes
+            .field-value
+              - @school.ap_classes.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom
+            .field-key Dual Enrollment
+            .field-value= @school.dual_enrollment? ? "Yes": "No"
+          .field.border-bottom
+            .field-key Dual Enrollment Institution
+            .field-value= @school.dual_enrollment_institution
+  .container_12.closed.section-title(data-target="support")
+    %h2 Support
+  .container_12.info-region
+    #support.hide
+      .middle
+        .fields
+          .field.border-bottom
+            .field-key Special Education Level
+            .field-value= @school.special_ed_level
+          .field.border-bottom.list
+            .field-key Special Education Programs
+            .field-value
+              - @school.special_ed_programs.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom
+            .field-key ELL Level
+            .field-value= @school.ell_level
+          .field.border-bottom.list
+            .field-key ELL Languages
+            .field-value
+              - @school.ell_languages.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key College Prep
+            .field-value
+              - @school.college_prep.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Extra Learning Resources
+            .field-value
+              - @school.extra_learning_resources.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Facilities
+            .field-value
+              - @school.facilities.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Skills Training
+            .field-value
+              - @school.skills_training.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Before/After Care
+            .field-value
+              - @school.before_after_care.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Staff Resources
+            .field-value
+              - @school.staff_resources.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+  .container_12.closed.section-title(data-target="activities")
+    %h2 Activities
+  .container_12.info-region
+    #activities.hide
+      .middle
+        .fields
+          .field.border-bottom.list
+            .field-key Boys Sports
+            .field-value
+              - @school.boys_sports.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Girls Sports
+            .field-value
+              - @school.girls_sports.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom.list
+            .field-key Student Clubs
+            .field-value
+              - @school.student_clubs.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+          .field.border-bottom
+            .field-key Student Clubs - Dance
+            .field-value= @school.student_clubs_dance
+          .field.border-bottom
+            .field-key Student Clubs - Language
+            .field-value= @school.student_clubs_language
+          .field.border-bottom.list
+            .field-key Student Clubs - Other
+            .field-value
+              - @school.student_clubs_other.each do |i|
+                %li
+                  %span= i.sub('_', ' ')
+  .container_12.closed.section-title(data-target="other-ratings")
+    %h2 Other ratings
+  .container_12.info-region
+    #other-ratings.hide
 
-:javascript
-  $(document).ready(function(e) {
-    var moveMap = function() {
-      if ($(window).width() > 800) {
-        $('#overview .map').first().detach().appendTo('#overview');
-      } else {
-        $('#overview .map').first().detach().insertAfter('#overview .fields').first();
-      }
-    };
+  :javascript
+    $(document).ready(function(e) {
+      var moveMap = function() {
+        if ($(window).width() > 800) {
+          $('#overview .map').first().detach().appendTo('#overview');
+        } else {
+          $('#overview .map').first().detach().insertAfter('#overview .fields').first();
+        }
+      };
 
-    moveMap();
-    $(window).resize(function() { moveMap(); });
+      moveMap();
+      $(window).resize(function() { moveMap(); });
 
-    $('.section-title').click(function() {
-      var me = $(this);
-      var target = $('#' + me.data('target'));
-      if (target.hasClass('hide')) {
-        me.removeClass('closed');
-        target.removeClass('hide');
-      } else {
-        me.addClass('closed');
-        target.addClass('hide');
-      }
-    });
-
-    var subjects = $('.subject')
-    subjects.click(function() {
-      var me = $(this);
-      var target = $('#' + me.data('target'));
-      var otherSubjects = me.siblings();
-      var otherTargets = target.siblings();
-      if (target.hasClass('hide')) {
-        me.addClass('active');
-        target.removeClass('hide');
-        otherTargets.addClass('hide');
-        otherSubjects.removeClass('active');
-      } else {
-        if (otherSubjects.hasClass('active').size > 1) {
-          me.removeClass('active');
+      $('.section-title').click(function() {
+        var me = $(this);
+        var target = $('#' + me.data('target'));
+        if (target.hasClass('hide')) {
+          me.removeClass('closed');
+          target.removeClass('hide');
+        } else {
+          me.addClass('closed');
           target.addClass('hide');
         }
-      }
+      });
+
+      var subjects = $('.subject')
+      subjects.click(function() {
+        var me = $(this);
+        var target = $('#' + me.data('target'));
+        var otherSubjects = me.siblings();
+        var otherTargets = target.siblings();
+        if (target.hasClass('hide')) {
+          me.addClass('active');
+          target.removeClass('hide');
+          otherTargets.addClass('hide');
+          otherSubjects.removeClass('active');
+        } else {
+          if (otherSubjects.hasClass('active').size > 1) {
+            me.removeClass('active');
+            target.addClass('hide');
+          }
+        }
+      });
     });
-  });

@@ -30,7 +30,23 @@ class SchoolData < OpenStruct
     end
   end
 
+  def school_type
+    if field_school_type
+      field_school_type.andand.name.downcase
+    else
+      type
+    end
+  end
+
   def earlychild?
     type == 'ecs'
+  end
+
+  def cache_key
+    "schools/#{tid}-#{timestamp}"
+  end
+
+  def can_cache?
+    tid && timestamp
   end
 end

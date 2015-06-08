@@ -1,8 +1,9 @@
-.footer
-  .container_12
-    .float_left Enroll Detroit
-    .float_right
-      = link_to image_tag('/images/icons/png/ESD_logo.png'), 'http://excellentschoolsdetroit.org'
+- cache('footer') do
+  .footer
+    .container_12
+      .float_left Enroll Detroit
+      .float_right
+        = link_to image_tag('/images/icons/png/ESD_logo.png'), 'http://excellentschoolsdetroit.org'
 
 - if false
   :javascript
