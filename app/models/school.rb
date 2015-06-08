@@ -57,12 +57,16 @@ module School
     school_profiles.andand.field_dress_code
   end
 
-  def bullying_policy?
-    school_profiles.andand.field_bullying_policy == 'y'
+  def bullying_policy
+    if p = school_profiles.andand.field_bullying_policy
+      p == 'y' ? "Yes" : "No"
+    end
   end
 
-  def parent_involvement?
-    school_profiles.andand.field_parent_involvement == 'y'
+  def parent_involvement
+    if i = school_profiles.andand.field_parent_involvement
+      i == 'y' ? "Yes" : "No"
+    end
   end
 
   def academic_focus
@@ -89,8 +93,10 @@ module School
     school_profiles.andand.field_arts_performing_written
   end
 
-  def immersion?
-    school_profiles.andand.field_immersion == 'yes'
+  def immersion
+    if i = school_profiles.andand.field_immersion
+      i == 'yes' ? "Yes" : "No"
+    end
   end
 
   def foreign_language
@@ -173,16 +179,20 @@ module School
     school_profiles.andand.field_student_clubs_other
   end
 
-  def application_process?
-    school_profiles.andand.field_application_process == 'yes'
+  def application_process
+    if p = school_profiles.andand.field_application_process
+      p == 'yes' ? "Yes" : "No"
+    end
   end
 
   def admissions_url
     school_profiles.andand.field_admissions_url
   end
 
-  def application_fee?
-    school_profiles.andand.field_application_fee == 'yes'
+  def application_fee
+    if f = school_profiles.andand.field_application_fee
+     f == 'yes' ? "Yes" : "No"
+    end
   end
 
   def application_fee_amount
@@ -195,7 +205,9 @@ module School
 
   ["math", "reading", "science", "english"].each do |s|
     define_method("#{s}_ready_average") do
-      act_2013s.send("#{s}PercentMeeting").to_f
+      if act_2014s
+        act_2014s.send("#{s}PercentMeeting").to_f
+      end
     end
 
     define_method("#{s}_growth_average") do
