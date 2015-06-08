@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   before_filter :password_protect, :only => [:tips]
 
   def index
-    @school_names = Portal.new("")
+    @school_names = []
     @resources = Tip.find_by_name('resources')
   end
 

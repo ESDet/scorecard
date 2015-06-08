@@ -1,10 +1,10 @@
 %li.school{'data-bcode' => school.bcode}
   - if school.earlychild?
     = image_tag EarlyChildhood.image(:mini, school.esd_el_2015.andand.overall_rating), :class => "mini-el-icon"
-    - url = school_path(school.tid) + "/ecs"
+    - url = school_path("#{school.tid}-ecs-#{Mogrify.transliterate(school.name)}")
   - else
     = image_tag School.image(school.overall_grade, :small), :class => 'mini-el-icon'
-    - url = school_path(school.tid)
+    - url = school_path("#{school.tid}-#{school.school_type}-#{Mogrify.transliterate(school.name)}")
 
   %h3= link_to school.display_name, url
   - unless school.grades_served.blank?

@@ -1,3 +1,5 @@
+require 'mogrify'
+
 class SchoolsController < ApplicationController
   helper_method :format_phone
 
@@ -13,7 +15,7 @@ class SchoolsController < ApplicationController
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
       elsif !@loc.blank?
-        url << "&filter[name]=#{@loc}"
+        url << "&filter[name]=%25#{@loc}%25&filter_op=LIKE"
       end
       @filters.each do |f|
         case f
@@ -44,7 +46,7 @@ class SchoolsController < ApplicationController
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
       elsif !@loc.blank?
-        url << "&filter[name]=#{@loc}&filter_op[name]=LIKE"
+        url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
       end
       @filters.each do |f|
         @schools = case f
@@ -80,19 +82,23 @@ class SchoolsController < ApplicationController
 
     redirect_to root_path and return unless params[:id]
 
-    url = if params[:type] == 'ecs'
+    id, school_type = params[:id].split('-')[0..1]
+
+    url = if school_type == 'ecs'
       "ecs/#{params[:id]}.json/?flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating," <<
         "ec_profile,esd_el_2014,esd_el_2015"
     else
-      "schools/#{params[:id]}.json/?flatten_fields=true" <<
+      "schools/#{id}.json?flatten_fields=true" <<
+        "&include_option_labels=true" <<
         "&includes=school_profile,act_2011,act_2012," <<
-        "act_2013,act_2014,esd_hs_2013,esd_hs_2014," <<
-        "esd_hs_2015,esd_k8_2013, esd_k8_2013_r1," <<
-        "esd_k8_2014, esd_k8_2015,fiveessentials_2013," <<
-        "fiveessentials_2014, fiveessentials_2015," <<
-        "meap_2009,meap_2010,meap_2011," <<
-        "meap_2012,meap_2013"
+        "act_2013,act_2014"
+        #<< ",esd_hs_2013,esd_hs_2014," <<
+        #"esd_hs_2015,esd_k8_2013,esd_k8_2013_r1," <<
+        #"esd_k8_2014,esd_k8_2015,fiveessentials_2013," <<
+        #"fiveessentials_2014,fiveessentials_2015," <<
+        #"meap_2009,meap_2010,meap_2011," <<
+        #"meap_2012,meap_2013"
     end
 
     school_data = Portal.new.fetch(url)
