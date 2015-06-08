@@ -847,30 +847,14 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .field-value {
   float: right;
-  width: 50%;
   color: @onyx;
   font-family: 'Crimson Text', serif;
   text-align: right;
-  li {
-    text-align: left;
-    span {
-      position: relative;
-      left: -5px;
-    }
-  }
 }
 
-.list > .field-key,
 .list > .field-value {
-  width: 100%;
-  float: none;
   display: block;
-  text-align: center;
-}
-
-.list > .field-value {
-  margin-top: 10px;
-  padding: 10px;
+  li { list-style-type: none; }
 }
 
 .key-value {
@@ -883,6 +867,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   color: @onyx;
   font-family: 'Crimson Text', serif;
 }
+
+.field > span { display: block; }
 
 .overview-text {
   padding: 20px 15px 0 15px;
@@ -1258,8 +1244,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     padding: 0 5%;
   }
   .links { margin: 30px 15%; }
-  #academics .field { text-align: center; }
-  .field span { display: inline-block; }
   .stat-region .content .subjects { margin-right: 10px; }
   .increasing-growth { margin-left: auto; }
   .decreasing-growth { margin-left: auto; }

@@ -16,17 +16,13 @@
             %h1= @school.display_name
       .middle
         .fields.clear_floats
-          .field.border-bottom
-            .field-key Excellent Schools Detroit rating
-            .rating.field-value B
+          =render 'field', key: 'Excellent Schools Detroit Rating', value: 'B'
           .field.border-bottom
             %a(href="/compare/+#{@school.tid}")
               .compare-arrow-icon
               Compare
             to other schools
-          .field.border-bottom
-            .field-key Grades served
-            .field-value= @school.grades_served.join(", ")
+          =render 'field', key: 'Grades Served', value: @school.grades_served.join(", ")
           .field.border-bottom
             .transportation-icon
               .icon-text
@@ -34,259 +30,97 @@
             .schedule-icon
               .icon-text
                 Year-round schedule
-          .field.border-bottom
-            .field_key Principal
-            .field-value
-          .field.border-bottom
-            .field-key Governance
-            .field-value= @school.governance
-          .field.border-bottom
-            .field-key Authorization
-            .field-value= @school.authorizer
-          .field
-            .field-key Operator
-            .field-value= @school.operator
+          =render 'field', key: 'Principal', value: @school.principal
+          =render 'field', key: 'Governance', value: @school.governance
+          =render 'field', key: 'Authorizer', value: @school.authorizer
+          =render 'field', key: 'Operator', value: @school.operator
+          =render 'field', key: 'Application Process', value: @school.application_process
+          =render 'field', key: 'Admissions URL', value: @school.admissions_url
+          =render 'field', key: 'Application Fee', value: @school.application_fee
+          - if @school.application_fee == 'Yes'
+            =render 'field', key: 'Application Fee Amount', value: sprintf("$%.2f", @school.application_fee_amount)
+          =render 'field', key: 'Applications Received', value: @school.applications_received
+          =render 'field', key: 'Dress Code', value: @school.dress_code
+          =render 'field', key: 'Bullying Policy', value: @school.bullying_policy
         .map.clear_floats= render :partial => 'shared/map', :object => @map
         .overview-text
           =raw simple_format(@school.overview_text)
-        .contact
-          .envelope-icon
-          %a{href: "mailto:#{@school.email}"} Email
-          this school
-        .contact
-          .phone-icon
-          %a{href: "tel:#{@school.phone}"} Call
-          this school
-        .contact
-          .website-icon
-          %a.external{:href => @school.school_url, :target => '_blank'} Visit
-          this school's website
-        .contact
-          .facebook-icon
-          %a.external{:href => @school.facebook_url, :target => '_blank'} Check
-          out this school's Facebook
-  .container_12.closed.section-title(data-target="enrollment")
-    %h2 Enrollment
+        - if !@school.email.blank?
+          .contact
+            .envelope-icon
+            %a{href: "mailto:#{@school.email}"} Email
+            this school
+        - if !@school.phone.blank?
+          .contact
+            .phone-icon
+            %a{href: "tel:#{@school.phone}"} Call
+            this school
+        - if !@school.school_url.blank?
+          .contact
+            .website-icon
+            %a.external{:href => @school.school_url, :target => '_blank'} Visit
+            this school's website
+        - if !@school.facebook_url.blank?
+          .contact
+            .facebook-icon
+            %a.external{:href => @school.facebook_url, :target => '_blank'} Check
+            out this school's Facebook
+  .container_12.closed.section-title(data-target="performance")
+    %h2 Performance
   .container_12.info-region
-    #enrollment.hide
-      .middle
-        .fields
-          .field.border-bottom
-            .field-key Application Process
-            .field-value= @school.application_process? ? "Yes" : "No"
-          .field.border-bottom
-            .field-key Admissions URL
-            .field-value= @school.admissions_url
-          .field.border-bottom
-            .field-key Application Fee
-            .field-value= @school.application_fee? ? "Yes" : "No"
-          - if @school.application_fee?
-            .field.border-bottom
-              .field-key Application Fee Amount
-              .field-value= @school.application_fee_amount
-          .field.border-bottom
-            .field-key Applications Received
-            .field-value= @school.applications_received
-  .container_12.closed.section-title(data-target="academics")
-    %h2 Academics
-  .container_12.info-region
-    #academics.hide
+    #performance.hide
       = render "high_school_academics"
-      .field.border-bottom
-        %a(href="/compare/+#{@school.id}")
-          .compare-arrow-icon
-          Compare
-        to other schools
-      .header Other Links
-      .field
-        %span
-          %a(href="#")
-            .plus-icon
-            Download
-          financial transparency PDF
-        %span
-          %a(href="#")
-            .plus-icon
-            Download
-          staff transparency PDF
-  .container_12.closed.section-title(data-target="culture")
-    %h2 Culture
+  .container_12.closed.section-title(data-target="community")
+    %h2 Community and Extracurricular Activities
   .container_12.info-region
-    #culture.hide
+    #community.hide
+      .middle
+        .fields
+          =render 'field', key: 'Parent Involvement', value: @school.parent_involvement
+          =render 'field_list', key: 'Academic Focus', value: @school.academic_focus
+          =render 'field_list', key: 'Instructional Model', value: @school.instructional_model
+          =render 'field_list', key: 'Arts - Visual', value: @school.arts_visual
+          =render 'field_list', key: 'Arts - Media', value: @school.arts_media
+          =render 'field_list', key: 'Arts - Music', value: @school.arts_music
+          =render 'field_list', key: 'Arts - Performing & Written', value: @school.arts_performing_written
+          =render 'field', key: 'Immersion', value: @school.immersion
+          =render 'field_list', key: 'Foreign Lanuage', value: @school.foreign_language
+          =render 'field_list', key: 'AP Classes', value: @school.ap_classes
+          =render 'field', key: 'Dual Enrollment', value: @school.dual_enrollment
+          =render 'field', key: 'Dual Enrollment Institution', value: @school.dual_enrollment_institution
+          =render 'field', key: 'Special Education Level', value: @school.special_ed_level
+          =render 'field_list', key: 'Special Education Programs', value: @school.special_ed_programs
+          =render 'field', key: 'ELL Level', value: @school.ell_level
+          =render 'field_list', key: 'ELL Languages', value: @school.ell_languages
+          =render 'field_list', key: 'College Prep', value: @school.college_prep
+          =render 'field_list', key: 'Extra Learning Resources', value: @school.extra_learning_resources
+          =render 'field_list', key: 'Facilities', value: @school.facilities
+          =render 'field_list', key: 'Skills Training', value: @school.skills_training
+          =render 'field_list', key: 'Before/After Care', value: @school.before_after_care
+          =render 'field_list', key: 'Staff Resources', value: @school.staff_resources
+          =render 'field_list', key: 'Boy Sports', value: @school.boy_sports
+          =render 'field_list', key: 'Girl Sports', value: @school.girl_sports
+          =render 'field_list', key: 'Student Clubs', value: @school.student_clubs
+          =render 'field', key: 'Student Clubs - Dance', value: @school.student_clubs_dance
+          =render 'field', key: 'Student Clubs - Language', value: @school.student_clubs_language
+          =render 'field_list', key: 'Student Clubs - Other', value: @school.student_clubs_other
+  .container_12.closed.section-title(data-target="other")
+    %h2 Other Links
+  .container_12.info-region
+    #other.hide
       .middle
         .fields
           .field.border-bottom
-            .field-key Dress Code
-            .field-value= @school.dress_code
-          .field.border-bottom
-            .field-key Bullying Policy
-            .field-value= @school.bullying_policy? ? "Yes" : "No"
-          .field.border-bottom
-            .field-key Parent Involvement
-            .field-value= @school.parent_involvement? ? "Yes" : "No"
-  .container_12.closed.section-title(data-target="classes")
-    %h2 Classes
-  .container_12.info-region
-    #classes.hide
-      .middle
-        .fields
-          .field.border-bottom.list
-            .field-key Academic Focus
-            .field-value
-              - @school.academic_focus.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Instructional Model
-            .field-value
-              - @school.instructional_model.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Arts - Visual
-            .field-value
-              - @school.arts_visual.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Arts - Media
-            .field-value
-              - @school.arts_media.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Arts - Music
-            .field-value
-              - @school.arts_music.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Arts - Performing & Written
-            .field-value
-              - @school.arts_performing_written.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom
-            .field-key Immersion
-            .field-value= @school.immersion? ? "Yes" : "No"
-          .field.border-bottom.list
-            .field-key Foreign Lanuage
-            .field-value
-              - @school.foreign_language.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key AP Classes
-            .field-value
-              - @school.ap_classes.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom
-            .field-key Dual Enrollment
-            .field-value= @school.dual_enrollment? ? "Yes": "No"
-          .field.border-bottom
-            .field-key Dual Enrollment Institution
-            .field-value= @school.dual_enrollment_institution
-  .container_12.closed.section-title(data-target="support")
-    %h2 Support
-  .container_12.info-region
-    #support.hide
-      .middle
-        .fields
-          .field.border-bottom
-            .field-key Special Education Level
-            .field-value= @school.special_ed_level
-          .field.border-bottom.list
-            .field-key Special Education Programs
-            .field-value
-              - @school.special_ed_programs.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom
-            .field-key ELL Level
-            .field-value= @school.ell_level
-          .field.border-bottom.list
-            .field-key ELL Languages
-            .field-value
-              - @school.ell_languages.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key College Prep
-            .field-value
-              - @school.college_prep.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Extra Learning Resources
-            .field-value
-              - @school.extra_learning_resources.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Facilities
-            .field-value
-              - @school.facilities.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Skills Training
-            .field-value
-              - @school.skills_training.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Before/After Care
-            .field-value
-              - @school.before_after_care.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Staff Resources
-            .field-value
-              - @school.staff_resources.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-  .container_12.closed.section-title(data-target="activities")
-    %h2 Activities
-  .container_12.info-region
-    #activities.hide
-      .middle
-        .fields
-          .field.border-bottom.list
-            .field-key Boys Sports
-            .field-value
-              - @school.boys_sports.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Girls Sports
-            .field-value
-              - @school.girls_sports.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom.list
-            .field-key Student Clubs
-            .field-value
-              - @school.student_clubs.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-          .field.border-bottom
-            .field-key Student Clubs - Dance
-            .field-value= @school.student_clubs_dance
-          .field.border-bottom
-            .field-key Student Clubs - Language
-            .field-value= @school.student_clubs_language
-          .field.border-bottom.list
-            .field-key Student Clubs - Other
-            .field-value
-              - @school.student_clubs_other.each do |i|
-                %li
-                  %span= i.sub('_', ' ')
-  .container_12.closed.section-title(data-target="other-ratings")
-    %h2 Other ratings
-  .container_12.info-region
-    #other-ratings.hide
+            %span
+              %a(href="#")
+                .plus-icon
+                Download
+              financial transparency PDF
+            %span
+              %a(href="#")
+                .plus-icon
+                Download
+              staff transparency PDF
 
   :javascript
     $(document).ready(function(e) {
@@ -300,6 +134,18 @@
 
       moveMap();
       $(window).resize(function() { moveMap(); });
+
+      if (!$('.overview-text').first().text().trim()) {
+        $('#overview .fields')
+          .css('float', 'none')
+          .css('width', '100%')
+          .css('margin-left', '0');
+      }
+
+      if ($(window).width() > 600) {
+        $('.section-title').removeClass('closed');
+        $('.info-region > div').removeClass('hide');
+      }
 
       $('.section-title').click(function() {
         var me = $(this);
