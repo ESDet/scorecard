@@ -37,11 +37,10 @@ class SchoolsController < ApplicationController
         "includes=school_profile&sort_by=name&sort_order=ASC"
 
       if @grade == 'k8'
-        url << "&filter[field_authorized_grades]=923,924,925,926,927,928,929,930,931"
+        url << "&filter[school_type]=10"
       else
-        url << "&filter[field_authorized_grades]=932,933,934,935"
+        url << "&filter[school_type]=3"
       end
-      url << "&filter_op[field_authorized_grades]=IN"
 
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
