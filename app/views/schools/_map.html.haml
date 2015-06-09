@@ -10,8 +10,15 @@
         maxZoom: 16
       }).addTo(_map);
 
-      customMarker = L.Marker.extend({
-        options: { id: null }
+      var myIcon = L.icon({
+        iconUrl: '/images/marker-icon.png'
+      });
+
+      var customMarker = L.Marker.extend({
+        options: {
+          id: null,
+          icon: myIcon
+        }
       });
 
       var _layers = [];
