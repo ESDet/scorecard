@@ -30,12 +30,7 @@
           .schedule-icon
             .icon-text
               Year-round schedule
-        .field.border-bottom
-          .field-key Principal
-          .field-value
-        .field.border-bottom
-          .field-key Program Specialty
-          .field-value= @school.specialty
+        = render 'field', key: 'Program Specialty', value: @school.specialty
       .school-map-wrapper= render 'map'
       .overview-text
         =raw simple_format(@school.overview_text)
@@ -62,162 +57,105 @@
     .middle
       .fields.clear_floats
         =render 'field', key: 'Schedule Type', value: @school.schedule
-        .field.border-bottom
-          .field-key Accepts Ages from
-          .field-value= @school.age_from
-        .field.border-bottom
-          .field-key Accepts Ages to
-          .field-value= @school.age_to
-        .field.border-bottom
-          .field-key Total Licensed Capacity
-          .field-value= @school.capacity
-        .field.border-bottom
-          .field-key Financial Assistance
-          .field-value= @school.subsidy
-        .field.border-bottom
-          .field-key Special Needs Experience
-          .field-value= @school.special
-        .field.border-bottom
-          .field-key Care Setting
-          .field-value= @school.setting
-        .field.border-bottom
-          .field-key Environment
-          .field-value= @school.environment
-        .field.border-bottom
-          .field-key Meals Provided
-          .field-value= @school.meals
-        .field.border-bottom
-          .field-key Payment Schedule
-          .field-value= @school.pay_schedule
-        .field.border-bottom
-          .field-key Application / Registration Fee
-          .field-value= @school.fee
-        .field.border-bottom
-          .field-key Additional program information
-          .field-value= @school.additional_info
-        .field.border-bottom
-          .field-key Age Groups
-          .field-value= @school.age_groups
-        .field.border-bottom
-          .field-key Enrichment Opportunities
-          .field-value= @school.enrichment
-        .field.border-bottom
-          .field-key Teacher Evaluations
-          .field-value= @school.evaluation
-        .field.border-bottom
-          .field-key Feild trips and other extended programming
-          .field-value= @school.extended
-        .field.border-bottom
-          .field-key Facilities Available
-          .field-value= @school.facilities
-        .field.border-bottom
-          .field-key Frequency of feedback on child's progress
-          .field-value= @school.feedback_freq
-        .field.border-bottom
-          .field-key Type of feedback provided on child's progress
-          .field-value= @school.feedback_type
-        .field.border-bottom
-          .field-key Languages spoken by program staff
-          .field-value= @school.language
-        .field.border-bottom
-          .field-key Health/Dental/Vision Care
-          .field-value= @school.medical
-        .field.border-bottom
-          .field-key Access to mental health services
-          .field-value= @school.mental
-        .field.border-bottom
-          .field-key Partner name - 1
-          .field-value= @school.partner_one
-        .field.border-bottom
-          .field-key Details of partnership - 1
-          .field-value= @school.partner_one_detail
-        .field.border-bottom
-          .field-key Partner name - 2
-          .field-value= @school.partner_two
-        .field.border-bottom
-          .field-key Details of partnership - 2
-          .field-value= @school.partner_two_detail
-        .field.border-bottom
-          .field-key Partner name - 3
-          .field-value= @school.partner_three
-        .field.border-bottom
-          .field-key Details of partnership - 3
-          .field-value= @school.partner_three_detail
-        .field.border-bottom
-          .field-key Playground and/or physical activity space on site
-          .field-value= @school.physical_activity
-        .field.border-bottom
-          .field-key Family and community support
-          .field-value= @school.support
-        .field.border-bottom
-          .field-key Actual Enrollment
-          .field-value= @school.actual_enrollment
-        .field.border-bottom
-          .field-key Licensed Enrollment
-          .field-value= @school.licensed_enrollment
-        .field.border-bottom
-          .field-key Number of children with special needs
-          .field-value= @school.special_enrollment
-        .field.border-bottom
-          .field-key Number of children receiving subsidy
-          .field-value= @school.subsidy_enrollment
+        =render 'field', key: 'Accepts Ages From', value: @school.ages_from
+        =render 'field', key: 'Accepts Ages To', value: @school.ages_to
+        =render 'field', key: 'Total Licensed Capacity', value: @school.capacity
+        =render 'field', key: 'Financial Assistance', value: @school.subsidy
+        =render 'field', key: 'Special Needs Experience', value: @school.special
+        =render 'field', key: 'Care Setting', value: @school.setting
+        =render 'field', key: 'Environment', value: @school.environment
+        =render 'field', key: 'Meals Provided', value: @school.meals
+        =render 'field', key: 'Payment Schedule', value: @school.pay_schedule
+        =render 'field', key: 'Application / Registration Fee', value: sprintf("$%.2f", @school.fee)
+        =render 'field', key: 'Additional Program Information', value: @school.additional_info
+        =render 'field', key: 'Age Groups', value: @school.age_groups
+        =render 'field', key: 'Enrichment Opportunities', value: @school.enrichment
+        =render 'field', key: 'Teacher Evaluations', value: @school.evaluation
+        =render 'field', key: 'Feild trips and other extended programming', value: @school.extended
+        =render 'field', key: 'Facilities Available', value: @school.facilities
+        =render 'field', key: "Frequency of feedback on child's progress", value: @school.feedback_freq
+        =render 'field', key: "Type of feedback provided on child's progress", value: @school.feedback_type
+        =render 'field', key: 'Languages spoken by program staff', value: @school.language
+        =render 'field', key: 'Health/Dental/Vision Care', value: @school.medical
+        =render 'field', key: 'Access to mental health services', value: @school.mental
+        =render 'field', key: 'Partner name - 1', value: @school.partner_one
+        =render 'field', key: 'Details of partnership - 1', value: @school.partner_one_detail
+        =render 'field', key: 'Partner name - 2', value: @school.partner_two
+        =render 'field', key: 'Details of partnership - 2', value: @school.partner_two_detail
+        =render 'field', key: 'Partner name - 3', value: @school.partner_three
+        =render 'field', key: 'Details of partnership - 3', value: @school.partner_three_detail
+        =render 'field', key: 'Playground and/or physical activity space on site', value: @school.physical_activity
+        =render 'field', key: 'Family and community support', value: @school.support
+        =render 'field', key: 'Actual Enrollment', value: @school.actual_enrollment
+        =render 'field', key: 'Licensed Enrollment', value: @school.licensed_enrollment
+        =render 'field', key: 'Number of children with special needs', value: @school.special_enrollment
+        =render 'field', key: 'Number of children receiving subsidy', value: @school.subsidy_enrollment
 .container_12.clear_floats.section-title(data-target="staff")
   %h2 Staff
 .container_12.info-region
   #staff
     .middle
       .fields.clear_floats
-        .field.border-bottom
-          .key-value
-            .field-key Program Environment
-            .field-value= @el.andand.physicalenviron_staff_average.to_f
-          %p Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.
-        .field.border-bottom
-          .key-value
-            .field-key Collaboration
-            .field-value= @el.andand.familycommunity_staff_average.to_f
-          %p Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.
-        .field.border-bottom
-          .key-value
-            .field-key Cultural Awareness
-            .field-value= @el.andand.culturallinguistic_staff_average.to_f
-          %p Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.
-        .field.border-bottom
-          .key-value
-            .field-key General Culture and Climate
-            .field-value= @el.andand.cultureclimate_staff_average.to_f
-          %p General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.
+        - if @el.andand.physicalenviron_staff_average
+          .field.border-bottom
+            .key-value
+              .field-key Program Environment
+              .field-value= @el.andand.physicalenviron_staff_average.to_f
+            %p Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.
+        - if @el.andand.familycommunity_staff_average
+          .field.border-bottom
+            .key-value
+              .field-key Collaboration
+              .field-value= @el.andand.familycommunity_staff_average.to_f
+            %p Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.
+        - if @el.andand.culturallinguistic_staff_average
+          .field.border-bottom
+            .key-value
+              .field-key Cultural Awareness
+              .field-value= @el.andand.culturallinguistic_staff_average.to_f
+            %p Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.
+        - if @el.andand.cultureclimate_staff_average
+          .field.border-bottom
+            .key-value
+              .field-key General Culture and Climate
+              .field-value= @el.andand.cultureclimate_staff_average.to_f
+            %p General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.
 .container_12.clear_floats.section-title(data-target="community")
   %h2 Community
 .container_12.info-region
   #community
     .middle
       .fields.clear_floats
-        .field.border-bottom
-          .key-value
-            .field-key Cultural Awareness
-            .field-value= @el.andand.clc_fairaverage.to_f
-          %p The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.
-        .field.border-bottom
-          .key-value
-            .field-key Professionalism
-            .field-value= @el.andand.professionalism_fairaverage.to_f
-          %p The rating is based on how teachers and staff behave and treat each other while in the room with children.
-        .field.border-bottom
-          .key-value
-            .field-key Program Environment
-            .field-value= @el.andand.safety_fairaverage.to_f
-          %p This rating is based on the conditions of the classroom.
-        .field.border-bottom
-          .key-value
-            .field-key Relationships & Interactions
-            .field-value= @el.andand.interactions_fairaverage.to_f
-          %p The rating is based on how well teachers manage the classroom.
-        .field.border-bottom
-          .key-value
-            .field-key Collaboration
-            .field-value= @el.andand.familycommunity_fairaverage.to_f
-          %p The rating is based on how the family, community and school work together.
+        - if @el.andand.clc_fairaverage
+          .field.border-bottom
+            .key-value
+              .field-key Cultural Awareness
+              .field-value= @el.andand.clc_fairaverage.to_f
+            %p The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.
+        - if @el.andand.professionalism_fairaverage
+          .field.border-bottom
+            .key-value
+              .field-key Professionalism
+              .field-value= @el.andand.professionalism_fairaverage.to_f
+            %p The rating is based on how teachers and staff behave and treat each other while in the room with children.
+        - if @el.andand.safety_fairaverage
+          .field.border-bottom
+            .key-value
+              .field-key Program Environment
+              .field-value= @el.andand.safety_fairaverage.to_f
+            %p This rating is based on the conditions of the classroom.
+        - if @el.andand.interactions_fairaverage
+          .field.border-bottom
+            .key-value
+              .field-key Relationships & Interactions
+              .field-value= @el.andand.interactions_fairaverage.to_f
+            %p The rating is based on how well teachers manage the classroom.
+        - if @el.andand.familycommunity_fairaverage
+          .field.border-bottom
+            .key-value
+              .field-key Collaboration
+              .field-value= @el.andand.familycommunity_fairaverage.to_f
+            %p The rating is based on how the family, community and school work together.
 .container_12.closed.section-title(data-target="other-ratings")
   %h2 Other ratings
 .container_12.info-region
