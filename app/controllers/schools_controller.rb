@@ -1,5 +1,3 @@
-require 'mogrify'
-
 class SchoolsController < ApplicationController
   helper_method :format_phone
 
@@ -11,7 +9,8 @@ class SchoolsController < ApplicationController
     special_filters = []
     case @grade
     when 'ec'
-      url = "ecs.json?flatten_fields=true&includes=ec_profile"
+      url = "ecs.json?flatten_fields=true&" <<
+        "includes=ec_profile&sort_by=name&sort_order=ASC"
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
       elsif !@loc.blank?
@@ -34,7 +33,8 @@ class SchoolsController < ApplicationController
         end
       end
     when 'k8', 'high'
-      url = "schools.json?flatten_fields=true&includes=school_profile"
+      url = "schools.json?flatten_fields=true&" <<
+        "includes=school_profile&sort_by=name&sort_order=ASC"
 
       if @grade == 'k8'
         url << "&filter[field_authorized_grades]=923,924,925,926,927,928,929,930,931"
@@ -67,7 +67,7 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      url = "ecs.json?limit=50&flatten_fields=true&includes=ec_profile"
+      url = "ecs.json?limit=50&flatten_fields=true&includes=ec_profile&sort_by=name&sort_order=ASC"
     end
 
     if !special_filters.empty?
