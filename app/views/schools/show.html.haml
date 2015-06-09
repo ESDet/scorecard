@@ -42,7 +42,8 @@
           =render 'field', key: 'Applications Received', value: @school.applications_received
           =render 'field', key: 'Dress Code', value: @school.dress_code
           =render 'field', key: 'Bullying Policy', value: @school.bullying_policy
-        .map.clear_floats= render :partial => 'shared/map', :object => @map
+
+        .school-map-wrapper= render 'map'
         .overview-text
           =raw simple_format(@school.overview_text)
         - if !@school.email.blank?
@@ -124,16 +125,23 @@
 
   :javascript
     $(document).ready(function(e) {
-      var moveMap = function() {
+      var moveMapElement = function() {
         if ($(window).width() > 800) {
-          $('#overview .map').first().detach().appendTo('#overview');
+          $('.school-map-wrapper').first().detach().
+            appendTo('#overview');
         } else {
-          $('#overview .map').first().detach().insertAfter('#overview .fields').first();
+          $('.school-map-wrapper').first().detach().
+            insertAfter('#overview .fields').first();
         }
       };
+      moveMapElement();
+      $(window).resize(function() { moveMapElement(); });
 
-      moveMap();
-      $(window).resize(function() { moveMap(); });
+      Map({
+        center: #{@school.center.to_json},
+        markers: #{[@school.marker].to_json},
+        zoom: 15
+      });
 
       if (!$('.overview-text').first().text().trim()) {
         $('#overview .fields')

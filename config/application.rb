@@ -1,9 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'active_record/connection_adapters/mysql2spatial_adapter'
-require 'rgeo-activerecord'
-require 'rgeo/geo_json'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 

@@ -1,13 +1,14 @@
-/= render 'shared/map', :map => @map
+.schools-wrapper
+  .schools-map-wrapper= render 'map'
 
-.results
-  %ul.school_list
-    - if @schools.empty?
-      %h3 There are no schools that fit your selection(s) right now.
-    - @schools.each do |s|
-      = render 'item', { :school => s }
+  .results
+    %ul.school_list
+      - if @schools.empty?
+        %h3 There are no schools that fit your selection(s) right now.
+      - @schools.select { |s| !s.field_geo.nil? }.each do |s|
+        = render 'item', { :school => s }
 
-  %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
+    %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
 
 :erb
   <script id='list-template' type='text/html'>
@@ -28,6 +29,12 @@
   var searching = false;
 
   $(document).ready(function(e) {
+    var map = Map({
+      center: [42.36, -83.09],
+      markers: #{@schools.map(&:marker).to_json},
+      zoom: 11
+    });
+
     $('body').on('change', 'input.compare-check', function(e) {
       var count = $('input.compare-check:checked').length;
       if(count > 0) {
@@ -39,12 +46,10 @@
     });
 
     $('.school_list .school').mouseover(function(e) {
-      var bcode = $(this).data('bcode');
-      for(var i in map.overlays.schools._layers) {
-        var layer = map.overlays.schools._layers[i];
-        var feature = layer.feature;
-        if(bcode == feature.properties.bcode) {
-          layer.openPopup();
+      var tid = $(this).data('tid');
+      for(var i in map.layers) {
+        if(tid == map.layers[i].options.id) {
+          map.layers[i].openPopup();
         }
       }
       return true;

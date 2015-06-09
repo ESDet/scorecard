@@ -36,7 +36,7 @@
         .field.border-bottom
           .field-key Program Specialty
           .field-value= @school.specialty
-      .map.clear_floats= render :partial => 'shared/map', :object => @map
+      .school-map-wrapper= render 'map'
       .overview-text
         =raw simple_format(@school.overview_text)
       .contact
@@ -61,9 +61,7 @@
   #profile
     .middle
       .fields.clear_floats
-        .field.border-bottom
-          .field-key Schedule Type
-          .field-value= @school.schedule
+        =render 'field', key: 'Schedule Type', value: @school.schedule
         .field.border-bottom
           .field-key Accepts Ages from
           .field-value= @school.age_from
@@ -229,14 +227,20 @@
   $(document).ready(function(e) {
     var moveMap = function() {
       if ($(window).width() > 800) {
-        $('#overview .map').first().detach().appendTo('#overview');
+        $('.school-map-wrapper').first().detach().appendTo('#overview');
       } else {
-        $('#overview .map').first().detach().insertAfter('#overview .fields').first();
+        $('.school-map-wrapper').first().detach().insertAfter('#overview .fields').first();
       }
     };
 
     moveMap();
     $(window).resize(function() { moveMap(); });
+
+    Map({
+      center: #{@school.center.to_json},
+      markers: #{[@school.marker].to_json},
+      zoom: 15
+    });
 
     $('.section-title').click(function() {
       var me = $(this);

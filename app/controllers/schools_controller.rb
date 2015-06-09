@@ -11,7 +11,7 @@ class SchoolsController < ApplicationController
     special_filters = []
     case @grade
     when 'ec'
-      url = "ecs.json?flatten_fields=true"
+      url = "ecs.json?flatten_fields=true&includes=ec_profile"
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
       elsif !@loc.blank?
@@ -34,7 +34,7 @@ class SchoolsController < ApplicationController
         end
       end
     when 'k8', 'high'
-      url = "schools.json?flatten_fields=true"
+      url = "schools.json?flatten_fields=true&includes=school_profile"
 
       if @grade == 'k8'
         url << "&filter[field_authorized_grades]=923,924,925,926,927,928,929,930,931"
@@ -74,7 +74,21 @@ class SchoolsController < ApplicationController
       url << "filter_special=#{special_filters.join(",")}"
     end
 
-    @schools = Portal.new.fetch(url)['data'].map { |s| SchoolData.new(s) }
+    response = Portal.new.fetch(url)
+    schools_with_profiles = response['data'].map do |s|
+      includes = response['included'].select do |i|
+        if s['links']
+          if s['links']['school_profile']
+            i['id'] == s['links']['school_profile']['linkage']['id']
+          elsif s['links']['ec_profile']
+            i['id'] == s['links']['ec_profile']['linkage']['id']
+          end
+        end
+      end
+      s.merge(included: includes)
+    end
+
+    @schools = schools_with_profiles.map { |s| SchoolData.new(s) }
   end
 
   def show
@@ -85,7 +99,7 @@ class SchoolsController < ApplicationController
     id, school_type = params[:id].split('-')[0..1]
 
     url = if school_type == 'ecs'
-      "ecs/#{params[:id]}.json/?flatten_fields=true" <<
+      "ecs/#{id}.json/?flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating," <<
         "ec_profile,esd_el_2014,esd_el_2015"
     else
@@ -112,38 +126,6 @@ class SchoolsController < ApplicationController
     else
       @school.extend(School)
     end
-
-    @school_o = Bedrock::Overlay.from_config('schools',
-      :ty       => :geojson,
-      :elements => [@school])
-    @det_o = Bedrock::Overlay.from_config('districts',
-      :ty => :geojson,
-      :elements => [District.find(580)]
-    )
-    extent = Bedrock::city_extents(:detroit)
-    extent = Bedrock.merge_extents(extent, [
-      {
-        :lon => @school.field_geo.lon.to_f,
-        :lat => @school.field_geo.lat.to_f
-      },
-      { :lon => @school.field_geo.lon.to_f,
-        :lat => @school.field_geo.lat.to_f
-      }
-    ])
-
-    @map = Bedrock::Map.new({
-      :base_layers    => ['street'],
-      :layers         => [ @det_o, @school_o ],
-      :layer_control  => false,
-      :min_zoom       => 5,
-      :max_zoom       => 15,
-      :zoom           => 15,
-      #:extent         => extent,
-      :center         => {
-        :lon => @school.field_geo.lon.to_f,
-        :lat => @school.field_geo.lat.to_f
-      }
-    })
 
     if @school.earlychild?
       if @school.esd_el_2015

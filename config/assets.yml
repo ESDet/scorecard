@@ -5,34 +5,17 @@ compress_assets: off
 javascripts:
   common:
     - public/javascripts/jquery-1.7.1.min.js
-    - public/javascripts/jquery.ba-bbq.min.js
-    - public/javascripts/jquery.placeholder.min.js
     - public/javascripts/underscore-min.js
-    - public/javascripts/jquery.jqplot.js
-    - public/javascripts/plugins/jqplot.pieRenderer.min.js
-    - public/javascripts/plugins/jqplot.barRenderer.min.js
-    - public/javascripts/plugins/jqplot.categoryAxisRenderer.min.js
-    - public/javascripts/plugins/jqplot.pointLabels.min.js
-    - public/javascripts/plugins/jqplot.highlighter.min.js
-    - public/javascripts/bootstrap.min.js
     - public/javascripts/mustache.js
+    - public/javascripts/d3.min.js
+    - public/javascripts/bootstrap.min.js
     - public/javascripts/application.js
   mapping:
-    - public/paraffin/lib/leaflet/leaflet-src.js
-    - public/paraffin/lib/leaflet/plugins/leaflet-hash.js
-    - public/paraffin/lib/leaflet/plugins/proj4js-compressed.js
-    - public/paraffin/lib/leaflet/plugins/proj4leaflet.js
-    - public/paraffin/lib/leaflet/plugins/tilejson.js
-    - public/paraffin/lib/leaflet/plugins/leaflet.utfgrid.js
-    - public/paraffin/lib/jquery.xdomainrequest.js
-    - public/paraffin/lib/spin.min.js
-    - public/paraffin/paraffin.js
-    
+    - public/javascripts/leaflet.js
+
 stylesheets:
   common:
     - public/stylesheets/960.css
     - public/stylesheets/theme.css
-    - public/stylesheets/jquery.jqplot.min.css
-    - public/paraffin/lib/leaflet/leaflet.css
-    - public/paraffin/lib/leaflet/leaflet.draw.css
+    - public/stylesheets/leaflet.css
 

@@ -1,14 +1,12 @@
-%li.school{'data-bcode' => school.bcode}
+%li.school{'data-tid' => school.tid}
   - if school.earlychild?
     = image_tag EarlyChildhood.image(:mini, school.esd_el_2015.andand.overall_rating), :class => "mini-el-icon"
-    - url = school_path("#{school.tid}-ecs-#{Mogrify.transliterate(school.name)}")
   - else
     = image_tag School.image(school.overall_grade, :small), :class => 'mini-el-icon'
-    - url = school_path("#{school.tid}-#{school.school_type}-#{Mogrify.transliterate(school.name)}")
 
-  %h3= link_to school.display_name, url
+  %h3= link_to school.display_name, school_path("#{school.link}")
   - unless school.grades_served.blank?
-    %div Grades #{school.grades_served}
+    %div Grades #{school.grades_served.join(", ")}
   %label
     = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
     Compare

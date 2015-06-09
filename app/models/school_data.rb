@@ -49,4 +49,57 @@ class SchoolData < OpenStruct
   def can_cache?
     tid && timestamp
   end
+
+  def center
+    if field_geo
+      [field_geo.lat.to_f, field_geo.lon.to_f]
+    end
+  end
+
+  def marker
+    if grades_served
+      grades = "Grades #{grades_served.join(", ")}"
+    end
+    {
+      id: tid,
+      center: center,
+      html: "<a href='/schools/#{link}'>#{display_name}</a><br/>" +
+       "#{street}<br/>#{grades if grades}"
+    }
+  end
+
+  def street
+    if field_address
+      field_address.thoroughfare
+    end
+  end
+
+  def link
+    if earlychild?
+      "#{tid}-ecs-#{transliterate(name)}"
+    else
+      "#{tid}-#{school_type}-#{transliterate(name)}"
+    end
+  end
+
+  def grades_served
+    unless earlychild?
+      if school_profiles
+        school_profiles.field_grades_served
+      end
+    end
+  end
+
+  private
+
+  def transliterate(str)
+    return nil if str.nil?
+    s = str.dup
+    s.downcase!
+    s.gsub!(/'/, '')
+    s.gsub!(/[^A-Za-z0-9]+/, ' ')
+    s.strip!
+    s.gsub!(/\ +/, '-')
+    return s
+  end
 end
