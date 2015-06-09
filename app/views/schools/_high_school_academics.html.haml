@@ -1,82 +1,94 @@
-.stat-region
-  .header What percent of the students are <u>ready</u> for college?
-  .content
-    .container_12
+- if @school.college_ready?
+  .stat-region
+    .header What percent of the students are <u>ready</u> for college?
+    .content
+      .container_12
+        .visual
+          - if @school.math_ready_average
+            %div(id="math-ready")
+          - if @school.reading_ready_average
+            %div.hide(id="reading-ready")
+          - if @school.science_ready_average
+            %div.hide(id="science-ready")
+          - if @school.english_ready_average
+            %div.hide(id="english-ready")
+        .subjects
+          - if @school.math_ready_average
+            .subject.active(data-target="math-ready")
+              .title Math
+          - if @school.reading_ready_average
+            .subject(data-target="reading-ready")
+              .title Reading
+          - if @school.science_ready_average
+            .subject(data-target="science-ready")
+              .title Science
+          - if @school.english_ready_average
+            .subject(data-target="english-ready")
+              .title English
+      .links
+        .compare(style="color: #bde35f") School Average
+        .compare(style="color: #ec5932") Detroit Average
+        .compare(style="color: #14b2ae") State Average
+        .message
+          .act-icon
+          Results based on ACT scores
+- if @school.subject_growth?
+  .stat-region
+    .header How do the students test scores <u>grow</u> over time compared to state averages?
+    .content
       .visual
-        - if @school.math_ready_average
-          %div(id="math-ready")
-        - if @school.reading_ready_average
-          %div.hide(id="reading-ready")
-        - if @school.science_ready_average
-          %div.hide(id="science-ready")
-        - if @school.english_ready_average
-          %div.hide(id="english-ready")
+        - if @school.math_growth_average
+          %div(id="math-growth")
+            = render 'subject_growth', growth: @school.math_growth_average
+        - if @school.reading_growth_average
+          %div.hide(id="reading-growth")
+            = render 'subject_growth', growth: @school.reading_growth_average
+        - if @school.science_growth_average
+          %div.hide(id="science-growth")
+            = render 'subject_growth', growth: @school.science_growth_average
+        - if @school.english_growth_average
+          %div.hide(id="english-growth")
+            = render 'subject_growth', growth: @school.english_growth_average
       .subjects
-        - if @school.math_ready_average
-          .subject.active(data-target="math-ready")
+        - if @school.math_growth_average
+          .subject.active(data-target="math-growth")
             .title Math
-        - if @school.reading_ready_average
-          .subject(data-target="reading-ready")
+        - if @school.reading_growth_average
+          .subject(data-target="reading-growth")
             .title Reading
-        - if @school.science_ready_average
-          .subject(data-target="science-ready")
+        - if @school.science_growth_average
+          .subject(data-target="science-growth")
             .title Science
-        - if @school.english_ready_average
-          .subject(data-target="english-ready")
+        - if @school.english_growth_average
+          .subject(data-target="english-growth")
             .title English
-    .links
-      .compare(style="color: #bde35f") School Average
-      .compare(style="color: #ec5932") Detroit Average
-      .compare(style="color: #14b2ae") State Average
-      .message
-        .act-icon
-        Results based on ACT scores
-.stat-region
-  .header How do the students test scores <u>grow</u> over time compared to state averages?
-  .content
-    .visual
-      %div(id="math-growth")
-        = render 'subject_growth', growth: @school.math_growth_average
-      %div.hide(id="reading-growth")
-        = render 'subject_growth', growth: @school.reading_growth_average
-      %div.hide(id="science-growth")
-        = render 'subject_growth', growth: @school.science_growth_average
-      %div.hide(id="english-growth")
-        = render 'subject_growth', growth: @school.english_growth_average
-    .subjects
-      .subject.active(data-target="math-growth")
-        .title Math
-      .subject(data-target="reading-growth")
-        .title Reading
-      .subject(data-target="science-growth")
-        .title Science
-      .subject(data-target="english-growth")
-        .title English
-    .links
-      .message
-        .act-icon
-        Results based on ACT scores
-.stat-region.three-columns
-  .header What percent of students <u>graduate</u> and go to <u>college</u>?
-  .content
-    .visual
-      %div.bar-graph(id="graduate")
-      %div.bar-graph.hide(id="enroll")
-      %div.bar-graph.hide(id="college")
-    .subjects
-      .subject.active(data-target="graduate")
-        .title Graduate on time
-      .subject(data-target="enroll")
-        .title Enroll in college
-      .subject(data-target="college")
-        .title Finish 1st year of college
-    .links
-      .compare
-        .compare-arrow-icon
-        <span>Compare</span> to <span>Detroit</span> averages
-      .compare
-        .compare-arrow-icon
-        <span>Compare</span> to <span>State</span> averages
+      .links
+        .message
+          .act-icon
+          Results based on ACT scores
+- if @school.go_to_college?
+  .stat-region.three-columns
+    .header What percent of students <u>graduate</u> and go to <u>college</u>?
+    .content
+      .visual
+
+        %div.bar-graph(id="graduate")
+        %div.bar-graph.hide(id="enroll")
+        %div.bar-graph.hide(id="college")
+      .subjects
+        .subject.active(data-target="graduate")
+          .title Graduate on time
+        .subject(data-target="enroll")
+          .title Enroll in college
+        .subject(data-target="college")
+          .title Finish 1st year of college
+      .links
+        .compare
+          .compare-arrow-icon
+          <span>Compare</span> to <span>Detroit</span> averages
+        .compare
+          .compare-arrow-icon
+          <span>Compare</span> to <span>State</span> averages
 
 
 :javascript
@@ -130,27 +142,27 @@
     };
 
     drawDonut("#math-ready", [
-      donutOpts("#{@school.math_ready_average}%", "#bde35f", 0, #{@school.math_ready_average}, 100, 75),
-      donutOpts("#{@school.detroit_math_ready_average}%", "#ec5932", 0, #{@school.detroit_math_ready_average}, 75, 50),
-      donutOpts("#{@school.state_math_ready_average}%", "#14b2ae", 0, #{@school.state_math_ready_average}, 50, 25)
+      donutOpts("#{@school.math_ready_average || 0}%", "#bde35f", 0, #{@school.math_ready_average || 0}, 100, 75),
+      donutOpts("#{@school.detroit_math_ready_average || 0}%", "#ec5932", 0, #{@school.detroit_math_ready_average || 0}, 75, 50),
+      donutOpts("#{@school.state_math_ready_average || 0}%", "#14b2ae", 0, #{@school.state_math_ready_average || 0}, 50, 25)
     ]);
 
     drawDonut("#reading-ready", [
-      donutOpts("#{@school.reading_ready_average}%", "#bde35f", 0, #{@school.reading_ready_average}, 100, 75),
-      donutOpts("#{@school.detroit_reading_ready_average}%", "#ec5932", 0, #{@school.detroit_reading_ready_average}, 75, 50),
-      donutOpts("#{@school.state_reading_ready_average}%", "#14b2ae", 0, #{@school.state_reading_ready_average}, 50, 25)
+      donutOpts("#{@school.reading_ready_average || 0}%", "#bde35f", 0, #{@school.reading_ready_average || 0}, 100, 75),
+      donutOpts("#{@school.detroit_reading_ready_average || 0}%", "#ec5932", 0, #{@school.detroit_reading_ready_average || 0}, 75, 50),
+      donutOpts("#{@school.state_reading_ready_average || 0}%", "#14b2ae", 0, #{@school.state_reading_ready_average || 0}, 50, 25)
     ]);
 
     drawDonut("#science-ready", [
-      donutOpts("#{@school.science_ready_average}%", "#bde35f", 0, #{@school.science_ready_average}, 100, 75),
-      donutOpts("#{@school.detroit_science_ready_average}%", "#ec5932", 0, #{@school.detroit_science_ready_average}, 75, 50),
-      donutOpts("#{@school.state_science_ready_average}%", "#14b2ae", 0, #{@school.state_science_ready_average}, 50, 25)
+      donutOpts("#{@school.science_ready_average || 0}%", "#bde35f", 0, #{@school.science_ready_average || 0}, 100, 75),
+      donutOpts("#{@school.detroit_science_ready_average || 0}%", "#ec5932", 0, #{@school.detroit_science_ready_average || 0}, 75, 50),
+      donutOpts("#{@school.state_science_ready_average || 0}%", "#14b2ae", 0, #{@school.state_science_ready_average || 0}, 50, 25)
     ]);
 
     drawDonut("#english-ready", [
-      donutOpts("#{@school.english_ready_average}%", "#bde35f", 0, #{@school.english_ready_average}, 100, 75),
-      donutOpts("#{@school.detroit_english_ready_average}%", "#ec5932", 0, #{@school.detroit_english_ready_average}, 75, 50),
-      donutOpts("#{@school.state_english_ready_average}%", "#14b2ae", 0, #{@school.state_english_ready_average}, 50, 25)
+      donutOpts("#{@school.english_ready_average || 0}%", "#bde35f", 0, #{@school.english_ready_average || 0}, 100, 75),
+      donutOpts("#{@school.detroit_english_ready_average || 0}%", "#ec5932", 0, #{@school.detroit_english_ready_average || 0}, 75, 50),
+      donutOpts("#{@school.state_english_ready_average || 0}%", "#14b2ae", 0, #{@school.state_english_ready_average || 0}, 50, 25)
     ]);
 
     var drawBar = function(element, data) {
@@ -213,16 +225,16 @@
 
     drawBar('#graduate', [
       barOpts("", '#fff', 100),
-      barOpts("#{@school.high_school_graduate_average}%", '#bde35f', #{@school.high_school_graduate_average})
+      barOpts("#{@school.high_school_graduate_average || 0}%", '#bde35f', #{@school.high_school_graduate_average || 0})
     ]);
 
     drawBar('#enroll', [
       barOpts("", '#fff', 100),
-      barOpts("#{@school.enroll_in_college_average}%", '#bde35f', #{@school.enroll_in_college_average})
+      barOpts("#{@school.enroll_in_college_average || 0}%", '#bde35f', #{@school.enroll_in_college_average || 0})
     ]);
 
     drawBar('#college', [
       barOpts("", '#fff', 100),
-      barOpts("#{@school.finish_some_college_average}%", '#bde35f', #{@school.finish_some_college_average})
+      barOpts("#{@school.finish_some_college_average || 0}%", '#bde35f', #{@school.finish_some_college_average || 0})
     ]);
   });

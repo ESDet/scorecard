@@ -211,7 +211,7 @@ module School
     end
 
     define_method("#{s}_growth_average") do
-      rand(-2..2)
+      nil
     end
 
     define_method("state_#{s}_ready_average") do
@@ -228,14 +228,30 @@ module School
   end
 
   def high_school_graduate_average
-    @graduate_high_school ||= rand(1..50)
+    @graduate_high_school ||= nil
   end
 
   def enroll_in_college_average
-    @college_enrool ||= rand(1..50)
+    @college_enrool ||= nil
   end
 
   def finish_some_college_average
-    @college_finish ||= rand(1..50)
+    @college_finish ||= nil
+  end
+
+  def college_ready?
+    math_ready_average || reading_ready_average ||
+    science_ready_average || english_ready_average
+  end
+
+  def subject_growth?
+    math_growth_average || reading_growth_average ||
+    science_growth_average || english_growth_average
+  end
+
+  def go_to_college?
+    high_school_graduate_average ||
+    enroll_in_college_average ||
+    finish_some_college_average
   end
 end
