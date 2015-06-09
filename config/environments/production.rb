@@ -1,5 +1,6 @@
 ESD::Application.configure do
 
+  config.eager_load = true
   config.cache_classes = true
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -33,5 +34,4 @@ ESD::Application.configure do
       :sender_address => %{"Exception Notifier" <noreply@alfajango.com>},
       :exception_recipients => %w{excellentschools@alfajango.com}
     }
-
 end

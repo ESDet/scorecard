@@ -1,5 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
+require 'sprockets/railtie'
 require 'rails/all'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
@@ -18,7 +19,6 @@ module ESD
     config.time_zone = 'Eastern Time (US & Canada)'
 
     # JavaScript files you want as :defaults (application.js is always included).
-    config.action_view.javascript_expansions[:defaults] = %w()
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
 
@@ -26,5 +26,6 @@ module ESD
       g.template_engine :haml
     end
 
+    config.secret_key_base = Rails.application.secrets.secret_key_base
   end
 end

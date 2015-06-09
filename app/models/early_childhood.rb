@@ -1,7 +1,7 @@
 module EarlyChildhood
   def self.image(category, rating, year = nil)
-    return 'el_icons/Overview.png' if category == :overview
-    return 'el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
+    return '/assets/images/el_icons/Overview.png' if category == :overview
+    return '/assets/images/el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
     #return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
@@ -25,9 +25,9 @@ module EarlyChildhood
     metal = valid_metals[rating].andand.gsub(' ', '') || 'None'
     #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')
     if year && category != :mini
-      "el_icons/EL_#{cat}_#{metal}_#{year}.png"
+      "/assets/images/el_icons/EL_#{cat}_#{metal}_#{year}.png"
     else
-      "el_icons/EL_#{cat}_#{metal}.png"
+      "/assets/images/el_icons/EL_#{cat}_#{metal}.png"
     end
   end
 

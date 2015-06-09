@@ -43,7 +43,8 @@
           =render 'field', key: 'Dress Code', value: @school.dress_code
           =render 'field', key: 'Bullying Policy', value: @school.bullying_policy
 
-        .school-map-wrapper= render 'map'
+        .school-map-wrapper
+          #map
         .overview-text
           =raw simple_format(@school.overview_text)
         - if !@school.email.blank?

@@ -31,7 +31,8 @@
             .icon-text
               Year-round schedule
         = render 'field', key: 'Program Specialty', value: @school.specialty
-      .school-map-wrapper= render 'map'
+      .school-map-wrapper
+        #map
       .overview-text
         =raw simple_format(@school.overview_text)
       .contact

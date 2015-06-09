@@ -3,8 +3,8 @@ module School
     valid = %w[A Aplus B Bplus C Cplus D F Promising]
     mod = letter.andand.gsub('+', 'plus')
     mod = valid.include?(mod) ? mod : 'NA'
-    return "el_icons/Sm_#{mod}.png" if style == :small
-    "el_icons/K12_Grade_#{mod}.png"
+    return "/assets/images/el_icons/Sm_#{mod}.png" if style == :small
+    "/assets/images/el_icons/K12_Grade_#{mod}.png"
   end
 
   def governance

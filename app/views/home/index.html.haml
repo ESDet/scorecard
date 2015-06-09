@@ -81,47 +81,47 @@
       = render 'shared/resources'
 
 :javascript
-  var gradeFilter = #{@grade.to_json};
-  var charFilters = #{@filters.to_json};
-
-  var showGradeFilters = function(grade) {
-    if (grade == 'ec') {
-      $('#ec-filters').show();
-      $('#k8-filters').hide();
-      $('#high-filters').hide();
-    } else if (grade == 'k8') {
-      $('#ec-filters').hide();
-      $('#k8-filters').show();
-      $('#high-filters').hide();
-    } else if (grade == 'high') {
-      $('#ec-filters').hide();
-      $('#k8-filters').hide();
-      $('#high-filters').show();
-    } else if (grade == 'none') {
-      $('#ec-filters').hide();
-      $('#k8-filters').hide();
-      $('#high-filters').hide();
-    }
-    $('#grade').attr('value', grade);
-
-    var dd = $('.dropdown');
-    var trigger = $('a.trigger', dd);
-    trigger.addClass('active');
-    $('.title', trigger).text($('li a[data-value="' + grade + '"]').text());
-  };
-
-  var enableGradeFilter = function(triggerElement) {
-    triggerElement.addClass('active');
-    triggerElement.append('<span class="plus"></span>');
-    $('#school-search-form').append(
-      '<input id="filters_" ' +
-      'name="filters[]" ' +
-      'type="hidden" value="'
-      + triggerElement.data('value') + '">'
-    );
-  };
-
   $(document).ready(function() {
+    var gradeFilter = #{@grade.to_json};
+    var charFilters = #{@filters.to_json};
+
+    var showGradeFilters = function(grade) {
+      if (grade == 'ec') {
+        $('#ec-filters').show();
+        $('#k8-filters').hide();
+        $('#high-filters').hide();
+      } else if (grade == 'k8') {
+        $('#ec-filters').hide();
+        $('#k8-filters').show();
+        $('#high-filters').hide();
+      } else if (grade == 'high') {
+        $('#ec-filters').hide();
+        $('#k8-filters').hide();
+        $('#high-filters').show();
+      } else if (grade == 'none') {
+        $('#ec-filters').hide();
+        $('#k8-filters').hide();
+        $('#high-filters').hide();
+      }
+      $('#grade').attr('value', grade);
+
+      var dd = $('.dropdown');
+      var trigger = $('a.trigger', dd);
+      trigger.addClass('active');
+      $('.title', trigger).text($('li a[data-value="' + grade + '"]').text());
+    };
+
+    var enableGradeFilter = function(triggerElement) {
+      triggerElement.addClass('active');
+      triggerElement.append('<span class="plus"></span>');
+      $('#school-search-form').append(
+        '<input id="filters_" ' +
+        'name="filters[]" ' +
+        'type="hidden" value="'
+        + triggerElement.data('value') + '">'
+      );
+    };
+
     $('#loc').typeahead({ source: #{@school_names} });
     if(gradeFilter) {
       showGradeFilters(gradeFilter);
