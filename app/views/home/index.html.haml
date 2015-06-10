@@ -78,8 +78,7 @@
         %a#search-btn.btn.search{:href => '#'} Search
 
     .middle
-      %h1= @resources.title
-      = raw(@resources.body)
+      = render 'shared/resources'
 
 :javascript
   var gradeFilter = #{@grade.to_json};
