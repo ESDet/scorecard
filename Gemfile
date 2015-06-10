@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.2.2'
 
 gem 'rake'
 gem 'rails'
@@ -26,6 +26,7 @@ gem 'pry-byebug'
 gem 'psych', '1.3.4'
 gem 'rack-mini-profiler', require: false
 gem 'sass-rails'
+gem 'stackprof'
 gem 'therubyracer'
 gem 'uglifier'
 
