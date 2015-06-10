@@ -4,7 +4,6 @@ ruby '2.2.2'
 
 gem 'rake'
 gem 'rails'
-gem 'mysql2'
 gem 'andand'
 gem 'awesome_print'
 gem 'better_errors'
