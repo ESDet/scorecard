@@ -39,10 +39,6 @@ module School
     school_profiles.andand.field_facebook_url
   end
 
-  def grades_served
-    school_profiles.andand.field_grades_served
-  end
-
   def photo
     if !photos.empty?
       photos.andand.first['filename']

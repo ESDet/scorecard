@@ -10,7 +10,8 @@ class SchoolsController < ApplicationController
     case @grade
     when 'ec'
       url = "ecs.json?flatten_fields=true&" <<
-        "includes=ec_profile&sort_by=name&sort_order=ASC"
+        "includes=all&sort_by=name&sort_order=ASC"
+      special_filters << "has_esd_el_2015"
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
       elsif !@loc.blank?
@@ -27,14 +28,16 @@ class SchoolsController < ApplicationController
         when 'meals'
           special_filters << "ec_profile_has_meals"
         when 'home_based'
-          url << "&filter[field_ec_license_type]=2424,2419&filter_op[field_ec_license_type]=IN"
+          url << "&filter[field_ec_license_type]=2424,2419" <<
+            "&filter_op[field_ec_license_type]=IN"
         when 'center_based'
           url << "&filter[field_ec_license_type]=2415"
         end
       end
     when 'k8', 'high'
       url = "schools.json?flatten_fields=true&" <<
-        "includes=school_profile&sort_by=name&sort_order=ASC"
+        "includes=all&sort_by=name&sort_order=ASC" <<
+        "&filter[field_scorecard_display]=1"
 
       if @grade == 'k8'
         url << "&filter[school_type]=10"
@@ -66,28 +69,31 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      url = "ecs.json?limit=50&flatten_fields=true&includes=ec_profile&sort_by=name&sort_order=ASC"
+      url = "ecs.json?limit=50&flatten_fields=true&includes=all&sort_by=name&sort_order=ASC"
     end
 
     if !special_filters.empty?
-      url << "filter_special=#{special_filters.join(",")}"
+      url << "&filter_special=#{special_filters.join(",")}"
     end
 
     response = Portal.new.fetch(url)
-    schools_with_profiles = response['data'].map do |s|
-      includes = response['included'].select do |i|
-        if s['links']
-          if s['links']['school_profile']
-            i['id'] == s['links']['school_profile']['linkage']['id']
-          elsif s['links']['ec_profile']
-            i['id'] == s['links']['ec_profile']['linkage']['id']
+    if response['data']
+      schools_with_profiles = response['data'].map do |s|
+        includes = response['included'].select do |i|
+          if s['links']
+            if s['links']['school_profile']
+              i['id'] == s['links']['school_profile']['linkage']['id']
+            elsif s['links']['ec_profile']
+              i['id'] == s['links']['ec_profile']['linkage']['id']
+            end
           end
         end
+        s.merge(included: includes)
       end
-      s.merge(included: includes)
+      @schools = schools_with_profiles.map { |s| SchoolData.new(s) }
+    else
+      redirect_to root_path
     end
-
-    @schools = schools_with_profiles.map { |s| SchoolData.new(s) }
   end
 
   def show

@@ -85,7 +85,7 @@ class SchoolData < OpenStruct
   def grades_served
     unless earlychild?
       if school_profiles
-        school_profiles.field_grades_served
+        school_profiles.field_grades_served.to_h.values
       end
     end
   end
