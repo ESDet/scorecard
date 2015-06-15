@@ -166,9 +166,11 @@
   $(document).ready(function(e) {
     var moveMap = function() {
       if ($(window).width() > 800) {
-        $('.school-map-wrapper').first().detach().appendTo('#overview');
+        $('.school-map-wrapper').first().detach().
+          appendTo('#overview .school-header');
       } else {
-        $('.school-map-wrapper').first().detach().insertAfter('#overview .fields').first();
+        $('.school-map-wrapper').first().detach().
+          insertAfter('#overview .fields').first();
       }
     };
 
@@ -178,7 +180,15 @@
     Map({
       center: #{@school.center.to_json},
       markers: #{[@school.marker].to_json},
-      zoom: 15
+      zoom: 15,
+      zoomControl: false,
+      dragging: false,
+      touchZoom: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      boxZoom: false,
+      tap: false,
+      keyboard: false
     });
 
     $('.section-title').click(function() {

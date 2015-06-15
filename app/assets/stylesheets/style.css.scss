@@ -1,61 +1,52 @@
-$indigo: #540a90;
-$light_sea_green: #14b2ae;
 $gainsboro: #dedede;
 $paynes_grey: #404040;
-$non_photo_blue: #a2e5e8;
-$lavender: #e7e5f3;
 $onyx: #141414;
 $dim_grey: #636466;
-$khaki: #e4f799;
-$white_smoke: #f3f3f9;
-$manatee: #a0a0a0;
-$deep_carrot_orange: #ec5932;
+$green: #7cc45c;
+$cyan: #2b9fc7;
+$light_cyan: #e3f2f8;
+$light_yellow: #fef5e2;
+$yellow: #f8ae16;
+$navy: #2e5b8c;
+$red: #c73458;
 
-$light: #eef;
-$lightgrey: #e8e8e8;
+$fivee_green: #319400;
+$fivee_light_green: #a2c100;
+$fivee_yellow: #ffc700;
+$fivee_orange: #ff690f;
+$fivee_red: #c32947;
 
-$dblue:   #134370;
-$yellow:  #ffcc4e;
-$lgreen:  #27b373;
-$red:     #953734;
-$greyish: #556677;
+@font-face {
+  font-family: "Aleo Bold";
+  src: url("aleo-bold-webfont.eot");
+  src: local("☺"),
+    url("aleo-bold-webfont.woff") format("woff"),
+    url("aleo-bold-webfont.woff2") format("woff2"),
+    url("aleo-bold-webfont.otf") format("opentype"),
+    url("aleo-bold-webfont.ttf") format("truetype"),
+    url("aleo-bold-webfont.svg#filename") format("svg");
+}
 
-/* These are 2013 colors */
-$orange2: #f48b68;  /* k8 */
-$orange3: #f05a28;
-$cyan:   #00aff0;     /* high */
-$lblue:  #cff0fc;
-$mblue:  #78d5f7;
-$dgreen: #29b473;
+@font-face {
+  font-family: "Aleo Regular";
+  src: url("aleo-regular-webfont.eot");
+  src: local("☺"),
+    url("aleo-regular-webfont.woff") format("woff"),
+    url("aleo-regular-webfont.woff2") format("woff2"),
+    url("aleo-regular-webfont.otf") format("opentype"),
+    url("aleo-regular-webfont.ttf") format("truetype"),
+    url("aleo-regular-webfont.svg#filename") format("svg");
+}
 
-$headerheight: 90px;
-$footerheight: 180px;
-$map_ratio: 35%;
-
-$e_red:    #ED2D26;
-$e_orange: #F05A28;
-$e_yellow: #FFD300;
-$e_lgreen: #A7D8BF;
-$e_green:  #29B473;
-
-/* 2014 summer update */
-$turq: #35bff2;
-$dturq: #466778;
-$lgrey: #dae1e4;
-$orange: #F05A29;
-$robin: #a5dff7;
-
-$bar1: #d4f0e3;
-$bar2: #a17644;
-$bar3: #938886;
-$bar4: #ffc75d;
-
-h2.grey { color: $greyish; }
+@font-face {
+  font-family: "Lato Italic";
+  src: url("Lato-Italic.ttf");
+}
 
 html { height: 100%; }
 
 body {
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: 'Aleo Regular';
   height: 100%;
   padding: 0;
   margin: 0;
@@ -83,10 +74,10 @@ body.schools-index { height: 100%; }
   margin-top: -200px;
   bottom: 0;
   padding: 10px 30px;
-  background-color: $indigo;
-  color: $light_sea_green;
+  background-color: $navy;
+  color: white;
   font-size: 40px;
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: 'Aleo Regular';
 }
 
 
@@ -100,39 +91,10 @@ body.schools-index { height: 100%; }
 .relative { position: relative; }
 .rounded { padding: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
 .ib { display: inline-block; float: none; }
-.subtle { color: $dblue; }
 .printonly { display: none; }
-.popover {
-  .popover-inner { width: 500px; }
-  a.close { position: absolute; right: 10px; top: 5px; color: #888; }
-  .popover-content {
-    max-height: 400px; overflow-y: scroll;
-    table {
-      width: 100%;
-      th, td { padding: 0.25em 0.5em; }
-      tr:nth-child(even) { background-color: #f4f4f4; }
-    }
-  }
-}
-.orange { color: $orange; }
-.bebas { font-family: 'bebas_neueregular'; }
-.arial { font-family: 'Arial', 'sans-serif'; }
-.boxsizing { box-sizing: border-box; -webkit-box-sizing:border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; }
-.lead { font-size: 23px; }
 table td, table th { vertical-align: top; }
 
 h1 { color: $onyx; }
-h3.bebas {
-  font-size: 1.5em; color: $dturq; margin-top: 0.5em;
-  &.underlined { display: block; border-bottom: 1px solid $dturq; padding-bottom: 5px; }
-}
-h4 { color: $dblue; text-transform: uppercase; margin: 0.5em 0 0 0; }
-hr { height: 1px; border: none; color: $turq; background-color: $turq; }
-
-.wf-loading {
-  h1, h2, h3, h4 { visibility: hidden; }
-}
-
 .branding { text-align: left; }
 
 #search {
@@ -142,7 +104,7 @@ hr { height: 1px; border: none; color: $turq; background-color: $turq; }
 }
 
 a.external, a.external:visited {
-  color: $dturq; font-family: sans-serif;
+  color: $cyan;
   img {
     max-height: 13px;
     width: auto;
@@ -150,54 +112,6 @@ a.external, a.external:visited {
   }
 }
 
-$unit: 14px;
-#outer_wrapper {
-  position: absolute;
-  top: 80px;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  #lefty {
-    position: absolute;
-    left: 0px;
-    width: $map_ratio;
-    top: 0px;
-    bottom: 0px;
-    box-sizing: border-box;
-    padding: 1em;
-    border-right: 1px solid $turq;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    z-index: 10;
-    border-right: 1px solid  $dblue;
-    h1 { margin-top: 0; }
-    a.search {
-      display: block;
-      background-color: $light_sea_green;
-      color: white;
-      margin: 0.5em 0;
-    }
-    a.do-compare {
-      position: fixed;
-      bottom: 0px;
-      left: 0px;
-      width: 300px;
-      display: block;
-      background-color: $orange3;
-      font-size: 1.4em;
-      text-align: center;
-      box-sizing: border-box;
-      &.hide { display: none; }
-    }
-  }
-  .wrapper {
-    height: 100%;
-    position: relative;
-    border: 1px solid $dblue;
-    padding-left: $map_ratio;
-    .key { left: $map_ratio; }
-  }
-}
 #block-boxes-school-score-widget .boxes-box-content {
   .score-right {
     min-height: 130px; padding-top: 1em !important;
@@ -220,44 +134,8 @@ $unit: 14px;
  h3 { margin: 0; }
 }
 
-#other_profile, #overview {   position: relative; }
-#other_profile table, table#climate-help, #overview table {
-  td, th { padding: 0.25em 1em; vertical-align: top; }
-  td:nth-child(1) { text-align: right; min-width: 200px; width: 33%; }
-  h3 { margin: 0; color: $turq; }
-}
-#other_profile table, #overview table { width: 100%; }
-
 .help {
   display: block; width: 20px; height: 20px; position: absolute; right: 8px; top: 8px; cursor: pointer;
-}
-
-.elements_wrapper { padding: 1em 1em 0 1em; background-color: white;
-  .element_label { min-height: 50px; margin: 3px 0; padding-top: 7px; }
-  .elements_score {
-    height: 45px; margin: 3px 0;
-    background-image: url(/assets/images/5e_scale.png);
-    background-repeat: no-repeat;
-    background-position: right top;
-    .bar { position: absolute; left: 67px;  height: 10px; top: 10px; background-color: $dblue; }
-  }
-  .circled {
-    -webkit-border-radius: 999px; -moz-border-radius: 999px; border-radius: 999px; behavior: url(PIE.htc);
-    width: 28px; height: 28px; font-size: 14px; font-weight: bold; padding: 6px 0; text-align: center;
-    background-color: $dblue; color: white; margin-bottom: 10px;
-  }
-}
-
-.blue {
-  h2, h3 { background-color: $cyan; padding: 0.5em; margin-bottom: 0; color: white; }
-  ul {
-    background-color: $lblue; padding: 0; margin: 0; padding-top: 0.5em;
-    li {
-      padding: 0.5em; list-style: none;
-      a, a:visited { color: black; font-weight: bold; }
-    }
-    li:hover { background-color: $mblue; }
-  }
 }
 
 .schools-wrapper {
@@ -273,15 +151,13 @@ $unit: 14px;
   height: 100%;
   width: 65%;
   position: relative;
-  border: 1px solid $dblue;
-  .key { left: $map_ratio; }
+  border: 1px solid $navy;
 }
 
 .school-map-wrapper {
   clear: both;
-  height: 250px;
+  height: 200px;
   position: relative;
-  border: 1px solid $dblue;
 }
 
 #map {
@@ -320,45 +196,7 @@ ul.school_list {
 $big: 150px;
 $med: 100px;
 
-.column { width: 280px; float: left; margin-right: 10px; }
-.k12 {
-  .grade_container {
-     width: 130px; height: 0px; margin-bottom: 0;
-    .grade { background-color: #29b473; }
-  }
-  h2.block__title img { height: 32px; width: auto; margin: -8px 4px -8px 0px; vertical-align: middle; position: relative;  }
-  .subscore_wrapper {
-    table.scores { width: 100%;
-      h3 { color: $turq; margin: 0; }
-      tr { border-bottom: 1px solid $turq; }
-      td, th { text-align: left; padding: 6px 15px; vertical-align: top;  }
-      td:nth-child(1) {  width: 450px; text-align: right; }
-      td i.help { top: 0; right: 0; }
-      tbody tr:nth-child(odd) { background-color: rgba(255, 255, 255, 0.2); }
-    }
-  }
-  &.top {
-    .grade_container { width: 80px; height: 80px; }
-    .boxes-box-content { min-height: 80px; position: relative; }
-    .subscore_wrapper { margin-left: 80px; }
-    .grade { width: 70px; height: 60px; font-size: 40px; margin-bottom: 2px; }
-    .grade.sub3 { font-size: 12px; width: 70px; height: 25px; padding: 5px; }
-  }
-}
-.grade {
-  display: inline-block; background-color: $cyan; font-size: 70px; color: white;
-  width: 130px; height: 105px;  padding: 8px 5px; text-align: center;  margin-bottom: 10px;
-  &.na { font-size: 55px; padding-top: 20px; }
-  &.earlychild { font-size: 18px; height: auto; }
-  &.sub {
-    font-size: 18px; width: 40px; height: 40px;  display: inline-block;
-    &.na { font-size: 15px; padding-top: 11px; }
-    a { color: white; }
-  }
-  &.sub3 { font-size: 18px; width: 130px; height: 40px; display: inline-block; }
-}
-
-.grades a, .dropdown > a, .filter > a {
+.dropdown > a, .filter > a {
   font-size: 1.3em;
   background-color: white;
   margin-bottom: 1em;
@@ -369,19 +207,19 @@ $med: 100px;
 }
 
 .dropdown > a {
-  color: $greyish;
-  border: 2px solid $light_sea_green;
+  color: $dim_grey;
+  border: 2px solid $navy;
   &.active {
     color: white;
-    background-color: $light_sea_green;
+    background-color: $navy;
   }
 }
 
 .filter > a {
-  color: $light_sea_green;
-  border: 2px solid $light_sea_green;
+  color: $navy;
+  border: 2px solid $navy;
   &.active {
-    background-color: $light_sea_green;
+    background-color: $navy;
   }
 }
 
@@ -398,7 +236,7 @@ $med: 100px;
     &#q { margin-top: 0; }
   }
   .btn.search {
-    background-color: $light_sea_green;
+    background-color: $navy;
     color: white;
     width: 100%;
     font-size: 1.3em;
@@ -430,15 +268,6 @@ $med: 100px;
   max-width: 100%;
 }
 
-.profile {
-  .lead { color: $dblue; margin-bottom: 0em; }
-  .nav-pills > li {
-    & > a { color: $dblue;  -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }
-    & > a:hover { background-color: #e2e2e2; }
-    &.active > a { color: white; }
-  }
-}
-
 
 table.compare {
   margin: 2em 0; font-size: 0.9em;
@@ -452,91 +281,15 @@ table.compare {
   }
 }
 
-.tab-content .tab-pane { padding: 1em 8em 4em 8em; }
-ul.nav {
-  li {
-    width: 23.5%; background-color: $lgrey; text-align: center;
-    margin-right: 2%; border-radius: 4px 4px 0 0;
-    a { min-height: 195px; padding: 9px 0 9px 0; }
-  }
-  li.active { background-color: white; }
-  li:last-of-type { margin-right: 0; }
-  img { margin-top: 1em; }
-  .question { color: $dturq; border-bottom: 1px solid $turq; display: block; padding: 0 9px 9px 9px; font-size: 1.2em; text-align: left; }
-  .question.hide { display: none; }
-  .stars { display: block; margin-top: 30%; font-size: 2em; }
-  li.active .question { color: $turq; }
-}
 .overall-stars { font-size: 2em; padding-top: 10px; }
-.turquoise { color: $dturq; }
 
-.earlychild {
-  .community_line:first-of-type { border-top: 1px solid $turq; }
-  #state {
-    p { border-bottom: 1px solid $turq; padding-bottom: 1em; }
-    table {
-      width: 100%;
-      thead { font-size: 1.5em; th { text-align: left; } }
-      td, th { padding: 9px 20px; border-bottom: 1px solid $turq; }
-      td:first-child, th:first-child { text-align: center; }
-    }
-    .gs-logo { width: 200px; height: auto; position: absolute; right: 0px; top: 0px; }
-  }
-  #staff {
-    .staff-rating {
-      position: relative; width: 100%; padding-top: 30px; padding-bottom: 40px;
-      .axis {
-        text-align: center; color: $lgreen;
-        .left { float: left; }
-        .right { float: right; }
-        .middle { }
-      }
-      .bar { height: 20px;
-        div { height: 100%; display: inline-block; margin-right: -4px; }
-        .light-green { background-color: $bar1; width: 50%; }
-        .bronze { background-color: $bar2; width: 20%; }
-        .silver { background-color: $bar3; width: 20%; }
-        .gold { background-color: $bar4; width: 10%; }
-      }
-      .not-rated { color: $orange; font-size: 14px; text-align: center; }
-      .pointer {
-        position: absolute; border-right: 2px solid $lgreen; padding-right: 0.5em;
-        &.state { top: 0px; padding-bottom: 45px; color: $lgreen; font-size: 90%; }
-        &.score { bottom: 0px; padding-top: 35px; color: $turq; border-color: $turq; }
-      }
-    }
-  }
-  .points { color: $turq; }
-  .stars { color: $turq; letter-spacing: -2px; font-size: 1.4em; margin-right: 9px; }
-  .grade-legend {
-    margin-top: 1em; clear: both;
-    h3 { padding-top: 0.5em; }
-    img { width: 60px; height: auto; margin-right: 1em; margin-bottom: 1em; float: left; }
-  }
-}
-
-.earlychild, .k12 {
-  .el-icon, .mini-el-icon { width: 60%; height: auto; }
-  .overall-seal .centered.nomobile { display: block !important; }
-  .el-icon.overview { margin-top: 0; }
-  .mini-el-icon { width: 40px; height: auto; float: right; margin-left: 0.5em; }
-  .overall-seal {
-    padding-top: 1em; text-align: center;
-    .el-icon { width: 100%; height: auto; margin-top: 1em;  max-width: 200px;  }
-  }
-  .community_line {
-    border-bottom: 1px solid $turq; padding: 0.5em 0; position: relative; padding-bottom: 0.66em;
-    .score {
-      position: absolute; left: 0px; top: 0.5em;
-    }
-    h3 { margin-top: 0; }
-    .statement, .explanation { padding-left: 80px; }
-    .statement { color: $turq; margin-bottom: 3px; }
-    .explanation { }
-    &.level-0 { font-size: 1.2em; padding-left: 30px;}
-    &.level-1 { padding-left: 30px; }
-    &.level-2 { font-size: 0.9em; padding-left: 50px; }
-  }
+.el-icon, .mini-el-icon { width: 60%; height: auto; }
+.overall-seal .centered.nomobile { display: block !important; }
+.el-icon.overview { margin-top: 0; }
+.mini-el-icon { width: 40px; height: auto; float: right; margin-left: 0.5em; }
+.overall-seal {
+  padding-top: 1em; text-align: center;
+  .el-icon { width: 100%; height: auto; margin-top: 1em;  max-width: 200px;  }
 }
 
 .k12 {
@@ -668,7 +421,7 @@ ul.nav {
 }
 
 .btn {
-  background-color: $dblue;
+  background-color: $navy;
   color: white;
   padding: 0.5em;
   img {
@@ -678,23 +431,23 @@ ul.nav {
   }
   &.light {
     background-color: white;
-    border: 1px solid $lgreen;
-    color: $lgreen;
+    border: 1px solid $green;
+    color: $green;
   }
 }
 
 a, a:visited, a:active, a:hover, a.external, a.external:visited {
   text-decoration: none;
-  color: $light_sea_green;
-  font-family: 'Didact Gothic', sans-serif;
+  color: $navy;
+  font-family: 'Aleo Regular';
 }
 
 .brand {
-  color: $light_sea_green;
+  color: $navy;
   font-size: 45px;
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: 'Aleo Regular';
   :hover {
-    color: $light_sea_green;
+    color: $navy;
   }
 }
 
@@ -725,12 +478,12 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 #nav {
   padding: 10px 20px;
-  color: $light_sea_green;
+  color: $navy;
   border-bottom: 2px solid $gainsboro;
 
   a span {
-    color: $light_sea_green;
-    font-family: 'Didact Gothic', sans-serif;
+    color: $cyan;
+    font-family: 'Aleo Regular';
     font-size: 25px;
   }
 
@@ -738,8 +491,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     top: 11px;
     background-color: transparent;
     float: left;
-    border: 2px solid $indigo;
-    border-radius: 2px 2px 2px 2px;
     cursor: pointer;
     display: block;
     padding: 1px 5px;
@@ -753,9 +504,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
 
   #hamburger div {
-    float: right;
-    background-color: $indigo;
-    border: 0.1em solid $indigo;
+    background-color: $navy;
+    border: 0.1em solid $navy;
     border-radius: 2px 2px 2px 2px;
     margin-top: 6px;
     width: 35%;
@@ -767,25 +517,12 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
   a.btn {
     background-color: white;
-    color: $light_sea_green;
-    font-family: 'Didact Gothic', sans-serif;
+    color: $navy;
+    font-family: 'Aleo Regular';
     font-size: 20px;
     &:hover {
       background-color: $gainsboro;
     }
-  }
-}
-
-.under-construction {
-  height: 70px;
-  width: 97%;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 1.5em;
-  background-color: $orange;
-  h2 {
-    padding: 0.45em 1.4em;
-    color: white;
   }
 }
 
@@ -799,9 +536,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   padding: 10px 5px 10px 20px;
   h2 {
     margin: 0 0 0 40px;
-    color: $paynes_grey;
+    color: $onyx;
     font-family: 'Crimson Text', serif;
-    font-size: 25px;
+    font-size: 21px;
   }
 }
 
@@ -816,20 +553,20 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: $non_photo_blue;
+  background-color: $light_yellow;
   text-align: center;
   cursor: pointer;
   h2 {
-    color: $onyx;
-    margin-bottom: 0;
-    padding: 10px 0 15px 0;
-    font-family: 'Didact Gothic', sans-serif;
-    font-size: 32px;
+    color: $yellow;
+    margin: 11px 0;
+    font-size: 23px;
+    letter-spacing: 1px;
+    font-family: 'Aleo Bold';
   }
 }
 
 .section-title.closed {
-  background-color: $khaki;
+  background-color: $navy;
 }
 
 .school-image {
@@ -840,12 +577,12 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .school-title  {
   padding: 10px;
-  background-color: $lavender;
+  background-color: $light_cyan;
   h1 {
     margin: 0px;
     color: $onyx;
     font-family: 'Crimson Text', serif;
-    font-size: 47px;
+    font-size: 33px;
   }
 }
 
@@ -853,8 +590,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   overflow: auto;
   padding: 15px 10px;
   color: $dim_grey;
-  font-family: 'Didact Gothic', sans-serif;
-  font-size: 20px;
+  font-family: 'Aleo Regular';
+  font-size: 17px;
   display: inherit;
 }
 
@@ -901,12 +638,12 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .contact {
   padding: 10px 0 10px 25px;
   color: $dim_grey;
-  font-family: 'Didact Gothic', sans-serif;
-  font-size: 23px;
+  font-family: 'Aleo Regular';
+  font-size: 17px;
 }
 
 .schools-index .results {
-  padding-left: 10px;
+  padding: 0 10px;
   float: left;
   width: 35%;
   max-height: 560px;
@@ -918,34 +655,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   float: right;
   width: 65%;
   height: 550px;
-}
-
-.schools-index .wrapper .map .key {
-  padding: 10px;
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  width: 600px;
-  max-width: 100%;
-  background-color: white;
-  background-color: rgba(255,255,255,0.8);
-  z-index: 100;
-  .square {
-    width: $unit;
-    height: $unit;
-    margin-right: 3px;
-    display: inline-block;
-    border: 1px solid #333;
-    float: none;
-    -webkit-border-radius: $unit/2+1;
-    -moz-border-radius: $unit/2+1;
-    border-radius: $unit/2+1;
-  }
-  .item {
-    text-wrap: none;
-    white-space: nowrap;
-    margin-right: 1em;
-  }
 }
 
 .back-arrow-icon {
@@ -1082,85 +791,225 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   background-repeat: no-repeat;
 }
 
-.header {
-  padding: 10px 15px;
-  color: $onyx;
-  font-size: 30px;
-  font-family: 'Didact Gothic', sans-serif;
-  text-align: center;
-}
-
 .stat-region {
-  .content {
+  h2 {
+    margin-top: 20px;
+    color: $navy;
+    font-size: 17px;
+    font-family: 'Aleo Bold';
+    letter-spacing: 1.3px;
     text-align: center;
-    background-color: $lavender;
-    min-height: 250px;
-    .visual, .subjects {
-      padding: 0 1%;
-    }
+  }
+  h3 {
+    margin-top: -10px;
+    color: $onyx;
+    font-size: 15px;
+    font-family: 'Lato Italic';
+    text-align: center;
+    letter-spacing: 0.1px;
+  }
+
+  .content {
+    width: 775px;
+    margin-top: 30px;
+    margin-left: 12.1%;
+    text-align: center;
   }
 
   .content .visual {
-    position: relative;
-    margin-top: 27px;
-    display: block;
     float: left;
-    > div {
-      margin: auto;
-      text-align: center;
-    }
-    .subjects .subject {
-      width: 250px;
-    }
   }
 
-  .content .subjects {
-    position: relative;
-    margin-top: 27px;
-    float: right;
-  }
-
-  .content .subjects .subject {
-    cursor: pointer;
-    margin: 10px 0;
-    padding: 5px 5px;
-    text-align: center;
+  .content .visual .title {
+    background-color: $cyan;
     color: white;
-    font-size: 20px;
-    .title {
-      margin: auto;
-      padding: 5px 10px;
-      max-width: 285px;
-      background-color: $dim_grey;
-    }
-    &.active .title {
-      background-color: $indigo;
+    font-family: 'Aleo Bold';
+    font-size: 13px;
+    padding: 4px 0;
+  }
+
+  .content.two .visual {
+    width: 365px;
+    margin-bottom: 20px;
+  }
+
+  .content.two .visual:nth-of-type(1) {
+    margin-right: 45px;
+  }
+
+  .content.four .visual {
+    width: 145px;
+    margin-right: 64px;
+  }
+
+  .content.four .visual:nth-of-type(4) {
+    margin-right: 0;
+  }
+
+  .content .graph {
+    background-color: $light_cyan;
+    width: 100%;
+    margin-top: 4px;
+    & > .number {
+      height: 100%;
+      background-color: $green;
+      .text {
+        text-align: left;
+        color: white;
+        font-family: 'Lato Bold';
+        font-size: 18px;
+        padding: 13px 0 13px 7px;
+        text-shadow:
+          -1px -1px 0 $green,
+          1px -1px 0 $green,
+          -1px 1px 0 $green,
+          1px 1px 0 $green;
+      }
     }
   }
 
-  .links {
+  .content.two .graph {
+    height: 68px;
+  }
+
+  .content.four .graph {
+    height: 45px;
+  }
+
+  .visual .bounds {
+    margin-top: 55px;
+    height: 6px;
+    border-left: 1px solid $navy;
+    border-right: 1px solid $navy;
+    .left-bounds, .right-bounds {
+      margin-top: -5px;
+      width: 1px;
+      font-family: 'Lato Light';
+      font-size: 10px;
+    }
+    .left-bounds {
+      float: left;
+      margin-left: -4px;
+    }
+    .right-bounds {
+      float: right;
+      margin-right: 5px;
+    }
+  }
+
+  .bounds .line-graph {
+    width: 100%;
+    margin-top: 58px;
+    height: 3.5px;
+    border-bottom: 1px solid $navy;
+    .line-marker {
+      height: 10px;
+      margin-top: -13px;
+      margin-left: 20px;
+      float: left;
+      width: 3px;
+      background: $yellow;
+      font-family: 'Lato Light';
+      font-size: 13px;
+      & > .text {
+        font-family: 'Lato Light';
+        font-size: 10px;
+        margin-top: 13px;
+      }
+      & > .number {
+        font-family: 'Lato Bold';
+        font-size: 13px;
+        color: $green;
+      }
+    }
+  }
+
+  .content.two .graph .left-bars {
+    width: 49.5%;
+    height: 100%;
+    float: left;
+    .negative {
+      margin-top: 5px;
+      width: 80%;
+      height: 25px;
+      float: right;
+      background: $red;
+      clear: right;
+      & > .text {
+        margin-top: -2px;
+        font-family: 'Lato Light';
+        font-size: 11px;
+      }
+      & > .number {
+        margin-top: -1px;
+        font-family: 'Lato Bold';
+        font-size: 16px;
+        color: $red;
+      }
+    }
+  }
+
+  .content.two .graph .right-bars {
+    width: 49.5%;
+    height: 100%;
+    float: right;
+    .positive {
+      margin-top: 5px;
+      width: 80%;
+      height: 25px;
+      float: left;
+      background: $green;
+      clear: left;
+      & > .text {
+        margin-top: -2px;
+        font-family: 'Lato Light';
+        font-size: 11px;
+      }
+      & > .number {
+        margin-top: -1px;
+        font-family: 'Lato Bold';
+        font-size: 16px;
+        color: $green;
+      }
+    }
+  }
+
+  .content.two .graph .zero-bar {
+    float: left;
+    width: 1%;
+    height: 100%;
+    background-color: $yellow;
+    .text {
+      padding: 1px;
+      margin-top: 70px;
+      margin-left: -20px;
+      background-color: $yellow;
+      color: white;
+      font-family: 'Lato Bold';
+      font-size: 10px;
+      width: 60px;
+    }
+  }
+
+  .content .what-this-means {
+    width: 100%;
     display: inline-block;
-    padding: 10px;
-    background-color: $white_smoke;
-    font-size: 19px;
-  }
-
-  .links .compare {
-    margin: 8px;
-    color: $dim_grey;
-    span {
-      color: $deep_carrot_orange;
-    }
-  }
-
-  .links .message {
-    margin: 7px;
-    color: $manatee;
+    margin-top: 60px;
+    background: $light_cyan;
+    height: 30px;
+    text-align: left;
+    padding: 9px;
+    font-family: 'Aleo Regular';
+    font-size: 11px;
   }
 }
 
+.stat-region:last-of-type {
+  border-bottom: none;
+}
+
 .school-header {
-  background-color: $lavender;
+  background-color: $light_cyan;
 }
 
 @media only screen and (max-width: 959px) {
@@ -1213,16 +1062,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 @media only screen and (min-width: 320px) and (max-width: 399px) {
-  .visual > div { position: absolute; }
-  .stat-region .content .subjects {
-    margin-right: 0;
-    max-width: 200px;
-  }
-  .stat-region .content .visual,
-  .stat-region .content .subjects { padding: 0; }
-  .stat-region .content .visual .bar-graph {
-    margin: 10px 0 0 20px;
-  }
   .increasing-growth { margin-left: 100%; }
   .decreasing-growth { margin-left: 100%; }
   .footer { font-size: 35px; padding: 10px 10px; }
@@ -1256,36 +1095,23 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 @media only screen and (min-width: 480px) {
-  .visual, .subjects {
-    width: 40%;
-    padding: 0 5%;
-  }
   .links { margin: 30px 15%; }
-  .stat-region .content .subjects { margin-right: 10px; }
   .increasing-growth { margin-left: auto; }
   .decreasing-growth { margin-left: auto; }
 }
 
 @media only screen and (min-width: 500px) {
-  .visual, .subjects {
-    width: 45%;
-    padding: 0 5%;
-  }
   .brand { padding-left: 15%; }
   .breadcrumbs { width: 450px; }
 }
 
 @media only screen and (min-width: 555px) {
   .stat-region {
-    border-bottom: 2px solid $dim_grey;
-    padding: 30px 0;
+    border-bottom: 1px solid $cyan;
+    padding-bottom: 20px;
   }
   .links {
     margin: 30px 20%;
-  }
-  .stat-region .content .visual > div {
-    width: 250px;
-    height: 234px;
   }
 }
 
@@ -1317,7 +1143,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     width: 40%;
     height: inherit;
   }
-  .brand { padding-left: 20%; }
   .home {
     margin: auto auto 20px auto;
     width: 70%;
@@ -1325,18 +1150,14 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 @media only screen and (min-width: 960px) {
-  h2 { margin-top: 0; }
   .middle {
-    max-width: 960px;
-    margin: auto;
+    max-width: 775px;
+    margin: 0 auto 20px auto;
   }
   .container_12 { width: auto; }
   .padding-left { padding-left: 20%; }
   .padding-right { padding-right: 40%; }
-  .stat-region {
-    background-color: $lavender;
-  }
-  .breadcrumbs { margin-left: 140px; }
+  .breadcrumbs { margin-left: 110px; }
   #hamburger { margin-left: 140px; }
   .breadcrumbs { width: 450px; }
 }
@@ -1349,42 +1170,12 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 @media only screen and (min-width: 1020px) {
-  .visual { padding-left: 3%; }
 }
 
 @media only screen and (min-width: 1080px) {
-  .visual { padding-left: 5%; }
 }
 
 @media only screen and (min-width: 1112px) {
-  .stat-region .content .visual { width: 100%; }
-  .stat-region .content .visual > div:nth-child(n + 1) {
-    float: left;
-  }
-  .stat-region .content .visual > div {
-    width: 25%;
-    float: none;
-    display: inline-block;
-  }
-  .stat-region .content .subjects {
-    width: 100%;
-    clear: both;
-    float: none;
-    .subject:nth-child(n + 1) { float: left; }
-    .subject {
-      width: 25%;
-      float: none;
-      display: inline-block;
-      cursor: none;
-    }
-    .subject.active .title {
-      background-color: $dim_grey;
-    }
-  }
-  .stat-region.three-columns .visual div,
-  .stat-region.three-columns .subjects .subject {
-    width: 33%;
-  }
   .home {
     margin: auto auto 20px auto;
     width: 60%;
@@ -1392,41 +1183,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 @media only screen and (min-width: 1219px) {
-  .stat-region {
-    border-bottom: 1px solid $dim_grey;
-    padding: 30px 0;
-  }
-  .stat-region .content .visual { width: 100%; }
-  .stat-region .content .visual > div:first-child {
-    float: left;
-  }
-  .stat-region .content .visual > div {
-    width: 25%;
-    float: none;
-    display: inline-block;
-  }
-  .stat-region .content .subjects {
-    width: 100%;
-    clear: both;
-    float: none;
-    .subject:first-child { float: left; }
-    .subject {
-      width: 25%;
-      float: none;
-      display: inline-block;
-      cursor: auto;
-    }
-    .subject .title {
-      text-align: center;
-    }
-    .subject.active .title {
-      background-color: $dim_grey;
-    }
-  }
-  .stat-region.three-columns .visual div,
-  .stat-region.three-columns .subjects .subject {
-    width: 33%;
-  }
   .home {
     margin: auto auto 20px auto;
     width: 50%;

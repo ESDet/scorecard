@@ -10,7 +10,7 @@ class SchoolsController < ApplicationController
     case @grade
     when 'ec'
       url = "ecs.json?flatten_fields=true&" <<
-        "includes=all&sort_by=name&sort_order=ASC"
+        "includes=all&sort_by_special=ec_total_pts&sort_order_special=DESC"
       special_filters << "has_esd_el_2015"
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
@@ -36,13 +36,13 @@ class SchoolsController < ApplicationController
       end
     when 'k8', 'high'
       url = "schools.json?flatten_fields=true&" <<
-        "includes=all&sort_by=name&sort_order=ASC" <<
+        "includes=all&sort_by_special=school_combined_total_points&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
       if @grade == 'k8'
-        url << "&filter[school_type]=10"
+        url << "&filter[field_school_type]=10"
       else
-        url << "&filter[school_type]=3"
+        url << "&filter[field_school_type]=3"
       end
 
       if @loc.andand.match /^[0-9]{5}$/
@@ -69,7 +69,7 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      url = "ecs.json?limit=50&flatten_fields=true&includes=all&sort_by=name&sort_order=ASC"
+      url = "ecs.json?limit=50&flatten_fields=true&includes=all&sort_by_special=ec_total_pts&sort_order_special=DESC"
     end
 
     if !special_filters.empty?
@@ -109,6 +109,25 @@ class SchoolsController < ApplicationController
 
     school_data = Portal.new.fetch(url)
 
+    if school_type != 'ecs'
+      url = "schools.json?flatten_fields=true" <<
+        "&include_option_labels=true&includes=all" <<
+        "&filter[field_bcode]=88888,99999" <<
+        "&filter_op[field_bcode]=IN"
+      response = Portal.new.fetch(url)
+      detroit_and_state = response['data'].each do |s|
+        if s['field_bcode'] == '88888'
+          includes = response['included'].
+            select { |i| i['id'] == '88888' }
+          @detroit = SchoolData.new s.merge(included: includes)
+        elsif s['field_bcode'] == '99999'
+          includes = response['included'].
+            select { |i| i['id'] == '99999' }
+          @state = SchoolData.new s.merge(included: includes)
+        end
+      end
+    end
+
     (redirect_to root_path and return) if school_data.first =~ /does not exist/
 
     @school = SchoolData.new school_data['data'].merge(included: school_data['included'])
@@ -117,6 +136,16 @@ class SchoolsController < ApplicationController
       @school.extend(EarlyChildhood)
     else
       @school.extend(School)
+      if @school.high?
+        @school.extend(HighSchool)
+        @detroit.extend(HighSchool)
+        @state.extend(HighSchool)
+      end
+      if @school.k8?
+        @school.extend(K8School)
+        @detroit.extend(K8School)
+        @state.extend(K8School)
+      end
     end
 
     if @school.earlychild?

@@ -39,6 +39,10 @@ module School
     school_profiles.andand.field_facebook_url
   end
 
+  def grades_served
+    school_profiles.andand.field_grades_served
+  end
+
   def photo
     if !photos.empty?
       photos.andand.first['filename']
@@ -199,55 +203,11 @@ module School
     school_profiles.andand.field_applications_received
   end
 
-  ["math", "reading", "science", "english"].each do |s|
-    define_method("#{s}_ready_average") do
-      if act_2014s
-        act_2014s.send("#{s}PercentMeeting").to_f
-      end
-    end
-
-    define_method("#{s}_growth_average") do
-      nil
-    end
-
-    define_method("state_#{s}_ready_average") do
-      method = "@state_#{s}_ready".to_sym
-      instance_variable_get(method) ||
-      instance_variable_set(method, rand(1..50))
-    end
-
-    define_method("detroit_#{s}_ready_average") do
-      method = "@detroit_#{s}_ready".to_sym
-      instance_variable_get(method) ||
-      instance_variable_set(method, rand(1..50))
-    end
+  def high?
+    school_type == 'hs'
   end
 
-  def high_school_graduate_average
-    @graduate_high_school ||= nil
-  end
-
-  def enroll_in_college_average
-    @college_enrool ||= nil
-  end
-
-  def finish_some_college_average
-    @college_finish ||= nil
-  end
-
-  def college_ready?
-    math_ready_average || reading_ready_average ||
-    science_ready_average || english_ready_average
-  end
-
-  def subject_growth?
-    math_growth_average || reading_growth_average ||
-    science_growth_average || english_growth_average
-  end
-
-  def go_to_college?
-    high_school_graduate_average ||
-    enroll_in_college_average ||
-    finish_some_college_average
+  def k8?
+    school_type == 'k8'
   end
 end

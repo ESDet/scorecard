@@ -1,0 +1,80 @@
+.visual
+  .title= title
+  .graph.growth(data-subject="#{subject}" data-school-growth="#{school_growth}" data-state-growth="#{state_growth}" data-detroit-growth="#{detroit_growth}")
+    .left-bars
+      .negative
+        .text
+        .number
+      .negative
+        .text
+        .number
+    .zero-bar
+      .text= zero_bar
+    .right-bars
+      .positive
+        .text
+        .number
+      .positive
+        .text
+        .number
+
+:javascript
+  $(function() {
+    var setGrowth = function(el, index, growth) {
+      var neg = $(el.find('.negative').get(index));
+      var pos = $(el.find('.positive').get(index));
+      if (growth > 0) {
+        var width = growth * 2;
+        neg.css('width', '0px');
+        pos.css('width', width + 'px');
+        var text = pos.find('.text'),
+            num  = pos.find('.number');
+        if (index == 0) {
+          text.text('SCHOOL');
+        } else {
+          text.text('DETROIT');
+        }
+        text.css('margin-left',
+          (pos.width() + 10) + 'px');
+        num.css('margin-left',
+          (pos.width() + 10) + 'px');
+        num.text(Math.round(growth * 100) / 100);
+      } else if (growth < 0) {
+        var width = growth * -2;
+        neg.css('width', width + 'px');
+        pos.css('width', '0px');
+        var text = neg.find('.text'),
+            num  = neg.find('.number');
+        if (index == 0) {
+          text.text('SCHOOL');
+        } else {
+          text.text('DETROIT');
+        }
+        text.css('margin-left',
+          -(neg.width() + 70) + 'px');
+        num.css('margin-left',
+          -(neg.width() + 70) + 'px');
+        num.text(Math.round(growth * 100) / 100);
+      } else {
+        neg.css('width', '0px');
+        pos.css('width', '0px');
+      }
+    };
+
+    $('.growth').each(function(i, n) {
+      var el = $(n);
+      var subject = el.data('subject')
+      var schoolGrowth = el.data('school-growth');
+      var detroitGrowth = el.data('detroit-growth');
+      var stateGrowth = el.data('state-growth');
+      if (stateGrowth < 0) {
+        schoolGrowth += stateGrowth;
+        detroitGrowth += stateGrowth;
+      } else if (stateGrowth > 0) {
+        schoolGrowth -= stateGrowth;
+        detroitGrowth -= stateGrowth;
+      }
+      setGrowth(el, 0, schoolGrowth);
+      setGrowth(el, 1, detroitGrowth);
+    });
+  });

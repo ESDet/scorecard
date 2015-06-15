@@ -22,7 +22,7 @@
               .compare-arrow-icon
               Compare
             to other schools
-          =render 'field', key: 'Grades Served', value: @school.grades_served.join(", ")
+          =render 'field', key: 'Grades Served', value: @school.grades_served_label
           .field.border-bottom
             .transportation-icon
               .icon-text
@@ -68,10 +68,13 @@
             %a.external{:href => @school.facebook_url, :target => '_blank'} Check
             out this school's Facebook
   .container_12.closed.section-title(data-target="performance")
-    %h2 Performance
+    %h2 SCHOOL PERFORMANCE
   .container_12.info-region
     #performance.hide
-      = render "high_school_academics"
+      - if @school.high?
+        = render "high_school_academics"
+      - else
+        = render "k_8_academics"
   .container_12.closed.section-title(data-target="community")
     %h2 Community and Extracurricular Activities
   .container_12.info-region
@@ -129,7 +132,7 @@
       var moveMapElement = function() {
         if ($(window).width() > 800) {
           $('.school-map-wrapper').first().detach().
-            appendTo('#overview');
+            appendTo('#overview .school-header').first();
         } else {
           $('.school-map-wrapper').first().detach().
             insertAfter('#overview .fields').first();
@@ -141,7 +144,15 @@
       Map({
         center: #{@school.center.to_json},
         markers: #{[@school.marker].to_json},
-        zoom: 15
+        zoom: 15,
+        zoomControl: false,
+        dragging: false,
+        touchZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        tap: false,
+        keyboard: false
       });
 
       if (!$('.overview-text').first().text().trim()) {

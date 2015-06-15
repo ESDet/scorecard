@@ -58,7 +58,7 @@ class SchoolData < OpenStruct
 
   def marker
     if grades_served
-      grades = "Grades #{grades_served}"
+      grades = "Grades #{grades_served.join(", ")}"
     end
     {
       id: tid,

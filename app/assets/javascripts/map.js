@@ -2,8 +2,15 @@ $(document).ready(function() {
   Map = function(args) {
     L.Icon.Default.imagePath = '/assets/images';
 
-    var _map = L.map('map').
-      setView(args.center, args.zoom);
+    var _center = args.center;
+    delete args['center'];
+    var _markers = args.markers;
+    delete args['markers'];
+    var _zoom = args.zoom;
+    delete args['zoom'];
+
+    var _map = L.map('map', args).
+      setView(_center, _zoom);
 
     L.tileLayer('http://a.tiles.mapbox.com/v4/esd.ExcellentSchoolsDetroit/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXNkIiwiYSI6InBab1ZlUWsifQ.Gwmbd8beRpVIc2kw3xs_QA', {
       minZoom: 11,
@@ -15,13 +22,13 @@ $(document).ready(function() {
     });
 
     var _layers = [];
-    for (var m in args.markers) {
-      if (args.markers[m].center) {
+    for (var m in _markers) {
+      if (_markers[m].center) {
         var marker = new customMarker(
-          args.markers[m].center,
-          {id: args.markers[m].id}
+          _markers[m].center,
+          {id: _markers[m].id}
         ).addTo(_map);
-        marker.bindPopup(args.markers[m].html);
+        marker.bindPopup(_markers[m].html);
         _layers.push(marker);
       }
     }

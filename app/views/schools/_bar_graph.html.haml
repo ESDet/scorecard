@@ -1,0 +1,40 @@
+.visual
+  .title= title
+  .graph
+    .number(data-num="#{school_average}")
+      .text
+        = school_average ? "#{school_average}%" : "N/A"
+  .bounds
+    .left-bounds 0%
+    .line-graph
+      .line-marker(data-num="#{detroit_average}")
+        .text DETROIT
+        .number
+          = detroit_average ? "#{detroit_average}%" : "N/A"
+      .line-marker(data-num="#{state_average}")
+        .text STATE
+        .number
+          = state_average ? "#{state_average}%" : "N/A"
+    .right-bounds 100%
+
+:javascript
+  $(function() {
+    $('.graph > .number').each(function(i, n) {
+      var el = $(n);
+      var num = $(n).data('num');
+      var width;
+      if (num > 0 && num < 1) { width = 1; }
+      if (num == "") {
+        width = 0;
+        el.find('.text').
+          css('color', 'black').
+          css('text-shadow', 'none');
+      }
+      el.css('width', width + "%");
+    });
+    $('.line-marker').each(function(i, n) {
+      var el = $(n);
+      var num = el.data('num');
+      el.css('margin-left', num);
+    });
+  });

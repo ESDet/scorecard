@@ -1,0 +1,37 @@
+.stat-region
+  %h2 Are students on track and academically prepared?
+  %h3 Percentage of students scoring proficient or higher on the state test, 2015
+  .content.four
+    = render 'bar_graph', title: 'Math',
+      num: @school.math_ready
+    = render 'bar_graph', title: 'Reading and Writing',
+      num: @school.ela_ready
+    = render 'bar_graph', title: 'Science',
+      num: @school.science_ready
+    = render 'bar_graph', title: 'Social Studies',
+      num: @school.socstud_ready
+    .what-this-means WHAT THIS MEANS
+.stat-region
+  %h2 Are students improving academically?
+  %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2015
+  .content.two
+    = render 'two_bar_graph', title: 'Math',
+      subject: 'math',
+      school_growth: @school.math_growth,
+      state_growth: @state.math_growth,
+      detroit_growth: @detroit.math_growth,
+      zero_bar: 'STATE'
+    = render 'two_bar_graph', title: 'Reading and Writing',
+      subject: 'ela',
+      school_growth: @school.ela_growth,
+      state_growth: @state.ela_growth,
+      detroit_growth: @detroit.ela_growth,
+      zero_bar: 'STATE'
+    .what-this-means WHAT THIS MEANS
+.stat-region
+  %h2 What do students and teachers think about this school?
+  %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+  .content
+    .visual
+      .title
+    .what-this-means WHAT THIS MEANS
