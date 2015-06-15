@@ -4,4 +4,4 @@
     .field-value
       - value.each do |i|
         %li
-          %span= i.split('_').map { |l| l.capitalize }.join(" ")
+          %span= i['label']

@@ -58,7 +58,7 @@ class SchoolData < OpenStruct
 
   def marker
     if grades_served
-      grades = "Grades #{grades_served.join(", ")}"
+      grades = "Grades #{grades_served}"
     end
     {
       id: tid,
@@ -85,7 +85,8 @@ class SchoolData < OpenStruct
   def grades_served
     unless earlychild?
       if school_profiles
-        school_profiles.field_grades_served.to_h.values
+        school_profiles.field_grades_served.andand.
+          map { |g| g['label'] }
       end
     end
   end

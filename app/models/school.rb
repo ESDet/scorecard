@@ -50,7 +50,7 @@ module School
   end
 
   def dress_code
-    school_profiles.andand.field_dress_code
+    school_profiles.andand.field_dress_code.andand.label
   end
 
   def bullying_policy
@@ -112,7 +112,7 @@ module School
   end
 
   def special_ed_level
-    school_profiles.andand.field_special_ed_level
+    school_profiles.andand.field_special_ed_level.andand.label
   end
 
   def special_ed_programs
@@ -120,7 +120,7 @@ module School
   end
 
   def ell_level
-    school_profiles.andand.field_ell_level
+    school_profiles.andand.field_ell_level.andand.label
   end
 
   def ell_languages
