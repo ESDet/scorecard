@@ -22,19 +22,34 @@
     $('.graph > .number').each(function(i, n) {
       var el = $(n);
       var num = $(n).data('num');
-      var width;
-      if (num > 0 && num < 1) { width = 1; }
+      if (num > 0 && num < 1) { num = 1; }
       if (num == "") {
-        width = 0;
+        num = 0;
         el.find('.text').
-          css('color', 'black').
+          css('color', 'grey').
           css('text-shadow', 'none');
       }
-      el.css('width', width + "%");
+      el.css('width', num + "%");
     });
     $('.line-marker').each(function(i, n) {
       var el = $(n);
       var num = el.data('num');
       el.css('margin-left', num);
+    });
+    $('.line-graph').each(function(i, n) {
+      var markers = $(n).find('.line-marker');
+      var marginOne = $(markers[0]).position().left,
+          marginTwo = $(markers[1]).position().left;
+      if (marginOne < 0) { marginOne *= -1; }
+      if (marginTwo < 0) { marginTwo *= -1; }
+      if (marginTwo - marginOne < 27) {
+        var numOne = $(markers[0]).data('num');
+        var numTwo = $(markers[1]).data('num');
+        if (numTwo > numOne) {
+          $(markers[0]).css('margin-top', '50px');
+        } else {
+          $(markers[1]).css('margin-top', '50px');
+        }
+      }
     });
   });

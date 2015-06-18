@@ -20,44 +20,51 @@
 
 :javascript
   $(function() {
-    var setGrowth = function(el, index, growth) {
+    var setText = function(el, index) {
+      if (index == 0) {
+        el.text('SCHOOL');
+      } else {
+        el.text('DETROIT');
+      }
+    };
+
+    var setBars = function(pos, neg, posWidth, negWidth, margin, displayText, index) {
+      pos.css('width', posWidth + 'px');
+      neg.css('width', negWidth + 'px');
+      var text, num;
+      if (posWidth > 0) {
+        text = pos.find('.text');
+        num = pos.find('.number');
+      } else {
+        text = neg.find('.text');
+        num = neg.find('.number');
+      }
+      setText(text, index);
+      text.css('margin-left', margin + 'px');
+      num.css('margin-left', margin + 'px');
+      if (displayText == 'N/A') {
+        num.css('color', 'grey');
+      }
+      num.text(displayText);
+    };
+
+    var displayGrowth = function(el, index, growth) {
       var neg = $(el.find('.negative').get(index));
       var pos = $(el.find('.positive').get(index));
       if (growth > 0) {
-        var width = growth * 2;
-        neg.css('width', '0px');
-        pos.css('width', width + 'px');
-        var text = pos.find('.text'),
-            num  = pos.find('.number');
-        if (index == 0) {
-          text.text('SCHOOL');
-        } else {
-          text.text('DETROIT');
-        }
-        text.css('margin-left',
-          (pos.width() + 10) + 'px');
-        num.css('margin-left',
-          (pos.width() + 10) + 'px');
-        num.text(Math.round(growth * 100) / 100);
+        setBars(pos, neg, growth, 0, pos.width() + 10, Math.round(growth * 100) / 100, index);
       } else if (growth < 0) {
-        var width = growth * -2;
-        neg.css('width', width + 'px');
-        pos.css('width', '0px');
-        var text = neg.find('.text'),
-            num  = neg.find('.number');
-        if (index == 0) {
-          text.text('SCHOOL');
-        } else {
-          text.text('DETROIT');
-        }
-        text.css('margin-left',
-          -(neg.width() + 70) + 'px');
-        num.css('margin-left',
-          -(neg.width() + 70) + 'px');
-        num.text(Math.round(growth * 100) / 100);
+        setBars(pos, neg, 0, growth * -1, -(neg.width() + 70), Math.round(growth * 100) / 100, index);
       } else {
-        neg.css('width', '0px');
-        pos.css('width', '0px');
+        setBars(pos, neg, 0, 0, 10, 'N/A', index);
+      }
+    };
+
+    var adjGrowth = function(el, baseGrowth, growth, index) {
+      if (growth != "") {
+        displayGrowth(el, index, growth + baseGrowth);
+      } else {
+        displayGrowth(el, index, 0);
       }
     };
 
@@ -67,14 +74,14 @@
       var schoolGrowth = el.data('school-growth');
       var detroitGrowth = el.data('detroit-growth');
       var stateGrowth = el.data('state-growth');
-      if (stateGrowth < 0) {
-        schoolGrowth += stateGrowth;
-        detroitGrowth += stateGrowth;
-      } else if (stateGrowth > 0) {
-        schoolGrowth -= stateGrowth;
-        detroitGrowth -= stateGrowth;
+      if (stateGrowth != "") {
+        if (stateGrowth < 0) {
+          adjGrowth(el, stateGrowth, schoolGrowth, 0);
+          adjGrowth(el, stateGrowth, detroitGrowth, 1);
+        } else if (stateGrowth > 0) {
+          adjGrowth(el, -stateGrowth, schoolGrowth, 0);
+          adjGrowth(el, -stateGrowth, detroitGrowth, 1);
+        }
       }
-      setGrowth(el, 0, schoolGrowth);
-      setGrowth(el, 1, detroitGrowth);
     });
   });

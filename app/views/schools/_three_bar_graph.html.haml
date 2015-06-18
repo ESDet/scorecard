@@ -1,0 +1,30 @@
+.visual
+  .title= title
+  .graph
+    .number
+      .width(data-num="#{school_average}")
+    .text
+      = school_average ? "#{school_average}%" : "N/A"
+  .graph
+    .number
+      .width(data-num="#{detroit_average}")
+    .text
+      = detroit_average ? "#{detroit_average}%" : "N/A"
+  .graph
+    .number
+      .width(data-num="#{state_average}")
+    .text
+      = state_average ? "#{state_average}%" : "N/A"
+
+  :javascript
+    $(function() {
+      $('.bar .graph > .number > .width').each(function(i, n) {
+        var el  = $(n),
+            num = el.data('num');
+        if (num != "") {
+          el.css('width', el.data('num') + '%');
+        } else {
+          el.css('width', '0px');
+        }
+      });
+    });

@@ -4,7 +4,7 @@
     %h2
       = @school.display_name
   .container_12.clear_floats.section-title(data-target="overview")
-    %h2 Overview
+    %h2 OVERVIEW
   .container_12.info-region
     #overview
       .school-header
@@ -76,7 +76,7 @@
       - else
         = render "k_8_academics"
   .container_12.closed.section-title(data-target="community")
-    %h2 Community and Extracurricular Activities
+    %h2 COMMUNITY AND EXTRACURRICULAR ACTIVITIES
   .container_12.info-region
     #community.hide
       .middle
@@ -110,7 +110,7 @@
           =render 'field', key: 'Student Clubs - Language', value: @school.student_clubs_language
           =render 'field_list', key: 'Student Clubs - Other', value: @school.student_clubs_other
   .container_12.closed.section-title(data-target="other")
-    %h2 Other Links
+    %h2 OTHER LINKS
   .container_12.info-region
     #other.hide
       .middle

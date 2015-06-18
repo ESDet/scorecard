@@ -2,20 +2,23 @@ module K8School
   def self.extend_object(o)
     super
     ['math', 'ela', 'science', 'socstud'].each do |s|
-      define_method("#{s}_prepared") do
-        float_value(esd_k8_2015s, "frac_prof#{s}")
-      end
+      o["#{s}_prepared".to_sym] = int_value(o, :esd_k8_2015s, "frac_prof#{s}")
 
-      define_method("#{s}_growth") do
-        float_value(esd_k8_2015s, "mean_pctl_#{s}")
-      end
+      o["#{s}_growth".to_sym] = float_value(o, :esd_k8_2015s, "mean_pctl_#{s}")
     end
+    o[:reading_growth] = float_value(o, :esd_k8_2015s, "mean_pctl_reading")
   end
 
   private
 
-  def float_value(set, value)
-    if v = set.andand.send(value)
+  def self.int_value(o, set, value)
+    if v = o[set].andand.send(value)
+      (v.to_f * 100).to_i
+    end
+  end
+
+  def self.float_value(o, set, value)
+    if v = o[set].andand.send(value)
       v.to_f
     end
   end
