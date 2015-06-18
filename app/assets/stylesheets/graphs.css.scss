@@ -1,0 +1,395 @@
+@import 'colors';
+@import 'fonts';
+
+.stat-region {
+  h2 {
+    margin-top: 20px;
+    color: $navy;
+    font-size: 17px;
+    font-family: 'Aleo Bold';
+    letter-spacing: 1.3px;
+    text-align: center;
+  }
+  h3 {
+    margin-top: -10px;
+    color: $onyx;
+    font-size: 15px;
+    font-family: 'Lato Italic';
+    text-align: center;
+    letter-spacing: 0.1px;
+  }
+
+  .content {
+    width: 775px;
+    margin-top: 30px;
+    margin-left: 12.1%;
+    text-align: center;
+  }
+
+  .content .visual {
+    float: left;
+  }
+
+  .content .visual .title {
+    background-color: $cyan;
+    color: white;
+    font-family: 'Aleo Bold';
+    font-size: 13px;
+    padding: 4px 0;
+  }
+
+  .content.two .visual {
+    width: 365px;
+    margin-bottom: 40px;
+  }
+
+  .content.two .visual:nth-of-type(1) {
+    margin-right: 45px;
+  }
+
+  .content.four .visual {
+    width: 145px;
+    margin-right: 64px;
+  }
+
+  .content.four .visual:nth-of-type(4) {
+    margin-right: 0;
+  }
+
+  .content .graph {
+    background-color: $light_cyan;
+    width: 100%;
+    margin-top: 4px;
+    & > .number {
+      height: 100%;
+      background-color: $green;
+      .text {
+        text-align: left;
+        color: white;
+        font-family: 'Lato Bold';
+        font-size: 18px;
+        padding: 13px 0 13px 7px;
+        text-shadow:
+          -1px -1px 0 $green,
+          1px -1px 0 $green,
+          -1px 1px 0 $green,
+          1px 1px 0 $green;
+      }
+    }
+  }
+
+  .content.two .graph {
+    height: 68px;
+  }
+
+  .content.four .graph {
+    height: 45px;
+  }
+
+  .visual .bounds {
+    margin-top: 4px;
+    height: 6px;
+    border-left: 1px solid $navy;
+    border-right: 1px solid $navy;
+    .left-bounds, .right-bounds {
+      margin-top: 8px;
+      width: 1px;
+      font-family: 'Lato Light';
+      font-size: 10px;
+    }
+    .left-bounds {
+      float: left;
+      margin-left: -4px;
+    }
+    .right-bounds {
+      float: right;
+      margin-right: 5px;
+    }
+  }
+
+  .bounds .line-graph {
+    width: 100%;
+    height: 3.5px;
+    border-bottom: 1px solid $navy;
+    .line-marker {
+      height: 10px;
+      float: left;
+      width: 3px;
+      background: $yellow;
+      font-family: 'Lato Light';
+      font-size: 13px;
+      & > .text {
+        margin-top: 20px;
+        margin-left: -10px;
+        font-family: 'Lato Light';
+        font-size: 10px;
+      }
+      & > .number {
+        margin-left: -10px;
+        font-family: 'Lato Bold';
+        font-size: 13px;
+        color: $green;
+      }
+    }
+  }
+
+  .content.two .graph .left-bars {
+    width: 49.5%;
+    height: 100%;
+    float: left;
+    .negative {
+      margin-top: 5px;
+      height: 25px;
+      float: right;
+      background: $red;
+      clear: right;
+      & > .text {
+        margin-top: -2px;
+        font-family: 'Lato Light';
+        font-size: 11px;
+      }
+      & > .number {
+        margin-top: -1px;
+        font-family: 'Lato Bold';
+        font-size: 16px;
+        color: $red;
+      }
+    }
+  }
+
+  .content.two .graph .right-bars {
+    width: 49.5%;
+    height: 100%;
+    float: right;
+    .positive {
+      margin-top: 5px;
+      height: 25px;
+      float: left;
+      background: $green;
+      clear: left;
+      & > .text {
+        margin-top: -2px;
+        font-family: 'Lato Light';
+        font-size: 11px;
+      }
+      & > .number {
+        margin-top: -1px;
+        font-family: 'Lato Bold';
+        font-size: 16px;
+        color: $green;
+      }
+    }
+  }
+
+  .content.two .graph .zero-bar {
+    float: left;
+    width: 1%;
+    height: 100%;
+    background-color: $yellow;
+    .text {
+      padding: 1px;
+      margin-top: 70px;
+      margin-left: -20px;
+      background-color: $yellow;
+      color: white;
+      font-family: 'Lato Bold';
+      font-size: 10px;
+      width: 60px;
+    }
+
+  }
+
+  .content.two.fivee {
+    & > .visual {
+      width: 345px;
+      margin-right: 0px;
+      margin-bottom: 0px;
+    }
+    & > .visual > .title,
+    & > .visual > .graph {
+      margin-top: 0px;
+      float: right;
+      width: 176px;
+      font-family: 'Aleo Bold';
+    }
+    & > .visual > .graph {
+      height: 40px;
+      font-family: 'Lato Black';
+      color: white;
+      & > .text {
+        padding-top: 10px;
+      }
+    }
+    & > .visual .square {
+      margin-right: 105px;
+      margin-top: 110px;
+      clear: right;
+      width: 15px;
+      height: 15px;
+      float: right;
+      background-color: grey;
+      & > .text {
+        font-family: 'Lato Regular';
+        font-size: 13px;
+        width: 135px;
+      }
+    }
+    & > .visual:nth-of-type(2) {
+      margin-left: 30px;
+      float: left;
+      width: 250px;
+      & > .graph {
+        float: left;
+        position: relative;
+        width: 190px;
+        height: 190px;
+        background-color: white;
+      }
+      .top-left, .top-right,
+      .bottom-left, .bottom-right {
+        font-family: 'Lato Bold';
+        font-size: 12px;
+        position: absolute;
+        background-color: grey;
+        width: 92.5px;
+        height: 92.5px;
+      }
+      .top-left, .top-right {
+        padding-top: 9px;
+        top: 0;
+      }
+      .top-left, .bottom-left {
+        text-align: left;
+        padding-left: 8px;
+        left: 0;
+      }
+      .top-right, .bottom-right {
+        text-align: right;
+        padding-right: 8px;
+        right: 0;
+      }
+      .bottom-left, .bottom-right {
+        padding-top: 50px;
+        bottom: 0;
+      }
+      .top-left {
+        -moz-border-radius: 0 0 -50px 0;
+        -webkit-border-radius: 0 0 -50px 0;
+        border-radius: 0 0 -50px 0;
+      }
+      .circle {
+        .outer {
+          position: absolute;
+          top: 45px;
+          left: 45px;
+          background-color: white;
+          width: 100px;
+          height: 100px;
+          z-index: 1000;
+          -moz-border-radius: 50px;
+          -webkit-border-radius: 50px;
+          border-radius: 50px;
+        }
+        .inner {
+          padding-top: 25px;
+          font-family: 'Lato Bold';
+          font-size: 12px;
+          position: absolute;
+          top: 50px;
+          left: 50px;
+          z-index: 2000;
+          background-color: grey;
+          width: 90px;
+          height: 90px;
+          -moz-border-radius: 45px;
+          -webkit-border-radius: 45px;
+          border-radius: 45px;
+        }
+      }
+      .legend {
+        font-family: 'Lato Regular';
+        font-size: 13px;
+        float: right;
+        width: 50px;
+        text-align: left;
+        & > .key {
+          margin: 1px 0;
+          width: 20px;
+          height: 20px;
+        }
+        .green { background-color: $fivee_green; }
+        .light-green { background-color: $fivee_light_green; }
+        .yellow { background-color: $fivee_yellow; }
+        .orange { background-color: $fivee_orange; }
+        .red { background-color: $fivee_red; }
+      }
+    }
+  }
+
+  .content.four.bar {
+    & > .labels {
+      float: left;
+      padding-top: 40px;
+      text-align: right;
+      margin-right: 5px;
+      & > .label {
+        font-family: 'Lato Bold';
+        font-size: 10px;
+        margin-bottom: 35px;
+      }
+      & > .label:nth-of-type(1) {
+        color: $green;
+      }
+    }
+    & > .visual {
+      width: 171px;
+      margin-right: 10px;
+    }
+    & > .visual > .graph { position: relative; }
+    & > .visual > .graph > .number,
+    & > .visual > .graph > .text {
+      position: absolute;
+    }
+    & > .visual > .graph > .number {
+      left: 0;
+      width: 130px;
+      background-color: inherit;
+      & > .width {
+        height: inherit;
+        background-color: $green;
+      }
+    }
+    & > .visual > .graph > .text {
+      right: 0;
+      padding: 6px 4px;
+      height: 30px;
+      width: 38px;
+      margin-top: 8px;
+      font-family: 'Lato Black';
+      font-size: 15px;
+      color: $green;
+    }
+    & > .visual > .graph:nth-of-type(2) {
+      & > .text {
+        background-color: $green;
+        color: white;
+      }
+    }
+  }
+
+  .content .what-this-means {
+    width: 100%;
+    display: inline-block;
+    margin-top: 60px;
+    background: $light_cyan;
+    height: 30px;
+    text-align: left;
+    padding: 9px;
+    font-family: 'Aleo Regular';
+    font-size: 11px;
+  }
+}
+
+.stat-region:last-of-type {
+  border-bottom: none;
+}
