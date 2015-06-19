@@ -1,0 +1,120 @@
+#overview
+  .middle
+    .section.border-bottom
+      .school-header
+        - if school.photo
+          .school-image
+            %img(src="https://portal.excellentschoolsdetroit.org/files/#{school.photo}")
+        .school-title
+          %h1= school.display_name
+          .grades-served= "Grades Served: #{school.grades_served.join(', ')}"
+      .overview-text
+        =raw simple_format(school.overview_text)
+      .info-bar
+        .item
+          .contact
+            .envelope-icon
+            %a{href: "mailto:#{school.email}"} Email
+            this school
+        .item
+          .contact
+            .phone-icon
+            %a{href: "tel:#{school.phone}"} Call
+            this school
+        .item
+          .contact
+            .website-icon
+            %a.external{:href => school.school_url, :target => '_blank'} Visit
+            this school's website
+        .item.compare
+          %a(href="/compare/+#{school.tid}")
+            COMPARE TO OTHER SCHOOLS
+    .section.border-bottom
+      .header
+        .left-header How is this school ranked?
+      .three-column
+        .column
+          .title Excellent Schools Detroit
+          .content
+            .rounded-square.green-background.centered-element
+              .grade
+                = school.excellent_schools_grade || 'N/A'
+        .column
+          .title State
+          .content
+            .rounded-square.light-cyan-background.centered-element
+              - if school.mighigan_percentile
+                .big
+                  = school.michigan_percentile
+                  .suffix th
+                .small PERCENTILE OUT OF 100
+              - else
+                .grade
+                  .navy N/A
+        .column
+          .title Governance
+          .content
+            .header= school.governance
+            .key-value.padding
+              .key Authorizer:
+              .value= school.authorizer
+            .key-value.padding
+              .key Operator:
+              .value= school.operator
+      .what-this-means WHAT THIS MEANS
+    .section.border-bottom
+      .three-column
+        .column
+          .title Hours
+          .content
+            .header= school.hours || 'N/A'
+            %ul
+              - school.before_after_care.each do |c|
+                %li= c
+        .column
+          .title= school.street
+          .content
+            .school-map-wrapper
+              #map
+        .column
+          .title Transportation
+          .content
+            %ul
+              - school.transportation_options.each do |t|
+                %li= t
+            .key-value.padding
+              .key Average Commute:
+              .value= "#{school.average_commute} miles"
+    .section
+      .header
+        .left-header Demographics
+        .right-header School Policies
+      .three-column
+        .column
+          .title Number of Students
+          .content
+            .header.big= school.total_enrollment
+            .race= "African American: #{school.african_american_enrollment || 'N/A'}"
+            .race= "Asian: #{school.asian_enrollment || 'N/A'}"
+            .race= "Hispanic: #{school.hispanic_enrollment || 'N/A'}"
+            .race= "White: #{school.white_enrollment || 'N/A'}"
+            .race= "Other: #{school.other_enrollment || 'N/A'}"
+        .column
+          .title Student Profile
+          .content
+            .text= "Male: #{school.male_enrollment || 'N/A'}"
+            .text= "Female: #{school.female_enrollment || 'N/A'}"
+            .text= "Free and reduced-price lunch: #{school.free_reduced_lunch || 'N/A'}"
+            .text= "English language learner: #{school.english_learner || 'N/A'}"
+            .text= "Special education: #{school.special_education || 'N/A'}"
+        .column
+          .title Application Required
+          .content
+            .header Yes&nbsp;&nbsp;No
+            .text.centered-text (see How To Apply)
+          .title Dress Code
+          .content
+            .header Yes&nbsp;&nbsp;No
+          .title Bullying Policy
+          .content
+            .header Yes&nbsp;&nbsp;No

@@ -20,9 +20,7 @@
   }
 
   .content {
-    width: 775px;
     margin-top: 30px;
-    margin-left: 12.1%;
     text-align: center;
   }
 
@@ -44,16 +42,22 @@
   }
 
   .content.two .visual:nth-of-type(1) {
-    margin-right: 45px;
+    float: left;
+  }
+
+  .content.two .visual:nth-of-type(2) {
+    float: right;
   }
 
   .content.four .visual {
     width: 145px;
-    margin-right: 64px;
   }
 
-  .content.four .visual:nth-of-type(4) {
-    margin-right: 0;
+  .content.four .visual:nth-of-type(2) {
+    margin: 0 36px 0 74px;
+  }
+  .content.four .visual:nth-of-type(3) {
+    margin: 0 74px 0 36px;
   }
 
   .content .graph {
@@ -375,18 +379,6 @@
         color: white;
       }
     }
-  }
-
-  .content .what-this-means {
-    width: 100%;
-    display: inline-block;
-    margin-top: 60px;
-    background: $light_cyan;
-    height: 30px;
-    text-align: left;
-    padding: 9px;
-    font-family: 'Aleo Regular';
-    font-size: 11px;
   }
 }
 

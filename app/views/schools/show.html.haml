@@ -3,37 +3,24 @@
     %a.back-arrow-icon(href="/")
     %h2
       = @school.display_name
-  .container_12.clear_floats.section-title(data-target="overview")
+  .container_12.clear_floats.region-title(data-target="overview")
     %h2 OVERVIEW
   .container_12.info-region
-    #overview
-      .school-header
-        .middle
-          - if @school.photo
-            .school-image
-              %img(src="https://portal.excellentschoolsdetroit.org/files/#{@school.photo}")
-          .school-title
-            %h1= @school.display_name
+    = render 'overview', school: @school
+  .container_12.closed.region-title(data-target="performance")
+    %h2 SCHOOL PERFORMANCE
+  .container_12.info-region
+    #performance.hide
+      - if @school.high?
+        = render "high_school_academics"
+      - else
+        = render "k_8_academics"
+  .container_12.closed.region-title(data-target="community")
+    %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
+  .container_12.info-region
+    #community.hide
       .middle
-        .fields.clear_floats
-          =render 'field', key: 'Excellent Schools Detroit Rating', value: 'B'
-          .field.border-bottom
-            %a(href="/compare/+#{@school.tid}")
-              .compare-arrow-icon
-              Compare
-            to other schools
-          =render 'field', key: 'Grades Served', value: @school.grades_served_label
-          .field.border-bottom
-            .transportation-icon
-              .icon-text
-                No transportation
-            .schedule-icon
-              .icon-text
-                Year-round schedule
-          =render 'field', key: 'Principal', value: @school.principal
-          =render 'field', key: 'Governance', value: @school.governance
-          =render 'field', key: 'Authorizer', value: @school.authorizer
-          =render 'field', key: 'Operator', value: @school.operator
+        .fields
           =render 'field', key: 'Application Process', value: @school.application_process
           =render 'field', key: 'Admissions URL', value: @school.admissions_url
           =render 'field', key: 'Application Fee', value: @school.application_fee
@@ -43,44 +30,6 @@
           =render 'field', key: 'Dress Code', value: @school.dress_code
           =render 'field', key: 'Bullying Policy', value: @school.bullying_policy
 
-        .school-map-wrapper
-          #map
-        .overview-text
-          =raw simple_format(@school.overview_text)
-        - if !@school.email.blank?
-          .contact
-            .envelope-icon
-            %a{href: "mailto:#{@school.email}"} Email
-            this school
-        - if !@school.phone.blank?
-          .contact
-            .phone-icon
-            %a{href: "tel:#{@school.phone}"} Call
-            this school
-        - if !@school.school_url.blank?
-          .contact
-            .website-icon
-            %a.external{:href => @school.school_url, :target => '_blank'} Visit
-            this school's website
-        - if !@school.facebook_url.blank?
-          .contact
-            .facebook-icon
-            %a.external{:href => @school.facebook_url, :target => '_blank'} Check
-            out this school's Facebook
-  .container_12.closed.section-title(data-target="performance")
-    %h2 SCHOOL PERFORMANCE
-  .container_12.info-region
-    #performance.hide
-      - if @school.high?
-        = render "high_school_academics"
-      - else
-        = render "k_8_academics"
-  .container_12.closed.section-title(data-target="community")
-    %h2 COMMUNITY AND EXTRACURRICULAR ACTIVITIES
-  .container_12.info-region
-    #community.hide
-      .middle
-        .fields
           =render 'field', key: 'Parent Involvement', value: @school.parent_involvement
           =render 'field_list', key: 'Academic Focus', value: @school.academic_focus
           =render 'field_list', key: 'Instructional Model', value: @school.instructional_model
@@ -109,7 +58,7 @@
           =render 'field', key: 'Student Clubs - Dance', value: @school.student_clubs_dance
           =render 'field', key: 'Student Clubs - Language', value: @school.student_clubs_language
           =render 'field_list', key: 'Student Clubs - Other', value: @school.student_clubs_other
-  .container_12.closed.section-title(data-target="other")
+  .container_12.closed.region-title(data-target="other")
     %h2 OTHER LINKS
   .container_12.info-region
     #other.hide
@@ -129,18 +78,6 @@
 
   :javascript
     $(document).ready(function(e) {
-      var moveMapElement = function() {
-        if ($(window).width() > 800) {
-          $('.school-map-wrapper').first().detach().
-            appendTo('#overview .school-header').first();
-        } else {
-          $('.school-map-wrapper').first().detach().
-            insertAfter('#overview .fields').first();
-        }
-      };
-      moveMapElement();
-      $(window).resize(function() { moveMapElement(); });
-
       Map({
         center: #{@school.center.to_json},
         markers: #{[@school.marker].to_json},
@@ -163,11 +100,11 @@
       }
 
       if ($(window).width() > 600) {
-        $('.section-title').removeClass('closed');
+        $('.region-title').removeClass('closed');
         $('.info-region > div').removeClass('hide');
       }
 
-      $('.section-title').click(function() {
+      $('.region-title').click(function() {
         var me = $(this);
         var target = $('#' + me.data('target'));
         if (target.hasClass('hide')) {

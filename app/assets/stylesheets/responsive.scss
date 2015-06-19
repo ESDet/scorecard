@@ -61,7 +61,7 @@
   .content .subjects .subject { font-size: 17px; }
   .header { font-size: 25px; }
   .brand { font-size: 33px; }
-  .section-title h2 { font-size: 27px; }
+  .region-title h2 { font-size: 27px; }
   .breadcrumbs h2 { font-size: 21px; }
   .school-title h1 { font-size: 35px; }
   .contact { font-size: 17px; }
@@ -118,19 +118,6 @@
     overflow: hidden;
   }
   .overview-text { padding: 0; }
-  #overview .fields, .school-image {
-    width: 40%;
-    float: right;
-    margin-left: 50px;
-  }
-  .school-title {
-    width: 60%;
-    height: inherit;
-  }
-  .school-image {
-    width: 40%;
-    height: inherit;
-  }
   .home {
     margin: auto auto 20px auto;
     width: 70%;
@@ -138,10 +125,6 @@
 }
 
 @media only screen and (min-width: 960px) {
-  .middle {
-    max-width: 775px;
-    margin: 0 auto 20px auto;
-  }
   .container_12 { width: auto; }
   .padding-left { padding-left: 20%; }
   .padding-right { padding-right: 40%; }
@@ -151,10 +134,6 @@
 }
 
 @media only screen and (min-width: 1005px) {
-  .stat-region .links { text-align: center; }
-  .links .compare, .links .message {
-    display: inline-block;
-  }
 }
 
 @media only screen and (min-width: 1020px) {

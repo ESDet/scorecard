@@ -1,4 +1,7 @@
 class Portal
+  include HTTParty
+  default_timeout 10
+
   BASE = 'https://portal.excellentschoolsdetroit.org/api/1.0/'
 
   def list_vocabularies
@@ -35,14 +38,12 @@ class Portal
     query = data.blank? ? "" : "?#{data.to_query}"
     if method == :get
       puts "Getting: #{url + query}"
-      response = HTTParty.get(url + query)
+      response = Portal.get(url + query)
     elsif method == :post
       headers = { 'Content-Type' => 'application/json' }
-      response = HTTParty.post(url, { :body => data.to_json, :headers => headers })
+      response = Portal.post(url, { :body => data.to_json, :headers => headers })
       #response, data = http.post(uri.path, data.to_json, headers)
     end
     JSON.parse(response.body) if response.body != ""
-  rescue Net::ReadTimeout
-    retry
   end
 end

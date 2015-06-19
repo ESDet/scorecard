@@ -9,6 +9,14 @@ module K8School
     o[:reading_growth] = float_value(o, :esd_k8_2015s, "mean_pctl_reading")
   end
 
+  def excellent_schools_grade
+    esd_k8_2015s.andand.total_ltrgrade
+  end
+
+  def hours
+    esd_k8_2015s.andand.hours
+  end
+
   private
 
   def self.int_value(o, set, value)

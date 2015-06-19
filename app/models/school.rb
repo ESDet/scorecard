@@ -66,10 +66,6 @@ module School
     school_profiles.andand.field_facebook_url
   end
 
-  def grades_served
-    school_profiles.andand.field_grades_served
-  end
-
   def photo
     if !photos.empty?
       photos.andand.first['filename']
@@ -229,4 +225,98 @@ module School
   def applications_received
     school_profiles.andand.field_applications_received
   end
+
+  def michigan_percentile
+    k12_supplemental_2015s.andand.michigan_ttb
+  end
+
+  def street
+    field_address.thoroughfare
+  end
+
+  def before_after_care
+    school_profiles.andand.field_before_after_care.andand.
+      map { |c| c['label'] }
+  end
+
+  def transportation_options
+    school_profiles.andand.field_transportation_options.
+      andand.map { |t| t['label'] }
+  end
+
+  def average_commute
+    k12_supplemental_2015s.andand.avg_commute
+  end
+
+  def total_enrollment
+    meap_2014s.andand.TOTAL_ENROLLMENT.andand.to_i
+  end
+
+  def african_american_enrollment
+    percentage_of_total_enrollment(
+      meap_2014s.andand.AFRICAN_AMERICAN_ENROLLMENT
+    )
+  end
+
+  def asian_enrollment
+    percentage_of_total_enrollment(
+      meap_2014s.andand.ASIAN_ENROLLMENT
+    )
+  end
+
+  def hispanic_enrollment
+    percentage_of_total_enrollment(
+      meap_2014s.andand.HISPANIC_ENROLLMENT
+    )
+  end
+
+  def white_enrollment
+    percentage_of_total_enrollment(
+      meap_2014s.andand.WHITE_ENROLLMENT
+    )
+  end
+
+  def other_enrollment
+    percentage_of_total_enrollment(
+      meap_2014s.andand.WHITE_ENROLLMENT +
+        meap_2014s.andand.TWO_OR_MORE_RACES_ENROLLMENT +
+        meap_2014s.andand.AMERICAN_INDIAN_ENROLLMENT
+    )
+  end
+
+  def male_enrollment
+    percentage_of_total_enrollment(
+      meap_2014s.andand.MALE_ENROLLMENT
+    )
+  end
+
+  def female_enrollment
+    percentage_of_total_enrollment(
+      meap_2014s.andand.FEMALE_ENROLLMENT
+    )
+  end
+
+  def free_reduced_lunch
+    n = meap_2014s.andand.ECONOMIC_DISADVANTAGED_ENROLLMENT
+    percentage_of_total_enrollment(n) if n != 9
+  end
+
+  def english_learner
+    n = meap_2014s.andand.ENGLISH_LANGUAGE_LEARNERS_ENROLLMENT
+    percentage_of_total_enrollment(n) if n != 9
+  end
+
+  def special_education
+    n = meap_2014s.andand.SPECIAL_EDUCATION_ENROLLMENT
+    percentage_of_total_enrollment(n) if n != 9
+  end
+
+  private
+
+  def percentage_of_total_enrollment(num)
+    if num
+      sprintf("%d.2", num.to_f / total_enrollment * 100)
+    end
+  end
+
 end

@@ -43,7 +43,9 @@ body.schools-index { height: 100%; }
 .float_left { float: left; }
 .clear_floats { clear: both; }
 .justify { text-align: justify; }
-.centered { text-align: center; }
+.centered-text { text-align: center; }
+.centered-element { margin: auto; }
+.left { text-align: left; }
 .hide { display: none; }
 .inline { display: inline-block; }
 .relative { position: relative; }
@@ -114,7 +116,8 @@ a.external, a.external:visited {
 
 .school-map-wrapper {
   clear: both;
-  height: 200px;
+  height: 120px;
+  width: 240px;
   position: relative;
 }
 
@@ -492,10 +495,47 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 .border-bottom {
-  border-bottom: 1px solid $gainsboro
+  border-bottom: 1px solid $cyan;
 }
 
-.section-title {
+.middle {
+  width: 800px;
+  margin: 0 auto 20px auto;
+}
+
+.region-title.closed {
+  background-color: $navy;
+}
+
+.school-header {
+  height: 185px;
+  background-color: $cyan;
+  color: white;
+  font-family: 'Aleo Bold';
+  .school-image {
+    width: 275px;
+    float: right;
+  }
+  .school-title  {
+    float: left;
+    width: 63%;
+    padding: 40px 0 0 15px;
+    background-color: $cyan;
+    h1 {
+      margin: 0px;
+      color: white;
+      font-size: 29px;
+    }
+  }
+  .grades-served {
+    margin-top: 35px;
+    background-color: $navy;
+    padding: 5px;
+    font-size: 15px;
+  }
+}
+
+.region-title {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -514,81 +554,173 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
 }
 
-.section-title.closed {
-  background-color: $navy;
-}
-
-.school-image {
-  img {
-    width: 100%;
-  }
-}
-
-.school-title  {
-  padding: 10px;
-  background-color: $light_cyan;
-  h1 {
-    margin: 0px;
-    color: $onyx;
-    font-family: 'Crimson Text', serif;
-    font-size: 33px;
-  }
-}
-
-.field {
-  overflow: auto;
-  padding: 15px 10px;
-  color: $dim_grey;
-  font-family: 'Aleo Regular';
-  font-size: 17px;
-  display: inherit;
-}
-
-.field a {
+.section {
+  padding-bottom: 13px;
+  margin-bottom: 13px;
   display: inline-block;
+  & > .header {
+    width: 100%;
+    height: 30px;
+    & > .left-header, & > .right-header {
+      text-align: center;
+      margin-bottom: 5px;
+      font-family: 'Aleo Bold';
+      font-size: 20px;
+      color: $navy;
+    }
+    & > .left-header {
+      float: left;
+      width: 520px;
+    }
+    & > .right-header {
+      float: right;
+      width: 240px;
+    }
+  }
+  & > .three-column > .column {
+    float: left;
+    width: 240px;
+    & > .title {
+      height: 26px;
+      background-color: $cyan;
+      font-family: 'Aleo Bold';
+      font-size: 14px;
+      padding: 5px 20px;
+      color: white;
+      text-align: center;
+    }
+    & > .content {
+      font-family: 'Lato Regular';
+      font-size: 12px;
+      margin-top: 8px;
+      .padding { padding-left: 7px; }
+      & > .header {
+        margin-bottom: 4px;
+        font-family: 'Lato Bold';
+        font-size: 16px;
+        text-align: center;
+        &.big { font-size: 25px; }
+      }
+      & > .key-value {
+        margin: 10px 0 30px 0;
+        & > .key {
+          float: left;
+          font-family: 'Aleo Bold';
+          font-size: 12px;
+          color: $cyan;
+        }
+        & > .value {
+          float: left;
+          margin-left: 7px;
+          font-family: 'Lato Regular';
+          font-size: 12px;
+          text-align: left;
+        }
+      }
+      & > ul {
+        list-style: none;
+        padding:0;
+        margin:0;
+        font-family: 'Lato Regular';
+        font-size: 14px;
+        li {
+          padding-left: 10px;
+          margin: 4px 0;
+        }
+
+        li:before {
+          content: "\002022";
+          color: $cyan;
+          padding-right: 7px;
+        }
+      }
+      & > .text {
+        margin: 5px 0;
+        padding-left: 7px;
+      }
+    }
+    & > .content:not(:nth-of-type(1)) {
+      margin-bottom: 20px;
+    }
+    .rounded-square {
+      width: 60px;
+      height: 60px;
+      border-radius: 7px;
+      .grade {
+        text-align: center;
+        padding-top: 10px;
+        color: white;
+        font-family: 'Lato Bold';
+        font-size: 30px;
+      }
+      .big, .small {
+        font-family: 'Lato Bold';
+        color: $navy;
+        text-align: center;
+      }
+      .big {
+        float: left;
+        margin-left: 6px;
+        font-size: 28px;
+        .suffix {
+          float: right;
+          font-size: 15px;
+        }
+      }
+      .small {
+        font-size: 9px;
+      }
+    }
+  }
+  & > .three-column > .column:nth-of-type(2) {
+    margin: 0 40px;
+  }
 }
 
-.field-key {
-  float: left;
+.info-bar {
+  clear: both;
+  width: 800px;
+  background: $light_cyan;
+  height: 30px;
+  text-align: left;
+  display: table-cell;
+  vertical-align: middle;
+  & > .item {
+    padding: 10px 0 0 18px;
+    display: inline-block;
+    width: 180px;
+    float: left;
+    font-family: 'Lato Bold';
+    font-size: 11px;
+    &.compare {
+      margin-left: 55px;
+      margin-top: 7px;
+      padding: 3px 7px;
+      background: $yellow;
+      border-radius: 9px;
+      color: white;
+      & > a { color: white; }
+    }
+  }
 }
 
-.field-value {
-  float: right;
-  color: $onyx;
-  font-family: 'Crimson Text', serif;
-  text-align: right;
+.what-this-means {
+  width: 100%;
+  display: inline-block;
+  margin-top: 60px;
+  background: $light_cyan;
+  height: 30px;
+  text-align: left;
+  padding: 9px;
+  font-family: 'Aleo Regular';
+  font-size: 11px;
 }
-
-.list > .field-value {
-  display: block;
-  li { list-style-type: none; }
-}
-
-.key-value {
-  position: relative;
-  min-height: 40px;
-}
-
-.field > p {
-  margin-top: -5px;
-  color: $onyx;
-  font-family: 'Crimson Text', serif;
-}
-
-.field > span { display: block; }
 
 .overview-text {
   padding: 20px 15px 0 15px;
   color: $onyx;
-  font-family: 'Crimson Text', serif;
-  font-size: 23px;
-}
-
-.contact {
-  padding: 10px 0 10px 25px;
-  color: $dim_grey;
-  font-family: 'Aleo Regular';
-  font-size: 17px;
+  font-family: 'Aleo Bold';
+  font-size: 16px;
 }
 
 .schools-index .results {
@@ -669,7 +801,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .envelope-icon {
   float: left;
-  margin-top: 7px;
   margin-right: 8px;
   width: 22px;
   height: 22px;
@@ -680,7 +811,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .phone-icon {
   float: left;
-  margin-top: 3px;
   margin-right: 10px;
   width: 20px;
   height: 20px;
@@ -691,7 +821,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .website-icon {
   float: left;
-  margin-top: 5px;
   margin-right: 10px;
   width: 20px;
   height: 20px;
@@ -727,6 +856,3 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   background-repeat: no-repeat;
 }
 
-.school-header {
-  background-color: $light_cyan;
-}
