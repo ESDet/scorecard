@@ -1,7 +1,17 @@
-- if value && !value.empty?
-  .field.border-bottom.list
-    .field-key= key
-    .field-value
-      - value.each do |i|
+- if list && !list.empty?
+  - s = list.size
+  - if s > 6
+    %ul
+      .left
+        - list[0..s / 2].each do |i|
+          %li
+            %span= i
+      .right
+        - list[s / 2 + 1..s - 1].each do |i|
+          %li
+            %span= i
+  - else
+    %ul
+      - list.each do |i|
         %li
-          %span= i['label']
+          %span= i

@@ -32,7 +32,7 @@
     .section.border-bottom
       .header
         .left-header How is this school ranked?
-      .three-column
+      .columns
         .column
           .title Excellent Schools Detroit
           .content
@@ -55,15 +55,15 @@
           .title Governance
           .content
             .header= school.governance
-            .key-value.padding
+            .key-value
               .key Authorizer:
               .value= school.authorizer
-            .key-value.padding
+            .key-value
               .key Operator:
               .value= school.operator
       .what-this-means WHAT THIS MEANS
     .section.border-bottom
-      .three-column
+      .columns
         .column
           .title Hours
           .content
@@ -73,7 +73,7 @@
                 %li= c
         .column
           .title= school.street
-          .content
+          .content.no-padding
             .school-map-wrapper
               #map
         .column
@@ -82,14 +82,14 @@
             %ul
               - school.transportation_options.each do |t|
                 %li= t
-            .key-value.padding
+            .key-value
               .key Average Commute:
               .value= "#{school.average_commute} miles"
     .section
       .header
         .left-header Demographics
         .right-header School Policies
-      .three-column
+      .columns
         .column
           .title Number of Students
           .content
@@ -115,6 +115,8 @@
           .title Dress Code
           .content
             .header Yes&nbsp;&nbsp;No
+            = school.dress_code
           .title Bullying Policy
           .content
             .header Yes&nbsp;&nbsp;No
+            = school.bullying_policy

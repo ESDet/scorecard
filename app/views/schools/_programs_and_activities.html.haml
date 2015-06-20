@@ -1,0 +1,105 @@
+#programs
+  .middle
+    .section.border-bottom
+      .columns
+        .column
+          .title Class Schedule
+          .content.light-cyan-background
+            = render 'field_list', list: school.schedule
+        .column.two-wide
+          .title Parent Involvement
+          .content.light-cyan-background
+            = render 'field_list', list: school.parent_involvement
+    .section.border-bottom
+      .header Academic Programs
+      .columns.two
+        .column
+          .title Academic Focus
+          .content.light-cyan-background
+            = render 'field_list', list: school.academic_focus
+        .column
+          .title English Language Learners
+          .content.light-cyan-background
+      .columns.two
+        .column
+          .title Personalized Learning Options
+          .content.light-cyan-background
+            = render 'field_list', list: school.instructional_model
+        .column
+          .title Special Education
+          .content.light-cyan-background
+            %span.key Level:
+            = school.special_ed_level
+            %span.key Programs
+            = render 'field_list', list: school.special_ed_programs
+    .section.border-bottom
+      .header Classes
+      .columns.two
+        .column
+          .title Arts
+          .content.light-cyan-background
+            %span.key Media
+            = render 'field_list', list: school.arts_media
+            <br/>
+            %span.key Music
+            = render 'field_list', list: school.arts_music
+            <br/>
+            %span.key Performing & Written
+            = render 'field_list', list: school.arts_performing_written
+            <br/>
+            %span.key Visual
+            = render 'field_list', list: school.arts_visual
+        .column
+          .title Foreign Language
+          .content.light-cyan-background
+            %span.key Language Immersion:
+            = school.immersion
+            <br/>
+            %span.key Languages Offered
+            = render 'field_list', list: school.foreign_languages
+    .section.border-bottom
+      .header Support
+      .columns.two
+        .column
+          .title Extra Learning Resources
+          .content.light-cyan-background
+            = render 'field_list', list: school.extra_learning_resources
+        .column
+          .title Staff Resources for Students
+          .content.light-cyan-background
+            = render 'field_list', list: school.staff_resources
+    .section.border-bottom
+      .header Facilities
+      .columns.one
+        .column
+          .content.light-cyan-background
+            = render 'four_col_field_list', list: school.facilities
+
+    .section.border-bottom
+      .header Sports
+      .columns.two
+        .column
+          .title Boy Sports
+          .content.light-cyan-background
+            = render 'field_list', list: school.boys_sports
+        .column
+          .title Girl Sports
+          .content.light-cyan-background
+            = render 'field_list', list: school.girls_sports
+    .section.border-bottom
+      .header Clubs
+      .columns.two
+        .column
+          .title Student Clubs
+          .content.light-cyan-background
+            = render 'field_list', list: school.student_clubs
+        .column
+          .title Dance
+          .content.light-cyan-background
+            = render 'field_list', list: [school.student_clubs_dance]
+          .title Language
+          .content.light-cyan-background
+            = render 'field_list', list: [school.student_clubs_language]
+          .title Other
+          .content.light-cyan-background
+            = render 'field_list', list: school.student_clubs_other

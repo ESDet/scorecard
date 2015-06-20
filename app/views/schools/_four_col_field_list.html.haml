@@ -1,0 +1,19 @@
+- if list && !list.empty?
+  - s = list.size
+  %ul
+    .left(style="width:25%")
+      - list[0..s / 4].each do |i|
+        %li
+          %span= i
+    .left(style="width:25%")
+      - list[s / 4 + 1..s / 2].each do |i|
+        %li
+          %span= i
+    .left(style="width:25%")
+      - list[s / 2 + 1..s * 3 / 4].each do |i|
+        %li
+          %span= i
+    .right(style="width:25%")
+      - list[s * 3 / 4 + 1..s - 1].each do |i|
+        %li
+          %span= i

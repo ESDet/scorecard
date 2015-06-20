@@ -87,43 +87,39 @@ module School
   end
 
   def parent_involvement
-    if i = school_profiles.andand.field_parent_involvement
-      i == 'y' ? "Yes" : "No"
-    end
+    list_labels school_profiles.andand.field_parent_involvement
   end
 
   def academic_focus
-    school_profiles.andand.field_academic_focus
+    list_labels school_profiles.andand.field_academic_focus
   end
 
   def instructional_model
-    school_profiles.andand.field_instructional_model
+    list_labels school_profiles.andand.field_instructional_model
   end
 
   def arts_visual
-    school_profiles.andand.field_arts_visual
+    list_labels school_profiles.andand.field_arts_visual
   end
 
   def arts_media
-    school_profiles.andand.field_arts_media
+    list_labels school_profiles.andand.field_arts_media
   end
 
   def arts_music
-    school_profiles.andand.field_arts_music
+    list_labels school_profiles.andand.field_arts_music
   end
 
   def arts_performing_written
-    school_profiles.andand.field_arts_performing_written
+    list_labels school_profiles.andand.field_arts_performing_written
   end
 
   def immersion
-    if i = school_profiles.andand.field_immersion
-      i == 'yes' ? "Yes" : "No"
-    end
+    school_profiles.andand.field_immersion.label
   end
 
-  def foreign_language
-    school_profiles.andand.field_foreign_language
+  def foreign_languages
+    list_labels school_profiles.andand.field_foreign_language
   end
 
   def ap_classes
@@ -159,11 +155,11 @@ module School
   end
 
   def extra_learning_resources
-    school_profiles.andand.field_extra_learning_resources
+    list_labels school_profiles.andand.field_extra_learning_resources
   end
 
   def facilities
-    school_profiles.andand.field_facilities
+    list_labels school_profiles.andand.field_facilities
   end
 
   def skills_training
@@ -175,19 +171,19 @@ module School
   end
 
   def staff_resources
-    school_profiles.andand.field_staff_resources
+    list_labels school_profiles.andand.field_staff_resources
   end
 
   def boys_sports
-    school_profiles.andand.field_boys_sports
+    list_labels school_profiles.andand.field_boys_sports
   end
 
   def girls_sports
-    school_profiles.andand.field_girls_sports
+    list_labels school_profiles.andand.field_girls_sports
   end
 
   def student_clubs
-    school_profiles.andand.field_student_clubs
+    list_labels school_profiles.andand.field_student_clubs
   end
 
   def student_clubs_dance
@@ -199,7 +195,7 @@ module School
   end
 
   def student_clubs_other
-    school_profiles.andand.field_student_clubs_other
+    list_labels school_profiles.andand.field_student_clubs_other
   end
 
   def application_process
@@ -311,7 +307,15 @@ module School
     percentage_of_total_enrollment(n) if n != 9
   end
 
+  def schedule
+    list_labels school_profiles.andand.field_schedule
+  end
+
   private
+
+  def list_labels(field)
+    field.map { |s| s['label'] } if field
+  end
 
   def percentage_of_total_enrollment(num)
     if num

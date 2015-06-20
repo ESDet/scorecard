@@ -15,66 +15,15 @@
         = render "high_school_academics"
       - else
         = render "k_8_academics"
-  .container_12.closed.region-title(data-target="community")
+  .container_12.closed.region-title(data-target="programs")
     %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
   .container_12.info-region
-    #community.hide
-      .middle
-        .fields
-          =render 'field', key: 'Application Process', value: @school.application_process
-          =render 'field', key: 'Admissions URL', value: @school.admissions_url
-          =render 'field', key: 'Application Fee', value: @school.application_fee
-          - if @school.application_fee == 'Yes'
-            =render 'field', key: 'Application Fee Amount', value: sprintf("$%.2f", @school.application_fee_amount)
-          =render 'field', key: 'Applications Received', value: @school.applications_received
-          =render 'field', key: 'Dress Code', value: @school.dress_code
-          =render 'field', key: 'Bullying Policy', value: @school.bullying_policy
-
-          =render 'field', key: 'Parent Involvement', value: @school.parent_involvement
-          =render 'field_list', key: 'Academic Focus', value: @school.academic_focus
-          =render 'field_list', key: 'Instructional Model', value: @school.instructional_model
-          =render 'field_list', key: 'Arts - Visual', value: @school.arts_visual
-          =render 'field_list', key: 'Arts - Media', value: @school.arts_media
-          =render 'field_list', key: 'Arts - Music', value: @school.arts_music
-          =render 'field_list', key: 'Arts - Performing & Written', value: @school.arts_performing_written
-          =render 'field', key: 'Immersion', value: @school.immersion
-          =render 'field_list', key: 'Foreign Lanuage', value: @school.foreign_language
-          =render 'field_list', key: 'AP Classes', value: @school.ap_classes
-          =render 'field', key: 'Dual Enrollment', value: @school.dual_enrollment
-          =render 'field', key: 'Dual Enrollment Institution', value: @school.dual_enrollment_institution
-          =render 'field', key: 'Special Education Level', value: @school.special_ed_level
-          =render 'field_list', key: 'Special Education Programs', value: @school.special_ed_programs
-          =render 'field', key: 'ELL Level', value: @school.ell_level
-          =render 'field_list', key: 'ELL Languages', value: @school.ell_languages
-          =render 'field_list', key: 'College Prep', value: @school.college_prep
-          =render 'field_list', key: 'Extra Learning Resources', value: @school.extra_learning_resources
-          =render 'field_list', key: 'Facilities', value: @school.facilities
-          =render 'field_list', key: 'Skills Training', value: @school.skills_training
-          =render 'field_list', key: 'Before/After Care', value: @school.before_after_care
-          =render 'field_list', key: 'Staff Resources', value: @school.staff_resources
-          =render 'field_list', key: 'Boy Sports', value: @school.boy_sports
-          =render 'field_list', key: 'Girl Sports', value: @school.girl_sports
-          =render 'field_list', key: 'Student Clubs', value: @school.student_clubs
-          =render 'field', key: 'Student Clubs - Dance', value: @school.student_clubs_dance
-          =render 'field', key: 'Student Clubs - Language', value: @school.student_clubs_language
-          =render 'field_list', key: 'Student Clubs - Other', value: @school.student_clubs_other
+    = render 'programs_and_activities', school: @school
   .container_12.closed.region-title(data-target="other")
     %h2 OTHER LINKS
   .container_12.info-region
-    #other.hide
+    #other
       .middle
-        .fields
-          .field.border-bottom
-            %span
-              %a(href="#")
-                .plus-icon
-                Download
-              financial transparency PDF
-            %span
-              %a(href="#")
-                .plus-icon
-                Download
-              staff transparency PDF
 
   :javascript
     $(document).ready(function(e) {
