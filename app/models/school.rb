@@ -81,7 +81,7 @@ module School
   end
 
   def bullying_policy
-    school_profiles.andand.field_bullying_policy
+    school_profiles.andand.field_bullying_policy.andand.label
   end
 
   def parent_involvement
@@ -268,9 +268,9 @@ module School
 
   def other_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.WHITE_ENROLLMENT +
-        meap_2014s.andand.TWO_OR_MORE_RACES_ENROLLMENT +
-        meap_2014s.andand.AMERICAN_INDIAN_ENROLLMENT
+      meap_2014s.andand.WHITE_ENROLLMENT.to_i +
+        meap_2014s.andand.TWO_OR_MORE_RACES_ENROLLMENT.to_i +
+        meap_2014s.andand.AMERICAN_INDIAN_ENROLLMENT.to_i
     )
   end
 
