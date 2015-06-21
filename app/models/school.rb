@@ -2,18 +2,18 @@ module School
   def self.extend_object(o)
     super
     five_essentials = {
-     'Category5E' => 'overall_rating',
-     'E_Ldr' => 'effective_leaders',
-     'E_Tch' => 'collaborative_teachers',
-     'E_Fam' => 'involved_families',
-     'E_Env' => 'supportive_environment',
-     'E_Ins' => 'ambitious_instruction'
+      'Category5E' => 'overall_rating',
+      'E_Ldr' => 'effective_leaders',
+      'E_Tch' => 'collaborative_teachers',
+      'E_Fam' => 'involved_families',
+      'E_Env' => 'supportive_environment',
+      'E_Ins' => 'ambitious_instruction'
     }
     five_essentials.each do |k, v|
-      o["five_e_#{v}"] = if k == 'Category5E'
-        o.andand.fiveessentials_2015s.andand.send(k)
+      o["five_e_#{v}".to_sym] = if k == 'Category5E'
+        o.fiveessentials_2015s.andand.send(k)
       else
-        o.andand.fiveessentials_2015s.andand.send(k).to_i
+        o.fiveessentials_2015s.andand.send(k).to_i
       end
     end
   end
@@ -22,8 +22,8 @@ module School
     valid = %w[A Aplus B Bplus C Cplus D F Promising]
     mod = letter.andand.gsub('+', 'plus')
     mod = valid.include?(mod) ? mod : 'NA'
-    return "/assets/images/el_icons/Sm_#{mod}.png" if style == :small
-    "/assets/images/el_icons/K12_Grade_#{mod}.png"
+    return "/assets/el_icons/Sm_#{mod}.png" if style == :small
+    "/assets/el_icons/K12_Grade_#{mod}.png"
   end
 
   def high?
@@ -81,9 +81,7 @@ module School
   end
 
   def bullying_policy
-    if p = school_profiles.andand.field_bullying_policy
-      p == 'y' ? "Yes" : "No"
-    end
+    school_profiles.andand.field_bullying_policy
   end
 
   def parent_involvement
@@ -115,7 +113,7 @@ module School
   end
 
   def immersion
-    school_profiles.andand.field_immersion.label
+    school_profiles.andand.field_immersion.andand.label
   end
 
   def foreign_languages
@@ -127,7 +125,7 @@ module School
   end
 
   def dual_enrollment
-    school_profiles.andand.field_dual_enrollment == 'yes'
+    school_profiles.andand.field_dual_enrollment
   end
 
   def dual_enrollment_institution
@@ -199,9 +197,7 @@ module School
   end
 
   def application_process
-    if p = school_profiles.andand.field_application_process
-      p == 'yes' ? "Yes" : "No"
-    end
+    school_profiles.andand.field_application_process
   end
 
   def admissions_url
@@ -209,9 +205,7 @@ module School
   end
 
   def application_fee
-    if f = school_profiles.andand.field_application_fee
-     f == 'yes' ? "Yes" : "No"
-    end
+    school_profiles.andand.field_application_fee
   end
 
   def application_fee_amount

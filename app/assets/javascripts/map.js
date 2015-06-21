@@ -1,6 +1,6 @@
 $(document).ready(function() {
   Map = function(args) {
-    L.Icon.Default.imagePath = '/assets/images';
+    L.Icon.Default.imagePath = '/assets';
 
     var _center = args.center;
     delete args['center'];

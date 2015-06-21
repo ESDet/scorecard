@@ -150,7 +150,7 @@ ul.school_list {
 }
 
 #block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-name .score-right {
-  background-image: url('/assets/images/theme/schoolbook_icon.png');
+  background-image: url('/assets/theme/schoolbook_icon.png');
   background-position-x: 10px; background-position-y: 10px;
 }
 
@@ -254,19 +254,19 @@ table.compare {
     display: inline-block; width: 24px; height: 30px; background-position: 0px 0px; background-repeat: no-repeat; margin-right: 0px;
   }
   #fb-share {
-    background-image: url(/assets/images/el_icons/facebook_sprite.png); background-position: 5px 0px;
+    background-image: url(/assets/el_icons/facebook_sprite.png); background-position: 5px 0px;
     &:hover { background-position: 5px -74px; }
   }
   #tw-share {
-    background-image: url(/assets/images/el_icons/twitter_sprite.png); background-position: 0px 2px;
+    background-image: url(/assets/el_icons/twitter_sprite.png); background-position: 0px 2px;
     &:hover { background-position: 0 -68px; }
   }
   #plus-share {
-    background-image: url(/assets/images/el_icons/googleplus_sprite.png); background-position: 0px 2px;
+    background-image: url(/assets/el_icons/googleplus_sprite.png); background-position: 0px 2px;
     &:hover { background-position: 0 -72px; }
   }
   #pin-share {
-    background-image: url(/assets/images/el_icons/pinterest_sprite.png); background-position: 0px 2px;
+    background-image: url(/assets/el_icons/pinterest_sprite.png); background-position: 0px 2px;
     &:hover { background-position: 0 -73px; }
   }
 }
@@ -783,7 +783,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   height: 18px;
   width: 23px;
   margin: 7px 15px 0 0;
-  background-image: url(/assets/images/icons/png/arrow_left.png);
+  background-image: url(/assets/icons/png/arrow_left.png);
   background-repeat: no-repeat;
 }
 
@@ -792,7 +792,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   height: 19px;
   width: 18px;
   margin: 7px 10px 0 0;
-  background-image: url(/assets/images/icons/png/arrow_45_up.png);
+  background-image: url(/assets/icons/png/arrow_45_up.png);
   background-repeat: no-repeat;
 }
 
@@ -800,7 +800,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   float: left;
   height: 75px;
   width: 50%;
-  background-image: url(/assets/images/icons/png/transportation.png);
+  background-image: url(/assets/icons/png/transportation.png);
   background-repeat: no-repeat;
   background-position: top;
 }
@@ -808,7 +808,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .schedule-icon {
   float: right;
   width: 50%;
-  background-image: url(/assets/images/icons/png/schedule.png);
+  background-image: url(/assets/icons/png/schedule.png);
   background-repeat: no-repeat;
   background-position: top;
   text-align: bottom;
@@ -819,7 +819,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   height: 26px;
   width: 22px;
   margin: 0 10px 0 0;
-  background-image: url(/assets/images/icons/png/ACT.png);
+  background-image: url(/assets/icons/png/ACT.png);
   background-repeat: no-repeat;
 }
 
@@ -828,7 +828,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   height: 19px;
   width: 19px;
   margin: 4px 10px 0 0;
-  background-image: url(/assets/images/icons/png/plus.png);
+  background-image: url(/assets/icons/png/plus.png);
   background-repeat: no-repeat;
 }
 
@@ -844,7 +844,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-right: 8px;
   width: 22px;
   height: 22px;
-  background-image: url(/assets/images/icons/png/envelope.png);
+  background-image: url(/assets/icons/png/envelope.png);
   background-repeat: no-repeat;
   background-size: 101%;
 }
@@ -854,7 +854,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-right: 10px;
   width: 20px;
   height: 20px;
-  background-image: url(/assets/images/icons/png/phone.png);
+  background-image: url(/assets/icons/png/phone.png);
   background-repeat: no-repeat;
   background-size: 101%;
 }
@@ -864,7 +864,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-right: 10px;
   width: 20px;
   height: 20px;
-  background-image: url(/assets/images/icons/png/pointer.png);
+  background-image: url(/assets/icons/png/pointer.png);
   background-repeat: no-repeat;
   background-size: 101%;
 }
@@ -875,7 +875,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-right: 10px;
   width: 20px;
   height: 20px;
-  background-image: url(/assets/images/icons/png/facebook.png);
+  background-image: url(/assets/icons/png/facebook.png);
   background-repeat: no-repeat;
   background-size: 101%;
 }
@@ -884,7 +884,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin: 30px auto 0 auto;
   width: 68px;
   height: 157px;
-  background-image: url(/assets/images/icons/png/arrow_up.png);
+  background-image: url(/assets/icons/png/arrow_up.png);
   background-repeat: no-repeat;
 }
 
@@ -892,7 +892,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin: 30px auto 0 auto;
   width: 68px;
   height: 157px;
-  background-image: url(/assets/images/icons/png/arrow_down.png);
+  background-image: url(/assets/icons/png/arrow_down.png);
   background-repeat: no-repeat;
 }
 

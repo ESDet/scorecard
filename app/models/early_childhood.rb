@@ -1,7 +1,7 @@
 module EarlyChildhood
   def self.image(category, rating, year = nil)
-    return '/assets/images/el_icons/Overview.png' if category == :overview
-    return '/assets/images/el_icons/EL_Award_NoRating.png'    if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
+    return '/assets/el_icons/Overview.png' if category == :overview
+    return '/assets/el_icons/EL_Award_NoRating.png' if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
     #return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
     cat = {
       :overall    => 'Award',
@@ -25,10 +25,15 @@ module EarlyChildhood
     metal = valid_metals[rating].andand.gsub(' ', '') || 'None'
     #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')
     if year && category != :mini
-      "/assets/images/el_icons/EL_#{cat}_#{metal}_#{year}.png"
+      "/assets/el_icons/EL_#{cat}_#{metal}_#{year}.png"
     else
-      "/assets/images/el_icons/EL_#{cat}_#{metal}.png"
+      "/assets/el_icons/EL_#{cat}_#{metal}.png"
     end
+  end
+
+  def age_groups
+    ec_profiles.andand.field_ec_agegroups.
+      map { |a| a['name'] }
   end
 
   def specialty
@@ -141,10 +146,6 @@ module EarlyChildhood
 
   def additional_info
     field_ec_additional
-  end
-
-  def age_groups
-    field_ec_agegroups
   end
 
   def enrichment
