@@ -38,10 +38,10 @@ class Portal
     query = data.blank? ? "" : "?#{data.to_query}"
     if method == :get
       puts "Getting: #{url + query}"
-      response = Portal.get(url + query)
+      response = Portal.get(url + query, verify: false)
     elsif method == :post
       headers = { 'Content-Type' => 'application/json' }
-      response = Portal.post(url, { :body => data.to_json, :headers => headers })
+      response = Portal.post(url, { :body => data.to_json, :headers => headers }, verify: false)
       #response, data = http.post(uri.path, data.to_json, headers)
     end
     JSON.parse(response.body) if response.body != ""
