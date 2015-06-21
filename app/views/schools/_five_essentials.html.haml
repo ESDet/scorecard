@@ -8,15 +8,15 @@
   .graph
     .circle
       .outer
-      .inner.category(data-num="#{ambitious_instruction}")
+      .inner.fivee-category(data-num="#{ambitious_instruction}")
         Ambitious Instruction
-    .top-left.category(data-num="#{effective_leaders}")
+    .top-left.fivee-category(data-num="#{effective_leaders}")
       Effective Leaders
-    .top-right.category(data-num="#{collaborative_teachers}")
+    .top-right.fivee-category(data-num="#{collaborative_teachers}")
       Collaborative Teachers
-    .bottom-left.category(data-num="#{supportive_environment}")
+    .bottom-left.fivee-category(data-num="#{supportive_environment}")
       Supportive Environment
-    .bottom-right.category(data-num="#{involved_families}")
+    .bottom-right.fivee-category(data-num="#{involved_families}")
       Involved Families
   .legend
     Very Strong
@@ -52,18 +52,19 @@
       text.text('WELL ORGANIZED');
     }
 
-    $('.graph > .category').each(function(i, el) {
+    $('.fivee-category').each(function(i, el) {
       var n = $(el);
       var num = n.data('num');
-      if (num == '1') {
+      console.log(num);
+      if (num > 0 && num < 20) {
         n.css('background-color', '#c32947');
-      } else if (num == '2') {
+      } else if (num > 19 && num < 40) {
         n.css('background-color', '#ff690f');
-      } else if (num == '3') {
+      } else if (num > 39 && num < 60) {
         n.css('background-color', '#ffc700');
-      } else if (num == '4') {
+      } else if (num > 59 && num < 80) {
         n.css('background-color', '#a2c100');
-      } else if (num == '5') {
+      } else if (num > 79 && num < 101) {
         n.css('background-color', '#319400');
       }
     });
