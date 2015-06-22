@@ -234,11 +234,11 @@
       font-family: 'Aleo Bold';
     }
     & > .visual > .graph {
-      height: 40px;
+      height: auto;
       font-family: 'Lato Black';
       color: white;
       & > .text {
-        padding-top: 10px;
+        padding: 10px 0 ;
       }
     }
     & > .visual .square {
