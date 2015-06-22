@@ -30,6 +30,7 @@
           .content.light-cyan-background
             %span.key Level:
             = school.special_ed_level
+            <br/>
             %span.key Programs
             = render 'field_list', list: school.special_ed_programs
     .section.border-bottom
@@ -86,7 +87,7 @@
           .title Girl Sports
           .content.light-cyan-background
             = render 'field_list', list: school.girls_sports
-    .section.border-bottom
+    .section
       .header Clubs
       .columns.two
         .column
@@ -96,10 +97,12 @@
         .column
           .title Dance
           .content.light-cyan-background
-            = render 'field_list', list: [school.student_clubs_dance]
+            - if school.student_club_dance
+              = render 'field_list', list: [school.student_clubs_dance]
           .title Language
           .content.light-cyan-background
-            = render 'field_list', list: [school.student_clubs_language]
+            - if school.student_club_language
+              = render 'field_list', list: [school.student_clubs_language]
           .title Other
           .content.light-cyan-background
             = render 'field_list', list: school.student_clubs_other

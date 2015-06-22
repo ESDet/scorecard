@@ -1,8 +1,7 @@
 - cache(@school.cache_key, condition: @school.can_cache?) do
   .container_12.breadcrumbs
     %a.back-arrow-icon(href="/")
-    %h2
-      = @school.display_name
+    %h2= @school.display_name
   .container_12.clear_floats.region-title(data-target="overview")
     %h2 OVERVIEW
   .container_12.info-region
@@ -19,11 +18,6 @@
     %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
   .container_12.info-region
     = render 'programs_and_activities', school: @school
-  .container_12.closed.region-title(data-target="other")
-    %h2 OTHER LINKS
-  .container_12.info-region
-    #other
-      .middle
 
   :javascript
     $(document).ready(function(e) {
