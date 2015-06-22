@@ -60,9 +60,9 @@
       }
     };
 
-    var adjGrowth = function(el, baseGrowth, growth, index) {
+    var addGrowth = function(el, growth, index) {
       if (growth != "") {
-        displayGrowth(el, index, growth + baseGrowth);
+        displayGrowth(el, index, growth);
       } else {
         displayGrowth(el, index, 0);
       }
@@ -73,15 +73,7 @@
       var subject = el.data('subject')
       var schoolGrowth = el.data('school-growth');
       var detroitGrowth = el.data('detroit-growth');
-      var stateGrowth = el.data('state-growth');
-      if (stateGrowth != "") {
-        if (stateGrowth < 0) {
-          adjGrowth(el, stateGrowth, schoolGrowth, 0);
-          adjGrowth(el, stateGrowth, detroitGrowth, 1);
-        } else if (stateGrowth > 0) {
-          adjGrowth(el, -stateGrowth, schoolGrowth, 0);
-          adjGrowth(el, -stateGrowth, detroitGrowth, 1);
-        }
-      }
+      addGrowth(el, schoolGrowth, 0);
+      addGrowth(el, detroitGrowth, 1);
     });
   });
