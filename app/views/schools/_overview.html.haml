@@ -55,12 +55,11 @@
           .title Governance
           .content
             .header= school.governance
-            .key-value
-              .key Authorizer:
-              .value= school.authorizer
-            .key-value
-              .key Operator:
-              .value= school.operator
+            %span.key Authorizer:
+            = school.authorizer.strip
+            <br/>
+            %span.key Operator:
+            = school.operator.strip
       .what-this-means WHAT THIS MEANS
     .section.border-bottom
       .columns
@@ -85,9 +84,8 @@
             %ul
               - school.transportation_options.each do |t|
                 %li= t
-            .key-value
-              .key Average Commute:
-              .value= "#{school.average_commute} miles"
+            %span.key Average Commute:
+            = "#{school.average_commute} miles"
     .section
       .header
         .left-header Demographics
