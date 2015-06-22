@@ -13,7 +13,7 @@
       .info-bar
         .item
           .contact
-            .envelope-icon
+            .email-icon
             %a{href: "mailto:#{school.email}"} Email
             this school
         .item
@@ -72,7 +72,10 @@
               - school.before_after_care.each do |c|
                 %li= c
         .column
-          .title= school.street
+          .title
+            .icon-text
+              .address-icon
+              = school.street
           .content.no-padding
             .school-map-wrapper
               #map

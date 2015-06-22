@@ -16,6 +16,7 @@ body {
 }
 
 body.schools-index { height: 100%; }
+
 .container {
   min-height: 100%;
   position:relative;
@@ -117,7 +118,7 @@ a.external, a.external:visited {
 .school-map-wrapper {
   clear: both;
   height: 120px;
-  width: 240px;
+  width: 250px;
   position: relative;
 }
 
@@ -584,12 +585,12 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
   & > .columns > .column {
     float: left;
-    width: 240px;
+    width: 250px;
     & > .title {
       height: 26px;
       background-color: $cyan;
       font-family: 'Aleo Bold';
-      font-size: 14px;
+      font-size: 13px;
       padding: 5px 20px;
       color: white;
       text-align: center;
@@ -597,7 +598,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     & > .content {
       &.no-padding { padding: 0; }
       font-family: 'Lato Regular';
-      font-size: 12px;
+      font-size: 13px;
       margin-top: 4px;
       padding: 7px;
       & > .header {
@@ -608,24 +609,23 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
         &.big { font-size: 25px; }
       }
       & .key-value {
-        margin: 10px 0 30px 0;
+        display: inline-block;
+        margin: 5px 0;
+        width: 100%;
         & > .key {
           float: left;
           font-family: 'Aleo Bold';
-          font-size: 12px;
           color: $cyan;
         }
         & > .value {
-          float: left;
+          float: right;
           margin-left: 7px;
           font-family: 'Lato Regular';
-          font-size: 12px;
           text-align: left;
         }
       }
       .key {
         font-family: 'Aleo Bold';
-        font-size: 12px;
         color: $cyan;
       }
       ul {
@@ -636,7 +636,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
         margin:0;
         padding-start: 40px;
         font-family: 'Lato Regular';
-        font-size: 12px;
         li {
           list-style-position: outside;
           padding-left: 10px;
@@ -654,13 +653,14 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       }
       #pie {
         float: left;
-        margin-right: 10px;
       }
       .legend {
+        float: right;
+        width: 155px;
         .stat {
           margin: 3px 0;
           .race {
-            margin-top: 2px;
+            margin-top: 4px;
             margin-right: 3px;
             float: left;
             width: 10px;
@@ -711,7 +711,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     }
   }
   & > .columns > .column:nth-of-type(2) {
-    margin: 0 40px;
+    margin: 0 25px;
   }
   & > .columns > .column.two-wide {
     margin: 0;
@@ -731,6 +731,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       margin: 0;
     }
   }
+  .icon-text {
+    text-align: left;
+    display: inline-block;
+  }
 }
 
 .info-bar {
@@ -742,7 +746,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   display: table-cell;
   vertical-align: middle;
   & > .item {
-    padding: 10px 0 0 18px;
+    padding: 6px 0 0 18px;
     display: inline-block;
     width: 180px;
     float: left;
@@ -750,7 +754,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     font-size: 11px;
     &.compare {
       margin-left: 55px;
-      margin-top: 7px;
+      margin-top: 2px;
       padding: 3px 7px;
       background: $yellow;
       border-radius: 9px;
@@ -793,122 +797,3 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   width: 65%;
   height: 550px;
 }
-
-.back-arrow-icon {
-  float: left;
-  height: 18px;
-  width: 23px;
-  margin: 7px 15px 0 0;
-  background-image: url(/assets/icons/png/arrow_left.png);
-  background-repeat: no-repeat;
-}
-
-.compare-arrow-icon {
-  float: left;
-  height: 19px;
-  width: 18px;
-  margin: 7px 10px 0 0;
-  background-image: url(/assets/icons/png/arrow_45_up.png);
-  background-repeat: no-repeat;
-}
-
-.transportation-icon {
-  float: left;
-  height: 75px;
-  width: 50%;
-  background-image: url(/assets/icons/png/transportation.png);
-  background-repeat: no-repeat;
-  background-position: top;
-}
-
-.schedule-icon {
-  float: right;
-  width: 50%;
-  background-image: url(/assets/icons/png/schedule.png);
-  background-repeat: no-repeat;
-  background-position: top;
-  text-align: bottom;
-}
-
-.act-icon {
-  float: left;
-  height: 26px;
-  width: 22px;
-  margin: 0 10px 0 0;
-  background-image: url(/assets/icons/png/ACT.png);
-  background-repeat: no-repeat;
-}
-
-.plus-icon {
-  float: left;
-  height: 19px;
-  width: 19px;
-  margin: 4px 10px 0 0;
-  background-image: url(/assets/icons/png/plus.png);
-  background-repeat: no-repeat;
-}
-
-.icon-text {
-  margin-top: 45px;
-  color: $onyx;
-  font-family: 'Crimson Text', serif;
-  text-align: center;
-}
-
-.envelope-icon {
-  float: left;
-  margin-right: 8px;
-  width: 22px;
-  height: 22px;
-  background-image: url(/assets/icons/png/envelope.png);
-  background-repeat: no-repeat;
-  background-size: 101%;
-}
-
-.phone-icon {
-  float: left;
-  margin-right: 10px;
-  width: 20px;
-  height: 20px;
-  background-image: url(/assets/icons/png/phone.png);
-  background-repeat: no-repeat;
-  background-size: 101%;
-}
-
-.website-icon {
-  float: left;
-  margin-right: 10px;
-  width: 20px;
-  height: 20px;
-  background-image: url(/assets/icons/png/pointer.png);
-  background-repeat: no-repeat;
-  background-size: 101%;
-}
-
-.facebook-icon {
-  float: left;
-  margin-top: 5px;
-  margin-right: 10px;
-  width: 20px;
-  height: 20px;
-  background-image: url(/assets/icons/png/facebook.png);
-  background-repeat: no-repeat;
-  background-size: 101%;
-}
-
-.increasing-growth {
-  margin: 30px auto 0 auto;
-  width: 68px;
-  height: 157px;
-  background-image: url(/assets/icons/png/arrow_up.png);
-  background-repeat: no-repeat;
-}
-
-.decreasing-growth {
-  margin: 30px auto 0 auto;
-  width: 68px;
-  height: 157px;
-  background-image: url(/assets/icons/png/arrow_down.png);
-  background-repeat: no-repeat;
-}
-

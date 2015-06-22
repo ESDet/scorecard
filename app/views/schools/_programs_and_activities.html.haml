@@ -11,7 +11,10 @@
           .content.light-cyan-background
             = render 'field_list', list: school.parent_involvement
     .section.border-bottom
-      .header Academic Programs
+      .header
+        .icon-text
+          .star-icon
+          Academic Programs
       .columns.two
         .column
           .title Academic Focus
@@ -34,7 +37,10 @@
             %span.key Programs
             = render 'field_list', list: school.special_ed_programs
     .section.border-bottom
-      .header Classes
+      .header
+        .icon-text
+          .classes-icon
+          Classes
       .columns.two
         .column
           .title Arts
@@ -59,7 +65,10 @@
             %span.key Languages Offered
             = render 'field_list', list: school.foreign_languages
     .section.border-bottom
-      .header Support
+      .header
+        .icon-text
+          .support-icon
+          Support
       .columns.two
         .column
           .title Extra Learning Resources
@@ -70,14 +79,20 @@
           .content.light-cyan-background
             = render 'field_list', list: school.staff_resources
     .section.border-bottom
-      .header Facilities
+      .header
+        .icon-text
+          .facilities-icon
+          Facilities
       .columns.one
         .column
           .content.light-cyan-background
             = render 'four_col_field_list', list: school.facilities
 
     .section.border-bottom
-      .header Sports
+      .header
+        .icon-text
+          .sports-icon
+          Sports
       .columns.two
         .column
           .title Boy Sports
@@ -88,7 +103,10 @@
           .content.light-cyan-background
             = render 'field_list', list: school.girls_sports
     .section
-      .header Clubs
+      .header
+        .icon-text
+          .clubs-icon
+          Clubs
       .columns.two
         .column
           .title Student Clubs
