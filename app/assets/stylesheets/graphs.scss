@@ -22,6 +22,8 @@
   .content {
     margin-top: 30px;
     text-align: center;
+    display: inline-block;
+    width: 100%;
   }
 
   .content .visual {
@@ -38,7 +40,7 @@
 
   .content.two .visual {
     width: 365px;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
   }
 
   .content.two .visual:nth-of-type(1) {
@@ -51,6 +53,7 @@
 
   .content.four .visual {
     width: 145px;
+    margin-bottom: 10px;
   }
 
   .content.four > .visual:nth-of-type(2) {
