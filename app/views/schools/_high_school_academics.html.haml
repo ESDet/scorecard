@@ -1,95 +1,96 @@
-.stat-region
-  %h2 Are students at this school ready for college?
-  %h3 Average percent of students scoring at the college-ready level on ACT, 2014-15
-  .content.four
-    = render 'bar_graph', title: 'English',
-      school_average: @school.english_college_ready,
-      detroit_average: @detroit.english_college_ready,
-      state_average: @state.english_college_ready
-    = render 'bar_graph', title: 'Math',
-      school_average: @school.math_college_ready,
-      detroit_average: @detroit.math_college_ready,
-      state_average: @state.math_college_ready
-    = render 'bar_graph', title: 'Reading',
-      school_average: @school.reading_college_ready,
-      detroit_average: @detroit.reading_college_ready,
-      state_average: @state.reading_college_ready
-    = render 'bar_graph', title: 'Science',
-      school_average: @school.science_college_ready,
-      detroit_average: @detroit.science_college_ready,
-      state_average: @state.science_college_ready
-    .what-this-means WHAT THIS MEANS
-.stat-region
-  %h2 Did students at this school improve academically over time?
-  %h3
-    Average difference in the performance of 11th grade students on the ACT (2012-2013 and 2013-14)<br/>
-    and their predicted performance based on their 7th and 8th grade state test results
-  .content.two
-    = render 'two_bar_graph', title: 'English',
-      subject: 'english',
-      school_growth: @school.english_growth,
-      state_growth: @state.english_growth,
-      detroit_growth: @detroit.english_growth,
-      zero_bar: 'PREDICTED SCORE'
-    = render 'two_bar_graph', title: 'Math',
-      subject: 'math',
-      school_growth: @school.math_growth,
-      state_growth: @state.math_growth,
-      detroit_growth: @detroit.math_growth,
-      zero_bar: 'PREDICTED SCORE'
-  .content.two
-    = render 'two_bar_graph', title: 'Reading',
-      subject: 'reading',
-      school_growth: @school.reading_growth,
-      state_growth: @state.reading_growth,
-      detroit_growth: @detroit.reading_growth,
-      zero_bar: 'PREDICTED SCORE'
-    = render 'two_bar_graph', title: 'Science',
-      subject: 'science',
-      school_growth: @school.science_growth,
-      state_growth: @state.science_growth,
-      detroit_growth: @detroit.science_growth,
-      zero_bar: 'PREDICTED SCORE'
-    .what-this-means WHAT THIS MEANS
-.stat-region
-  %h2 Do students at this school graduate, enroll in college and stay in college?
-  %h3 Average percent of 9th graders who...
-  .content.four.bar
-    .labels
-      .label SCHOOL
-      .label DETROIT
-      .label STATE
-    = render 'three_bar_graph',
-      title: 'Graduate in 4 Year',
-      school_average: @school.graduate_in_four_years,
-      detroit_average: @detroit.graduate_in_four_years,
-      state_average: @state.graduate_in_four_years
-    = render 'three_bar_graph',
-      title: 'Graduate in 5 Year',
-      school_average: @school.graduate_in_five_years,
-      detroit_average: @detroit.graduate_in_five_years,
-      state_average: @state.graduate_in_five_years
-    = render 'three_bar_graph',
-      title: 'Enroll in College',
-      school_average: @school.enroll_in_college,
-      detroit_average: @detroit.enroll_in_college,
-      state_average: @state.enroll_in_college
-    = render 'three_bar_graph',
-      title: 'Stay in College',
-      school_average: @school.stay_in_college,
-      detroit_average: @detroit.stay_in_college,
-      state_average: @state.stay_in_college
-    .what-this-means WHAT THIS MEANS
-.stat-region
-  %h2 What do students and teachers think about this school?
-  %h3 Rating on 5Essentials Student and Teacher Survey, 2015
-  .content.two.fivee
-    = render 'five_essentials',
-      overall_rating: @school.five_e_overall_rating,
-      effective_leaders: @school.five_e_effective_leaders,
-      collaborative_teachers: @school.collaborative_teachers,
-      involved_families: @school.involved_families,
-      supportive_environment: @school.supportive_environment,
-      ambitious_instruction: @school.ambitious_instruction
+.middle
+  .stat-region
+    %h2 Are students at this school ready for college?
+    %h3 Average percent of students scoring at the college-ready level on ACT, 2014-15
+    .content.four
+      = render 'bar_graph', title: 'English',
+        school_average: @school.english_college_ready,
+        detroit_average: @detroit.english_college_ready,
+        state_average: @state.english_college_ready
+      = render 'bar_graph', title: 'Math',
+        school_average: @school.math_college_ready,
+        detroit_average: @detroit.math_college_ready,
+        state_average: @state.math_college_ready
+      = render 'bar_graph', title: 'Reading',
+        school_average: @school.reading_college_ready,
+        detroit_average: @detroit.reading_college_ready,
+        state_average: @state.reading_college_ready
+      = render 'bar_graph', title: 'Science',
+        school_average: @school.science_college_ready,
+        detroit_average: @detroit.science_college_ready,
+        state_average: @state.science_college_ready
+      .what-this-means WHAT THIS MEANS
+  .stat-region
+    %h2 Did students at this school improve academically over time?
+    %h3
+      Average difference in the performance of 11th grade students on the ACT (2012-2013 and 2013-14)<br/>
+      and their predicted performance based on their 7th and 8th grade state test results
+    .content.two
+      = render 'two_bar_graph', title: 'English',
+        subject: 'english',
+        school_growth: @school.english_growth,
+        state_growth: @state.english_growth,
+        detroit_growth: @detroit.english_growth,
+        zero_bar: 'PREDICTED SCORE'
+      = render 'two_bar_graph', title: 'Math',
+        subject: 'math',
+        school_growth: @school.math_growth,
+        state_growth: @state.math_growth,
+        detroit_growth: @detroit.math_growth,
+        zero_bar: 'PREDICTED SCORE'
+    .content.two
+      = render 'two_bar_graph', title: 'Reading',
+        subject: 'reading',
+        school_growth: @school.reading_growth,
+        state_growth: @state.reading_growth,
+        detroit_growth: @detroit.reading_growth,
+        zero_bar: 'PREDICTED SCORE'
+      = render 'two_bar_graph', title: 'Science',
+        subject: 'science',
+        school_growth: @school.science_growth,
+        state_growth: @state.science_growth,
+        detroit_growth: @detroit.science_growth,
+        zero_bar: 'PREDICTED SCORE'
+      .what-this-means WHAT THIS MEANS
+  .stat-region
+    %h2 Do students at this school graduate, enroll in college and stay in college?
+    %h3 Average percent of 9th graders who...
+    .content.four.bar
+      .labels
+        .label SCHOOL
+        .label DETROIT
+        .label STATE
+      = render 'three_bar_graph',
+        title: 'Graduate in 4 Year',
+        school_average: @school.graduate_in_four_years,
+        detroit_average: @detroit.graduate_in_four_years,
+        state_average: @state.graduate_in_four_years
+      = render 'three_bar_graph',
+        title: 'Graduate in 5 Year',
+        school_average: @school.graduate_in_five_years,
+        detroit_average: @detroit.graduate_in_five_years,
+        state_average: @state.graduate_in_five_years
+      = render 'three_bar_graph',
+        title: 'Enroll in College',
+        school_average: @school.enroll_in_college,
+        detroit_average: @detroit.enroll_in_college,
+        state_average: @state.enroll_in_college
+      = render 'three_bar_graph',
+        title: 'Stay in College',
+        school_average: @school.stay_in_college,
+        detroit_average: @detroit.stay_in_college,
+        state_average: @state.stay_in_college
+      .what-this-means WHAT THIS MEANS
+  .stat-region
+    %h2 What do students and teachers think about this school?
+    %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+    .content.two.fivee
+      = render 'five_essentials',
+        overall_rating: @school.five_e_overall_rating,
+        effective_leaders: @school.five_e_effective_leaders,
+        collaborative_teachers: @school.collaborative_teachers,
+        involved_families: @school.involved_families,
+        supportive_environment: @school.supportive_environment,
+        ambitious_instruction: @school.ambitious_instruction
 
-    .what-this-means WHAT THIS MEANS
+      .what-this-means WHAT THIS MEANS
