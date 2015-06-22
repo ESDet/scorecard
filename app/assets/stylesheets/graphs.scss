@@ -122,18 +122,22 @@
       background: $yellow;
       font-family: 'Lato Light';
       font-size: 13px;
-      & > .text {
+      & > .wrapper > .text {
         margin-top: 20px;
-        margin-left: -10px;
         font-family: 'Lato Light';
         font-size: 10px;
       }
-      & > .number {
-        margin-left: -10px;
+      & > .wrapper > .number {
         font-family: 'Lato Bold';
         font-size: 13px;
         color: $green;
       }
+    }
+    .line-marker.detroit {
+      & > .wrapper { width: 45px; }
+    }
+    .line-marker.state {
+      & > .wrapper  { width: 30px; }
     }
   }
 

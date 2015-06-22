@@ -7,14 +7,16 @@
   .bounds
     .left-bounds 0%
     .line-graph
-      .line-marker(data-num="#{detroit_average}")
-        .text DETROIT
-        .number
-          = detroit_average ? "#{detroit_average}%" : "N/A"
-      .line-marker(data-num="#{state_average}")
-        .text STATE
-        .number
-          = state_average ? "#{state_average}%" : "N/A"
+      .line-marker.detroit(data-num="#{detroit_average}")
+        .wrapper
+          .text DETROIT
+          .number
+            = detroit_average ? "#{detroit_average}%" : "N/A"
+      .line-marker.state(data-num="#{state_average}")
+        .wrapper
+          .text STATE
+          .number
+            = state_average ? "#{state_average}%" : "N/A"
     .right-bounds 100%
 
 :javascript
@@ -42,14 +44,15 @@
           marginTwo = $(markers[1]).position().left;
       if (marginOne < 0) { marginOne *= -1; }
       if (marginTwo < 0) { marginTwo *= -1; }
-      if (marginTwo - marginOne < 27) {
-        var numOne = $(markers[0]).data('num');
-        var numTwo = $(markers[1]).data('num');
-        if (numTwo > numOne) {
-          $(markers[0]).css('margin-top', '50px');
-        } else {
-          $(markers[1]).css('margin-top', '50px');
-        }
+      if (marginTwo - marginOne < 20) {
+        $(markers[0]).find('.wrapper').
+          css('text-align', 'right').
+          css('margin-left', '-35px');
+      } else {
+        $(markers[0]).find('.wrapper').
+          css('margin-left', '-20px');
+        $(markers[1]).find('.wrapper').
+          css('margin-left', '-10px');
       }
     });
   });
