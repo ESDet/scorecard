@@ -38,7 +38,8 @@
           .content
             .rounded-square.green-background.centered-element
               .grade
-                = school.excellent_schools_grade || 'N/A'
+                = school.excellent_schools_grade
+              .small Overall Grade
         .column
           .title State
           .content
@@ -50,7 +51,7 @@
                 .small PERCENTILE OUT OF 100
               - else
                 .grade
-                  .navy N/A
+                  .navy
         .column
           .title Governance
           .content

@@ -682,15 +682,15 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       margin-bottom: 10px;
     }
     .rounded-square {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 7px;
       .grade {
         text-align: center;
-        padding-top: 10px;
+        padding-top: 7px;
         color: white;
         font-family: 'Lato Bold';
-        font-size: 30px;
+        font-size: 37px;
       }
       .big, .small {
         font-family: 'Lato Bold';
@@ -709,6 +709,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       .small {
         font-size: 9px;
       }
+    }
+    .description {
+      text-align: center;
+      margin-top: 10px;
     }
   }
   & > .columns > .column:nth-of-type(2) {
