@@ -137,7 +137,7 @@ module School
   end
 
   def special_ed_programs
-    school_profiles.andand.field_special_ed_programs
+    list_labels school_profiles.andand.field_special_ed_programs
   end
 
   def ell_level
