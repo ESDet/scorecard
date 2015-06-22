@@ -33,13 +33,25 @@
       }
       el.css('width', num + "%");
     });
-    $('.line-marker').each(function(i, n) {
-      var el = $(n);
-      var num = el.data('num');
-      el.css('margin-left', num);
-    });
     $('.line-graph').each(function(i, n) {
       var markers = $(n).find('.line-marker');
+      var mar;
+      markers.each(function(i, n) {
+        var el = $(n);
+        var num = el.data('num');
+        if (mar) {
+          if (mar > num) {
+            el.css('margin-left',
+              (mar - num - 1) + '%');
+          } else {
+            el.css('margin-left',
+              (num - mar - 1) + '%');
+          }
+        } else {
+          mar = num;
+          el.css('margin-left', (mar - 1) + '%');
+        }
+      });
       var marginOne = $(markers[0]).position().left,
           marginTwo = $(markers[1]).position().left;
       if (marginOne < 0) { marginOne *= -1; }
