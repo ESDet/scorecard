@@ -46,8 +46,9 @@
           .content
             .rounded-square.light-cyan-background.auto-margin
               .big
-                = school.michigan_percentile
-                .suffix th
+                - if school.michigan_percentile
+                  = school.michigan_percentile
+                  .suffix th
               .small PERCENTILE OUT OF 100
         .column
           .title School Type
