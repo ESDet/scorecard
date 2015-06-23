@@ -30,6 +30,9 @@
       Average difference in the performance of 11th grade students on the ACT (2012-2013 and 2013-14)<br/>
       and their predicted performance based on their 7th and 8th grade state test results
     .content.two
+      .labels
+        .label SCHOOL
+        .label DETROIT
       = render 'two_bar_graph', title: 'English',
         subject: 'english', scale: 10,
         school_growth: @school.english_growth,
@@ -41,6 +44,9 @@
         detroit_growth: @detroit.math_growth,
         zero_bar: 'PREDICTED SCORE'
     .content.two
+      .labels
+        .label SCHOOL
+        .label DETROIT
       = render 'two_bar_graph', title: 'Reading',
         subject: 'reading', scale: 10,
         school_growth: @school.reading_growth,

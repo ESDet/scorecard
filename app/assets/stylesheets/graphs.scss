@@ -359,19 +359,25 @@
     }
   }
 
+  .content .labels {
+    float: left;
+    text-align: right;
+    margin-top: 40px;
+    margin-right: 5px;
+    & > .label {
+      font-family: 'Lato Bold';
+      font-size: 10px;
+    }
+    & > .label:nth-of-type(1) {
+      color: $cyan;
+      margin-bottom: 23px;
+    }
+  }
+
   .content.four.bar {
     & > .labels {
-      float: left;
-      padding-top: 40px;
-      text-align: right;
-      margin-right: 5px;
       & > .label {
-        font-family: 'Lato Bold';
-        font-size: 10px;
         margin-bottom: 35px;
-      }
-      & > .label:nth-of-type(1) {
-        color: $green;
       }
     }
     & > .visual {

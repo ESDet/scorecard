@@ -28,6 +28,9 @@
     %h2 Are students improving academically?
     %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2015
     .content.two
+      .labels
+        .label SCHOOL
+        .label DETROIT
       = render 'two_bar_graph', title: 'Math',
         subject: 'math', scale: 20,
         school_growth: @school.math_growth,
