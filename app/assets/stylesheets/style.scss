@@ -44,8 +44,8 @@ body.schools-index { height: 100%; }
 .float_left { float: left; }
 .clear_floats { clear: both; }
 .justify { text-align: justify; }
-.centered-text { text-align: center; }
-.centered-element { margin: auto; }
+.centered { text-align: center; }
+.auto-margin { margin: auto; }
 .left-text { text-align: left; }
 .hide { display: none; }
 .inline { display: inline-block; }
@@ -560,186 +560,237 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   padding: 14px 0px;
   display: inline-block;
   width: inherit;
-  & > .header {
-    width: 100%;
-    height: 30px;
-    text-align: center;
-    margin-bottom: 5px;
-    font-family: 'Aleo Bold';
-    font-size: 20px;
-    color: $navy;
-    & > .left-header {
-      float: left;
-      width: 520px;
-    }
-    & > .right-header {
-      float: right;
-      width: 240px;
-    }
-  }
-  & > .columns {
-    width: inherit;
-    height: inherit;
-    display: inherit;
-    margin-bottom: 10px;
-  }
-  & > .columns > .column {
+}
+
+.section > .header {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  margin-bottom: 5px;
+  font-family: 'Aleo Bold';
+  font-size: 20px;
+  color: $navy;
+  & > .left-header {
     float: left;
-    width: 250px;
-    & > .title {
-      height: 26px;
-      background-color: $cyan;
-      font-family: 'Aleo Bold';
-      font-size: 13px;
-      padding: 5px 20px;
-      color: white;
-      text-align: center;
-    }
-    & > .content {
-      &.no-padding { padding: 0; }
-      font-family: 'Lato Regular';
-      font-size: 13px;
-      margin-top: 4px;
-      padding: 7px;
-      & > .header {
-        margin-bottom: 10px;
-        font-family: 'Lato Bold';
-        font-size: 16px;
-        text-align: center;
-        &.big { font-size: 25px; }
-      }
-      & .key-value {
-        display: inline-block;
-        margin: 5px 0;
-        width: 100%;
-        & > .key {
-          float: left;
-          font-family: 'Aleo Bold';
-          color: $cyan;
-        }
-        & > .value {
-          float: right;
-          margin-left: 7px;
-          font-family: 'Lato Regular';
-          text-align: left;
-        }
-      }
-      .key {
-        font-family: 'Aleo Bold';
-        color: $cyan;
-        margin-right: 5px;
-      }
-      ul {
-        display: inline-block;
-        width: 100%;
-        list-style: none;
-        padding:0;
-        margin:0;
-        padding-start: 40px;
-        font-family: 'Lato Regular';
-        li {
-          list-style-position: outside;
-          padding-left: 10px;
-          margin: 4px 0;
-        }
-        li:before {
-          content: "\002022";
-          color: $cyan;
-          padding-right: 7px;
-        }
-      }
-      & > .text {
-        margin: 5px 0;
-        padding-left: 7px;
-      }
-      #pie {
-        float: left;
-      }
-      .legend {
-        float: right;
-        width: 155px;
-        .stat {
-          margin: 3px 0;
-          .race {
-            margin-top: 4px;
-            margin-right: 3px;
-            float: left;
-            width: 10px;
-            height: 10px;
-          }
-        }
-      }
-      .left {
-        float: left;
-        width: 50%
-      }
-      .right {
-        float: right;
-        width: 50%
-      }
-    }
-    & > .content:not(:nth-of-type(1)) {
-      margin-bottom: 10px;
-    }
-    .rounded-square {
-      width: 70px;
-      height: 70px;
-      border-radius: 7px;
-      .grade {
-        text-align: center;
-        padding-top: 7px;
-        color: white;
-        font-family: 'Lato Bold';
-        font-size: 37px;
-      }
-      .big, .small {
-        font-family: 'Lato Bold';
-        color: $navy;
-        text-align: center;
-      }
-      .big {
-        float: left;
-        margin-left: 6px;
-        font-size: 28px;
-        .suffix {
-          float: right;
-          font-size: 15px;
-        }
-      }
-      .small {
-        font-size: 9px;
-      }
-    }
-    .description {
-      text-align: center;
-      margin-top: 10px;
-    }
-  }
-  & > .columns > .column:nth-of-type(2) {
-    margin: 0 25px;
-  }
-  & > .columns > .column.two-wide {
-    margin: 0;
-    float: right;
     width: 520px;
   }
-  & > .columns.one {
-    width: 100%;
-    & > .column { width: 100%; }
+  & > .right-header {
+    float: right;
+    width: 240px;
   }
-  & > .columns.two {
-    & > .column {
-      width: 360px;
+}
+
+.section > .columns {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  margin-bottom: 10px;
+}
+
+.section > .columns > .column {
+  float: left;
+  width: 250px;
+  & > .title {
+    height: 26px;
+    background-color: $cyan;
+    font-family: 'Aleo Bold';
+    font-size: 13px;
+    padding-top: 5px;
+    color: white;
+    text-align: center;
+  }
+  & > .content {
+    &.no-padding { padding: 0; }
+    font-family: 'Lato Regular';
+    font-size: 13px;
+    margin-top: 4px;
+    padding: 7px;
+    & > .header {
+      margin-bottom: 10px;
+      font-family: 'Lato Bold';
+      font-size: 16px;
+      text-align: center;
+      &.big { font-size: 25px; }
     }
-    & > .column:nth-of-type(2) {
+    & .key-value {
+      display: inline-block;
+      margin: 5px 0;
+      width: 100%;
+      & > .key {
+        float: left;
+        font-family: 'Aleo Bold';
+        color: $cyan;
+      }
+      & > .value {
+        float: right;
+        margin-left: 7px;
+        font-family: 'Lato Regular';
+        text-align: left;
+      }
+    }
+    .key {
+      font-family: 'Aleo Bold';
+      color: $cyan;
+      margin-right: 5px;
+    }
+    ul {
+      display: inline-block;
+      width: 100%;
+      list-style: none;
+      padding:0;
+      margin:0;
+      padding-start: 40px;
+      font-family: 'Lato Regular';
+      li {
+        list-style-position: outside;
+        padding-left: 10px;
+        margin: 4px 0;
+      }
+      li:before {
+        content: "\002022";
+        color: $cyan;
+        padding-right: 7px;
+      }
+    }
+    & > .text {
+      width: 100%;
+      margin: 5px 0;
+      padding-left: 7px;
+      .wrapper {
+        display: inline-block;
+      }
+    }
+    #pie {
+      float: left;
+    }
+    .legend {
       float: right;
-      margin: 0;
+      width: 155px;
+      .stat {
+        margin: 3px 0;
+        .race {
+          margin-top: 4px;
+          margin-right: 3px;
+          float: left;
+          width: 10px;
+          height: 10px;
+        }
+      }
+    }
+    .left {
+      float: left;
+      width: 50%
+    }
+    .right {
+      float: right;
+      width: 50%
     }
   }
-  .icon-text {
-    text-align: left;
-    display: inline-block;
+  & > .content:not(:nth-of-type(1)) {
+    margin-bottom: 10px;
   }
+  .rounded-square {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    border-radius: 15px;
+    .grade {
+      text-align: center;
+      padding-top: 7px;
+      color: white;
+      font-family: 'Lato Bold';
+      font-size: 37px;
+    }
+    .big, .small {
+      font-family: 'Lato Bold';
+      color: $navy;
+      text-align: center;
+    }
+    .big {
+      float: left;
+      margin: 7px 0 0 8px;
+      font-size: 37px;
+      .suffix {
+        float: right;
+        font-size: 21px;
+      }
+    }
+    .small {
+      font-size: 9px;
+      position: absolute;
+      bottom: 3px;
+      padding: 0 2px;
+    }
+  }
+  .description {
+    text-align: center;
+    margin-top: 10px;
+  }
+}
+
+.section > .columns > .column:nth-of-type(2) {
+  margin: 0 25px;
+}
+
+.section > .columns > .column.two-wide {
+  margin: 0;
+  float: right;
+  width: 520px;
+}
+
+.section > .columns.one {
+  width: 100%;
+  & > .column { width: 100%; }
+}
+
+.section > .columns.two {
+  & > .column {
+    width: 360px;
+  }
+  & > .column:nth-of-type(2) {
+    float: right;
+    margin: 0;
+  }
+}
+
+.yes-no-line {
+  width: 100%;
+  text-align: center;
+  & > .yes-no {
+    display: inline-block;
+    width: 50px;
+    margin-right: 15px;
+  }
+}
+
+.checked {
+  float: left;
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background-color: $green;
+}
+
+.checked:before {
+  content: "\2714\0020";
+  color: white;
+  font-size: 14px;
+  padding-left: 3px;
+}
+
+.unchecked {
+  float: left;
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background-color: grey;
+}
+
+.icon-text {
+  text-align: left;
+  display: inline-block;
 }
 
 .info-bar {

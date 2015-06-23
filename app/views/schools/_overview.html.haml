@@ -36,22 +36,19 @@
         .column
           .title Excellent Schools Detroit
           .content
-            .rounded-square.green-background.centered-element
+            .rounded-square.green-background.auto-margin
               .grade
                 = school.excellent_schools_grade
-              .small Overall Grade
+
+              .small OVERALL GRADE
         .column
           .title State
           .content
-            .rounded-square.light-cyan-background.centered-element
-              - if school.mighigan_percentile
-                .big
-                  = school.michigan_percentile
-                  .suffix th
-                .small PERCENTILE OUT OF 100
-              - else
-                .grade
-                  .navy
+            .rounded-square.light-cyan-background.auto-margin
+              .big
+                = school.michigan_percentile
+                .suffix th
+              .small PERCENTILE OUT OF 100
         .column
           .title Governance
           .content
@@ -68,9 +65,11 @@
           .title Hours
           .content
             .header= school.hours || 'N/A'
-            %ul
-              - school.before_after_care.each do |c|
-                %li= c
+            - school.before_after_care.each do |c|
+              .text.centered
+                .wrapper
+                  .checked
+                  = c
         .column
           .title
             .icon-text
@@ -124,16 +123,17 @@
         .column
           .title Application Required
           .content
-            .header Yes&nbsp;&nbsp;No
-            .text.centered-text (see How To Apply)
+            .header
+              = render 'yes_no', value: school.application_process?
+            .text.centered (see How To Apply)
           .title Dress Code
           .content
-            .header Yes&nbsp;&nbsp;No
-            = school.dress_code
+            .header
+              = render 'yes_no', value: school.dress_code?
           .title Bullying Policy
           .content
-            .header Yes&nbsp;&nbsp;No
-            = school.bullying_policy
+            .header
+              = render 'yes_no', value: school.bullying_policy?
 
 :javascript
   $(function() {

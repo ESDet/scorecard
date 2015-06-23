@@ -1,3 +1,5 @@
+@import 'colors';
+
 .email-icon {
   width: 20px;
   height: 15px;
@@ -110,61 +112,6 @@
   background-repeat: no-repeat;
 }
 
-.compare-arrow-icon {
-  float: left;
-  height: 19px;
-  width: 18px;
-  margin: 7px 10px 0 0;
-  background-image: url(/assets/icons/png/arrow_45_up.png);
-  background-repeat: no-repeat;
-}
-
-.transportation-icon {
-  float: left;
-  height: 75px;
-  width: 50%;
-  background-image: url(/assets/icons/png/transportation.png);
-  background-repeat: no-repeat;
-  background-position: top;
-}
-
-.schedule-icon {
-  float: right;
-  width: 50%;
-  background-image: url(/assets/icons/png/schedule.png);
-  background-repeat: no-repeat;
-  background-position: top;
-  text-align: bottom;
-}
-
-.act-icon {
-  float: left;
-  height: 26px;
-  width: 22px;
-  margin: 0 10px 0 0;
-  background-image: url(/assets/icons/png/ACT.png);
-  background-repeat: no-repeat;
-}
-
-.plus-icon {
-  float: left;
-  height: 19px;
-  width: 19px;
-  margin: 4px 10px 0 0;
-  background-image: url(/assets/icons/png/plus.png);
-  background-repeat: no-repeat;
-}
-
-.envelope-icon {
-  float: left;
-  margin-right: 8px;
-  width: 22px;
-  height: 22px;
-  background-image: url(/assets/icons/png/envelope.png);
-  background-repeat: no-repeat;
-  background-size: 101%;
-}
-
 .facebook-icon {
   float: left;
   margin-top: 5px;
@@ -175,20 +122,3 @@
   background-repeat: no-repeat;
   background-size: 101%;
 }
-
-.increasing-growth {
-  margin: 30px auto 0 auto;
-  width: 68px;
-  height: 157px;
-  background-image: url(/assets/icons/png/arrow_up.png);
-  background-repeat: no-repeat;
-}
-
-.decreasing-growth {
-  margin: 30px auto 0 auto;
-  width: 68px;
-  height: 157px;
-  background-image: url(/assets/icons/png/arrow_down.png);
-  background-repeat: no-repeat;
-}
-
