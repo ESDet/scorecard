@@ -7,7 +7,7 @@
             %img(src="https://portal.excellentschoolsdetroit.org/files/#{school.photo}")
         .school-title
           %h1= school.display_name
-          .grades-served= "Grades Served: #{school.grades_served.join(', ')}"
+          .grades-served= "Grades Served: #{school.grades_served.first} - #{school.grades_served.last}"
       .overview-text
         =raw simple_format(school.overview_text)
       .info-bar
@@ -58,13 +58,20 @@
             <br/>
             %span.key Operator:
             = school.operator.strip
-      .what-this-means WHAT THIS MEANS
+      .what-this-means
+        .question-mark
+        WHAT THIS MEANS
+        .text.hide
+          - if school.k8?
+            The Excellent Schools Detroit grade is a measure of how schools educate their students. The grade indicates the percent of possible points that the school earned. The State Rank is part of Michigan's statewide school accountability system, which orders schools by percentile.
+          - else
+            The Excellent Schools Detroit grade is a measure of how schools educate their students. The grade indicates the percent of possible points that the school earned. The State Rank is part of Michigan's statewide school accountability system, which orders schools by percentile.
     .section.border-bottom
       .columns
         .column
           .title Hours
           .content
-            .header= school.hours || 'N/A'
+            .header= school.hours
             - school.before_after_care.each do |c|
               .text.centered
                 .wrapper
@@ -137,6 +144,15 @@
 
 :javascript
   $(function() {
+    $('.what-this-means').click(function() {
+      var text = $(this).find('> .text');
+      if (text.hasClass('hide')) {
+        text.removeClass('hide');
+      } else {
+        text.addClass('hide');
+      }
+    });
+
     var drawPie = function(element, data) {
     var w = 75,
       h = 75,

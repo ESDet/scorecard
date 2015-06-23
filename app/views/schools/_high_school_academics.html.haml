@@ -19,7 +19,11 @@
         school_average: @school.science_college_ready,
         detroit_average: @detroit.science_college_ready,
         state_average: @state.science_college_ready
-    .what-this-means WHAT THIS MEANS
+    .what-this-means
+      .question-mark
+      WHAT THIS MEANS
+      .text.hide
+        This graph shows the percentage of students at this school who scored at the "College-Ready" level or higher on the ACT in 2014-2015. It compares this school's students to students in Detroit and in Michigan who also scored at the "College-Ready" level or higher on the ACT in 2014-2015.
   .stat-region
     %h2 Did students at this school improve academically over time?
     %h3
@@ -51,7 +55,11 @@
         state_growth: @state.science_growth,
         detroit_growth: @detroit.science_growth,
         zero_bar: 'PREDICTED SCORE'
-    .what-this-means WHAT THIS MEANS
+    .what-this-means
+      .question-mark
+      WHAT THIS MEANS
+      .text.hide
+        This graph provides information about whether students at a school are moving toward college readiness at a faster or slower pace relative to their academic peers across the state. The graph shows the difference between a school's average student actual ACT score and predicted ACT score. The predicted ACT score is based on a peer group of Michigan students who scored within a similar range on the 7th and 8th grade MEAP tests.
   .stat-region
     %h2 Do students at this school graduate high school, enroll in college and stay in college?
     %h3 Average percent of 9th graders who...
@@ -80,7 +88,11 @@
         school_average: @school.stay_in_college,
         detroit_average: @detroit.stay_in_college,
         state_average: @state.stay_in_college
-    .what-this-means WHAT THIS MEANS
+    .what-this-means
+      .question-mark
+      WHAT THIS MEANS
+      .text.hide
+        These graphs shows the percentage of students at the school who: graduate from high school within four years, graduate from high school within five years, enroll in college within two years of graduation, stay in college for two years in a row. All school percents are compared to those of Detroit and Michigan.
   .stat-region
     %h2 What do students and teachers think about this school?
     %h3 Rating on 5Essentials Student and Teacher Survey, 2015
@@ -93,4 +105,15 @@
         supportive_environment: @school.five_e_supportive_environment,
         ambitious_instruction: @school.five_e_ambitious_instruction
 
-    .what-this-means WHAT THIS MEANS
+    .what-this-means
+      .question-mark
+      WHAT THIS MEANS
+      .text.hide
+        This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
+        %ul
+          %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
+          %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
+          %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
+          %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
+          %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
+        Parents also took the survey. Find out more about how they rated this school.

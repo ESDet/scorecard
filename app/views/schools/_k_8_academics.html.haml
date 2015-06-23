@@ -19,7 +19,11 @@
         school_average: @school.socstud_prepared,
         detroit_average: @detroit.socstud_prepared,
         state_average: @state.socstud_prepared
-      .what-this-means WHAT THIS MEANS
+      .what-this-means
+        .question-mark
+        WHAT THIS MEANS
+        .text.hide
+          This graph uses 2015 MEAP data to compare the percentage of proficient or higher students at this school to the percentage of proficient or higher students in Detroit and in Michigan.
   .stat-region
     %h2 Are students improving academically?
     %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2015
@@ -36,7 +40,11 @@
         state_growth: @state.reading_growth,
         detroit_growth: @detroit.reading_growth,
         zero_bar: 'STATE'
-      .what-this-means WHAT THIS MEANS
+      .what-this-means
+        .question-mark
+        WHAT THIS MEANS
+        .text.hide
+          This graph provides information about whether students at a school are growing at a faster or slower pace relative to their academic peers across the state in Math and Reading. The graph shows the school's average growth compared to the average growth of other schools in Detroit and in Michigan.
   .stat-region
     %h2 What do students and teachers think about this school?
     %h3 Rating on 5Essentials Student and Teacher Survey, 2015
@@ -48,4 +56,15 @@
         involved_families: @school.five_e_involved_families,
         supportive_environment: @school.five_e_supportive_environment,
         ambitious_instruction: @school.five_e_ambitious_instruction
-      .what-this-means WHAT THIS MEANS
+      .what-this-means
+        .question-mark
+        WHAT THIS MEANS
+        .text.hide
+          This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
+          %ul
+            %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
+            %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
+            %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
+            %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
+            %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
+          Parents also took the survey. Find out more about how they rated this school.

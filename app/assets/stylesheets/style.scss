@@ -764,6 +764,27 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
 }
 
+.question-mark {
+  position: relative;
+  float: left;
+  margin-right: 7px;
+  bottom: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background-color: white;
+  border: 1px solid $navy;
+}
+
+.question-mark:before {
+  position: absolute;
+  content: "\003f\0020";
+  color: $navy;
+  font-size: 14px;
+  bottom: 0.1px;
+  left: 5px;
+}
+
 .checked {
   float: left;
   margin-right: 5px;
@@ -822,15 +843,25 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 .what-this-means {
+  cursor: pointer;
   width: 100%;
   display: inline-block;
   margin-top: 40px;
   background: $light_cyan;
-  height: 30px;
   text-align: left;
-  padding: 9px;
-  font-family: 'Aleo Regular';
-  font-size: 11px;
+  padding: 7px 9px 2px 9px;
+  font-family: 'Lato Regular';
+  font-size: 12px;
+  color: $navy;
+  .text {
+    color: $onyx;
+    margin: 10px 0;
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+      li b { font-family: 'Lato Bold'; }
+    }
+  }
 }
 
 .overview-text {
