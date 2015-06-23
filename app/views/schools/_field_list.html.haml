@@ -1,17 +1,18 @@
 - if list && !list.empty?
   - s = list.size
   - if s > 6
-    %ul
-      .left
+    .left
+      %ul
         - list[0..s / 2].each do |i|
           %li
-            %span= i
-      .right
+            = i
+    .right
+      %ul
         - list[s / 2 + 1..s - 1].each do |i|
           %li
-            %span= i
+            = i
   - else
     %ul
       - list.each do |i|
         %li
-          %span= i
+          = i

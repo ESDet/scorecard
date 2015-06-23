@@ -601,6 +601,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     text-align: center;
   }
   & > .content {
+    display: inline-block;
+    width: 100%;
     &.no-padding { padding: 0; }
     font-family: 'Lato Regular';
     font-size: 13px;
@@ -636,21 +638,19 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     }
     ul {
       display: inline-block;
-      width: 100%;
       list-style: none;
-      padding:0;
-      margin:0;
-      padding-start: 40px;
+      width: 100%;
       font-family: 'Lato Regular';
-      li {
-        list-style-position: outside;
-        padding-left: 10px;
-        margin: 4px 0;
-      }
-      li:before {
+      margin: 2px 0 2px 20px;
+      padding-left: 0px;
+      padding-right: 25px;
+      text-indent: -15px;
+      & > li { margin: 5px 0; }
+      & > li:before {
+        position: relative;
         content: "\002022";
         color: $cyan;
-        padding-right: 7px;
+        padding-right: 5px;
       }
     }
     & > .text {
