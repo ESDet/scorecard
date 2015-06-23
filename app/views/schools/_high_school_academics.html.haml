@@ -31,28 +31,24 @@
       and their predicted performance based on their 7th and 8th grade state test results
     .content.two
       = render 'two_bar_graph', title: 'English',
-        subject: 'english',
+        subject: 'english', scale: 10,
         school_growth: @school.english_growth,
-        state_growth: @state.english_growth,
         detroit_growth: @detroit.english_growth,
         zero_bar: 'PREDICTED SCORE'
       = render 'two_bar_graph', title: 'Math',
-        subject: 'math',
+        subject: 'math', scale: 10,
         school_growth: @school.math_growth,
-        state_growth: @state.math_growth,
         detroit_growth: @detroit.math_growth,
         zero_bar: 'PREDICTED SCORE'
     .content.two
       = render 'two_bar_graph', title: 'Reading',
-        subject: 'reading',
+        subject: 'reading', scale: 10,
         school_growth: @school.reading_growth,
-        state_growth: @state.reading_growth,
         detroit_growth: @detroit.reading_growth,
         zero_bar: 'PREDICTED SCORE'
       = render 'two_bar_graph', title: 'Science',
-        subject: 'science',
+        subject: 'science', scale: 10,
         school_growth: @school.science_growth,
-        state_growth: @state.science_growth,
         detroit_growth: @detroit.science_growth,
         zero_bar: 'PREDICTED SCORE'
     .what-this-means

@@ -1,79 +1,75 @@
 .visual
   .title= title
-  .graph.growth(data-subject="#{subject}" data-school-growth="#{school_growth}" data-state-growth="#{state_growth}" data-detroit-growth="#{detroit_growth}")
-    .left-bars
-      .negative
-        .text
-        .number
-      .negative
-        .text
-        .number
+  .graph.growth(data-subject="#{subject}" data-scale="#{scale}" data-school-growth="#{school_growth}" data-detroit-growth="#{detroit_growth}")
+    .bar.school
+      .number
+      .difference.hide
+        .bar
+        .line
+      .text
+    .bar.detroit
+      .number
+      .difference.hide
+        .bar
+        .line
+      .text
     .zero-bar
       .text= zero_bar
-    .right-bars
-      .positive
-        .text
-        .number
-      .positive
-        .text
-        .number
 
 :javascript
   $(function() {
-    var setText = function(el, index) {
-      if (index == 0) {
-        el.text('SCHOOL');
-      } else {
-        el.text('DETROIT');
-      }
-    };
+    var graph = $('.graph.growth[data-subject="#{subject}"]');
+    var schoolGrowth = graph.data('school-growth');
+    var detroitGrowth = graph.data('detroit-growth');
+    var scale = graph.data('scale');
+    var halfScale = scale / 2.0;
 
-    var setBars = function(pos, neg, posWidth, negWidth, margin, displayText, index) {
-      pos.css('width', posWidth + 'px');
-      neg.css('width', negWidth + 'px');
-      var text, num;
-      if (posWidth > 0) {
-        text = pos.find('.text');
-        num = pos.find('.number');
+    if (schoolGrowth <= halfScale) {
+      var schoolNum, schoolDiff, schoolColor;
+      if (schoolGrowth < 0) {
+        schoolNum = (halfScale + schoolGrowth) / halfScale * 100 / 2.0;
+        schoolDiff = 50 - schoolNum;
+        schoolColor = '#c73458';
       } else {
-        text = neg.find('.text');
-        num = neg.find('.number');
+        schoolNum = 50;
+        schoolDiff = schoolGrowth / halfScale * 100 / 2.0;
+        schoolColor = '#7cc45c';
       }
-      setText(text, index);
-      text.css('margin-left', margin + 'px');
-      num.css('margin-left', margin + 'px');
-      if (displayText == 'N/A') {
-        num.css('color', 'grey');
-      }
-      num.text(displayText);
-    };
 
-    var displayGrowth = function(el, index, growth) {
-      var neg = $(el.find('.negative').get(index));
-      var pos = $(el.find('.positive').get(index));
-      if (growth > 0) {
-        setBars(pos, neg, growth, 0, pos.width() + 10, Math.round(growth * 100) / 100, index);
-      } else if (growth < 0) {
-        setBars(pos, neg, 0, growth * -1, -(neg.width() + 70), Math.round(growth * 100) / 100, index);
+      if (schoolDiff > 50) { schoolDiff = 49; }
+      var schoolEl = graph.find('> .bar.school');
+      schoolEl.find('> .number').
+        css('width', schoolNum + '%').
+        css('background-color', schoolColor);
+      schoolEl.find('> .difference').
+        css('width', schoolDiff + '%').
+        removeClass('hide');
+      schoolEl.find('> .text').
+        text(schoolGrowth).
+        css('color', schoolColor);
+    }
+
+    if (detroitGrowth < halfScale) {
+      var detroitNum, detroitDiff, detroitColor;
+      if (detroitGrowth < 0) {
+        detroitNum = (halfScale + detroitGrowth) / halfScale * 100 / 2.0;
+        detroitDiff = 50 - detroitNum;
+        detroitColor = '#c73458';
       } else {
-        setBars(pos, neg, 0, 0, 10, 'N/A', index);
+        detroitNum = 50;
+        detroitDiff = detroitGrowth / halfScale * 100 / 2.0;
+        detroitColor = '#7cc45c';
       }
-    };
 
-    var addGrowth = function(el, growth, index) {
-      if (growth != "") {
-        displayGrowth(el, index, growth);
-      } else {
-        displayGrowth(el, index, 0);
-      }
-    };
-
-    $('.growth').each(function(i, n) {
-      var el = $(n);
-      var subject = el.data('subject')
-      var schoolGrowth = el.data('school-growth');
-      var detroitGrowth = el.data('detroit-growth');
-      addGrowth(el, schoolGrowth, 0);
-      addGrowth(el, detroitGrowth, 1);
-    });
+      var detroitEl = graph.find('> .bar.detroit');
+      detroitEl.find('> .number').
+        css('width', detroitNum + '%').
+        css('background-color', detroitColor);
+      detroitEl.find('> .difference').
+        css('width', detroitDiff + '%').
+        removeClass('hide');
+      detroitEl.find('> .text').
+        text(detroitGrowth).
+        css('color', detroitColor);
+    }
   });
