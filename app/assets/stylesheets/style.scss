@@ -844,6 +844,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     font-family: 'Lato Bold';
     font-size: 11px;
     &.compare {
+      cursor: pointer;
       margin-left: 55px;
       margin-top: 2px;
       padding: 3px 7px;

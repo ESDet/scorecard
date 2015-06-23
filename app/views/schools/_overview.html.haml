@@ -26,9 +26,8 @@
             .website-icon
             %a.external{:href => school.school_url, :target => '_blank'} Visit
             this school's website
-        .item.compare
-          %a(href="/compare/+#{school.tid}")
-            COMPARE TO OTHER SCHOOLS
+        .item.compare(title="Coming Soon")
+          COMPARE TO OTHER SCHOOLS
     .section.border-bottom
       .header
         .left-header How is this school ranked?
@@ -218,11 +217,11 @@
       };
     };
 
-    var aa = #{school.african_american_enrollment},
-        a  = #{school.asian_enrollment},
-        h  = #{school.hispanic_enrollment},
-        w  = #{school.white_enrollment},
-        o  = #{school.other_enrollment};
+    var aa = #{school.african_american_enrollment || 0},
+        a  = #{school.asian_enrollment || 0},
+        h  = #{school.hispanic_enrollment || 0},
+        w  = #{school.white_enrollment || 0},
+        o  = #{school.other_enrollment || 0};
 
     drawPie("#pie", [
       pieOpts(
@@ -246,5 +245,11 @@
         "#ff690f", aa + a + h + w, aa + a + h + w + o
       )
     ]);
+
+    $('.compare').mouseover(function() {
+      $(this).text('COMING SOON');
+    }).mouseout(function() {
+      $(this).text('COMPARE TO OTHER SCHOOLS');
+    });
 
   });
