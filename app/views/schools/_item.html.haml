@@ -5,8 +5,11 @@
     %img(src="#{School.image(school.overall_grade, :small)}" class="mini-el-icon")
 
   %h3= link_to school.display_name, school_path("#{school.link}")
-  - unless school.grades_served.blank?
-    %div Grades #{school.grades_served.join(", ")}
-  %label
-    = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
-    Compare
+  - if !school.grades_served.blank?
+    %div Grades: #{school.grades_served.join(", ")}
+  - elsif school.age_groups
+    %div Age Groups: #{school.age_groups.join(", ")}
+
+//  %label
+//    = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
+//    Compare

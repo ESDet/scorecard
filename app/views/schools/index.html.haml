@@ -10,59 +10,59 @@
         - @schools.select { |s| !s.field_geo.nil? }.each do |s|
           = render 'item', { :school => s }
 
-      %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
+      //%a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
 
-  :erb
-    <script id='list-template' type='text/html'>
-    {{#features}}{{#properties}}
-      <li class='school'>
-        <img src='/assets/{{seal}}' class='mini-el-icon'/>
-        <h3><a href='/schools/{{slug}}'>{{name}}</a></h3>
-        {{#grades_served}}<div>Grades {{grades_served}}</div>{{/grades_served}}
-        <label><input class='compare-check' name='compare[]' type='checkbox' value='{{id}}'/> Compare</label>
-      </li>
-    {{/properties}}{{/features}}";
-    </script>
+/  :erb
+/    <script id='list-template' type='text/html'>
+/    {{#features}}{{#properties}}
+/      <li class='school'>
+/        <img src='/assets/{{seal}}' class='mini-el-icon'/>
+/        <h3><a href='/schools/{{slug}}'>{{name}}</a></h3>
+/        {{#grades_served}}<div>Grades {{grades_served}}</div>{{/grades_served}}
+/        <label><input class='compare-check' name='compare[]' type='checkbox' value='{{id}}'/> Compare</label>
+/      </li>
+/    {{/properties}}{{/features}}";
+/    </script>
+/
 
+:javascript
+  var ajax = false;
+  var listSpinner = null;
+  var searching = false;
 
-  :javascript
-    var ajax = false;
-    var listSpinner = null;
-    var searching = false;
-
-    $(document).ready(function(e) {
-      var map = Map({
-        center: [42.36, -83.09],
-        markers: #{@schools.map(&:marker).to_json},
-        zoom: 11
-      });
-
-      $('body').on('change', 'input.compare-check', function(e) {
-        var count = $('input.compare-check:checked').length;
-        if(count > 0) {
-          $('a.do-compare').removeClass('hide');
-        } else {
-          $('a.do-compare').addClass('hide');
-        }
-        return true;
-      });
-
-      $('.school_list .school').mouseover(function(e) {
-        var tid = $(this).data('tid');
-        for(var i in map.layers) {
-          if(tid == map.layers[i].options.id) {
-            map.layers[i].openPopup();
-          }
-        }
-        return true;
-      });
-
-      $('a.do-compare').click(function(e) {
-        ids = [];
-        $('input.compare-check:checked').each(function(idx, el) {
-          ids.push($(el).val());
-        });
-        window.location = "/compare/+" + ids.join(',');
-        return false;
-      });
+  $(document).ready(function(e) {
+    var map = Map({
+      center: [42.36, -83.09],
+      markers: #{@schools.map(&:marker).to_json},
+      zoom: 11
     });
+
+    $('body').on('change', 'input.compare-check', function(e) {
+      var count = $('input.compare-check:checked').length;
+      if(count > 0) {
+        $('a.do-compare').removeClass('hide');
+      } else {
+        $('a.do-compare').addClass('hide');
+      }
+      return true;
+    });
+
+    $('.school_list .school').mouseover(function(e) {
+      var tid = $(this).data('tid');
+      for(var i in map.layers) {
+        if(tid == map.layers[i].options.id) {
+          map.layers[i].openPopup();
+        }
+      }
+      return true;
+    });
+
+    $('a.do-compare').click(function(e) {
+      ids = [];
+      $('input.compare-check:checked').each(function(idx, el) {
+        ids.push($(el).val());
+      });
+      window.location = "/compare/+" + ids.join(',');
+      return false;
+    });
+  });

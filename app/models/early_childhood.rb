@@ -31,11 +31,6 @@ module EarlyChildhood
     end
   end
 
-  def age_groups
-    ec_profiles.andand.field_ec_agegroups.
-      map { |a| a['name'] }
-  end
-
   def specialty
     field_ec_specialty
   end

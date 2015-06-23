@@ -91,6 +91,14 @@ class SchoolData < OpenStruct
     end
   end
 
+  def age_groups
+    if earlychild?
+      ec_profiles.andand.field_ec_agegroups.andand.
+        map { |a| a['name'] }
+    end
+  end
+
+
   private
 
   def transliterate(str)
