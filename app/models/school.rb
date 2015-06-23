@@ -76,12 +76,12 @@ module School
     school_profiles.andand.field_photos
   end
 
-  def dress_code
-    school_profiles.andand.field_dress_code.andand.label
+  def dress_code?
+    school_profiles.andand.field_dress_code.present?
   end
 
-  def bullying_policy
-    school_profiles.andand.field_bullying_policy.andand.label
+  def bullying_policy?
+    school_profiles.andand.field_bullying_policy.andand.machine_name == 'y'
   end
 
   def parent_involvement
@@ -196,8 +196,8 @@ module School
     list_labels school_profiles.andand.field_student_clubs_other
   end
 
-  def application_process
-    school_profiles.andand.field_application_process
+  def application_process?
+    school_profiles.andand.field_application_process.andand.machine_name == 'yes'
   end
 
   def admissions_url
