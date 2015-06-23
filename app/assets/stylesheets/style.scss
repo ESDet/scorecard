@@ -518,7 +518,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   .school-image {
     width: 275px;
     float: right;
-    img { float: right; }
+    img {
+      height: 185px;
+      float: right;
+    }
   }
   .school-title  {
     float: left;
