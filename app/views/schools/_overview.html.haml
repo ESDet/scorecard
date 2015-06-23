@@ -89,7 +89,7 @@
           .title Hours
           .content
             .header= school.hours
-            - school.before_after_care.each do |c|
+            - school.before_after_care.reverse.each do |c|
               .text.centered
                 .wrapper
                   .checked
