@@ -3,7 +3,7 @@
   .graph
     .number(data-num="#{school_average}")
       .text
-        = school_average ? "#{school_average}%" : "N/A"
+        = school_average ? "#{school_average}%" : ""
   .bounds
     .left-bounds 0%
     .line-graph
@@ -11,12 +11,12 @@
         .wrapper
           .text DETROIT
           .number
-            = detroit_average ? "#{detroit_average}%" : "N/A"
+            = detroit_average ? "#{detroit_average}%" : ""
       .line-marker.state(data-num="#{state_average}")
         .wrapper
           .text STATE
           .number
-            = state_average ? "#{state_average}%" : "N/A"
+            = state_average ? "#{state_average}%" : ""
     .right-bounds 100%
 
 :javascript
