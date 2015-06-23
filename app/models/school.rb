@@ -34,6 +34,14 @@ module School
     school_type == 'k8'
   end
 
+  def district_code
+    meap_2014s.andand.DistrictCode
+  end
+
+  def building_code
+    meap_2014s.andand.BuildingCode
+  end
+
   def governance
     field_governance.andand.name
   end

@@ -4,7 +4,8 @@
 html { height: 100%; }
 
 body {
-  font-family: 'Aleo Regular';
+  font-family: 'Lato Regular';
+  font-size: 13px;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -563,6 +564,14 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   width: inherit;
 }
 
+.section > .links {
+  margin-top: -15px;
+  text-align: center;
+  a {
+    margin: 0 1px 0 2px;
+  }
+}
+
 .section > .header {
   width: 100%;
   height: 30px;
@@ -862,6 +871,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       li b { font-family: 'Lato Bold'; }
     }
   }
+}
+
+.two-column {
+  width: 525px;
 }
 
 .overview-text {

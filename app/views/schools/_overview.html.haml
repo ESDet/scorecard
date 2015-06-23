@@ -58,7 +58,24 @@
             <br/>
             %span.key Operator:
             = school.operator.strip
-      .what-this-means
+      .links.two-column
+        See more rankings:
+        %a(href="http://www.greatschools.org/michigan/detroit/" target="_blank")
+          Great Schools
+          .link-icon
+        - if school.k8?
+          %a(href="https://www.mackinac.org/depts/epi/performance.aspx?report=3" target="_blank")
+            Mackinac
+            .link-icon
+        - else
+          %a(href="https://www.mackinac.org/depts/epi/performance.aspx" target="_blank")
+            Mackinac
+            .link-icon
+        %a(href="http://bridgemi.com/2015/02/asc-resultspage/?Dbcode=#{school.district_code}-#{school.building_code}" target="_blank")
+          Bridge
+          .link-icon
+
+      .what-this-means.two-column
         .question-mark
         WHAT THIS MEANS
         .text.hide
