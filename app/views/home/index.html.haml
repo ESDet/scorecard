@@ -3,7 +3,7 @@
     %h1 Find the best Detroit schools for your family.
 
     #search
-      = form_tag '/schools', { :method => :post, :autocomplete => 'off', :id => 'school-search-form' } do
+      = form_tag '/schools', { :method => :get, :autocomplete => 'off', :id => 'school-search-form' } do
         = text_field_tag :loc, params[:loc], :placeholder => 'Zip code or school name (optional)'
         = hidden_field_tag :grade, nil
         .dropdown
