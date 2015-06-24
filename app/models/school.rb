@@ -7,7 +7,8 @@ module School
       'E_Tch' => 'collaborative_teachers',
       'E_Fam' => 'involved_families',
       'E_Env' => 'supportive_environment',
-      'E_Ins' => 'ambitious_instruction'
+      'E_Ins' => 'ambitious_instruction',
+      'Report_School_Id' => 'report_id'
     }
     five_essentials.each do |k, v|
       o["five_e_#{v}".to_sym] = if k == 'Category5E'

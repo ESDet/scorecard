@@ -341,12 +341,12 @@
       }
       .legend {
         font-family: 'Lato Regular';
-        font-size: 13px;
+        font-size: 11px;
         float: right;
         width: 50px;
         text-align: left;
         & > .key {
-          margin: 1px 0;
+          margin: 2px 0;
           width: 20px;
           height: 20px;
         }
@@ -355,6 +355,11 @@
         .yellow { background-color: $fivee_yellow; }
         .orange { background-color: $fivee_orange; }
         .red { background-color: $fivee_red; }
+      }
+      .link {
+        margin-top: 4px;
+        font-family: 'Lato Bold';
+        font-size: 11px;
       }
     }
   }
