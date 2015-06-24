@@ -7,17 +7,13 @@ class SchoolsController < ApplicationController
     @filters = params[:filters] || []
 
     special_filters = []
+    license_types = []
     case @grade
     when 'ec'
       url = "ecs.json?limit=50&flatten_fields=true&includes=all" <<
         "&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC"
       special_filters << "has_esd_el_2015"
-      if @loc.andand.match /^[0-9]{5}$/
-        url << "&filter[postal_code]=#{@loc}"
-      elsif !@loc.blank?
-        url << "&filter[name]=%25#{@loc}%25&filter_op=LIKE"
-      end
       @filters.each do |f|
         case f
         when 'free_reduced'
@@ -29,10 +25,10 @@ class SchoolsController < ApplicationController
         when 'meals'
           special_filters << "ec_profile_has_meals"
         when 'home_based'
-          url << "&filter[field_ec_license_type]=2424,2419" <<
-            "&filter_op[field_ec_license_type]=IN"
+          license_types << 2424
+          license_types << 2419
         when 'center_based'
-          url << "&filter[field_ec_license_type]=2415"
+          license_types << 2415
         end
       end
     when 'k8', 'high'
@@ -47,11 +43,6 @@ class SchoolsController < ApplicationController
         url << "&filter[field_school_type]=3"
       end
 
-      if @loc.andand.match /^[0-9]{5}$/
-        url << "&filter[postal_code]=#{@loc}"
-      elsif !@loc.blank?
-        url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
-      end
       @filters.each do |f|
         @schools = case f
         when 'special_education'
@@ -77,11 +68,24 @@ class SchoolsController < ApplicationController
         "&filter[field_scorecard_display]=1"
     end
 
+    if @loc.andand.match /^[0-9]{5}$/
+      url << "&filter[field_address:postal_code]=#{@loc}"
+    elsif !@loc.blank?
+      url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+    end
+
     if !special_filters.empty?
-      url << "&filter_special=#{special_filters.join(",")}"
+      url << "&filter_special=" << special_filters.join(",")
+    end
+
+    if !license_types.empty?
+      url << "&filter[field_ec_license_type]=" <<
+        license_types.join(", ") <<
+        "&filter_op[field_ec_license_type]=IN"
     end
 
     response = Portal.new.fetch(url)
+
     if response['data']
       schools_with_profiles = response['data'].map do |s|
         includes = response['included'].select do |i|
