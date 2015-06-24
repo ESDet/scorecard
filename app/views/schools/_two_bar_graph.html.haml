@@ -24,7 +24,7 @@
     var scale = graph.data('scale');
     var halfScale = scale / 2.0;
 
-    if (schoolGrowth <= halfScale) {
+    if (schoolGrowth != "" && schoolGrowth <= halfScale) {
       var schoolNum, schoolDiff, schoolColor;
       if (schoolGrowth < 0) {
         schoolNum = (halfScale + schoolGrowth) / halfScale * 100 / 2.0;
@@ -49,7 +49,7 @@
         css('color', schoolColor);
     }
 
-    if (detroitGrowth < halfScale) {
+    if (detroitGrowth != "" && detroitGrowth < halfScale) {
       var detroitNum, detroitDiff, detroitColor;
       if (detroitGrowth < 0) {
         detroitNum = (halfScale + detroitGrowth) / halfScale * 100 / 2.0;
