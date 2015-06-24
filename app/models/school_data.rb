@@ -8,7 +8,6 @@ class SchoolData < OpenStruct
         if k == :included
           v.each do |i|
             type = i['type']
-            i.delete('type')
             @table[type.to_sym] = (i.is_a?(Hash) ? self.class.new(i) : i)
             @hash_table[type.to_sym] = i
             new_ostruct_member(type)
@@ -59,7 +58,7 @@ class SchoolData < OpenStruct
   end
 
   def early_childhood_rating
-    esd_el_2015.andand.overall_rating
+    esd_el_2015s.andand.overall_rating
   end
 
   def k12_image(style = :normal)

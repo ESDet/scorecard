@@ -1,224 +1,207 @@
-.container_12.breadcrumbs
-  %a.back-arrow-icon(href="/")
-  %h2
-    = @school.display_name
-.container_12.clear_floats.section-title(data-target="overview")
-  %h2 Overview
-.container_12.info-region
-  #overview
-    .school-header
+- cache(@school.cache_key, condition: @school.can_cache?) do
+  .container_12.breadcrumbs
+    %a.back-arrow-icon(href="/")
+    %h2= @school.display_name
+  .container_12.clear_floats.region-title(data-target="overview")
+    %h2 Overview
+  .container_12.info-region
+    = render 'overview_ec', school: @school
+  .container_12.clear_floats.region-title(data-target="community")
+    %h2 COMMUNITY RATING DETAILS
+  .container_12.info-region
+    #community
       .middle
-        - if @school.photo
-          .school-image
-            %img(src="https://portal.excellentschoolsdetroit.org/files/#{@school.photo}")
-        .school-title
-          %h1= @school.display_name
-    .middle
-      .fields.clear_floats
-        .field.border-bottom
-          .field-key Excellent Schools Detroit rating
-          .rating.field-value B
-        .field.border-bottom
-          %a(href="/compare/+#{@school.tid}")
-            .compare-arrow-icon
-            Compare
-          to other schools
-        .field.border-bottom
-          .transportation-icon
-            .icon-text
-              No transportation
-          .schedule-icon
-            .icon-text
-              Year-round schedule
-        = render 'field', key: 'Program Specialty', value: @school.specialty
-      .school-map-wrapper
-        #map
-      .overview-text
-        =raw simple_format(@school.overview_text)
-      .contact
-        .envelope-icon
-        %a{href: "mailto:#{@school.email}"} Email
-        this school
-      .contact
-        .phone-icon
-        %a{href: "tel:#{@school.phone}"} Call
-        this school
-      .contact
-        .website-icon
-        %a.external{:href => @school.school_url, :target => '_blank'} Visit
-        this school's website
-      .contact
-        .facebook-icon
-        %a.external{:href => @school.facebook_url, :target => '_blank'} Check
-        out this school's Facebook
-.container_12.clear_floats.section-title(data-target="profile")
-  %h2 Profile
-.container_12.info-region
-  #profile
-    .middle
-      .fields.clear_floats
-        =render 'field', key: 'Schedule Type', value: @school.schedule
-        =render 'field', key: 'Accepts Ages From', value: @school.ages_from
-        =render 'field', key: 'Accepts Ages To', value: @school.ages_to
-        =render 'field', key: 'Total Licensed Capacity', value: @school.capacity
-        =render 'field', key: 'Financial Assistance', value: @school.subsidy
-        =render 'field', key: 'Special Needs Experience', value: @school.special
-        =render 'field', key: 'Care Setting', value: @school.setting
-        =render 'field', key: 'Environment', value: @school.environment
-        =render 'field', key: 'Meals Provided', value: @school.meals
-        =render 'field', key: 'Payment Schedule', value: @school.pay_schedule
-        =render 'field', key: 'Application / Registration Fee', value: sprintf("$%.2f", @school.fee)
-        =render 'field', key: 'Additional Program Information', value: @school.additional_info
-        =render 'field', key: 'Age Groups', value: @school.age_groups
-        =render 'field', key: 'Enrichment Opportunities', value: @school.enrichment
-        =render 'field', key: 'Teacher Evaluations', value: @school.evaluation
-        =render 'field', key: 'Feild trips and other extended programming', value: @school.extended
-        =render 'field', key: 'Facilities Available', value: @school.facilities
-        =render 'field', key: "Frequency of feedback on child's progress", value: @school.feedback_freq
-        =render 'field', key: "Type of feedback provided on child's progress", value: @school.feedback_type
-        =render 'field', key: 'Languages spoken by program staff', value: @school.language
-        =render 'field', key: 'Health/Dental/Vision Care', value: @school.medical
-        =render 'field', key: 'Access to mental health services', value: @school.mental
-        =render 'field', key: 'Partner name - 1', value: @school.partner_one
-        =render 'field', key: 'Details of partnership - 1', value: @school.partner_one_detail
-        =render 'field', key: 'Partner name - 2', value: @school.partner_two
-        =render 'field', key: 'Details of partnership - 2', value: @school.partner_two_detail
-        =render 'field', key: 'Partner name - 3', value: @school.partner_three
-        =render 'field', key: 'Details of partnership - 3', value: @school.partner_three_detail
-        =render 'field', key: 'Playground and/or physical activity space on site', value: @school.physical_activity
-        =render 'field', key: 'Family and community support', value: @school.support
-        =render 'field', key: 'Actual Enrollment', value: @school.actual_enrollment
-        =render 'field', key: 'Licensed Enrollment', value: @school.licensed_enrollment
-        =render 'field', key: 'Number of children with special needs', value: @school.special_enrollment
-        =render 'field', key: 'Number of children receiving subsidy', value: @school.subsidy_enrollment
-.container_12.clear_floats.section-title(data-target="staff")
-  %h2 Staff
-.container_12.info-region
-  #staff
-    .middle
-      .fields.clear_floats
-        - if @el.andand.physicalenviron_staff_average
-          .field.border-bottom
-            .key-value
-              .field-key Program Environment
-              .field-value= @el.andand.physicalenviron_staff_average.to_f
-            %p Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.
-        - if @el.andand.familycommunity_staff_average
-          .field.border-bottom
-            .key-value
-              .field-key Collaboration
-              .field-value= @el.andand.familycommunity_staff_average.to_f
-            %p Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.
-        - if @el.andand.culturallinguistic_staff_average
-          .field.border-bottom
-            .key-value
-              .field-key Cultural Awareness
-              .field-value= @el.andand.culturallinguistic_staff_average.to_f
-            %p Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.
-        - if @el.andand.cultureclimate_staff_average
-          .field.border-bottom
-            .key-value
-              .field-key General Culture and Climate
-              .field-value= @el.andand.cultureclimate_staff_average.to_f
-            %p General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.
-.container_12.clear_floats.section-title(data-target="community")
-  %h2 Community
-.container_12.info-region
-  #community
-    .middle
-      .fields.clear_floats
-        - if @el.andand.clc_fairaverage
-          .field.border-bottom
-            .key-value
-              .field-key Cultural Awareness
-              .field-value= @el.andand.clc_fairaverage.to_f
-            %p The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.
-        - if @el.andand.professionalism_fairaverage
-          .field.border-bottom
-            .key-value
-              .field-key Professionalism
-              .field-value= @el.andand.professionalism_fairaverage.to_f
-            %p The rating is based on how teachers and staff behave and treat each other while in the room with children.
-        - if @el.andand.safety_fairaverage
-          .field.border-bottom
-            .key-value
-              .field-key Program Environment
-              .field-value= @el.andand.safety_fairaverage.to_f
-            %p This rating is based on the conditions of the classroom.
-        - if @el.andand.interactions_fairaverage
-          .field.border-bottom
-            .key-value
-              .field-key Relationships & Interactions
-              .field-value= @el.andand.interactions_fairaverage.to_f
-            %p The rating is based on how well teachers manage the classroom.
-        - if @el.andand.familycommunity_fairaverage
-          .field.border-bottom
-            .key-value
-              .field-key Collaboration
-              .field-value= @el.andand.familycommunity_fairaverage.to_f
-            %p The rating is based on how the family, community and school work together.
-.container_12.closed.section-title(data-target="other-ratings")
-  %h2 Other ratings
-.container_12.info-region
-  #other-ratings.hide
+        Cultural Awareness
+        = @school.community_clc_fair_average
+        %p The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.
 
-:javascript
-  $(document).ready(function(e) {
-    var moveMap = function() {
-      if ($(window).width() > 800) {
-        $('.school-map-wrapper').first().detach().
-          appendTo('#overview .school-header');
-      } else {
-        $('.school-map-wrapper').first().detach().
-          insertAfter('#overview .fields').first();
-      }
-    };
+        Professionalism
+        = @school.community_professionalism_fair_average
+        %p The rating is based on how teachers and staff behave and treat each other while in the room with children.
 
-    moveMap();
-    $(window).resize(function() { moveMap(); });
+        Program Environment
+        = @school.community_safety_fair_average
+        %p This rating is based on the conditions of the classroom.
 
-    Map({
-      center: #{@school.center.to_json},
-      markers: #{[@school.marker].to_json},
-      zoom: 15,
-      zoomControl: false,
-      dragging: false,
-      touchZoom: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      tap: false,
-      keyboard: false
-    });
+        Relationships & Interactions
+        = @school.community_interactions_fair_average
+        %p The rating is based on how well teachers manage the classroom.
 
-    $('.section-title').click(function() {
-      var me = $(this);
-      var target = $('#' + me.data('target'));
-      if (target.hasClass('hide')) {
-        me.removeClass('closed');
-        target.removeClass('hide');
-      } else {
-        me.addClass('closed');
-        target.addClass('hide');
-      }
-    });
+        Collaboration
+        = @school.community_family_fair_average
+        %p The rating is based on how the family, community and school work together.
+  .container_12.clear_floats.region-title(data-target="state")
+    %h2 STATE RATING DETAILS
+  .container_12.info-region
+    #state
+      .middle
+        .section
+          The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS), which is a state-run program. The points in each category are from the program's self-assessment.
 
-    var subjects = $('.subject')
-    subjects.click(function() {
-      var me = $(this);
-      var target = $('#' + me.data('target'));
-      var otherSubjects = me.siblings();
-      var otherTargets = target.siblings();
-      if (target.hasClass('hide')) {
-        me.addClass('active');
-        target.removeClass('hide');
-        otherTargets.addClass('hide');
-        otherSubjects.removeClass('active');
-      } else {
-        if (otherSubjects.hasClass('active').size > 1) {
-          me.removeClass('active');
+          = render 'stars', :n => [@school.published_rating.to_i, 0].max
+        %table
+          %thead
+            %tr
+              %th
+                %span.points= @school.ec_points_total
+                %span / 50
+              %th Overall Score
+          %tbody
+            - @grades[:status][:summary_table].each do |item|
+              %tr
+                %td
+                  %span.points= item[:points]
+                  %span / #{item[:possible]}
+                %td= item[:name]
+
+        %br/
+        %h3 Here is what the star ratings mean:
+        - @stars.each do |n, desc|
+          %div
+            = render 'stars', :n => n
+            = desc
+
+  .container_12.clear_floats.region-title(data-target="staff")
+    %h2 STAFF RATING DETAILS
+  .container_12.info-region
+    #staff
+      .middle
+        .section
+          .header Program Environment
+          = @school.staff_program_environment_average
+          %p Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.
+
+        Collaboration
+        = @school.staff_family_community_average
+        %p Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.
+
+        Cultural Awareness
+        = @school.staff_cultural_linguistic_average
+        %p Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.
+
+        General Culture and Climate
+        = @school.staff_culture_climate_average
+        %p General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.
+
+  .container_12.clear_floats.region-title(data-target="profile")
+    %h2 ADDITIONAL INFORMATION
+  .container_12.info-region
+    #profile
+      .middle
+        .section.border-bottom
+          .columns.one
+            .column
+              .content.light-cyan-background
+                %span.key Schedule Type
+                =render 'field_list', list: @school.schedule
+                =render 'field', key: 'Accepts Ages From', value: @school.ages_from
+                =render 'field', key: 'Accepts Ages To', value: @school.ages_to
+                =render 'field', key: 'Total Licensed Capacity', value: @school.capacity
+                %span.key Financial Assistance
+                = render 'field_list', list: @school.subsidy
+          .columns.one
+            .column
+              .title Special Needs Experience
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.special
+          .columns.one
+            .column
+              .content.light-cyan-background
+                =render 'field', key: 'Care Setting', value: @school.setting
+                =render 'field', key: 'Environment', value: @school.environment
+                =render 'field', key: 'Meals Provided', value: @school.meals
+                =render 'field', key: 'Payment Schedule', value: @school.pay_schedule
+                =render 'field', key: 'Application / Registration Fee', value: sprintf("$%.2f", @school.fee)
+                =render 'field', key: 'Additional Program Information', value: @school.additional_info
+                =render 'field', key: 'Age Groups', value: @school.age_groups
+          .columns.one
+            .column
+              .title Enrichment Opportunities
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.enrichment
+          .columns.one
+            .column
+              .content.light-cyan-background
+                =render 'field', key: 'Teacher Evaluations', value: @school.evaluation
+          .columns.one
+            .column
+              .title Field trips and other extended programming
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.extended
+          .columns.one
+            .column
+              .title Facilities Available
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.facilities
+          .columns.one
+            .column
+              .content.light-cyan-background
+                =render 'field', key: "Frequency of feedback on child's progress", value: @school.feedback_freq
+                =render 'field', key: "Type of feedback provided on child's progress", value: @school.feedback_type
+                =render 'field', key: 'Languages spoken by program staff', value: @school.language
+          .columns.one
+            .column
+              .title Health/Dental/Vision Care
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.medical
+          .columns.one
+            .column
+              .title Access to mental health services
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.mental
+          .columns.one
+            .column
+              .title Partners
+              .content.light-cyan-background
+                =render 'field', key: 'Partner name - 1', value: @school.partner_one
+                =render 'field', key: 'Details of partnership - 1', value: @school.partner_one_detail
+                =render 'field', key: 'Partner name - 2', value: @school.partner_two
+                =render 'field', key: 'Details of partnership - 2', value: @school.partner_two_detail
+                =render 'field', key: 'Partner name - 3', value: @school.partner_three
+                =render 'field', key: 'Details of partnership - 3', value: @school.partner_three_detail
+          .columns.one
+            .column
+              .title Playground and/or physical activity space on site
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.physical_activity
+          .columns.one
+            .column
+              .title Family and community support
+              .content.light-cyan-background
+                =render 'four_col_field_list', list: @school.support
+          .columns.one
+            .column
+              .content.light-cyan-background
+                =render 'field', key: 'Actual Enrollment', value: @school.actual_enrollment
+                =render 'field', key: 'Licensed Enrollment', value: @school.licensed_enrollment
+                =render 'field', key: 'Number of children with special needs', value: @school.special_enrollment
+                =render 'field', key: 'Number of children receiving subsidy', value: @school.subsidy_enrollment
+
+  :javascript
+    $(document).ready(function(e) {
+      Map({
+        center: #{@school.center.to_json},
+        markers: #{[@school.marker].to_json},
+        zoom: 15,
+        zoomControl: false,
+        dragging: false,
+        touchZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        tap: false,
+        keyboard: false
+      });
+
+      $('.region-title').click(function() {
+        var me = $(this);
+        var target = $('#' + me.data('target'));
+        if (target.hasClass('hide')) {
+          me.removeClass('closed');
+          target.removeClass('hide');
+        } else {
+          me.addClass('closed');
           target.addClass('hide');
         }
-      }
+      });
     });
-  });

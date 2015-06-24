@@ -9,7 +9,7 @@ class SchoolsController < ApplicationController
     special_filters = []
     case @grade
     when 'ec'
-      url = "ecs.json?flatten_fields=true&includes=all" <<
+      url = "ecs.json?limit=50&flatten_fields=true&includes=all" <<
         "&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC"
       special_filters << "has_esd_el_2015"
@@ -71,7 +71,10 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      url = "ecs.json?limit=50&flatten_fields=true&includes=all&sort_by_special=ec_total_pts&sort_order_special=DESC"
+      url = "schools.json?limit=50&flatten_fields=true&" <<
+        "includes=all&sort_by_special=" <<
+        "school_combined_total_pts&sort_order_special=DESC" <<
+        "&filter[field_scorecard_display]=1"
     end
 
     if !special_filters.empty?
@@ -97,6 +100,10 @@ class SchoolsController < ApplicationController
           elsif i['type'] == 'esd_hs_2015s'
             if s['links']['esd_hs_2015']
               i['id'] == s['links']['esd_hs_2015']['linkage']['id']
+            end
+          elsif i['type'] == 'esd_el_2015s'
+            if s['links']['esd_el_2015']
+              i['id'] == s['links']['esd_el_2015']['linkage']['id']
             end
           end
         end

@@ -1,50 +1,18 @@
 module EarlyChildhood
-  def self.image(category, rating, year = nil)
-    return '/assets/el_icons/Overview.png' if category == :overview
-    return '/assets/el_icons/EL_Award_NoRating.png' if ![:community, :state, :staff].include?(category) and rating.andand.downcase.andand.include?('not rated')
-    #return 'el_icons/EL_Award_Participant.png' if ![:community, :state, :staff].include?(category) and rating.andand.match(/Below|Not/)
-    cat = {
-      :overall    => 'Award',
-      :mini       => 'Mobile',
-      :community  => 'Sub_Comm',
-      :state      => 'Sub_State',
-      :staff      => 'Sub_Staff',
-    }[category]
-
-    valid_metals = {
-      'Below Bronze'  => 'BelowBronze',
-      'Bronze'        => 'Bronze',
-      'Below Bronze - Rating in progress' => 'BelowBronze',
-      'Bronze - Rating in progres' => 'Bronze',
-      'Bronze - Rating in progress' => 'Bronze',
-      'Silver'        => 'Silver',
-      'Silver - Rating in progress' => 'Silver',
-      'Gold'          => 'Gold',
-      'Incomplete'    => 'NoRating'
-    }
-    metal = valid_metals[rating].andand.gsub(' ', '') || 'None'
-    #metal = ((category == :overall and !rating.nil?) ? 'Participant' : 'None')
-    if year && category != :mini
-      "/assets/el_icons/EL_#{cat}_#{metal}_#{year}.png"
-    else
-      "/assets/el_icons/EL_#{cat}_#{metal}.png"
-    end
-  end
-
   def specialty
     ec_profiles.andand.field_ec_specialty
   end
 
   def schedule
-    ec_profiles.andand.field_ec_schedule
+    list_labels ec_profiles.andand.field_ec_schedule
   end
 
   def age_from
-    ec_profiles.andand.field_age_from.to_i
+    ec_profiles.andand.field_age_from
   end
 
   def age_to
-    ec_profiles.andand.field_age_to.to_i
+    ec_profiles.andand.field_age_to
   end
 
   def capacity
@@ -60,19 +28,20 @@ module EarlyChildhood
   end
 
   def special
-    ec_profiles.andand.field_ec_special
+    ec_profiles.andand.field_ec_special.andand.
+      map { |s| s['name'] }
   end
 
   def setting
-    ec_profiles.andand.field_ec_setting
+    ec_profiles.andand.field_ec_setting.andand.label
   end
 
   def environment
-    ec_profiles.andand.field_ec_environment
+    list_names ec_profiles.andand.field_ec_environment
   end
 
   def meals
-    ec_profiles.andand.field_ec_meals
+    list_names ec_profiles.andand.field_ec_meals
   end
 
   def pay_schedule
@@ -144,39 +113,39 @@ module EarlyChildhood
   end
 
   def enrichment
-    ec_profiles.andand.field_ec_enrichment
+    list_names ec_profiles.andand.field_ec_enrichment
   end
 
   def evaluation
-    ec_profiles.andand.field_ec_evaluation
+    list_names ec_profiles.andand.field_ec_evaluation
   end
 
   def extended
-    ec_profiles.andand.field_ec_extended
+    list_names ec_profiles.andand.field_ec_extended
   end
 
   def facilities
-    ec_profiles.andand.field_ec_facilities
+    list_names ec_profiles.andand.field_ec_facilities
   end
 
   def feedback_freq
-    ec_profiles.andand.field_ec_feedbackfreq
+    list_names ec_profiles.andand.field_ec_feedbackfreq
   end
 
   def feedback_type
-    ec_profiles.andand.field_ec_feedbacktype
+    list_names ec_profiles.andand.field_ec_feedbacktype
   end
 
   def language
-    ec_profiles.andand.field_ec_language
+    list_names ec_profiles.andand.field_ec_language
   end
 
   def medical
-    ec_profiles.andand.field_ec_medical
+    list_names ec_profiles.andand.field_ec_medical
   end
 
   def mental
-    ec_profiles.andand.field_ec_mental
+    list_names ec_profiles.andand.field_ec_mental
   end
 
   def partner_one
@@ -204,11 +173,11 @@ module EarlyChildhood
   end
 
   def physical_activity
-    ec_profiles.andand.field_ec_physactivity
+    list_names ec_profiles.andand.field_ec_physactivity
   end
 
   def support
-    ec_profiles.andand.field_ec_supports
+    list_names ec_profiles.andand.field_ec_supports
   end
 
   def actual_enrollment
@@ -229,5 +198,51 @@ module EarlyChildhood
 
   def subsidy_enrollment
     ec_profiles.andand.field_ec_subsidy_enrollment
+  end
+
+  def staff_program_environment_average
+    esd_el_2015s.andand.PhysicalEnviron_Staff_Average
+  end
+
+  def staff_family_community_average
+    esd_el_2015s.andand.FamilyCommunity_Staff_Average
+  end
+
+  def staff_cultural_linguistic_average
+    esd_el_2015s.andand.CulturalLinguistic_Staff_Average
+  end
+
+  def staff_culture_climate_average
+    esd_el_2015s.andand.CultureClimate_Staff_Average
+  end
+
+  def community_clc_fair_average
+    esd_el_2015s.andand.CLC_FairAverage
+  end
+
+  def community_professionalism_fair_average
+    esd_el_2015s.andand.Professionalism_FairAverage
+  end
+
+  def community_safety_fair_average
+    esd_el_2015s.andand.Safety_FairAverage
+  end
+
+  def community_interactions_fair_average
+    esd_el_2015s.andand.Interactions_FairAverage
+  end
+
+  def community_family_fair_average
+    esd_el_2015s.andand.FamilyCommunity_FairAverage
+  end
+
+  private
+
+  def list_labels(field)
+    field.map { |s| s['label'] } if field
+  end
+
+  def list_names(field)
+    field.map { |s| s['name'] } if field
   end
 end
