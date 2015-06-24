@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   before_filter :password_protect, :only => [:tips]
 
   def index
-    @school_names = ['one']
+    @school_names = []
   end
 
   def resources
