@@ -9,8 +9,9 @@ class SchoolsController < ApplicationController
     special_filters = []
     case @grade
     when 'ec'
-      url = "ecs.json?flatten_fields=true&" <<
-        "includes=all&sort_by_special=ec_total_pts&sort_order_special=DESC"
+      url = "ecs.json?flatten_fields=true&includes=all" <<
+        "&sort_by_special=ec_total_pts" <<
+        "&sort_order_special=DESC"
       special_filters << "has_esd_el_2015"
       if @loc.andand.match /^[0-9]{5}$/
         url << "&filter[postal_code]=#{@loc}"
@@ -35,8 +36,9 @@ class SchoolsController < ApplicationController
         end
       end
     when 'k8', 'high'
-      url = "schools.json?flatten_fields=true&" <<
-        "includes=all&sort_by_special=school_combined_total_points&sort_order_special=DESC" <<
+      url = "schools.json?limit=50&flatten_fields=true&" <<
+        "includes=all&sort_by_special=" <<
+        "school_combined_total_pts&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
       if @grade == 'k8'
@@ -80,11 +82,21 @@ class SchoolsController < ApplicationController
     if response['data']
       schools_with_profiles = response['data'].map do |s|
         includes = response['included'].select do |i|
-          if s['links']
+          if i['type'] == 'school_profiles'
             if s['links']['school_profile']
               i['id'] == s['links']['school_profile']['linkage']['id']
-            elsif s['links']['ec_profile']
+            end
+          elsif i['type'] == 'ec_profiles'
+            if s['links']['ec_profile']
               i['id'] == s['links']['ec_profile']['linkage']['id']
+            end
+          elsif i['type'] == 'esd_k8_2015s'
+            if s['links']['esd_k8_2015']
+              i['id'] == s['links']['esd_k8_2015']['linkage']['id']
+            end
+          elsif i['type'] == 'esd_hs_2015s'
+            if s['links']['esd_hs_2015']
+              i['id'] == s['links']['esd_hs_2015']['linkage']['id']
             end
           end
         end
@@ -104,8 +116,11 @@ class SchoolsController < ApplicationController
     id, school_type = params[:id].split('-')[0..1]
 
     url = school_type == 'ecs' ? 'ecs' : 'schools'
-    url << "/#{id}.json?flatten_fields=true" <<
-      "&include_option_labels=true&includes=all"
+    url << "/#{id}.json?flatten_fields=true&includes=all"
+
+    if school_type != 'ecs'
+      url << "&include_option_labels=true"
+    end
 
     school_data = Portal.new.fetch(url)
 
@@ -134,6 +149,7 @@ class SchoolsController < ApplicationController
 
     if @school.earlychild?
       @school.extend(EarlyChildhood)
+      render 'show_ec'
     else
       @school.extend(School)
       if @school.high?
@@ -146,98 +162,6 @@ class SchoolsController < ApplicationController
         @detroit.extend(K8School)
         @state.extend(K8School)
       end
-    end
-
-    if @school.earlychild?
-      if @school.esd_el_2015
-        @el = @school.esd_el_2015
-        if @el.staffsurveyratingyear == "2014"
-          @teacher_score_mean = @el.andand.teacher_score_mean_2014
-        end
-      else
-        @el = @school.esd_el_2014
-        @teacher_score_mean = @el.andand.teacher_score_mean
-      end
-      @staff_state_avg = 3.62
-
-      age_format = lambda { |months|
-        if months > 11
-          "#{months / 12} years, #{months % 12} months"
-        else
-          "#{months % 12} months"
-        end
-      }
-      render 'show_ec' and return
-    end
-
-    #@profile_fields = School::PROFILE_FIELDS
-    ##@profile_fields_flat = @profile_fields.values.collect { |h| h.to_a }.flatten(1)
-
-    #ethnicities = %w(total female male american_indian asian african_american hispanic hawaiian white two_or_more_races)
-    #if @school.meap_2013
-    #  @demographics = ethnicities.collect do |e|
-    #    num = @school.meap_2013.send("#{e}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
-    #    num = 0 if num == 9
-    #    num == 0 ? nil : [ "#{e.titleize}: #{num} students", num]
-    #  end
-    #  @demographics.reject! { |a| a.nil? }
-
-    #  @enrollment = %w(kindergarten 1 2 3 4 5 6 7 8 9 10 11 12).collect do |g|
-    #    num = @school.meap_2013.send("grade_#{g}_enrollment").to_s.gsub(/[^0-9]/, '').to_i
-    #    num = 0 if num == 9
-    #    num
-    #  end
-    #else
-    #  @demographics = []
-    #  @enrollment = []
-    #end
-    #@enroll_ticks = %w(K 1 2 3 4 5 6 7 8 9 10 11 12)
-
-    #@sitevisit = {
-    #  :overall_rating       => [0, 'Overall Rating', 'average of domain scores'],
-    #  :domain_community     => [1, 'Welcoming Community Score', 'welcoming community score - overall_score'],
-    #  :visitor_resources    => [2, 'Visitor resources score', 'visitor resources score - domain_community'],
-    #  :welcoming_culture    => [2, 'Welcoming culture score', 'welcoming culture score 0- domain_community'],
-    #  :domain_environment   => [1, 'Safe and Caring Environment Score', 'safe and caring environment score - overall_score'],
-    #  :caring_environment   => [2, 'Caring environment score', 'caring environment score - domain_environment'],
-    #  :safe_environment     => [2, 'Safe environment score', 'safe environment score - domain_environment'],
-    #  :domain_expectations  => [1, 'High Expectations Score', 'high expectations score - overall_score'],
-    #  :academic_displays    => [2, 'Academic displays score', 'academic displays score - domain_expectations'],
-    #  :college_promoted     => [2, 'College emphasis score', 'college emphasis score - domain_expectations'],
-    #}
-    #@sitevisit_values = @school.esd_site_visit_2014.andand.marshal_dump
-
-    #@extra_credit = {}
-    #if e = @school.esd
-    #  @extra_credit['Overall Student Characteristics Points'] = e.studchrs_pts
-    #  if old = (@school.k8? ? @school.esd_k8_2014 : e)
-    #    @extra_credit.merge!({
-    #      'Socio-economic Status' => "#{(old.econdis_pct.to_f*100).to_i}%",
-    #      'Special Education' => "#{(old.sped_pct.to_f*100).to_i}%",
-    #      'English Language Learners' => "#{(old.ell_pct.to_f*100).to_i}%",
-    #    })
-    #  end
-    #  if @school.high?
-    #    @extra_credit['FAFSA Completion Rate'] = "#{(@school.esd_hs_2014.andand.fafsa_rate.to_f*100).to_i}%"
-    #  end
-    #end
-
-    #@category_copy = {
-    #  'Turnaround' => ['Fresh start school',
-    #    "These are schools that Michigan has identified as the lowest achieving five percent of schools in the state.
-    #      They are mandated to perform a rapid turnaround to improve. As part of the mandate, the school has a new operator."],
-    #  'New' => ['New school',
-    #    "This school has been open since 2009 or sooner and as a result of being new, doesn't have the cumulative information
-    #    needed for ESD to assign a grade."],
-    #  'Specialty' => ['Specialty school',
-    #    "A specialty school serves students that have unique learning needs or skills.
-    #    Examples can include: adult education and alternative learning programs."]
-    #  }
-
-    respond_to do |format|
-      format.html do
-      end
-      #format.pdf { render :layout => false }
     end
   end
 

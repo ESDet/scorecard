@@ -32,7 +32,7 @@ class SchoolData < OpenStruct
 
   def school_type
     if field_school_type
-      field_school_type.andand.name.downcase
+      field_school_type.andand.name.andand.downcase
     else
       type
     end
@@ -40,6 +40,64 @@ class SchoolData < OpenStruct
 
   def earlychild?
     type == 'ecs'
+  end
+
+  def high?
+    school_type == 'hs'
+  end
+
+  def k8?
+    school_type == 'k8'
+  end
+
+  def excellent_schools_grade
+    if k8?
+      esd_k8_2015s.andand.total_ltrgrade
+    elsif high?
+      esd_hs_2015s.andand.total_ltrgrade
+    end
+  end
+
+  def early_childhood_rating
+    esd_el_2015.andand.overall_rating
+  end
+
+  def k12_image(style = :normal)
+    valid = %w[A Aplus B Bplus C Cplus D F Promising]
+    mod = excellent_schools_grade.andand.gsub('+', 'plus')
+    mod = valid.include?(mod) ? mod : 'NA'
+    return "/assets/el_icons/Sm_#{mod}.png" if style == :small
+    "/assets/el_icons/K12_Grade_#{mod}.png"
+  end
+
+  def early_childhood_image(category, year = nil)
+    return '/assets/el_icons/Overview.png' if category == :overview
+    return '/assets/el_icons/EL_Award_NoRating.png' if ![:community, :state, :staff].include?(category) and early_childhood_rating.andand.downcase.andand.include?('not rated')
+    cat = {
+      :overall    => 'Award',
+      :mini       => 'Mobile',
+      :community  => 'Sub_Comm',
+      :state      => 'Sub_State',
+      :staff      => 'Sub_Staff',
+    }[category]
+
+    valid_metals = {
+      'Below Bronze'  => 'BelowBronze',
+      'Bronze'        => 'Bronze',
+      'Below Bronze - Rating in progress' => 'BelowBronze',
+      'Bronze - Rating in progres' => 'Bronze',
+      'Bronze - Rating in progress' => 'Bronze',
+      'Silver'        => 'Silver',
+      'Silver - Rating in progress' => 'Silver',
+      'Gold'          => 'Gold',
+      'Incomplete'    => 'NoRating'
+    }
+    metal = valid_metals[early_childhood_rating].andand.gsub(' ', '') || 'None'
+    if year && category != :mini
+      "/assets/el_icons/EL_#{cat}_#{metal}_#{year}.png"
+    else
+      "/assets/el_icons/EL_#{cat}_#{metal}.png"
+    end
   end
 
   def cache_key

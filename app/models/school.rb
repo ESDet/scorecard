@@ -18,22 +18,6 @@ module School
     end
   end
 
-  def self.image(letter, style=:normal)
-    valid = %w[A Aplus B Bplus C Cplus D F Promising]
-    mod = letter.andand.gsub('+', 'plus')
-    mod = valid.include?(mod) ? mod : 'NA'
-    return "/assets/el_icons/Sm_#{mod}.png" if style == :small
-    "/assets/el_icons/K12_Grade_#{mod}.png"
-  end
-
-  def high?
-    school_type == 'hs'
-  end
-
-  def k8?
-    school_type == 'k8'
-  end
-
   def district_code
     meap_2014s.andand.DistrictCode
   end
@@ -172,10 +156,6 @@ module School
     school_profiles.andand.field_skills_training
   end
 
-  def before_after_care
-    school_profiles.andand.field_before_after_care
-  end
-
   def staff_resources
     list_labels school_profiles.andand.field_staff_resources
   end
@@ -234,7 +214,7 @@ module School
 
   def before_after_care
     school_profiles.andand.field_before_after_care.andand.
-      map { |c| c['label'] }
+      map { |c| c['label'] }.andand.reverse || []
   end
 
   def transportation_options

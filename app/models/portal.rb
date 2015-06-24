@@ -1,6 +1,6 @@
 class Portal
   include HTTParty
-  default_timeout 10
+  default_timeout 30
 
   BASE = 'https://portal.excellentschoolsdetroit.org/api/1.0/'
 

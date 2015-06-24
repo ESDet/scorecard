@@ -28,10 +28,6 @@ module HighSchool
     HighSchool.int_value(self, :esd_hs_2015s, :col_persist_pct)
   end
 
-  def excellent_schools_grade
-    esd_hs_2015s.andand.total_ltrgrade
-  end
-
   def hours
     esd_hs_2015s.andand.hours
   end

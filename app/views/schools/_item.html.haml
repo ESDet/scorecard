@@ -1,8 +1,8 @@
 %li.school{'data-tid' => school.tid}
   - if school.earlychild?
-    %img(src="#{EarlyChildhood.image(:mini, school.esd_el_2015.andand.overall_rating)}" class="mini-el-icon")
+    %img(src="#{school.early_childhood_image(:mini)}" class="mini-el-icon")
   - else
-    %img(src="#{School.image(school.overall_grade, :small)}" class="mini-el-icon")
+    %img(src="#{school.k12_image(:small)}" class="mini-el-icon")
 
   %h3= link_to school.display_name, school_path("#{school.link}")
   - if !school.grades_served.blank?
