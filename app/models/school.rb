@@ -257,7 +257,7 @@ module School
 
   def other_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.WHITE_ENROLLMENT.to_i +
+      meap_2014s.andand.HAWAIIAN_ENROLLMENT.to_i +
         meap_2014s.andand.TWO_OR_MORE_RACES_ENROLLMENT.to_i +
         meap_2014s.andand.AMERICAN_INDIAN_ENROLLMENT.to_i
     )
