@@ -178,6 +178,7 @@ class SchoolsController < ApplicationController
 
 
   def compare
+    redirect_to root_path
     str = params[:which] || ''
     if str == 'clear'
       session[:compare] = []
