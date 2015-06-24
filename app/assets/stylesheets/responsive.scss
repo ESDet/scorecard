@@ -44,7 +44,6 @@
 
 @media only screen and (max-width: 499px) {
   .brand { padding-left: 5%; }
-  .breadcrumbs { width: 315px; }
   .bar-graph { width: 70%; }
 }
 
@@ -56,7 +55,6 @@
   .header { font-size: 25px; }
   .brand { font-size: 33px; }
   .region-title h2 { font-size: 27px; }
-  .breadcrumbs h2 { font-size: 21px; }
   .school-title h1 { font-size: 35px; }
   .contact { font-size: 17px; }
   .home { margin: 5px 10px 20px 10px; }
@@ -82,7 +80,6 @@
 
 @media only screen and (min-width: 500px) {
   .brand { padding-left: 15%; }
-  .breadcrumbs { width: 450px; }
 }
 
 @media only screen and (min-width: 555px) {
@@ -116,9 +113,7 @@
   .container_12 { width: auto; }
   .padding-left { padding-left: 20%; }
   .padding-right { padding-right: 40%; }
-  .breadcrumbs { margin-left: 110px; }
   #hamburger { margin-left: 140px; }
-  .breadcrumbs { width: 450px; }
 }
 
 @media only screen and (min-width: 1005px) {
