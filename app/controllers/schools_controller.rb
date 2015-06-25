@@ -86,7 +86,7 @@ class SchoolsController < ApplicationController
 
     response = Portal.new.fetch(url)
 
-    if response['data']
+    if response != ["request error"] && response['data']
       schools_with_profiles = response['data'].map do |s|
         includes = response['included'].select do |i|
           if i['type'] == 'school_profiles'
