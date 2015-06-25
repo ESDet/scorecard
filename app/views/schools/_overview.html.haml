@@ -7,6 +7,8 @@
             %img(src="#{school.photo}")
         .school-title
           %h1= school.display_name
+          - if school.status != 'Mature' && school.status != 'Suburban'
+            = school.status
           .grades-served= "Grades Served: #{school.grades_served.first} - #{school.grades_served.last}"
       .overview-text
         =raw simple_format(school.overview_text)

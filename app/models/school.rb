@@ -19,6 +19,10 @@ module School
     end
   end
 
+  def status
+    field_school_scorecard_status.name
+  end
+
   def district_code
     meap_2014s.andand.DistrictCode
   end
