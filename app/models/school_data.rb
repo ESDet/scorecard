@@ -61,14 +61,6 @@ class SchoolData < OpenStruct
     esd_el_2015s.andand.overall_rating
   end
 
-  def k12_image(style = :normal)
-    valid = %w[A Aplus B Bplus C Cplus D F Promising]
-    mod = excellent_schools_grade.andand.gsub('+', 'plus')
-    mod = valid.include?(mod) ? mod : 'NA'
-    return "/assets/el_icons/Sm_#{mod}.png" if style == :small
-    "/assets/el_icons/K12_Grade_#{mod}.png"
-  end
-
   def early_childhood_image(category, year = nil)
     return '/assets/el_icons/Overview.png' if category == :overview
     return '/assets/el_icons/EL_Award_NoRating.png' if ![:community, :state, :staff].include?(category) and early_childhood_rating.andand.downcase.andand.include?('not rated')

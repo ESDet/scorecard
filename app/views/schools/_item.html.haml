@@ -1,14 +1,20 @@
-%li.school{'data-tid' => school.tid}
-  - if school.earlychild?
-    %img(src="#{school.early_childhood_image(:mini)}" class="mini-el-icon")
-  - else
-    %img(src="#{school.k12_image(:small)}" class="mini-el-icon")
+.school{'data-tid' => school.tid}
+  .icon
+    - if school.earlychild?
+      %img(src="#{school.early_childhood_image(:mini)}")
+    - else
+      .icon
+        .rounded-square.green-background.small
+          .grade
+            = school.excellent_schools_grade.andand.upcase
 
-  %h3= link_to school.display_name, school_path("#{school.link}")
-  - if !school.grades_served.blank?
-    %div Grades: #{school.grades_served.join(", ")}
-  - elsif school.age_groups
-    %div Age Groups: #{school.age_groups.join(", ")}
+
+  .info
+    %h3= link_to school.display_name, school_path("#{school.link}")
+    - if !school.grades_served.blank?
+      %div Grades: #{school.grades_served.join(", ")}
+    - elsif school.age_groups
+      %div Age Groups: #{school.age_groups.join(", ")}
 
 //  %label
 //    = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'

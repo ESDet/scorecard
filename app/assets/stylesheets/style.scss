@@ -142,11 +142,15 @@ a.external, a.external:visited {
   input[type=text] { width: 270px; max-width: 100%; }
 }
 
-ul.school_list {
-  padding-left: 0;
-  li.school {
-    list-style: none; margin-bottom: 1em; position: relative; padding-left: 50px; padding-top: 0px;
-    .mini-el-icon { position: absolute; left: 0px; top: 6px; height: auto; width: 40px; }
+.school-list {
+  .school {
+    height: 35px;
+    clear: left;
+    margin-bottom: 24px;
+    .icon {
+      float: left;
+    }
+    .info { margin-left: 60px; }
     h3 { margin-top: 0; margin-bottom: 0; }
   }
 }
@@ -711,43 +715,55 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   & > .content:not(:nth-of-type(1)) {
     margin-bottom: 10px;
   }
-  .rounded-square {
-    position: relative;
-    width: 75px;
-    height: 75px;
-    border-radius: 15px;
-    .grade {
-      text-align: center;
-      padding-top: 7px;
-      color: white;
-      font-family: 'Lato Bold';
-      font-size: 37px;
-    }
-    .big, .small {
-      font-family: 'Lato Bold';
-      color: $navy;
-      text-align: center;
-    }
-    .big {
-      float: left;
-      margin: 7px 0 0 8px;
-      font-size: 37px;
-      .suffix {
-        float: right;
-        font-size: 21px;
-      }
-    }
-    .small {
-      font-size: 9px;
-      position: absolute;
-      bottom: 3px;
-      padding: 0 2px;
-    }
-  }
   .description {
     text-align: center;
     margin-top: 10px;
   }
+}
+
+.rounded-square {
+  position: relative;
+  width: 75px;
+  height: 75px;
+  border-radius: 15px;
+  .grade {
+    text-align: center;
+    padding-top: 7px;
+    color: white;
+    font-family: 'Lato Bold';
+    font-size: 37px;
+  }
+  .big, .small {
+    font-family: 'Lato Bold';
+    color: $navy;
+    text-align: center;
+  }
+  .big {
+    float: left;
+    margin: 7px 0 0 8px;
+    font-size: 37px;
+    .suffix {
+      float: right;
+      font-size: 21px;
+    }
+  }
+  .small {
+    font-size: 9px;
+    position: absolute;
+    bottom: 3px;
+    padding: 0 2px;
+  }
+}
+
+.rounded-square.small {
+  width: 50px;
+  height: 50px;
+  .grade {
+    font-size: 23px;
+    padding-top: 11px;
+  }
+  .small { font-size: 5px; }
+  border-radius: 10px;
 }
 
 .section > .columns > .column:nth-of-type(2) {
