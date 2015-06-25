@@ -19,3 +19,12 @@
 //  %label
 //    = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
 //    Compare
+
+:javascript
+  $('.rounded-square.small .grade').each(function(i, n) {
+    var grade = $(n);
+    if (grade.text().trim() == 'NEW') {
+      grade.css('font-size', '19px').
+        css('padding-top', '13px');
+    }
+  });

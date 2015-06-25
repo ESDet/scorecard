@@ -254,4 +254,9 @@
       $(this).text('COMPARE TO OTHER SCHOOLS');
     });
 
+    var grade = $('.rounded-square .grade');
+    if (grade.text().trim() == 'NEW') {
+      grade.css('font-size', '31px').
+        css('padding-top', '11px');
+    }
   });
