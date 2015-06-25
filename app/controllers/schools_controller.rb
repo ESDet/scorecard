@@ -84,7 +84,11 @@ class SchoolsController < ApplicationController
         "&filter_op[field_ec_license_type]=IN"
     end
 
-    response = Portal.new.fetch(url)
+    begin
+      response = Portal.new.fetch(url)
+    rescue EOFError
+      retry
+    end
 
     if response != ["request error"] && response['data']
       schools_with_profiles = response['data'].map do |s|
