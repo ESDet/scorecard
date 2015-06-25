@@ -60,9 +60,7 @@ module School
   end
 
   def photo
-    if !photos.empty?
-      photos.andand.first['filename']
-    end
+    school_profiles.andand.field_photos_url.andand.first
   end
 
   def photos

@@ -4,7 +4,7 @@
       .school-header
         - if school.photo
           .school-image
-            %img(src="https://portal.excellentschoolsdetroit.org/files/#{school.photo}")
+            %img(src="#{school.photo}")
         .school-title
           %h1= school.display_name
           .grades-served= "Grades Served: #{school.grades_served.first} - #{school.grades_served.last}"
