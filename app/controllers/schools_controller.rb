@@ -29,12 +29,14 @@ class SchoolsController < ApplicationController
           license_types << 2419
         when 'center_based'
           license_types << 2415
+        when 'high_rating'
         end
       end
     when 'k8', 'high'
       url = "schools.json?limit=50&flatten_fields=true&" <<
-        "includes=all&sort_by_special=" <<
-        "school_combined_total_pts&sort_order_special=DESC" <<
+        "includes=all" <<
+        "&sort_by_special=school_combined_total_pts" <<
+        "&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
       if @grade == 'k8'
@@ -59,6 +61,7 @@ class SchoolsController < ApplicationController
           special_filters << "school_profile_application_required"
         when 'college_readiness'
           special_filters << "school_profile_collegereadiness"
+        when 'high_rating'
         end
       end
     else
