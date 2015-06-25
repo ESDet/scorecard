@@ -139,11 +139,11 @@
         .column
           .title Student Profile
           .content
-            .text= "Male: #{school.male_enrollment ? "#{school.male_enrollment}%" : 'N/A'}"
-            .text= "Female: #{school.female_enrollment ? "#{school.female_enrollment}%" : 'N/A'}"
-            .text= "Free and reduced-price lunch: #{school.free_reduced_lunch ? "#{school.free_reduced_lunch}%" : 'N/A'}"
-            .text= "English language learner: #{school.english_learner ? "#{school.english_learner}%" : 'N/A'}"
-            .text= "Special education: #{school.special_education ? "#{school.special_education}%" : 'N/A'}"
+            .text= "Male: #{school.male_enrollment ? "#{school.male_enrollment}%" : ''}"
+            .text= "Female: #{school.female_enrollment ? "#{school.female_enrollment}%" : ''}"
+            .text= "Free and reduced-price lunch: #{school.free_reduced_lunch ? "#{school.free_reduced_lunch}%" : ''}"
+            .text= "English language learner: #{school.english_learner ? "#{school.english_learner}%" : ''}"
+            .text= "Special education: #{school.special_education ? "#{school.special_education}%" : ''}"
         .column
           .title Application Required
           .content
