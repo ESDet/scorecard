@@ -134,7 +134,11 @@ class SchoolsController < ApplicationController
       url << "&include_option_labels=true"
     end
 
-    school_data = Portal.new.fetch(url)
+    begin
+      school_data = Portal.new.fetch(url)
+    rescue EOFError
+      retry
+    end
 
     if school_type != 'ecs'
       url = "schools.json?flatten_fields=true" <<
