@@ -1,8 +1,8 @@
 - if local_assigns.has_key?(:year)
   .centered.nomobile= image_tag School.el_image(category, rating, year), :class => "el-icon #{category}"
   - unless category == :overview or category == :overall
-    = image_tag School.el_image(:mini, rating, year), :class => "mini-el-icon #{category} mobile_only"
+    = image_tag school.early_childhood_image(:mini, year), :class => "mini-el-icon #{category} mobile_only"
 - else
-  .centered.nomobile= image_tag School.el_image(category, rating), :class => "el-icon #{category}"
+  .centered.nomobile= image_tag school.early_childhood_image(category, nil), :class => "el-icon #{category}"
   - unless category == :overview or category == :overall
-    = image_tag School.el_image(:mini, rating), :class => "mini-el-icon #{category} mobile_only"
+    = image_tag school.early_childhood_image(:mini, nil), :class => "mini-el-icon #{category} mobile_only"

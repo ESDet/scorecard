@@ -61,9 +61,10 @@ class SchoolData < OpenStruct
     esd_el_2015s.andand.overall_rating
   end
 
-  def early_childhood_image(category, year = nil)
+  def early_childhood_image(category, medal, year = nil)
+    school_medal = medal || early_childhood_rating
     return '/assets/el_icons/Overview.png' if category == :overview
-    return '/assets/el_icons/EL_Award_NoRating.png' if ![:community, :state, :staff].include?(category) and early_childhood_rating.andand.downcase.andand.include?('not rated')
+    return '/assets/el_icons/EL_Award_NoRating.png' if ![:community, :state, :staff].include?(category) and school_medal.andand.downcase.andand.include?('not rated')
     cat = {
       :overall    => 'Award',
       :mini       => 'Mobile',
@@ -83,7 +84,7 @@ class SchoolData < OpenStruct
       'Gold'          => 'Gold',
       'Incomplete'    => 'NoRating'
     }
-    metal = valid_metals[early_childhood_rating].andand.gsub(' ', '') || 'None'
+    metal = valid_metals[school_medal].andand.gsub(' ', '') || 'None'
     if year && category != :mini
       "/assets/el_icons/EL_#{cat}_#{metal}_#{year}.png"
     else

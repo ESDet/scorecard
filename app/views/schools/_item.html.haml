@@ -1,12 +1,11 @@
 .school{'data-tid' => school.tid}
   .icon
     - if school.earlychild?
-      %img(src="#{school.early_childhood_image(:mini)}")
+      %img(src="#{school.early_childhood_image(:mini, nil)}")
     - else
-      .icon
-        .rounded-square.green-background.small
-          .grade
-            = school.excellent_schools_grade
+      .rounded-square.green-background.small
+        .grade
+          = school.excellent_schools_grade
 
 
   .info

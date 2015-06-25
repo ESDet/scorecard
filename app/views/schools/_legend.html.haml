@@ -2,7 +2,21 @@
 %br/
 %h3.bebas.underlined Grade Legend
 .grade-legend
-  - legend.each do |metal, info|
-    .clear_floats
-      = image_tag School.el_image(tab, metal)
-      %h3= info[1]
+  .clear_floats
+    = image_tag school.early_childhood_image(tab, 'Gold')
+    %h3 Superior Quality Program
+  .clear_floats
+    = image_tag school.early_childhood_image(tab, 'Silver')
+    %h3 High Quality Program
+  .clear_floats
+    = image_tag school.early_childhood_image(tab, 'Bronze')
+    %h3 Quality Program
+  .clear_floats
+    = image_tag school.early_childhood_image(tab, 'Below Bronze')
+    %h3 On the path to medal-level quality
+  .clear_floats
+    = image_tag school.early_childhood_image(tab, 'Not Rated')
+    %h3 Not enough information to designate a rating
+  .clear_floats
+    = image_tag school.early_childhood_image(tab, 'None')
+    %h3 This program did not participate

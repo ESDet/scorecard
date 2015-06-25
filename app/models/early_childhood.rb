@@ -1,4 +1,12 @@
 module EarlyChildhood
+  def self.extend_object(o)
+    super
+    ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |d|
+      o["#{d}_open".to_sym] = o.esd_el_2015s.send("field_#{d}_open")
+      o["#{d}_open".to_sym] = o.esd_el_2015s.send("field_#{d}_close")
+    end
+  end
+
   def specialty
     ec_profiles.andand.field_ec_specialty
   end
@@ -77,7 +85,7 @@ module EarlyChildhood
   end
 
   def published_rating
-    ec_profiles.andand.PublishedRating
+    ec_state_ratings.andand.PublishedRating
   end
 
   def message
@@ -85,27 +93,27 @@ module EarlyChildhood
   end
 
   def points_total
-    ec_profiles.andand.ptsTotal
+    ec_state_ratings.andand.ptsTotal
   end
 
   def points_staff
-    ec_profiles.andand.ptsStaff
+    ec_state_ratings.andand.ptsStaff
   end
 
   def points_family
-    ec_profiles.andand.ptsFamily
+    ec_state_ratings.andand.ptsFamily
   end
 
   def points_admin
-    ec_profiles.andand.ptsAdmin
+    ec_state_ratings.andand.ptsAdmin
   end
 
   def points_env
-    ec_profiles.andand.ptsEnv
+    ec_state_ratings.andand.ptsEnv
   end
 
   def points_curriculum
-    ec_profiles.andand.ptsCurr
+    ec_state_ratings.andand.ptsCurr
   end
 
   def additional_info
@@ -217,23 +225,31 @@ module EarlyChildhood
   end
 
   def community_clc_fair_average
-    esd_el_2015s.andand.CLC_FairAverage
+    esd_el_2015s.andand.CLC_FairAverage.to_f
   end
 
   def community_professionalism_fair_average
-    esd_el_2015s.andand.Professionalism_FairAverage
+    esd_el_2015s.andand.Professionalism_FairAverage.to_f
   end
 
   def community_safety_fair_average
-    esd_el_2015s.andand.Safety_FairAverage
+    esd_el_2015s.andand.Safety_FairAverage.to_f
   end
 
   def community_interactions_fair_average
-    esd_el_2015s.andand.Interactions_FairAverage
+    esd_el_2015s.andand.Interactions_FairAverage.to_f
   end
 
   def community_family_fair_average
-    esd_el_2015s.andand.FamilyCommunity_FairAverage
+    esd_el_2015s.andand.FamilyCommunity_FairAverage.to_f
+  end
+
+  def teacher_score_mean
+    esd_el_2015s.andand.teacher_score_mean_2014
+  end
+
+  def teacher_survey_rating
+    esd_el_2015s.andand.teacher_survey_rating
   end
 
   private

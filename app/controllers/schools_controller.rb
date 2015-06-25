@@ -10,9 +10,8 @@ class SchoolsController < ApplicationController
     license_types = []
     case @grade
     when 'ec'
-      redirect_to root_path and return
-      url = "ecs.json?limit=50&flatten_fields=true&includes=all" <<
-        "&sort_by_special=ec_total_pts" <<
+      url = "ecs.json?limit=50&flatten_fields=true" <<
+        "&includes=all&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC"
       special_filters << "has_esd_el_2015"
       @filters.each do |f|
@@ -175,7 +174,7 @@ class SchoolsController < ApplicationController
 
     if @school.earlychild?
       @school.extend(EarlyChildhood)
-      render 'show_ec'
+      render 'show_ec' and return
     else
       @school.extend(School)
       if @school.high?

@@ -149,6 +149,7 @@ a.external, a.external:visited {
     margin-bottom: 24px;
     .icon {
       float: left;
+      img { max-width: 50px; }
     }
     .info { margin-left: 60px; }
     h3 { margin-top: 0; margin-bottom: 0; }
