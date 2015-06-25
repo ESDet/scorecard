@@ -10,6 +10,7 @@ class SchoolsController < ApplicationController
     license_types = []
     case @grade
     when 'ec'
+      redirect_to root_path and return
       url = "ecs.json?limit=50&flatten_fields=true&includes=all" <<
         "&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC"
@@ -30,6 +31,7 @@ class SchoolsController < ApplicationController
         when 'center_based'
           license_types << 2415
         when 'high_rating'
+          special_filters << "esd_el_2015_highscore"
         end
       end
     when 'k8', 'high'
@@ -62,6 +64,7 @@ class SchoolsController < ApplicationController
         when 'college_readiness'
           special_filters << "school_profile_collegereadiness"
         when 'high_rating'
+          special_filters << "esd_k8hs_2015_highscore"
         end
       end
     else
