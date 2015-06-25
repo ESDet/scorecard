@@ -1,5 +1,8 @@
 .home.middle
   .container_12
+    - if flash[:notice]
+      %div.notice= flash[:notice]
+
     %h1 Find the best Detroit schools for your family.
 
     #search

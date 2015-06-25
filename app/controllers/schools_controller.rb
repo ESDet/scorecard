@@ -115,6 +115,7 @@ class SchoolsController < ApplicationController
       end
       @schools = schools_with_profiles.map { |s| SchoolData.new(s) }
     else
+      flash[:notice] = 'No results found'
       redirect_to root_path
     end
   end
