@@ -3,6 +3,10 @@ class HomeController < ApplicationController
 
   def index
     @school_names = []
+    request.format = :html
+    respond_to do |format|
+      format.html
+    end
   end
 
   def resources
