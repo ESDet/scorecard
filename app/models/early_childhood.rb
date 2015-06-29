@@ -2,8 +2,8 @@ module EarlyChildhood
   def self.extend_object(o)
     super
     ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |d|
-      o["#{d}_open".to_sym] = o.esd_el_2015s.send("field_#{d}_open")
-      o["#{d}_open".to_sym] = o.esd_el_2015s.send("field_#{d}_close")
+      o["#{d}_open".to_sym] = o.ec_profiles.send("field_#{d}_open")
+      o["#{d}_close".to_sym] = o.ec_profiles.send("field_#{d}_close")
     end
   end
 
@@ -218,6 +218,30 @@ module EarlyChildhood
     ec_profiles.andand.field_ec_subsidy_enrollment
   end
 
+  def teacher_score_mean
+    esd_el_2015s.andand.teacher_score_mean_2014
+  end
+
+  def site_visit_rating
+    esd_el_2015s.andand.Overall_Site_Visit_Rating
+  end
+
+  def site_visit_rating_year
+    esd_el_2015s.andand.SiteVisitRatingYear
+  end
+
+  def sas_score_rating
+    esd_el_2015s.andand.sas_score_rating
+  end
+
+  def teacher_survey_rating
+    esd_el_2015s.andand.teacher_survey_rating
+  end
+
+  def staff_survey_rating_year
+    esd_el_2015s.andand.StaffSurveyRatingYear
+  end
+
   def staff_program_environment_average
     esd_el_2015s.andand.PhysicalEnviron_Staff_Average
   end
@@ -252,14 +276,6 @@ module EarlyChildhood
 
   def community_family_fair_average
     esd_el_2015s.andand.FamilyCommunity_FairAverage.to_f
-  end
-
-  def teacher_score_mean
-    esd_el_2015s.andand.teacher_score_mean_2014
-  end
-
-  def teacher_survey_rating
-    esd_el_2015s.andand.teacher_survey_rating
   end
 
   private
