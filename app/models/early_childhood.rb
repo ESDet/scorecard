@@ -8,7 +8,7 @@ module EarlyChildhood
   end
 
   def specialty
-    ec_profiles.andand.field_ec_specialty
+    list_names ec_profiles.andand.field_ec_specialty
   end
 
   def schedule
@@ -16,11 +16,21 @@ module EarlyChildhood
   end
 
   def age_from
-    ec_profiles.andand.field_age_from
+    from = ec_profiles.andand.field_age_from
+    if from.to_i > 11
+      "#{(from.to_i / 12).to_i} years"
+    else
+      "#{from.to_i % 12} months"
+    end if from
   end
 
   def age_to
-    ec_profiles.andand.field_age_to
+    to = ec_profiles.andand.field_age_to
+    if to.to_i > 11
+      "#{(to.to_i / 12).to_i} years"
+    else
+      "#{to.to_i % 12} months"
+    end if to
   end
 
   def capacity

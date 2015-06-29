@@ -98,20 +98,42 @@
                 %p= raw @school.gscmessage
 
               %table
-                /- @profile_fields.each do |field,label|
-                /  - val = @schoolh[field.to_sym]
-                /  - unless val.blank?
-                /    %tr
-                /      %td
-                /        %h3 #{label}:
-                /      %td.arial
-                /        - if [:agefrom, :ageto].include? field
-                /          - if val.to_i > 11
-                /            #{(val.to_i/12).to_i} years,
-                /          #{val.to_i%12} months
-                /        - else
-                /          = raw((val == '0') ? 'No' : (val == '1' ? 'Yes' : val))
-
+                = render 'ec_profile_field', label: 'Program Specialty', val: @school.specialty
+                = render 'ec_profile_field', label: 'Schedule Type', val: @school.schedule
+                = render 'ec_profile_field', label: 'Accepts Ages from', val: @school.age_from
+                = render 'ec_profile_field', label: 'Accepts Ages to', val: @school.age_to
+                = render 'ec_profile_field', label: 'Total Licensed Capacity', val: @school.capacity
+                = render 'ec_profile_field', label: 'Financial Assistance', val: @school.subsidy
+                = render 'ec_profile_field', label: 'Special Needs Experience', val: @school.special
+                = render 'ec_profile_field', label: 'Care Setting', val: @school.setting
+                = render 'ec_profile_field', label: 'Environment', val: @school.environment
+                = render 'ec_profile_field', label: 'Meals Provided', val: @school.meals
+                = render 'ec_profile_field', label: 'Payment Schedule', val: @school.pay_schedule
+                = render 'ec_profile_field', label: 'Application / Registration Fee', val: sprintf("$%.2f", @school.fee)
+                = render 'ec_profile_field', label: 'Provides Transportation?', val: @school.transportation
+                = render 'ec_profile_field', label: 'Additional program information', val: @school.additional_info
+                = render 'ec_profile_field', label: 'Age Groups', val: @school.age_groups
+                = render 'ec_profile_field', label: 'Enrichment opportunities', val: @school.enrichment
+                = render 'ec_profile_field', label: 'Teacher Evaluations', val: @school.evaluation
+                = render 'ec_profile_field', label: 'Field trips and other extended programming', val: @school.extended
+                = render 'ec_profile_field', label: 'Facilities Available', val: @school.facilities
+                = render 'ec_profile_field', label: 'Frequency of feedback provided to parents on child’s progress', val: @school.feedback_freq
+                = render 'ec_profile_field', label: 'Type of feedback provided to parents on child\'s progress', val: @school.feedback_type
+                = render 'ec_profile_field', label: 'Languages spoken by program staff', val: @school.language
+                = render 'ec_profile_field', label: 'Health/Dental/Vision Care', val: @school.medical
+                = render 'ec_profile_field', label: 'Access to mental health services', val: @school.mental
+                = render 'ec_profile_field', label: 'Partner name - 1', val: @school.partner_one
+                = render 'ec_profile_field', label: 'Details of partnership - 1', val: @school.partner_one_detail
+                = render 'ec_profile_field', label: 'Partner name - 2', val: @school.partner_two
+                = render 'ec_profile_field', label: 'Details of partnership - 2', val: @school.partner_two_detail
+                = render 'ec_profile_field', label: 'Partner name - 3', val: @school.partner_three
+                = render 'ec_profile_field', label: 'Details of partnership - 3', val: @school.partner_three_detail
+                = render 'ec_profile_field', label: 'Playground and/or physical activity space on site', val: @school.physical_activity
+                = render 'ec_profile_field', label: 'Family and community support', val: @school.support
+                = render 'ec_profile_field', label: 'Actual Enrollment', val: @school.actual_enrollment
+                = render 'ec_profile_field', label: 'Licensed Enrollment', val: @school.licensed_enrollment
+                = render 'ec_profile_field', label: 'Number of children with special needs', val: @school.special_enrollment
+                = render 'ec_profile_field', label: 'Number of children receiving subsidy', val: @school.subsidy_enrollment
               = render 'legend', :school => @school, :tab => :overall
 
             #community.tab-pane

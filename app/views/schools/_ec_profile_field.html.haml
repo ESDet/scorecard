@@ -1,0 +1,9 @@
+- unless val.blank?
+  %tr
+    %td
+      %h3 #{label}:
+    %td.arial
+      - if val.is_a?(Array)
+        = val.join(", ")
+      - else
+        = val
