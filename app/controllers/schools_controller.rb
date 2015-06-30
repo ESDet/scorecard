@@ -87,7 +87,7 @@ class SchoolsController < ApplicationController
 
     if !license_types.empty?
       url << "&filter[field_ec_license_type]=" <<
-        license_types.join(", ") <<
+        license_types.join(",") <<
         "&filter_op[field_ec_license_type]=IN"
     end
 
