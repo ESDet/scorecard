@@ -123,24 +123,30 @@
         .column
           .title Number of Students
           .content
-            .header.big= school.total_enrollment
+            - if school.total_enrollment.present? && school.total_enrollment > 0
+              .header.big= school.total_enrollment
             #pie
             .legend
-              .stat
-                .race(style="background-color: #2e5b8c")
-                .text= "African American: #{school.african_american_enrollment}%"
-              .stat
-                .race(style="background-color: #7cc45c")
-                .text= "Asian: #{school.asian_enrollment}%"
-              .stat
-                .race(style="background-color: #2b9fc7")
-                .text= "Hispanic: #{school.hispanic_enrollment}%"
-              .stat
-                .race(style="background-color: #f8ae16")
-                .text= "White: #{school.white_enrollment}%"
-              .stat
-                .race(style="background-color: #ff690f")
-                .text= "Other: #{school.other_enrollment}%"
+              - if school.african_american_enrollment.present?
+                .stat
+                  .race(style="background-color: #2e5b8c")
+                  .text= "African American: #{school.african_american_enrollment}%"
+              - if school.asian_enrollment.present?
+                .stat
+                  .race(style="background-color: #7cc45c")
+                  .text= "Asian: #{school.asian_enrollment}%"
+              - if school.hispanic_enrollment.present?
+                .stat
+                  .race(style="background-color: #2b9fc7")
+                  .text= "Hispanic: #{school.hispanic_enrollment}%"
+              - if school.white_enrollment.present?
+                .stat
+                  .race(style="background-color: #f8ae16")
+                  .text= "White: #{school.white_enrollment}%"
+              - if school.other_enrollment.present?
+                .stat
+                  .race(style="background-color: #ff690f")
+                  .text= "Other: #{school.other_enrollment}%"
         .column
           .title Student Profile
           .content
