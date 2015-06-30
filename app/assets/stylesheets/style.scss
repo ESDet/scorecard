@@ -786,7 +786,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   & > .column {
     width: 360px;
   }
-  & > .column:nth-of-type(2) {
+  & > .column:nth-of-type(even) {
     float: right;
     margin: 0;
   }

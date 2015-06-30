@@ -83,12 +83,30 @@ module School
     list_labels school_profiles.andand.field_parent_involvement
   end
 
+  def has_academic_programs?
+    academic_focus.present? ||
+      has_ell? || instructional_model.present?
+      special_ed_level.present? ||
+      special_ed_programs.present?
+  end
+
   def academic_focus
     list_labels school_profiles.andand.field_academic_focus
   end
 
   def instructional_model
     list_labels school_profiles.andand.field_instructional_model
+  end
+
+  def has_classes?
+    has_arts? || has_foreign_language?
+  end
+
+  def has_arts?
+    arts_media.present? ||
+      arts_music.present? ||
+      arts_performing_written.present? ||
+      arts_visual.present?
   end
 
   def arts_visual
@@ -105,6 +123,10 @@ module School
 
   def arts_performing_written
     list_labels school_profiles.andand.field_arts_performing_written
+  end
+
+  def has_foreign_language?
+    immersion.present? || foreign_languages.present?
   end
 
   def immersion
@@ -135,16 +157,25 @@ module School
     list_labels school_profiles.andand.field_special_ed_programs
   end
 
+  def has_ell?
+    ell_level.present? || ell_languages.present?
+  end
+
   def ell_level
     school_profiles.andand.field_ell_level.andand.label
   end
 
   def ell_languages
-    school_profiles.andand.field_ell_languages
+    list_labels school_profiles.andand.field_ell_languages
   end
 
   def college_prep
     school_profiles.andand.field_college_prep
+  end
+
+  def has_support?
+    extra_learning_resources.present? ||
+      staff_resources.present?
   end
 
   def extra_learning_resources
@@ -163,12 +194,26 @@ module School
     list_labels school_profiles.andand.field_staff_resources
   end
 
+  def has_sports?
+    boys_sports.present? || girls_sports.present?
+  end
+
   def boys_sports
     list_labels school_profiles.andand.field_boys_sports
   end
 
   def girls_sports
     list_labels school_profiles.andand.field_girls_sports
+  end
+
+  def has_clubs?
+    student_clubs.present? || has_other_student_clubs?
+  end
+
+  def has_other_student_clubs?
+    student_clubs_dance.present? ||
+      student_clubs_language.present? ||
+      student_clubs_other.present?
   end
 
   def student_clubs

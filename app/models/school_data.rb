@@ -126,8 +126,9 @@ class SchoolData < OpenStruct
     {
       id: tid,
       center: center,
-      html: "<a href='#{gmaps_url}' target='_blank'>#{display_name}</a><br/>" +
-       "#{street}<br/>#{grades if grades}"
+      html: "<a href='#{gmaps_url}' target='_blank'>" +
+        "#{display_name}</a><br/>" +
+        "#{street}<br/>#{grades if grades}"
     }
   end
 
