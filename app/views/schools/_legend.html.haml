@@ -16,7 +16,11 @@
     %h3 On the path to medal-level quality
   .clear_floats
     = image_tag school.early_childhood_image(tab, 'Not Rated')
-    %h3 Not enough information to designate a rating
-  .clear_floats
-    = image_tag school.early_childhood_image(tab, 'None')
-    %h3 This program did not participate
+    - if tab == :overall
+      %h3 Not enough information to designate a rating
+    - else
+      %h3 Not enough information to designate a rating or this program did not participate
+  - if tab == :overall
+    .clear_floats
+      = image_tag school.early_childhood_image(tab, 'None')
+      %h3 This program did not participate
