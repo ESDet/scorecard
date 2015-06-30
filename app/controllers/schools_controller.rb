@@ -91,10 +91,17 @@ class SchoolsController < ApplicationController
         "&filter_op[field_ec_license_type]=IN"
     end
 
+    retries = 2
     begin
       response = Portal.new.fetch(url)
-    rescue EOFError
-      retry
+    rescue EOFError => e
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+    rescue Net::ReadTimeout => e
+      flash[:notice] = 'There was an error during the search and we are looking into the issue now. Please try again later.'
+      ExceptionNotifier.notify_exception(e)
+      redirect_to root_path and return
     end
 
     if response != ["request error"] && response['data']
@@ -147,10 +154,17 @@ class SchoolsController < ApplicationController
       url << "&include_option_labels=true"
     end
 
+    retries = 2
     begin
       school_data = Portal.new.fetch(url)
     rescue EOFError
-      retry
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+    rescue Net::ReadTimeout => e
+      flash[:notice] = 'There was an error retrieving school data and we are looking into the issue now. Please try again later.'
+      ExceptionNotifier.notify_exception(e)
+      redirect_to root_path and return
     end
 
     if school_type != 'ecs'
