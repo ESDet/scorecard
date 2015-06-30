@@ -42,7 +42,7 @@ module EarlyChildhood
   end
 
   def subsidy
-    ec_profiles.andand.field_ec_subsidy
+    list_names ec_profiles.andand.field_ec_subsidy
   end
 
   def special
