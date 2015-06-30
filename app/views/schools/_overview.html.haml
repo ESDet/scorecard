@@ -2,7 +2,7 @@
   .middle
     .section.border-bottom
       .school-header
-        - if school.photo
+        - if school.photo.present?
           .school-image
             %img(src="#{school.photo}")
         .school-title
@@ -37,29 +37,31 @@
         .column
           .title Excellent Schools Detroit
           .content
-            .rounded-square.green-background.auto-margin
-              .grade
-                = school.excellent_schools_grade
-
-              .small OVERALL GRADE
+            - if school.excellent_schools_grade.present?
+              .rounded-square.green-background.auto-margin
+                .grade
+                  = school.excellent_schools_grade
+                .small OVERALL GRADE
         .column
           .title State
           .content
-            .rounded-square.light-cyan-background.auto-margin
-              .big
-                - if school.michigan_percentile
+            - if school.michigan_percentile.present?
+              .rounded-square.light-cyan-background.auto-margin
+                .big
                   = school.michigan_percentile
                   .suffix th
-              .small PERCENTILE OUT OF 100
+                .small PERCENTILE OUT OF 100
         .column
           .title School Type
           .content
             .header= school.governance
-            %span.key Authorizer:
-            = school.authorizer
-            <br/>
-            %span.key Operator:
-            = school.operator
+            - if school.authorizer.present?
+              %span.key Authorizer:
+              = school.authorizer
+              <br/>
+            - if school.operator.present?
+              %span.key Operator:
+              = school.operator
       .links.two-column
         See more rankings:
         %a(href="http://www.greatschools.org/michigan/detroit/" target="_blank")
@@ -110,8 +112,9 @@
             %ul
               - school.transportation_options.each do |t|
                 %li= t
-            %span.key Average Commute:
-            = "#{school.average_commute} miles"
+            - if school.average_commute.present?
+              %span.key Average Commute:
+              = "#{school.average_commute} miles"
     .section
       .header
         .left-header Demographics
@@ -141,11 +144,16 @@
         .column
           .title Student Profile
           .content
-            .text= "Male: #{school.male_enrollment ? "#{school.male_enrollment}%" : ''}"
-            .text= "Female: #{school.female_enrollment ? "#{school.female_enrollment}%" : ''}"
-            .text= "Free and reduced-price lunch: #{school.free_reduced_lunch ? "#{school.free_reduced_lunch}%" : ''}"
-            .text= "English language learner: #{school.english_learner ? "#{school.english_learner}%" : ''}"
-            .text= "Special education: #{school.special_education ? "#{school.special_education}%" : ''}"
+            - if school.male_enrollment.present?
+              .text= "Male: #{school.male_enrollment}%"
+            - if school.female_enrollment.present?
+              .text= "Female: #{school.female_enrollment}%"
+            - if school.free_reduced_lunch.present?
+              .text= "Free and reduced-price lunch: #{school.free_reduced_lunch}%"
+            - if school.english_learner.present?
+              .text= "English language learner: #{school.english_learner}%"
+            - if school.special_education.present?
+              .text= "Special education: #{school.special_education}%"
         .column
           .title Application Required
           .content
