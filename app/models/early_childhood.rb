@@ -38,7 +38,7 @@ module EarlyChildhood
   end
 
   def eligibility
-    ec_profiles.andand.field_ec_eligibility
+    ec_profiles.andand.field_ec_eligibility ? "Yes" : "No"
   end
 
   def subsidy
@@ -79,7 +79,7 @@ module EarlyChildhood
   end
 
   def contract
-    ec_profiles.andand.field_ec_contract
+    ec_profiles.andand.field_ec_contract ? "Yes" : "No"
   end
 
   def months_of_operation
