@@ -7,6 +7,10 @@ module EarlyChildhood
     end
   end
 
+  def school_url
+    normalize_url(ec_profiles.andand.field_website.andand.url)
+  end
+
   def specialty
     list_names ec_profiles.andand.field_ec_specialty
   end

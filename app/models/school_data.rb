@@ -92,6 +92,18 @@ class SchoolData < OpenStruct
     end
   end
 
+  def gmaps_url
+    opts = { :q => "#{street}, #{city} #{state}" }
+    "http://maps.google.com?#{opts.to_query}"
+  end
+
+  def normalize_url(u)
+    return if u.nil?
+    x = u.gsub(/^(http|https):\/\//, '')
+    return if x.blank?
+    "http://#{x}"
+  end
+
   def cache_key
     "schools/#{tid}-#{timestamp}"
   end
@@ -113,15 +125,21 @@ class SchoolData < OpenStruct
     {
       id: tid,
       center: center,
-      html: "<a href='/schools/#{link}'>#{display_name}</a><br/>" +
+      html: "<a href='#{gmaps_url}' target='_blank'>#{display_name}</a><br/>" +
        "#{street}<br/>#{grades if grades}"
     }
   end
 
   def street
-    if field_address
-      field_address.thoroughfare
-    end
+    field_address.andand.thoroughfare if field_address
+  end
+
+  def city
+    field_address.andand.locality if field_address
+  end
+
+  def state
+    field_address.andand.administrative_area if field_address
   end
 
   def link

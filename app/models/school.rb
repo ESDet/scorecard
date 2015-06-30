@@ -56,11 +56,11 @@ module School
   end
 
   def school_url
-    school_profiles.andand.field_school_url
+    normalize_url(school_profiles.andand.field_school_url)
   end
 
   def facebook_url
-    school_profiles.andand.field_facebook_url
+    normalize_url(school_profiles.andand.field_facebook_url)
   end
 
   def photo
