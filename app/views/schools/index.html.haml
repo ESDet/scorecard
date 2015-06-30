@@ -7,8 +7,50 @@
       .school-list
         - if @schools.empty?
           %h3 There are no schools that fit your selection(s) right now.
-        - @schools.select { |s| !s.field_geo.nil? }.each do |s|
+        - @schools.each do |s|
           = render 'item', { :school => s }
+
+  :javascript
+    var ajax = false;
+    var listSpinner = null;
+    var searching = false;
+
+    $(document).ready(function(e) {
+      var map = Map({
+        center: [42.36, -83.09],
+        markers: #{@schools.map(&:marker).to_json},
+        zoom: 11
+      });
+
+      $('body').on('change', 'input.compare-check', function(e) {
+        var count = $('input.compare-check:checked').length;
+        if(count > 0) {
+          $('a.do-compare').removeClass('hide');
+        } else {
+          $('a.do-compare').addClass('hide');
+        }
+        return true;
+      });
+
+      $('.school_list .school').mouseover(function(e) {
+        var tid = $(this).data('tid');
+        for(var i in map.layers) {
+          if(tid == map.layers[i].options.id) {
+            map.layers[i].openPopup();
+          }
+        }
+        return true;
+      });
+
+      $('a.do-compare').click(function(e) {
+        ids = [];
+        $('input.compare-check:checked').each(function(idx, el) {
+          ids.push($(el).val());
+        });
+        window.location = "/compare/+" + ids.join(',');
+        return false;
+      });
+    });
 
       //%a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
 
@@ -25,44 +67,3 @@
 /    </script>
 /
 
-:javascript
-  var ajax = false;
-  var listSpinner = null;
-  var searching = false;
-
-  $(document).ready(function(e) {
-    var map = Map({
-      center: [42.36, -83.09],
-      markers: #{@schools.map(&:marker).to_json},
-      zoom: 11
-    });
-
-    $('body').on('change', 'input.compare-check', function(e) {
-      var count = $('input.compare-check:checked').length;
-      if(count > 0) {
-        $('a.do-compare').removeClass('hide');
-      } else {
-        $('a.do-compare').addClass('hide');
-      }
-      return true;
-    });
-
-    $('.school_list .school').mouseover(function(e) {
-      var tid = $(this).data('tid');
-      for(var i in map.layers) {
-        if(tid == map.layers[i].options.id) {
-          map.layers[i].openPopup();
-        }
-      }
-      return true;
-    });
-
-    $('a.do-compare').click(function(e) {
-      ids = [];
-      $('input.compare-check:checked').each(function(idx, el) {
-        ids.push($(el).val());
-      });
-      window.location = "/compare/+" + ids.join(',');
-      return false;
-    });
-  });

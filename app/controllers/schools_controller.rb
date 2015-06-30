@@ -122,7 +122,9 @@ class SchoolsController < ApplicationController
         end
         s.merge(included: includes)
       end
-      @schools = schools_with_profiles.map { |s| SchoolData.new(s) }
+      @schools = schools_with_profiles.
+        map { |s| SchoolData.new(s) }.
+        select { |s| !s.field_geo.nil? }
     else
       flash[:notice] = 'No results found'
       redirect_to root_path
