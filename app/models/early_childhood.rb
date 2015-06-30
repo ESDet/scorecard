@@ -83,15 +83,15 @@ module EarlyChildhood
   end
 
   def months_of_operation
-    ec_profiles.andand.field_months_of_operation
+    field_months_of_operation
   end
 
   def email
-    ec_profiles.andand.field_ec_email
+    ec_profiles.andand.field_email
   end
 
   def phone
-    ec_profiles.andand.field_address.andand.phone_number
+    field_address.andand.phone_number
   end
 
   def published_rating

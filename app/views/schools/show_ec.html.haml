@@ -36,8 +36,9 @@
             - if num == 0
               No hours of operation listed.
             %p
-              %span.day Months of operation:
-              #{@school.months_of_operation}
+              -unless @school.months_of_operation.blank?
+                %span.day Months of operation:
+                #{@school.months_of_operation}
             %p
               - unless @school.contact.blank?
                 %span.day Contact person:
@@ -229,6 +230,11 @@
                       %span.points= @school.points_admin
                       %span / 6
                     %td Administration and Management
+                  %tr
+                    %td
+                      %span.points= @school.points_env
+                      %span / 8
+                    %td Environment
                   %tr
                     %td
                       %span.points= @school.points_curriculum
