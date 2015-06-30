@@ -22,8 +22,9 @@ class SchoolData < OpenStruct
   end
 
   def display_name
-    if school_profiles && school_profiles.title
-      school_profiles.title
+    profile = earlychild? ? ec_profiles : school_profiles
+    if profile.andand.title
+      profile.andand.title
     else
       name
     end
