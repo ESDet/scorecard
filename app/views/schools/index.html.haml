@@ -32,7 +32,7 @@
         return true;
       });
 
-      $('.school_list .school').mouseover(function(e) {
+      $('.school-list .school').mouseover(function(e) {
         var tid = $(this).data('tid');
         for(var i in map.layers) {
           if(tid == map.layers[i].options.id) {
