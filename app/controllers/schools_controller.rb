@@ -12,7 +12,9 @@ class SchoolsController < ApplicationController
     when 'ec'
       url = "ecs.json?limit=50&flatten_fields=true" <<
         "&includes=all&sort_by_special=ec_total_pts" <<
-        "&sort_order_special=DESC"
+        "&sort_order_special=DESC" <<
+        "&filter[field_scorecard_display]=1"
+
       special_filters << "has_esd_el_2015"
       @filters.each do |f|
         case f
