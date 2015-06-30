@@ -18,7 +18,10 @@
 
       .container_12
         .grid_3.overall-seal
-          = render 'seal', :category => :overall, :rating => @school.overall_rating, :school => @school
+          = render 'seal',
+            :category => :overall,
+            :rating => @school.early_childhood_rating,
+            :school => @school
 
         .grid_3.hours
           %h3 Hours
@@ -264,27 +267,32 @@
               - if @school.teacher_score_mean
                 = render 'staff_rating', :score => @school.teacher_score_mean, :state => 3.64
               - else
-                %h3.score
-                  %span.points= @school.staff_program_environment_average.andand.to_f.andand.round(2)
-                  %span / 5.0
-                %h3.statement Program Environment
-                .explanation.arial Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.
-                %h3.score
-                  %span.points= @school.staff_family_community_average.to_f.round(2)
-                  %span / 5.0
-                %h3.statement Collaboration
-                .explanation.arial Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.
-                %h3.score
-                  %span.points= @school.staff_cultural_linguistic_average.to_f.round(2)
-                  %span / 5.0
-                %h3.statement Cultural Awareness
-                .explanation.arial Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.
-                %h3.score
-                  %span.points= @school.staff_culture_climate_average.to_f.round(2)
-                  %span / 5.0
-                %h3.statement General Culture and Climate
-                .explanation.arial General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.
-              .clear_floats
+                .community_line
+                  %div
+                    %h3.score
+                      %span.points= @school.staff_program_environment_average.andand.to_f.andand.round(1)
+                      %span / 5.0
+                    %h3.statement Program Environment
+                    .explanation.arial Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.
+                  %div.clear_floats
+                    %h3.score
+                      %span.points= @school.staff_family_community_average.to_f.round(1)
+                      %span / 5.0
+                    %h3.statement Collaboration
+                    .explanation.arial Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.
+                  %div.clear_floats
+                    %h3.score
+                      %span.points= @school.staff_cultural_linguistic_average.to_f.round(1)
+                      %span / 5.0
+                    %h3.statement Cultural Awareness
+                    .explanation.arial Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.
+                  %div.clear_floats
+                    %h3.score
+                      %span.points= @school.staff_culture_climate_average.to_f.round(1)
+                      %span / 5.0
+                    %h3.statement General Culture and Climate
+                    .explanation.arial General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.
+                .clear_floats
               = render 'legend', school: @school, :tab => :staff
 
 
