@@ -25,6 +25,7 @@
     var halfScale = scale / 2.0;
 
     if (schoolGrowth != "" && schoolGrowth <= halfScale) {
+      schoolGrowth = parseFloat(schoolGrowth);
       var schoolNum, schoolDiff, schoolColor;
       if (schoolGrowth < 0) {
         schoolNum = (halfScale + schoolGrowth) / halfScale * 100 / 2.0;
@@ -37,6 +38,7 @@
       }
 
       if (schoolDiff > 50) { schoolDiff = 49; }
+      if (schoolNum < 10) { schoolNum = 0.5; }
       var schoolEl = graph.find('> .bar.school');
       schoolEl.find('> .number').
         css('width', schoolNum + '%').
@@ -50,6 +52,7 @@
     }
 
     if (detroitGrowth != "" && detroitGrowth < halfScale) {
+      detroitGrowth = parseFloat(detroitGrowth);
       var detroitNum, detroitDiff, detroitColor;
       if (detroitGrowth < 0) {
         detroitNum = (halfScale + detroitGrowth) / halfScale * 100 / 2.0;
@@ -61,6 +64,8 @@
         detroitColor = '#7cc45c';
       }
 
+      if (detroitDiff > 50) { detroitDiff = 49; }
+      if (detroitNum < 10) { detroitNum = 0.5; }
       var detroitEl = graph.find('> .bar.detroit');
       detroitEl.find('> .number').
         css('width', detroitNum + '%').

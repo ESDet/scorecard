@@ -25,7 +25,8 @@
         var el  = $(n),
             num = el.data('num');
         if (num != "") {
-          el.css('width', el.data('num') + '%');
+          num = parseFloat(num);
+          el.css('width', num + '%');
         } else {
           el.css('width', '0px');
         }
