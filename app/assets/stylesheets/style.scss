@@ -54,7 +54,12 @@ body.schools-index { height: 100%; }
 .hide { display: none; }
 .inline { display: inline-block; }
 .relative { position: relative; }
-.rounded { padding: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
+.rounded {
+  padding: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
 .ib { display: inline-block; float: none; }
 .printonly { display: none; }
 table td, table th { vertical-align: top; }
@@ -148,15 +153,22 @@ a.external, a.external:visited {
 
 .school-list {
   .school {
-    height: 35px;
+    height: 79px;
     clear: left;
-    margin-bottom: 24px;
+    padding: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
     .icon {
       float: left;
       img { max-width: 50px; }
     }
     .info { margin-left: 60px; }
     h3 { margin-top: 0; margin-bottom: 0; }
+  }
+  .school:hover {
+    cursor: pointer;
+    background-color: $light_cyan;
   }
 }
 
@@ -492,6 +504,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   #hamburger div {
     background-color: $navy;
     border: 0.1em solid $navy;
+    -webkit-border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
     border-radius: 2px 2px 2px 2px;
     margin-top: 6px;
     width: 35%;
@@ -758,6 +772,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   position: relative;
   width: 75px;
   height: 75px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
   border-radius: 15px;
   .grade {
     text-align: center;
@@ -796,6 +812,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     padding-top: 11px;
   }
   .small { font-size: 5px; }
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
   border-radius: 10px;
 }
 
@@ -841,6 +859,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   bottom: 1px;
   width: 18px;
   height: 18px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
   border-radius: 9px;
   background-color: white;
   border: 1px solid $navy;
@@ -860,6 +880,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-right: 5px;
   width: 16px;
   height: 16px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
   border-radius: 8px;
   background-color: $green;
 }
@@ -876,6 +898,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-right: 5px;
   width: 16px;
   height: 16px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
   border-radius: 8px;
   background-color: $light_cyan;
 }
@@ -905,6 +929,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       margin-top: -3px;
       padding: 3px 7px;
       background: $yellow;
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
       border-radius: 9px;
       color: white;
       & > a { color: white; }

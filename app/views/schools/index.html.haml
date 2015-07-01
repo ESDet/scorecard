@@ -15,41 +15,55 @@
     var listSpinner = null;
     var searching = false;
 
-    $(document).ready(function(e) {
+    $(function(e) {
       var map = Map({
         center: [42.36, -83.09],
         markers: #{@schools.map(&:marker).to_json},
         zoom: 11
       });
 
-      $('body').on('change', 'input.compare-check', function(e) {
-        var count = $('input.compare-check:checked').length;
-        if(count > 0) {
-          $('a.do-compare').removeClass('hide');
-        } else {
-          $('a.do-compare').addClass('hide');
-        }
-        return true;
-      });
-
       $('.school-list .school').mouseover(function(e) {
         var tid = $(this).data('tid');
         for(var i in map.layers) {
           if(tid == map.layers[i].options.id) {
+            console.log(map.layers[i]);
             map.layers[i].openPopup();
           }
         }
         return true;
       });
 
-      $('a.do-compare').click(function(e) {
-        ids = [];
-        $('input.compare-check:checked').each(function(idx, el) {
-          ids.push($(el).val());
-        });
-        window.location = "/compare/+" + ids.join(',');
-        return false;
+      $('.school-list .school').click(function(e) {
+        location.href = $(this).find('> .info > h3 > a').
+          attr('href');
       });
+
+      $('.rounded-square.small .grade').each(function(i, n) {
+        var grade = $(n);
+        if (grade.text().trim() == 'NEW') {
+          grade.css('font-size', '19px').
+            css('padding-top', '13px');
+        }
+      });
+
+      //$('body').on('change', 'input.compare-check', function(e) {
+      //  var count = $('input.compare-check:checked').length;
+      //  if(count > 0) {
+      //    $('a.do-compare').removeClass('hide');
+      //  } else {
+      //    $('a.do-compare').addClass('hide');
+      //  }
+      //  return true;
+      //});
+
+      //$('a.do-compare').click(function(e) {
+      //  ids = [];
+      //  $('input.compare-check:checked').each(function(idx, el) {
+      //    ids.push($(el).val());
+      //  });
+      //  window.location = "/compare/+" + ids.join(',');
+      //  return false;
+      //});
     });
 
       //%a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
