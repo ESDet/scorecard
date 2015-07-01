@@ -9,7 +9,10 @@
     border: none;
     top: 27px;
     left: 12%;
-    & > a.btn { display: inline; }
+    & > a.btn {
+      padding: 0px 20px 0 0;
+      display: inline;
+    }
   }
   #nav a.btn:hover { background-color: white; }
 }
