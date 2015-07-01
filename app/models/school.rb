@@ -349,7 +349,7 @@ module School
 
   def percentage_of_total_enrollment(num)
     if num && total_enrollment > 0
-      sprintf("%d.2", num.to_f / total_enrollment * 100)
+      sprintf("%.1f", num.to_f / total_enrollment * 100)
     end
   end
 
