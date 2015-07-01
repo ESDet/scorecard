@@ -26,7 +26,6 @@
         var tid = $(this).data('tid');
         for(var i in map.layers) {
           if(tid == map.layers[i].options.id) {
-            console.log(map.layers[i]);
             map.layers[i].openPopup();
           }
         }
