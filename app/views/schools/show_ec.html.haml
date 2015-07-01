@@ -15,7 +15,7 @@
         color: white;
       }
       .map-container {
-        height: 205px;
+        height: 235px;
       }
       @media only screen and (max-width: 700px) {
         .under-construction.mobile_only {
@@ -533,9 +533,9 @@
         background-position-y: 10px;
       }
       .column {
-        width: 280px;
+        width: 30%;
         float: left;
-        margin-right: 10px;
+        margin: 0 1%;
       }
       .k12 .grade_container {
         width: 130px;
@@ -822,7 +822,7 @@
         border-radius: 4px 4px 0 0;
       }
       ul.nav li a {
-        min-height: 195px;
+        height: 230px;
         padding: 9px 0 9px 0;
       }
       ul.nav li.active {
@@ -2437,13 +2437,13 @@
                 School Website
 
       .container_12
-        .grid_3.overall-seal
+        .column.overall-seal
           = render 'seal',
             :category => :overall,
             :rating => @school.early_childhood_rating,
             :school => @school
 
-        .grid_3.hours
+        .column.hours
           %h3 Hours
           .arial
             - num = 0
@@ -2475,7 +2475,7 @@
           = render 'shared/share'
 
 
-        .grid_4.map-container
+        .column.map-container
           #map
 
 
