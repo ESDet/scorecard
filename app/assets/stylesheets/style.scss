@@ -14,6 +14,7 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
   o-webkit-overflow-scrolling: touch;
+  min-width: 0px;
 }
 
 body.schools-index { height: 100%; }
@@ -119,7 +120,6 @@ a.external, a.external:visited {
 .school-map-wrapper {
   clear: both;
   height: 120px;
-  width: 250px;
   position: relative;
 }
 
@@ -528,7 +528,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 .middle {
-  width: 800px;
+  width: 80%;
   margin: 0 auto 20px auto;
 }
 
@@ -547,6 +547,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 .school-header {
+  position: relative;
   height: 185px;
   background-color: $cyan;
   color: white;
@@ -562,7 +563,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
   .school-title  {
     float: left;
-    width: 63%;
+    width: 60%;
     padding: 40px 0 0 15px;
     background-color: $cyan;
     h1 {
@@ -572,6 +573,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     }
   }
   .grades-served {
+    position: absolute;
+    bottom: 25px;
+    left: 15px;
+    width: 60%;
     margin-top: 35px;
     background-color: $navy;
     padding: 5px;
@@ -601,7 +606,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .section {
   padding: 14px 0px;
   display: inline-block;
-  width: inherit;
+  width: 100%;
 }
 
 .section > .links {
@@ -622,7 +627,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   color: $navy;
   & > .left-header {
     float: left;
-    width: 520px;
+    width: 70%;
   }
   & > .right-header {
     float: right;
@@ -639,7 +644,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .section > .columns > .column {
   float: left;
-  width: 250px;
+  width: 31%;
   & > .title {
     height: 26px;
     background-color: $cyan;
@@ -807,7 +812,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .section > .columns.two {
   & > .column {
-    width: 360px;
+    width: 48%;
   }
   & > .column:nth-of-type(even) {
     float: right;
@@ -878,23 +883,22 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .info-bar {
   clear: both;
-  width: 800px;
+  padding: 3px;
   background: $light_cyan;
   height: 30px;
   text-align: left;
-  display: table-cell;
-  vertical-align: middle;
   & > .item {
     padding: 6px 0 0 18px;
     display: inline-block;
-    width: 180px;
+    width: 25%;
     float: left;
     font-family: 'Lato Bold';
     font-size: 11px;
-    &.compare {
+    & > .compare {
+      width: 180px;
+      float: right;
       cursor: pointer;
-      margin-left: 55px;
-      margin-top: 2px;
+      margin-top: -3px;
       padding: 3px 7px;
       background: $yellow;
       border-radius: 9px;
@@ -927,7 +931,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 .two-column {
-  width: 525px;
+  width: 65%;
 }
 
 .overview-text {

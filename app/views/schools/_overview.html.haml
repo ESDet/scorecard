@@ -9,7 +9,7 @@
           %h1= school.display_name
           - if school.status != 'Mature' && school.status != 'Suburban'
             = school.status
-          .grades-served= "Grades Served: #{school.grades_served.first} - #{school.grades_served.last}"
+        .grades-served= "Grades Served: #{school.grades_served.first} - #{school.grades_served.last}"
       .overview-text
         =raw simple_format(school.overview_text)
       .info-bar
@@ -28,8 +28,9 @@
             .website-icon
             %a.external{:href => school.school_url, :target => '_blank'} Visit
             this school's website
-        .item.compare(title="Coming Soon")
-          COMPARE TO OTHER SCHOOLS
+        .item
+          .compare(title="Coming Soon")
+            COMPARE TO OTHER SCHOOLS
     .section.border-bottom
       .header
         .left-header How is this school ranked?

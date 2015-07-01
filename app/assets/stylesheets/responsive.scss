@@ -1,137 +1,15 @@
 @import 'colors';
 
-@media only screen and (max-width: 959px) {
-  body { min-width: 0px; }
-  h2 { margin-top: 0px; }
-  .container_12 {
-    width: auto;
-    .grid_1,
-    .grid_2,
-    .grid_3,
-    .grid_4,
-    .grid_5,
-    .grid_6,
-    .grid_7,
-    .grid_8,
-    .grid_9,
-    .grid_10,
-    .grid_11,
-    .grid_12 {
-      margin-left: 10px;
-      margin-right: 10px;
-      text-align: left;
-      width: auto;
-      float: none;
-    }
-  }
+.container_12 { width: 100%; }
+
+@media only screen and (max-width: 1070px) {
+  .middle { width: 85%; }
 }
 
-@media only screen and (max-width: 900px) {
-  .schools-index .results,
-  .schools-index .wrapper {
-    float: none;
-    width: 100%;
-  }
-  .schools-index .wrapper {
-    top: 80px;
-    height: 250px;
-  }
-  .schools-index .results {
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
+@media only screen and (max-width: 940px) {
+  .middle { width: 90%; }
 }
 
-@media only screen and (max-width: 499px) {
-  .bar-graph { width: 70%; }
-}
-
-@media only screen and (min-width: 320px) and (max-width: 399px) {
-  .increasing-growth { margin-left: 100%; }
-  .decreasing-growth { margin-left: 100%; }
-  .footer { font-size: 35px; padding: 10px 10px; }
-  .content .subjects .subject { font-size: 17px; }
-  .header { font-size: 25px; }
-  .region-title h2 { font-size: 27px; }
-  .school-title h1 { font-size: 35px; }
-  .contact { font-size: 17px; }
-  .home { margin: 5px 10px 20px 10px; }
-  #nav #hamburger { top: 3px; }
-  .results {
-    padding: 0 10px;
-  }
-}
-
-@media only screen and (min-width: 399px) {
-  .increasing-growth { margin-left: 100%; }
-  .decreasing-growth { margin-left: 100%; }
-  .home {
-    margin: auto auto 20px auto;
-    width: 90%;
-  }
-}
-
-@media only screen and (min-width: 480px) {
-  .increasing-growth { margin-left: auto; }
-  .decreasing-growth { margin-left: auto; }
-}
-
-@media only screen and (min-width: 500px) {
-}
-
-@media only screen and (min-width: 555px) {
-  .stat-region {
-    border-bottom: 1px solid $cyan;
-    padding-bottom: 20px;
-  }
-}
-
-@media only screen and (min-width: 663px) {
-  .home {
-    margin: auto auto 20px auto;
-    width: 80%;
-  }
-}
-
-@media only screen and (min-width: 800px) {
-  .school-header {
-    display: inline-block;
-    display: block;
-    overflow: hidden;
-  }
-  .overview-text { padding: 0; }
-  .home {
-    margin: auto auto 20px auto;
-    width: 70%;
-  }
-}
-
-@media only screen and (min-width: 960px) {
-  .container_12 { width: auto; }
-  .padding-left { padding-left: 20%; }
-  .padding-right { padding-right: 40%; }
-  #hamburger { margin-left: 140px; }
-}
-
-@media only screen and (min-width: 1005px) {
-}
-
-@media only screen and (min-width: 1020px) {
-}
-
-@media only screen and (min-width: 1080px) {
-}
-
-@media only screen and (min-width: 1112px) {
-  .home {
-    margin: auto auto 20px auto;
-    width: 60%;
-  }
-}
-
-@media only screen and (min-width: 1219px) {
-  .home {
-    margin: auto auto 20px auto;
-    width: 50%;
-  }
+@media only screen and (max-width: 885px) {
+  .middle { width: 95%; }
 }
