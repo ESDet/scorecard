@@ -2,7 +2,7 @@
   .container_12
     .middle
       .breadcrumbs
-        %a.back-arrow-icon(href="/")
+        %a.back-arrow-icon(href="#")
     %h2= @school.display_name
   .container_12.clear_floats.region-title(data-target="overview")
     %h2 OVERVIEW
@@ -36,6 +36,8 @@
         tap: false,
         keyboard: false
       });
+
+      $('.back-arrow-icon').attr('href', document.referrer);
 
       if (!$('.overview-text').first().text().trim()) {
         $('#overview .fields')
