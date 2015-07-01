@@ -1,5 +1,3 @@
-@import 'colors';
-
 .container_12 { width: 100%; }
 
 @media only screen and (max-width: 1070px) {
@@ -8,8 +6,13 @@
 
 @media only screen and (max-width: 940px) {
   .middle { width: 90%; }
+  .home.middle { width: 80%; }
 }
 
 @media only screen and (max-width: 885px) {
   .middle { width: 95%; }
+}
+
+@media only screen and (max-width: 630px) {
+  .home.middle { width: 95%; }
 }

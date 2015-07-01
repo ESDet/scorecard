@@ -24,11 +24,13 @@ body.schools-index { height: 100%; }
   position:relative;
   padding-bottom: 70px;
 }
+
 .bodywrap {
   height: 100%;
   padding: 0 0 0 0;
   margin-bottom: 0;
 }
+
 .footer {
   position: absolute;
   width: 100%;
@@ -59,6 +61,8 @@ table td, table th { vertical-align: top; }
 
 h1 { color: $onyx; }
 .branding { text-align: left; }
+
+.home.middle { width: 60%; }
 
 #search {
   display: inline-block;
