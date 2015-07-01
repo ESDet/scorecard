@@ -5,7 +5,7 @@ html { height: 100%; }
 
 body {
   font-family: 'Lato Regular';
-  font-size: 13px;
+  font-size: 15px;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -573,7 +573,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     h1 {
       margin: 0px;
       color: white;
-      font-size: 29px;
+      font-size: 35px;
     }
   }
   .grades-served {
@@ -583,8 +583,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     width: 60%;
     margin-top: 35px;
     background-color: $navy;
-    padding: 5px;
-    font-size: 15px;
+    padding: 7px 15px;
+    font-size: 17px;
   }
 }
 
@@ -625,17 +625,17 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   width: 100%;
   height: 30px;
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-family: 'Aleo Bold';
-  font-size: 20px;
+  font-size: 23px;
   color: $navy;
   & > .left-header {
     float: left;
-    width: 70%;
+    width: 64.5%;
   }
   & > .right-header {
-    float: right;
-    width: 240px;
+    float: left;
+    width: 35%;
   }
 }
 
@@ -653,8 +653,8 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     height: 26px;
     background-color: $cyan;
     font-family: 'Aleo Bold';
-    font-size: 13px;
-    padding-top: 5px;
+    font-size: 17px;
+    padding-top: 3px;
     color: white;
     text-align: center;
   }
@@ -663,9 +663,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     width: 100%;
     &.no-padding { padding: 0; }
     font-family: 'Lato Regular';
-    font-size: 13px;
+    font-size: 15px;
     margin-top: 4px;
-    padding: 7px;
+    padding: 7px 15px;
     & > .header {
       margin-bottom: 10px;
       font-family: 'Lato Bold';
@@ -724,7 +724,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     }
     .legend {
       float: right;
-      width: 155px;
+      width: 62%;
       .stat {
         margin: 3px 0;
         .race {
@@ -838,7 +838,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   position: relative;
   float: left;
   margin-right: 7px;
-  bottom: 2px;
+  bottom: 1px;
   width: 18px;
   height: 18px;
   border-radius: 9px;
@@ -889,17 +889,17 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   clear: both;
   padding: 3px;
   background: $light_cyan;
-  height: 30px;
+  height: 35px;
   text-align: left;
   & > .item {
-    padding: 6px 0 0 18px;
+    padding: 7px 0 0 18px;
     display: inline-block;
     width: 25%;
     float: left;
     font-family: 'Lato Bold';
-    font-size: 11px;
+    font-size: 13px;
     & > .compare {
-      width: 180px;
+      width: 210px;
       float: right;
       cursor: pointer;
       margin-top: -3px;
@@ -919,9 +919,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-top: 40px;
   background: $light_cyan;
   text-align: left;
-  padding: 7px 9px 2px 9px;
+  padding: 4px 9px 2px 9px;
   font-family: 'Lato Regular';
-  font-size: 12px;
+  font-size: 14px;
   color: $navy;
   .text {
     color: $onyx;

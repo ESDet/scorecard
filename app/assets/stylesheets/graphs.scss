@@ -5,7 +5,7 @@
   h2 {
     margin-top: 20px;
     color: $navy;
-    font-size: 17px;
+    font-size: 19px;
     font-family: 'Aleo Bold';
     letter-spacing: 1.3px;
     text-align: center;
@@ -13,7 +13,7 @@
   h3 {
     margin-top: -10px;
     color: $onyx;
-    font-size: 15px;
+    font-size: 17px;
     font-family: 'Lato Italic';
     text-align: center;
     letter-spacing: 0.1px;
@@ -34,7 +34,7 @@
     background-color: $cyan;
     color: white;
     font-family: 'Aleo Bold';
-    font-size: 13px;
+    font-size: 15px;
     padding: 4px 0;
   }
 
@@ -87,7 +87,7 @@
         text-align: left;
         color: white;
         font-family: 'Lato Bold';
-        font-size: 18px;
+        font-size: 20px;
         padding: 13px 0 13px 7px;
         text-shadow:
           -1px -1px 0 $green,
@@ -99,11 +99,11 @@
   }
 
   .content.two .graph {
-    height: 68px;
+    height: 80px;
   }
 
   .content.four .graph {
-    height: 45px;
+    height: 55px;
   }
 
   .visual .bounds {
@@ -115,7 +115,7 @@
       margin-top: 8px;
       width: 1px;
       font-family: 'Lato Light';
-      font-size: 10px;
+      font-size: 12px;
     }
     .left-bounds {
       float: left;
@@ -137,15 +137,15 @@
       width: 3px;
       background: $yellow;
       font-family: 'Lato Light';
-      font-size: 13px;
+      font-size: 15px;
       & > .wrapper > .text {
         margin-top: 20px;
         font-family: 'Lato Light';
-        font-size: 10px;
+        font-size: 12px;
       }
       & > .wrapper > .number {
         font-family: 'Lato Bold';
-        font-size: 13px;
+        font-size: 15px;
         color: $green;
       }
     }
@@ -167,11 +167,11 @@
       margin-left: 7px;
       float: left;
       font-family: 'Lato Black';
-      font-size: 15px;
+      font-size: 17px;
     }
     & > .number {
       float: left;
-      height: 25px;
+      height: 30px;
       font-family: 'Lato Bold';
       background-color: $red;
     }
@@ -204,11 +204,11 @@
   .content.two .graph .bar.detroit {
     margin-top: 12px;
     & > .number {
-      height: 19px;
+      height: 23px;
       opacity: 0.5;
     }
     & > .difference {
-      height: 19px;
+      height: 23px;
     }
   }
 
@@ -221,12 +221,12 @@
     background-color: $yellow;
     .text {
       padding: 1px;
-      margin-top: 70px;
+      margin-top: 80px;
       margin-left: -28px;
       background-color: $yellow;
       color: white;
       font-family: 'Lato Bold';
-      font-size: 10px;
+      font-size: 12px;
       width: 60px;
     }
 
@@ -255,17 +255,17 @@
       }
     }
     & > .visual .square {
-      margin-right: 105px;
+      margin-right: 139px;
       margin-top: 110px;
       clear: right;
-      width: 15px;
-      height: 15px;
+      width: 18px;
+      height: 18px;
       float: right;
       background-color: grey;
       & > .text {
         font-family: 'Lato Regular';
-        font-size: 13px;
-        width: 145px;
+        font-size: 15px;
+        width: 165px;
       }
     }
     & > .visual:nth-of-type(2) {
@@ -282,7 +282,7 @@
       .top-left, .top-right,
       .bottom-left, .bottom-right {
         font-family: 'Lato Bold';
-        font-size: 12px;
+        font-size: 14px;
         position: absolute;
         background-color: grey;
         width: 92.5px;
@@ -327,7 +327,7 @@
         .inner {
           padding-top: 25px;
           font-family: 'Lato Bold';
-          font-size: 12px;
+          font-size: 14px;
           position: absolute;
           top: 50px;
           left: 50px;
@@ -344,7 +344,7 @@
         float: left;
         margin-left: 10px;
         font-family: 'Lato Regular';
-        font-size: 11px;
+        font-size: 13px;
         width: 50px;
         text-align: left;
         & > .key {
@@ -359,9 +359,10 @@
         .red { background-color: $fivee_red; }
       }
       .link {
+        width: 110px;
         margin-top: 4px;
         font-family: 'Lato Bold';
-        font-size: 11px;
+        font-size: 13px;
       }
     }
   }
@@ -369,22 +370,22 @@
   .content .labels {
     float: left;
     text-align: right;
-    margin-top: 40px;
+    margin-top: 50px;
     margin-right: 5px;
     & > .label {
       font-family: 'Lato Bold';
-      font-size: 10px;
+      font-size: 12px;
     }
     & > .label:nth-of-type(1) {
       color: $cyan;
-      margin-bottom: 23px;
+      margin-bottom: 20px;
     }
   }
 
   .content.four.bar {
     & > .labels {
       & > .label {
-        margin-bottom: 35px;
+        margin-bottom: 45px;
       }
     }
     & > .visual {
@@ -411,7 +412,7 @@
       width: 38px;
       margin-top: 8px;
       font-family: 'Lato Black';
-      font-size: 15px;
+      font-size: 17px;
       color: $green;
     }
     & > .visual > .graph:nth-of-type(2) {
