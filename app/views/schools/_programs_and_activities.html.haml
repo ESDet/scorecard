@@ -3,16 +3,12 @@
     - if school.schedule.present? || school.parent_involvement.present?
       .section.border-bottom
         .columns.two
-          - if school.schedule.present?
-            .column
-              .title Class Schedule
-              .content.light-cyan-background
-                = render 'field_list', list: school.schedule
-          - if school.parent_involvement.present?
-            .column
-              .title Parent Involvement
-              .content.light-cyan-background
-                = render 'field_list', list: school.parent_involvement
+          = render 'column',
+            title: 'Class Schedule',
+            list: school.schedule
+          = render 'column',
+            title: 'Parent Involvement',
+            list: school.parent_involvement
     - if school.has_academic_programs?
       .section.border-bottom
         .header
@@ -20,11 +16,9 @@
             .star-icon
             Academic Programs
         .columns.two
-          - if school.academic_focus.present?
-            .column
-              .title Academic Focus
-              .content.light-cyan-background
-                = render 'field_list', list: school.academic_focus
+          = render 'column',
+            title: 'Academic Focus',
+            list: school.academic_focus
           - if school.has_ell?
             .column
               .title English Language Learners
@@ -37,11 +31,9 @@
                 - if school.ell_languages.present?
                   %span.key Languages
                   = render 'field_list', list: school.ell_languages
-          - if school.instructional_model.present?
-            .column
-              .title Personalized Learning Options
-              .content.light-cyan-background
-                = render 'field_list', list: school.instructional_model
+            = render 'column',
+              title: 'Personalized Learning Options',
+              list: school.instructional_model
           - if school.special_ed_level.present? || school.special_ed_programs.present?
             .column
               .title Special Education
@@ -99,16 +91,12 @@
             .support-icon
             Support
         .columns.two
-          - if school.extra_learning_resources.present?
-            .column
-              .title Extra Learning Resources
-              .content.light-cyan-background
-                = render 'field_list', list: school.extra_learning_resources
-          - if school.staff_resources.present?
-            .column
-              .title Staff Resources for Students
-              .content.light-cyan-background
-                = render 'field_list', list: school.staff_resources
+          = render 'column',
+            title: 'Extra Learning Resources',
+            list: school.extra_learning_resources
+          = render 'column',
+            title: 'Staff Resources for Students',
+            list: school.staff_resources
     - if school.facilities.present?
       .section.border-bottom
         .header
@@ -128,16 +116,12 @@
             .sports-icon
             Sports
         .columns.two
-          - if school.boys_sports.present?
-            .column
-              .title Boy Sports
-              .content.light-cyan-background
-                = render 'field_list', list: school.boys_sports
-          - if school.girls_sports.present?
-            .column
-              .title Girl Sports
-              .content.light-cyan-background
-                = render 'field_list', list: school.girls_sports
+          = render 'column',
+            title: 'Boy Sports',
+            list: school.boys_sports
+          = render 'column',
+            title: 'Girl Sports',
+            list: school.girls_sports
     - if school.has_clubs?
       .section
         .header
@@ -145,22 +129,17 @@
             .clubs-icon
             Clubs
         .columns.two
-          - if school.student_clubs.present?
-            .column
-              .title Student Clubs
-              .content.light-cyan-background
-                = render 'field_list', list: school.student_clubs
+          = render 'column',
+            title: 'Student Clubs',
+            list: school.student_clubs
           - if school.has_other_student_clubs?
             .column
-              - if school.student_clubs_dance.present?
-                .title Dance
-                .content.light-cyan-background
-                  = render 'field_list', list: [school.student_clubs_dance]
-              - if school.student_clubs_language.present?
-                .title Language
-                .content.light-cyan-background
-                  = render 'field_list', list: [school.student_clubs_language]
-              - if school.student_clubs_other.present?
-                .title Other
-                .content.light-cyan-background
-                  = render 'field_list', list: school.student_clubs_other
+              = render 'column_content',
+                title: 'Dance',
+                list: school.student_clubs_dance
+              = render 'column_content',
+                title: 'Language',
+                list: school.student_clubs_language
+              = render 'column_content',
+                title: 'Other',
+                list: school.student_clubs_other

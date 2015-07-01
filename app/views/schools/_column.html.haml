@@ -1,0 +1,7 @@
+- if list.present?
+  - if !list.is_a?(Array)
+    - list = [list]
+  .column
+    = render 'column_content',
+      title: title,
+      list: list
