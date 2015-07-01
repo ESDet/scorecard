@@ -1,4 +1,4 @@
-.school{'data-tid' => school.tid}
+%a.school{href: school_path(school.link), "data-tid" => school.tid}
   .icon
     - if school.earlychild?
       %img(src="#{school.early_childhood_image(:mini, nil)}")
@@ -6,15 +6,13 @@
       .rounded-square.green-background.small
         .grade
           = school.excellent_schools_grade
-
-
   .info
-    %h3= link_to school.display_name, school_path("#{school.link}")
+    %h3= school.display_name
     - if !school.grades_served.blank?
       %div Grades: #{school.grades_served.join(", ")}
     - elsif school.age_groups
       %div Age Groups: #{school.age_groups.join(", ")}
 
-//  %label
-//    = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
-//    Compare
+  //  %label
+  //    = check_box_tag 'compare[]', school.id, false, :class => 'compare-check'
+  //    Compare
