@@ -16,6 +16,28 @@
     var searching = false;
 
     $(function(e) {
+      var w = $(window);
+      var mapWrapper = $('.schools-map-wrapper');
+      var resultsList = $('.schools-wrapper > .results');
+      var updateMap = function() {
+        if (w.width() < 960) {
+          mapWrapper.css('float', 'none').
+            css('height', '250px').
+            css('width', '100%');
+          resultsList.css('width', '100%').
+            css('height', '60%');
+        } else {
+          mapWrapper.css('float', 'right').
+            css('height', '100%').
+            css('width', '65%');
+          resultsList.css('width', '35%').
+            css('height', '100%');
+        }
+      };
+
+      w.resize(function() { updateMap(); });
+      updateMap();
+
       var map = Map({
         center: [42.36, -83.09],
         markers: #{@schools.map(&:marker).to_json},
@@ -30,11 +52,6 @@
           }
         }
         return true;
-      });
-
-      $('.school-list .school').click(function(e) {
-        location.href = $(this).find('> .info > h3 > a').
-          attr('href');
       });
 
       $('.rounded-square.small .grade').each(function(i, n) {
