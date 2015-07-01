@@ -6,8 +6,9 @@
 //= require map
 
 $(function() {
+  var menu = $('.menu').first();
   $('a#hamburger').click(function(e) {
-    $('.menu').toggleClass('active');
+    menu.toggleClass('active');
     return false;
   });
 });

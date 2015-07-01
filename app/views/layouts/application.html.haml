@@ -5,13 +5,14 @@
   %body{:class => "#{params[:controller]}-#{params[:action]}"}
     .container
       %header#nav
-        .container_12
-          %a#hamburger{:href => '#'}
-            %div
-            %div
-            %div
-          .middle.centered
-            = link_to 'Scorecard', root_path, class: 'brand'
+        .middle
+          .container_12
+            %a#hamburger{:href => '#'}
+              %div
+              %div
+              %div
+            .centered
+              = link_to 'Scorecard', root_path, class: 'brand'
         .menu
           = link_to 'Home', root_path, :class => 'btn'
           = link_to 'Resources', '/resources', :class => 'btn'
