@@ -179,6 +179,8 @@ class SchoolsController < ApplicationController
 
     id, school_type = params[:id].split("-")[0..1]
 
+    redirect_to root_path and return unless id.to_i != 0
+
     if school_type == "ecs"
       url = "ecs"
       includes = "ec_profile,esd_el_2015," <<
@@ -218,15 +220,17 @@ class SchoolsController < ApplicationController
         "&filter[field_bcode]=88888,99999" <<
         "&filter_op[field_bcode]=IN"
       response = Portal.new.fetch(url)
-      detroit_and_state = response["data"].each do |s|
-        if s["field_bcode"] == "88888"
-          includes = response["included"].
-            select { |i| i["id"] == "88888" }
-          @detroit = SchoolData.new s.merge(included: includes)
-        elsif s["field_bcode"] == "99999"
-          includes = response["included"].
-            select { |i| i["id"] == "99999" }
-          @state = SchoolData.new s.merge(included: includes)
+      if response != ["request error"] && response["data"]
+        detroit_and_state = response["data"].each do |s|
+          if s["field_bcode"] == "88888"
+            includes = response["included"].
+              select { |i| i["id"] == "88888" }
+            @detroit = SchoolData.new s.merge(included: includes)
+          elsif s["field_bcode"] == "99999"
+            includes = response["included"].
+              select { |i| i["id"] == "99999" }
+            @state = SchoolData.new s.merge(included: includes)
+          end
         end
       end
     end
