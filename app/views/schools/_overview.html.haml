@@ -169,17 +169,20 @@
         .column
           .title Application Required
           .content
-            .header
-              = render 'yes_no', value: school.application_process?
-            /.text.centered (see How To Apply)
+            - if school.application_process?
+              .header
+                = render 'yes_no', value: school.application_process?
+              /.text.centered (see How To Apply)
           .title Dress Code
           .content
-            .header
-              = render 'yes_no', value: school.dress_code?
+            - if school.dress_code?
+              .header
+                = render 'yes_no', value: school.dress_code?
           .title Bullying Policy
           .content
-            .header
-              = render 'yes_no', value: school.bullying_policy?
+            - if school.bullying_policy?
+              .header
+                = render 'yes_no', value: school.bullying_policy?
 
 :javascript
   $(function() {
