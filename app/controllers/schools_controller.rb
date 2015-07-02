@@ -140,19 +140,24 @@ class SchoolsController < ApplicationController
               school
             end
         end
-        @schools.sort_by! do |s|
-          if s.earlychild?
-            s.esd_el_2015s.total_points.to_f
-          elsif s.k8?
-            if s.esd_k8_2015s.total_pts.to_f < 1
-              s.esd_k8_2015s.total_pts.to_f * 100
+        if @schools
+          @schools.sort_by! do |s|
+            if s.earlychild?
+              s.esd_el_2015s.total_points.to_f
+            elsif s.k8?
+              if s.esd_k8_2015s.total_pts.to_f < 1
+                s.esd_k8_2015s.total_pts.to_f * 100
+              else
+                s.esd_k8_2015s.total_pts.to_f
+              end
             else
-              s.esd_k8_2015s.total_pts.to_f
+              s.esd_hs_2015s.total_pts.to_f
             end
-          else
-            s.esd_hs_2015s.total_pts.to_f
-          end
-        end.reverse!
+          end.reverse!
+        else
+          flash[:notice] = "No results found"
+          redirect_to root_path
+        end
       end
     rescue EOFError => e
       ExceptionNotifier.notify_exception(e)
