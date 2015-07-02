@@ -265,6 +265,10 @@ module School
       map { |c| c['label'] }.andand.reverse || []
   end
 
+  def council_district
+    school_profiles.andand.field_council_district
+  end
+
   def transportation_options
     school_profiles.andand.field_transportation_options.
       andand.map { |t| t['label'] }

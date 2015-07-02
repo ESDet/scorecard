@@ -107,6 +107,11 @@
           .content.no-padding
             .school-map-wrapper
               #map
+            - if school.council_district
+              <br/>
+              .centered
+                %span.key City Council District:
+                = school.council_district
         .column
           .title Transportation
           .content
