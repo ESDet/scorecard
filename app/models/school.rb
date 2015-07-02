@@ -260,6 +260,10 @@ module School
     field_address.thoroughfare
   end
 
+  def hours
+    school_profiles.andand.hours
+  end
+
   def before_after_care
     school_profiles.andand.field_before_after_care.andand.
       map { |c| c['label'] }.andand.reverse || []

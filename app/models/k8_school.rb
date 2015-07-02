@@ -13,10 +13,6 @@ module K8School
     esd_k8_2015s.andand.total_ltrgrade
   end
 
-  def hours
-    esd_k8_2015s.andand.hours
-  end
-
   private
 
   def self.int_value(o, set, value)
