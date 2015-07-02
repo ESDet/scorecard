@@ -1,4 +1,6 @@
 - if list.present?
+  - if !list.is_a?(Array)
+    - list = [list]
   - s = list.size
   - if s > 6
     .left
