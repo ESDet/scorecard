@@ -137,7 +137,8 @@ class SchoolsController < ApplicationController
     else
       url = "schools"
       includes = "school_profile,meap_2014," <<
-        "fiveessentials_2015,esd_#{school_type}_2015"
+        "fiveessentials_2015,esd_#{school_type}_2015," <<
+        "k12_supplemental_2015"
     end
 
     url << "/#{id}.json?flatten_fields=true&includes=#{includes}"
