@@ -144,7 +144,11 @@ class SchoolsController < ApplicationController
           if s.earlychild?
             s.esd_el_2015s.total_points.to_f
           elsif s.k8?
-            s.esd_k8_2015s.total_pts.to_f * 100
+            if s.esd_k8_2015s.total_pts.to_f < 1
+              s.esd_k8_2015s.total_pts.to_f * 100
+            else
+              s.esd_k8_2015s.total_pts.to_f
+            end
           else
             s.esd_hs_2015s.total_pts.to_f
           end
