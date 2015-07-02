@@ -1,8 +1,8 @@
 module SchoolsHelper
   def schools_cache_key
     key = "schools/all/"
-    key << "#{@grade}/" if !@grade.blank?
-    key << "#{@loc}/" if !@loc.blank?
+    key << "#{@grade}/" if @grade.present?
+    key << "#{@loc}/" if @loc.present?
     @filters.each { |f| key << "#{f}/" }
     key << @schools.max_by { |s| s.timestamp.to_i }.timestamp
   end
