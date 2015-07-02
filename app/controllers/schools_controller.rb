@@ -70,31 +70,86 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      url = "schools.json?limit=50&flatten_fields=true&" <<
-        "includes=all&sort_by_special=" <<
-        "school_combined_total_pts&sort_order_special=DESC" <<
-        "&filter[field_scorecard_display]=1"
+      schools_url = "schools.json?limit=25" <<
+        "&flatten_fields=true&" <<
+        "includes=school_profile,esd_k8_2015," <<
+        "esd_hs_2015&filter[field_scorecard_display]=1" <<
+        "&sort_by_special=school_combined_total_pts" <<
+        "&sort_order_special=DESC"
+
+      ecs_url = "ecs.json?limit=25&flatten_fields=true" <<
+        "&includes=ec_profile,esd_el_2015" <<
+        "&filter[field_scorecard_display]=1" <<
+        "&sort_by_special=ec_total_pts" <<
+        "&sort_order_special=DESC"
+
+      if @loc.andand.match /^[0-9]{5}$/
+        schools_url << "&filter[field_address:postal_code]=#{@loc}"
+        ecs_url << "&filter[field_address:postal_code]=#{@loc}"
+      elsif @loc.present?
+        schools_url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+        ecs_url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+      end
     end
 
-    if @loc.andand.match /^[0-9]{5}$/
-      url << "&filter[field_address:postal_code]=#{@loc}"
-    elsif !@loc.blank?
-      url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
-    end
+    if @grade.present?
+      if @loc.andand.match /^[0-9]{5}$/
+        url << "&filter[field_address:postal_code]=#{@loc}"
+      elsif @loc.present?
+        url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+      end
 
-    if !special_filters.empty?
-      url << "&filter_special=" << special_filters.join(",")
-    end
+      if special_filters.present?
+        url << "&filter_special=" << special_filters.join(",")
+      end
 
-    if !license_types.empty?
-      url << "&filter[field_ec_license_type]=" <<
-        license_types.join(",") <<
-        "&filter_op[field_ec_license_type]=IN"
+      if license_types.present?
+        url << "&filter[field_ec_license_type]=" <<
+          license_types.join(",") <<
+          "&filter_op[field_ec_license_type]=IN"
+      end
     end
 
     retries = 2
     begin
-      response = Portal.new.fetch(url)
+      if @grade.present?
+        response = Portal.new.fetch(url)
+        if response != ["request error"] && response["data"]
+          @schools = gather_included_fields(response).
+            select { |s| !s['field_geo'].nil? }.
+            map { |s| SchoolData.new(s) }
+        else
+          flash[:notice] = "No results found"
+          redirect_to root_path
+        end
+      else
+        schools_response = Portal.new.fetch(schools_url)
+        if schools_response != ["request error"] && schools_response["data"]
+          @schools = gather_included_fields(schools_response).
+            select { |s| !s['field_geo'].nil? }.
+            map { |s| SchoolData.new(s) }
+        end
+        ecs_response = Portal.new.fetch(ecs_url)
+        if ecs_response != ["request error"] && ecs_response["data"]
+          @schools += gather_included_fields(ecs_response).
+            select { |s| !s['field_geo'].nil? }.
+            map do |s|
+              school = SchoolData.new(s)
+              pts = school.esd_el_2015s.total_points.to_f
+              school.esd_el_2015s.total_points = pts * (100 / 15.0)
+              school
+            end
+        end
+        @schools.sort_by! do |s|
+          if s.earlychild?
+            s.esd_el_2015s.total_points.to_f
+          elsif s.k8?
+            s.esd_k8_2015s.total_pts.to_f * 100
+          else
+            s.esd_hs_2015s.total_pts.to_f
+          end
+        end.reverse!
+      end
     rescue EOFError => e
       ExceptionNotifier.notify_exception(e)
       retries -= 1
@@ -105,21 +160,6 @@ class SchoolsController < ApplicationController
       "now. Please try again later."
       ExceptionNotifier.notify_exception(e)
       redirect_to root_path and return
-    end
-
-    if response != ["request error"] && response["data"]
-      schools_with_profiles = response["data"].map do |s|
-        includes = response["included"].select do |i|
-          valid_includes?(i, s)
-        end
-        s.merge(included: includes)
-      end
-      @schools = schools_with_profiles.
-        map { |s| SchoolData.new(s) }.
-        select { |s| !s.field_geo.nil? }
-    else
-      flash[:notice] = "No results found"
-      redirect_to root_path
     end
   end
 
@@ -286,6 +326,14 @@ class SchoolsController < ApplicationController
 
   private
 
+  def gather_included_fields(response)
+    response["data"].map do |s|
+      includes = response["included"].select do |i|
+        valid_includes?(i, s)
+      end
+      s.merge(included: includes)
+    end
+  end
   def valid_includes?(includes, school)
     if includes["type"] == "school_profiles"
       if school["links"]["school_profile"]
