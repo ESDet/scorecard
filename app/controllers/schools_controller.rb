@@ -9,40 +9,41 @@ class SchoolsController < ApplicationController
     special_filters = []
     license_types = []
     case @grade
-    when 'ec'
+    when "ec"
       url = "ecs.json?limit=50&flatten_fields=true" <<
-        "&includes=all&sort_by_special=ec_total_pts" <<
+        "&includes=ec_profile,esd_el_2015" <<
+        "&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
       special_filters << "has_esd_el_2015"
       @filters.each do |f|
         case f
-        when 'free_reduced'
+        when "free_reduced"
           special_filters << "ec_profile_is_free_or_reduced_cost"
-        when 'transportation'
+        when "transportation"
           special_filters << "ec_profile_has_transportation"
-        when 'special_needs'
+        when "special_needs"
           special_filters << "ec_profile_has_special_needs_experience"
-        when 'meals'
+        when "meals"
           special_filters << "ec_profile_has_meals"
-        when 'home_based'
+        when "home_based"
           license_types << 2424
           license_types << 2419
-        when 'center_based'
+        when "center_based"
           license_types << 2415
-        when 'high_rating'
+        when "high_rating"
           special_filters << "esd_el_2015_highscore"
         end
       end
-    when 'k8', 'high'
+    when "k8", "hs"
       url = "schools.json?limit=50&flatten_fields=true&" <<
-        "includes=all" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC" <<
-        "&filter[field_scorecard_display]=1"
+        "&filter[field_scorecard_display]=1" <<
+        "&includes=school_profile,esd_#{@grade}_2015"
 
-      if @grade == 'k8'
+      if @grade == "k8"
         url << "&filter[field_school_type]=10"
       else
         url << "&filter[field_school_type]=3"
@@ -50,21 +51,21 @@ class SchoolsController < ApplicationController
 
       @filters.each do |f|
         @schools = case f
-        when 'special_education'
+        when "special_education"
           special_filters << "school_profile_has_specialed"
-        when 'arts'
+        when "arts"
           special_filters << "school_profile_has_arts"
-        when 'sports'
+        when "sports"
           special_filters << "school_profile_has_sports"
-        when 'transportation'
+        when "transportation"
           special_filters << "school_profile_has_transportation"
-        when 'before_after_care'
+        when "before_after_care"
           special_filters << "school_profile_has_before_after_care"
-        when 'app_required'
+        when "app_required"
           special_filters << "school_profile_application_required"
-        when 'college_readiness'
+        when "college_readiness"
           special_filters << "school_profile_collegereadiness"
-        when 'high_rating'
+        when "high_rating"
           special_filters << "esd_k8hs_2015_highscore"
         end
       end
@@ -99,35 +100,17 @@ class SchoolsController < ApplicationController
       retries -= 1
       retry if retries > 0
     rescue Net::ReadTimeout => e
-      flash[:notice] = 'There was an error during the search and we are looking into the issue now. Please try again later.'
+      flash[:notice] = "There was an error during " <<
+      "the search and we are looking into the issue " <<
+      "now. Please try again later."
       ExceptionNotifier.notify_exception(e)
       redirect_to root_path and return
     end
 
-    if response != ["request error"] && response['data']
-      schools_with_profiles = response['data'].map do |s|
-        includes = response['included'].select do |i|
-          if i['type'] == 'school_profiles'
-            if s['links']['school_profile']
-              i['id'] == s['links']['school_profile']['linkage']['id']
-            end
-          elsif i['type'] == 'ec_profiles'
-            if s['links']['ec_profile']
-              i['id'] == s['links']['ec_profile']['linkage']['id']
-            end
-          elsif i['type'] == 'esd_k8_2015s'
-            if s['links']['esd_k8_2015']
-              i['id'] == s['links']['esd_k8_2015']['linkage']['id']
-            end
-          elsif i['type'] == 'esd_hs_2015s'
-            if s['links']['esd_hs_2015']
-              i['id'] == s['links']['esd_hs_2015']['linkage']['id']
-            end
-          elsif i['type'] == 'esd_el_2015s'
-            if s['links']['esd_el_2015']
-              i['id'] == s['links']['esd_el_2015']['linkage']['id']
-            end
-          end
+    if response != ["request error"] && response["data"]
+      schools_with_profiles = response["data"].map do |s|
+        includes = response["included"].select do |i|
+          valid_includes?(i, s)
         end
         s.merge(included: includes)
       end
@@ -135,22 +118,31 @@ class SchoolsController < ApplicationController
         map { |s| SchoolData.new(s) }.
         select { |s| !s.field_geo.nil? }
     else
-      flash[:notice] = 'No results found'
+      flash[:notice] = "No results found"
       redirect_to root_path
     end
   end
 
   def show
-    render :text => '' and return if params[:id] == 'PIE' # PIE.htc requests
+    render :text => "" and return if params[:id] == "PIE" # PIE.htc requests
 
     redirect_to root_path and return unless params[:id]
 
-    id, school_type = params[:id].split('-')[0..1]
+    id, school_type = params[:id].split("-")[0..1]
 
-    url = school_type == 'ecs' ? 'ecs' : 'schools'
-    url << "/#{id}.json?flatten_fields=true&includes=all"
+    if school_type == "ecs"
+      url = "ecs"
+      includes = "ec_profile,esd_el_2015," <<
+        "most_recent_ec_state_rating"
+    else
+      url = "schools"
+      includes = "school_profile,meap_2014," <<
+        "fiveessentials_2015,esd_#{school_type}_2015"
+    end
 
-    if school_type != 'ecs'
+    url << "/#{id}.json?flatten_fields=true&includes=#{includes}"
+
+    if school_type != "ecs"
       url << "&include_option_labels=true"
     end
 
@@ -162,25 +154,28 @@ class SchoolsController < ApplicationController
       retries -= 1
       retry if retries > 0
     rescue Net::ReadTimeout => e
-      flash[:notice] = 'There was an error retrieving school data and we are looking into the issue now. Please try again later.'
+      flash[:notice] = "There was an error " <<
+        "retrieving school data and we are looking " <<
+        "into the issue now. Please try again later."
       ExceptionNotifier.notify_exception(e)
       redirect_to root_path and return
     end
 
-    if school_type != 'ecs'
+    if school_type != "ecs"
       url = "schools.json?flatten_fields=true" <<
-        "&include_option_labels=true&includes=all" <<
+        "&include_option_labels=true" <<
+        "&includes=school_profile,esd_#{school_type}_2015" <<
         "&filter[field_bcode]=88888,99999" <<
         "&filter_op[field_bcode]=IN"
       response = Portal.new.fetch(url)
-      detroit_and_state = response['data'].each do |s|
-        if s['field_bcode'] == '88888'
-          includes = response['included'].
-            select { |i| i['id'] == '88888' }
+      detroit_and_state = response["data"].each do |s|
+        if s["field_bcode"] == "88888"
+          includes = response["included"].
+            select { |i| i["id"] == "88888" }
           @detroit = SchoolData.new s.merge(included: includes)
-        elsif s['field_bcode'] == '99999'
-          includes = response['included'].
-            select { |i| i['id'] == '99999' }
+        elsif s["field_bcode"] == "99999"
+          includes = response["included"].
+            select { |i| i["id"] == "99999" }
           @state = SchoolData.new s.merge(included: includes)
         end
       end
@@ -188,11 +183,11 @@ class SchoolsController < ApplicationController
 
     (redirect_to root_path and return) if school_data.first =~ /does not exist/
 
-    @school = SchoolData.new school_data['data'].merge(included: school_data['included'])
+    @school = SchoolData.new school_data["data"].merge(included: school_data["included"])
 
     if @school.earlychild?
       @school.extend(EarlyChildhood)
-      render 'show_ec' and return
+      render "show_ec" and return
     else
       @school.extend(School)
       if @school.high?
@@ -210,17 +205,17 @@ class SchoolsController < ApplicationController
 
 
   def compare
-    str = params[:which] || ''
-    if str == 'clear'
+    str = params[:which] || ""
+    if str == "clear"
       session[:compare] = []
-      redirect_to '/compare', :notice => "Thank you, you may now choose new schools to compare." and return
+      redirect_to "/compare", :notice => "Thank you, you may now choose new schools to compare." and return
     elsif str.blank?
       list = session[:compare] || []
     elsif m = str.match(/^\+([0-9,]+)$/)
-      ids = m[1].split(',').collect { |i| i.to_i }
+      ids = m[1].split(",").collect { |i| i.to_i }
       list = (session[:compare] || []) + ids
     else
-      list = str.split(',')
+      list = str.split(",")
     end
 
     # Limit
@@ -238,30 +233,30 @@ class SchoolsController < ApplicationController
       tx = {}
 
       if s.earlychild?
-        tx['Overall Rating']            = s.published_rating
-        tx['Address']                   = "#{s.address}<br/>#{s.address2}"
-        tx['Total Points']              = s.points_total
-        tx['Staff Qualifications']      = s.points_staff
-        tx['Family/Community Partnerships'] = s.points_family
-        tx['Administration']            = s.points_admin
-        tx['Environment Pts']           = s.points_env
-        tx['Curriculum']                = s.points_curriculum
-        tx['Financial Assistance']      = format_field(s.subsidy)
-        tx['Special Needs Experience']  = format_field(s.special)
-        tx['Care Setting']              = s.setting
-        tx['Environment']               = format_field(s.environment)
-        tx['Meals Provided']            = format_field(s.meals)
-        tx['Provides Transportation?']  = format_field(s.transportation)
+        tx["Overall Rating"]            = s.published_rating
+        tx["Address"]                   = "#{s.address}<br/>#{s.address2}"
+        tx["Total Points"]              = s.points_total
+        tx["Staff Qualifications"]      = s.points_staff
+        tx["Family/Community Partnerships"] = s.points_family
+        tx["Administration"]            = s.points_admin
+        tx["Environment Pts"]           = s.points_env
+        tx["Curriculum"]                = s.points_curriculum
+        tx["Financial Assistance"]      = format_field(s.subsidy)
+        tx["Special Needs Experience"]  = format_field(s.special)
+        tx["Care Setting"]              = s.setting
+        tx["Environment"]               = format_field(s.environment)
+        tx["Meals Provided"]            = format_field(s.meals)
+        tx["Provides Transportation?"]  = format_field(s.transportation)
 
       else
-        tx['Overall Grade']     = g[:cumulative][:letter] || 'N/A'
-        tx['Academic Status']   = g[:status][:letter]     || 'N/A'
-        tx['Academic Progress'] = g[:progress][:letter]   || 'N/A'
-        tx['School Climate']    = g[:climate][:letter]    || 'N/A'
+        tx["Overall Grade"]     = g[:cumulative][:letter] || "N/A"
+        tx["Academic Status"]   = g[:status][:letter]     || "N/A"
+        tx["Academic Progress"] = g[:progress][:letter]   || "N/A"
+        tx["School Climate"]    = g[:climate][:letter]    || "N/A"
 
-        tx['Address']           = "#{s.address}<br/>#{s.address2}"
-        tx['Grades Served']     = s.grades_served || 'Unknown'
-        tx['Governance']        = s.basic.governance || 'Unknown'
+        tx["Address"]           = "#{s.address}<br/>#{s.address2}"
+        tx["Grades Served"]     = s.grades_served || "Unknown"
+        tx["Governance"]        = s.basic.governance || "Unknown"
       end
 
       @transposed[i] = tx
@@ -279,22 +274,46 @@ class SchoolsController < ApplicationController
 
     # When you go to add others to compare, we want to show only compatible
     # if only preschools
-    types = @schools.collect { |s| s.school_type }.uniq.reject { |s| s.nil? }.sort.join('_')
+    types = @schools.collect { |s| s.school_type }.uniq.reject { |s| s.nil? }.sort.join("_")
     @filter = {
-      'EC'    => 'ec',
-      'HS_K8' => 'k8hs',
-      'K8'    => 'k8',
-      'HS'    => 'hs',
-    }[types] || 'all'
+      "EC"    => "ec",
+      "HS_K8" => "k8hs",
+      "K8"    => "k8",
+      "HS"    => "hs",
+    }[types] || "all"
   end
 
   private
+
+  def valid_includes?(includes, school)
+    if includes["type"] == "school_profiles"
+      if school["links"]["school_profile"]
+        includes["id"] == school["links"]["school_profile"]["linkage"]["id"]
+      end
+    elsif includes["type"] == "ec_profiles"
+      if school["links"]["ec_profile"]
+        includes["id"] == school["links"]["ec_profile"]["linkage"]["id"]
+      end
+    elsif includes["type"] == "esd_k8_2015s"
+      if school["links"]["esd_k8_2015"]
+        includes["id"] == school["links"]["esd_k8_2015"]["linkage"]["id"]
+      end
+    elsif includes["type"] == "esd_hs_2015s"
+      if school["links"]["esd_hs_2015"]
+        includes["id"] == school["links"]["esd_hs_2015"]["linkage"]["id"]
+      end
+    elsif includes["type"] == "esd_el_2015s"
+      if school["links"]["esd_el_2015"]
+        includes["id"] == school["links"]["esd_el_2015"]["linkage"]["id"]
+      end
+    end
+  end
 
   def format_field(val)
     if val.is_a?(Array)
       val.join(", ")
     else
-      val == '0' ? 'No' : (val == '1' ? 'Yes' : val)
+      val == "0" ? "No" : (val == "1" ? "Yes" : val)
     end
   end
 

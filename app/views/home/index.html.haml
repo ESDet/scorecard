@@ -17,7 +17,7 @@
             %li= link_to 'Clear selection', '#'
             %li= link_to "Early Childhood Education", '#', 'data-key' => 'grades_served', 'data-value' => 'ec'
             %li= link_to "K-8", '#', 'data-key' => 'grades_served', 'data-value' => 'k8'
-            %li= link_to "High School", '#', 'data-key' => 'grades_served', 'data-value' => 'high'
+            %li= link_to "High School", '#', 'data-key' => 'grades_served', 'data-value' => 'hs'
         #ec-filters.hide
           .filter
             %a.trigger(data-value="free_reduced" href="#")
@@ -59,7 +59,7 @@
           .filter
             %a.trigger(data-value="high_rating" href="#")
               %span.title high rating from Excellent Schools Detroit
-        #high-filters.hide
+        #hs-filters.hide
           .filter
             %a.trigger(data-value="special_education" href="#")
               %span.title special education experience
@@ -91,19 +91,19 @@
       if (grade == 'ec') {
         $('#ec-filters').show();
         $('#k8-filters').hide();
-        $('#high-filters').hide();
+        $('#hs-filters').hide();
       } else if (grade == 'k8') {
         $('#ec-filters').hide();
         $('#k8-filters').show();
-        $('#high-filters').hide();
-      } else if (grade == 'high') {
+        $('#hs-filters').hide();
+      } else if (grade == 'hs') {
         $('#ec-filters').hide();
         $('#k8-filters').hide();
-        $('#high-filters').show();
+        $('#hs-filters').show();
       } else if (grade == 'none') {
         $('#ec-filters').hide();
         $('#k8-filters').hide();
-        $('#high-filters').hide();
+        $('#hs-filters').hide();
       }
       $('#grade').attr('value', grade);
 
