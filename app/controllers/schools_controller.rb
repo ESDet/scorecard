@@ -2,6 +2,10 @@ class SchoolsController < ApplicationController
   helper_method :format_phone
 
   def index
+    if @grade.present? && !@grade.in?(["ecs", "k8", "hs", "high"])
+      redirect_to root_path and return
+    end
+
     @loc = params[:loc]
     @grade = params[:grade]
     @filters = params[:filters] || []
@@ -36,7 +40,9 @@ class SchoolsController < ApplicationController
           special_filters << "esd_el_2015_highscore"
         end
       end
-    when "k8", "hs"
+    when "k8", "hs", "high"
+      @grade = "hs" if @grade == "high"
+
       url = "schools.json?limit=50&flatten_fields=true&" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC" <<
@@ -116,7 +122,7 @@ class SchoolsController < ApplicationController
         response = Portal.new.fetch(url)
         if response != ["request error"] && response["data"]
           @schools = gather_included_fields(response).
-            select { |s| !s['field_geo'].nil? }.
+            select { |s| !s["field_geo"].nil? }.
             map { |s| SchoolData.new(s) }
         else
           flash[:notice] = "No results found"
@@ -126,13 +132,13 @@ class SchoolsController < ApplicationController
         schools_response = Portal.new.fetch(schools_url)
         if schools_response != ["request error"] && schools_response["data"]
           @schools = gather_included_fields(schools_response).
-            select { |s| !s['field_geo'].nil? }.
+            select { |s| !s["field_geo"].nil? }.
             map { |s| SchoolData.new(s) }
         end
         ecs_response = Portal.new.fetch(ecs_url)
         if ecs_response != ["request error"] && ecs_response["data"]
           @schools += gather_included_fields(ecs_response).
-            select { |s| !s['field_geo'].nil? }.
+            select { |s| !s["field_geo"].nil? }.
             map do |s|
               school = SchoolData.new(s)
               pts = school.esd_el_2015s.total_points.to_f
@@ -180,6 +186,12 @@ class SchoolsController < ApplicationController
     id, school_type = params[:id].split("-")[0..1]
 
     redirect_to root_path and return unless id.to_i != 0
+
+    if !school_type.in? ["ecs", "k8", "hs", "high"]
+      redirect_to root_path and return
+    end
+
+    school_type = "hs" if school_type == "high"
 
     if school_type == "ecs"
       url = "ecs"
