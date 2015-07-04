@@ -131,13 +131,13 @@ class SchoolsController < ApplicationController
       else
         schools_response = Portal.new.fetch(schools_url)
         if schools_response != ["request error"] && schools_response["data"]
-          @schools = gather_included_fields(schools_response).
+          schools_data = gather_included_fields(schools_response).
             select { |s| !s["field_geo"].nil? }.
             map { |s| SchoolData.new(s) }
         end
         ecs_response = Portal.new.fetch(ecs_url)
         if ecs_response != ["request error"] && ecs_response["data"]
-          @schools += gather_included_fields(ecs_response).
+          ecs_data = gather_included_fields(ecs_response).
             select { |s| !s["field_geo"].nil? }.
             map do |s|
               school = SchoolData.new(s)
@@ -146,7 +146,9 @@ class SchoolsController < ApplicationController
               school
             end
         end
-        if @schools
+        @schools = schools_data || []
+        @schools += ecs_data if ecs_data
+        if @schools.present?
           @schools.sort_by! do |s|
             if s.earlychild?
               s.esd_el_2015s.total_points.to_f
