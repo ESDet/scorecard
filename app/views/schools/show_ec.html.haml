@@ -17,21 +17,6 @@
       .map-container {
         height: 235px;
       }
-      @media only screen and (max-width: 700px) {
-        .under-construction.mobile_only {
-          height: 95px;
-        }
-      }
-      @media only screen and (max-width: 570px) {
-        .under-construction.mobile_only {
-          height: 120px;
-        }
-      }
-      @media only screen and (max-width: 410px) {
-        .under-construction.mobile_only {
-          height: 145px;
-        }
-      }
       html {
         overflow-y: scroll;
         height: 100%;
@@ -2417,6 +2402,17 @@
         bottom: -10px;
         border-left-color: #fff;
         border-right-width: 0;
+      }
+      @media only screen and (max-width: 420px) {
+        .container_12 .column { width: 100%; }
+        ul.nav.nav-tabs li,
+        ul.nav.nav-tabs li a { height: 60px; }
+        #overview table td,
+        #overview table td:nth-child(1) { width: 100%; }
+        #overview table td { padding: 0.25em 0; }
+        .earlychild .community_line .score { width: 17%; }
+        .earlychild .community_line .explanation,
+        .earlychild .community_line .statement { width: 80%; }
       }
   .summary.earlychild
     .middle
