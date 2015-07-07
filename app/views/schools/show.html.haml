@@ -22,6 +22,7 @@
     = render 'programs_and_activities', school: @school
 
   :javascript
+    var w = $(window);
     $(document).ready(function(e) {
       Map({
         center: #{@school.center.to_json},
@@ -46,7 +47,7 @@
           .css('margin-left', '0');
       }
 
-      if ($(window).width() > 600) {
+      if (w.width() > 600) {
         $('.region-title').removeClass('closed');
         $('.info-region > div').removeClass('hide');
       }
@@ -81,4 +82,71 @@
           }
         }
       });
+
+      var adjustGraphs = function() {
+        if (w.width() < 990) {
+          $('.content.four.bar').
+            removeClass('four').
+            addClass('two');
+        } else {
+          $('.content.two.bar').
+            removeClass('two').
+            addClass('four');
+        }
+      };
+      adjustGraphs();
+      w.resize(function() { adjustGraphs(); });
+
+      var moveText = function() {
+        var overview = $('#overview > .middle > .section:nth-of-type(4)'),
+          policies = overview.
+            find('> .columns > .column:nth-of-type(3)').
+            first(),
+          barGraph = $('.content.bar.two').first(),
+          growthGraphs = $('.content.growth.two'),
+          fivee = $('.content.two.fivee');
+        if (w.width() < 400) {
+          var header = $('<div class="header"></div>').
+            insertBefore(policies);
+          overview.find('> .header > .right-header').
+            first().appendTo(header);
+          var barLabels = barGraph.find('> .labels').clone();
+          barLabels.prependTo(barGraph.
+            find('> .visual:nth-of-type(3)').first()
+          );
+          barLabels.clone().prependTo(barGraph.
+            find('> .visual:nth-of-type(4)').first()
+          );
+          barLabels.clone().prependTo(barGraph.
+            find('> .visual:nth-of-type(5)').first()
+          );
+          growthGraphs.each(function(i, n) {
+            var graph = $(n);
+            var growthLabels = graph.
+              find('> .labels').clone();
+            growthLabels.prependTo(graph.
+              find('> .visual:nth-of-type(3)').first()
+            );
+          });
+          fivee.find('> .visual').first().
+            find('.square').appendTo(fivee);
+        } else {
+          overview.
+            find('> .columns > .header > .right-header').
+            first().appendTo(
+              overview.find('> .header').first()
+            );
+            barGraph.
+              find('> .visual:nth-of-type(3) > .labels').
+              first().remove();
+            barGraph.
+              find('> .visual:nth-of-type(4) > .labels').
+              first().remove();
+            barGraph.
+              find('> .visual:nth-of-type(5) > .labels').
+              first().remove();
+        }
+      }
+      moveText();
+      w.resize(function() { moveText(); });
     });

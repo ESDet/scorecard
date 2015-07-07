@@ -1,21 +1,21 @@
 - if list && !list.empty?
   - s = list.size
-  .left(style="width:25%")
+  .left.twenty-five
     %ul
       - list[0..s / 4].each do |i|
         %li
           = i
-  .left(style="width:25%")
+  .left.twenty-five
     %ul
       - list[s / 4 + 1..s / 2].each do |i|
         %li
           = i
-  .left(style="width:25%")
+  .left.twenty-five
     %ul
       - list[s / 2 + 1..s * 3 / 4].each do |i|
         %li
           = i
-  .right(style="width:25%")
+  .right.twenty-five
     %ul
       - list[s * 3 / 4 + 1..s - 1].each do |i|
         %li
