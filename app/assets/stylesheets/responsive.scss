@@ -31,7 +31,8 @@
   .menu { left: 4%; }
 }
 
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 990px) and (min-width: 501px) {
+  .info-bar > .item:not(:nth-of-type(4)) { width: 24%; }
   #performance .stat-region .content.four.bar {
     & > .visual {
       width: 40%;
@@ -42,13 +43,16 @@
       margin-bottom: 10px;
     }
     & > .visual:nth-of-type(3) { margin-left: 13px; }
+    & > .visual:nth-of-type(4) > .labels {
+      position: absolute;
+      z-index: 100;
+      margin-left: 13px;
+      left: 5px;
+    }
   }
 }
 
-@media only screen and (max-width: 800px) {
-}
-
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 790px) {
   .home.middle { width: 90%; }
   .section > .columns > .column:nth-of-type(2) { margin: 0; }
   .section > .columns > .column,

@@ -83,40 +83,73 @@
         }
       });
 
+      var adjustGraphs = function() {
+        if (w.width() < 791) {
+          $('.content.four.bar').
+            removeClass('four').
+            addClass('two');
+        } else {
+          $('.content.two.bar').
+            removeClass('two').
+            addClass('four');
+        }
+      };
+      adjustGraphs();
+      w.resize(function() { adjustGraphs(); });
+
       var moveText = function() {
         var overview = $('#overview > .middle > .section:nth-of-type(4)'),
           policies = overview.
             find('> .columns > .column:nth-of-type(3)').
             first(),
           barGraph = $('.content.bar.two').first(),
+          fourBar = $('.content.bar.four').first(),
           growthGraphs = $('.content.growth.two'),
           fivee = $('.content.two.fivee');
-        if (w.width() < 501) {
+        if (w.width() > 790 && w.width() < 991) {
+          var fourLabels = fourBar.find('> .labels').
+            clone();
+          var newLabels = fourBar.
+            find('> .visual:nth-of-type(4) > .labels').
+            first();
+          if (newLabels.length == 0) {
+            fourLabels.clone().prependTo(fourBar.
+              find('> .visual:nth-of-type(4)').first()
+            );
+          }
+        }
+        if (w.width() < 791) {
           var header = $('<div class="header"></div>').
             insertBefore(policies);
           overview.find('> .header > .right-header').
             first().appendTo(header);
           var barLabels = barGraph.find('> .labels').clone();
-          barLabels.prependTo(barGraph.
-            find('> .visual:nth-of-type(3)').first()
-          );
-          barLabels.clone().prependTo(barGraph.
-            find('> .visual:nth-of-type(4)').first()
-          );
-          barLabels.clone().prependTo(barGraph.
-            find('> .visual:nth-of-type(5)').first()
-          );
-          growthGraphs.each(function(i, n) {
-            var graph = $(n);
-            var growthLabels = graph.
-              find('> .labels').clone();
-            growthLabels.prependTo(graph.
+          var newLabels = barGraph.
+            find('> .visual:nth-of-type(3) > .labels').
+            first();
+          if (newLabels.length == 0) {
+            barLabels.prependTo(barGraph.
               find('> .visual:nth-of-type(3)').first()
             );
-          });
-          fivee.find('> .visual').first().
-            find('.square').appendTo(fivee);
-        } else {
+            barLabels.clone().prependTo(barGraph.
+              find('> .visual:nth-of-type(4)').first()
+            );
+            barLabels.clone().prependTo(barGraph.
+              find('> .visual:nth-of-type(5)').first()
+            );
+            growthGraphs.each(function(i, n) {
+              var graph = $(n);
+              var growthLabels = graph.
+                find('> .labels').clone();
+              growthLabels.prependTo(graph.
+                find('> .visual:nth-of-type(3)').first()
+              );
+            });
+            fivee.find('> .visual').first().
+              find('.square').appendTo(fivee);
+          }
+        }
+        if (w.width() > 790) {
           overview.
             find('> .columns > .header > .right-header').
             first().appendTo(
@@ -130,6 +163,9 @@
               first().remove();
             barGraph.
               find('> .visual:nth-of-type(5) > .labels').
+              first().remove();
+            fourBar.
+              find('> .visual:nth-of-type(4) > .labels').
               first().remove();
         }
       }
