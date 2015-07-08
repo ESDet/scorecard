@@ -32,7 +32,20 @@
 }
 
 @media only screen and (max-width: 990px) {
-  .stat-region > .content.two.bar > .visual { width: 45%; }
+  #performance .stat-region .content.four.bar {
+    & > .visual {
+      width: 40%;
+    }
+    & > .visual:nth-of-type(2),
+    & > .visual:nth-of-type(3) {
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }
+    & > .visual:nth-of-type(3) { margin-left: 13px; }
+  }
+}
+
+@media only screen and (max-width: 800px) {
 }
 
 @media only screen and (max-width: 500px) {

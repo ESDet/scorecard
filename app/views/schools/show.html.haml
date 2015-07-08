@@ -83,20 +83,6 @@
         }
       });
 
-      var adjustGraphs = function() {
-        if (w.width() < 990) {
-          $('.content.four.bar').
-            removeClass('four').
-            addClass('two');
-        } else {
-          $('.content.two.bar').
-            removeClass('two').
-            addClass('four');
-        }
-      };
-      adjustGraphs();
-      w.resize(function() { adjustGraphs(); });
-
       var moveText = function() {
         var overview = $('#overview > .middle > .section:nth-of-type(4)'),
           policies = overview.
