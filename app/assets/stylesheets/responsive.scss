@@ -73,8 +73,8 @@
     ul { text-align: left; }
     .twenty-five { margin-bottom: -10px; }
   }
-  .section > .columns > .column > .content .left,
-  .section > .columns > .column > .content .right {
+  .section > .columns.one > .column > .content .left,
+  .section > .columns.one > .column > .content .right {
     float: none;
     width: 100%;
   }
