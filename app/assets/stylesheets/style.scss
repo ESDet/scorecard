@@ -67,7 +67,10 @@ table td, table th { vertical-align: top; }
 h1 { color: $onyx; }
 .branding { text-align: left; }
 
-.home.middle { width: 60%; }
+.home.middle {
+  width: 60%;
+  .container_12.video { height: 500px; }
+}
 
 #search {
   display: inline-block;
@@ -746,7 +749,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     .pie-wrapper {
       display: inline-block;
       width: auto;
-      float: left;
       #pie { display: inline-block; }
       .legend {
         display: inline-block;
