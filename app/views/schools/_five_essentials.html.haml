@@ -5,32 +5,33 @@
   .square
     .text Did not participate
 .visual
-  .graph
-    .circle
-      .outer
-      .inner.fivee-category(data-num="#{ambitious_instruction}")
-        Ambitious Instruction
-    .top-left.fivee-category(data-num="#{effective_leaders}")
-      Effective Leaders
-    .top-right.fivee-category(data-num="#{collaborative_teachers}")
-      Collaborative Teachers
-    .bottom-left.fivee-category(data-num="#{supportive_environment}")
-      Supportive Environment
-    .bottom-right.fivee-category(data-num="#{involved_families}")
-      Involved Families
-  .legend
-    Very Strong
-    .key.green
-    .key.light-green
-    .key.yellow
-    .key.orange
-    .key.red
-    Very Weak
-    - if report_id
-      .link
-        %a(href="https://detroit.5-essentials.org/2015/s/#{report_id}" target="_blank")
-          See more results
-          .link-icon
+  .wrapper
+    .graph
+      .circle
+        .outer
+        .inner.fivee-category(data-num="#{ambitious_instruction}")
+          Ambitious Instruction
+      .top-left.fivee-category(data-num="#{effective_leaders}")
+        Effective Leaders
+      .top-right.fivee-category(data-num="#{collaborative_teachers}")
+        Collaborative Teachers
+      .bottom-left.fivee-category(data-num="#{supportive_environment}")
+        Supportive Environment
+      .bottom-right.fivee-category(data-num="#{involved_families}")
+        Involved Families
+    .legend
+      Very Strong
+      .key.green
+      .key.light-green
+      .key.yellow
+      .key.orange
+      .key.red
+      Very Weak
+      - if report_id
+        .link
+          %a(href="https://detroit.5-essentials.org/2015/s/#{report_id}" target="_blank")
+            See more results
+            .link-icon
 
 :javascript
   $(function() {
