@@ -38,7 +38,10 @@
       }
 
       if (schoolDiff > 50) { schoolDiff = 49; }
-      if (schoolNum < 10) { schoolNum = 0.5; }
+      if (schoolNum < 10) {
+        schoolNum = 0.5;
+        schoolDiff = 49.5;
+      }
       var schoolEl = graph.find('> .bar.school');
       schoolEl.find('> .number').
         css('width', schoolNum + '%').
@@ -65,7 +68,10 @@
       }
 
       if (detroitDiff > 50) { detroitDiff = 49; }
-      if (detroitNum < 10) { detroitNum = 0.5; }
+      if (detroitNum < 10) {
+        detroitNum = 0.5;
+        detroitDiff = 49.5;
+      }
       var detroitEl = graph.find('> .bar.detroit');
       detroitEl.find('> .number').
         css('width', detroitNum + '%').
