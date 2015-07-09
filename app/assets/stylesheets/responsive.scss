@@ -52,6 +52,15 @@
   }
 }
 
+@media only screen and (max-width: 960px) {
+  .schools-wrapper > .schools-map-wrapper {
+    float: none;
+    height: 250px;
+    width: 100%;
+  }
+  .schools-wrapper > .results { width: 100%; }
+}
+
 @media only screen and (max-width: 790px) {
   .home.middle { width: 90%; }
   .section > .columns > .column > .content .pie-wrapper {
@@ -179,4 +188,9 @@
       & > .compare { float: left; }
     }
   }
+}
+
+@media only screen and (max-width: 500px) {
+  .schools-wrapper > .schools-map-wrapper { display: none; }
+  .schools-wrapper > .results { height: 100%; }
 }
