@@ -743,20 +743,24 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
         display: inline-block;
       }
     }
-    #pie {
+    .pie-wrapper {
+      display: inline-block;
+      width: auto;
       float: left;
-    }
-    .legend {
-      float: right;
-      width: 62%;
-      .stat {
-        margin: 3px 0;
-        .race {
-          margin-top: 4px;
-          margin-right: 3px;
-          float: left;
-          width: 10px;
-          height: 10px;
+      #pie { display: inline-block; }
+      .legend {
+        display: inline-block;
+        margin-left: 10px;
+        width: 190px;
+        .stat {
+          margin: 3px 0;
+          .race {
+            margin-top: 4px;
+            margin-right: 3px;
+            float: left;
+            width: 10px;
+            height: 10px;
+          }
         }
       }
     }
