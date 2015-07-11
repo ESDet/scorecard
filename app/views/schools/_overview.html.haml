@@ -29,6 +29,10 @@
             %a.external{:href => school.school_url, :target => '_blank'} Visit
             this school's website
         .item
+          .download
+            %a(href="#{school_path(@school.link)}.pdf")
+              DOWNLOAD PDF
+        .item
           .compare(title="Coming Soon")
             COMPARE TO OTHER SCHOOLS
     .section.border-bottom

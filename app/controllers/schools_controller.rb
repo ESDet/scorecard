@@ -271,6 +271,13 @@ class SchoolsController < ApplicationController
         @state.extend(K8School)
       end
     end
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "#{@school.display_name}"
+      end
+    end
   end
 
 

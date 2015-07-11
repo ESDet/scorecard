@@ -28,5 +28,7 @@ gem 'sass-rails'
 gem 'stackprof'
 gem 'therubyracer'
 gem 'uglifier'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 gem 'rails_12factor', group: :production
