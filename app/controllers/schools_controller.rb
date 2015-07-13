@@ -275,7 +275,9 @@ class SchoolsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "#{@school.display_name}"
+        render pdf: @school.display_name,
+          template: 'schools/show.pdf.haml',
+          disposition: 'attachment'
       end
     end
   end
