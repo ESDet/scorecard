@@ -1459,3 +1459,26 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .section { padding: 15px 0 45px 0; }
 .stat-region .content { margin-top: 10px; }
 .stat-region .content.growth.two:nth-of-type(1) { margin-bottom: 20px; }
+.school-header { height: 220px; }
+.school-header .left {
+  float: left;
+  width: 70%;
+}
+.school-header .right {
+  float: right;
+  width: 30%;
+  height: 100%;
+  background-color: #fef4ce;
+}
+.school-header .school-title { width: 100%; }
+.school-header .grades-served {
+  width: 95%;
+  position: initial;
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.school-header .icon-text {
+  float: left;
+  margin-top: 20px;
+}

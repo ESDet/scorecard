@@ -9,11 +9,21 @@
     .container
       .container_12.info-region
         .school-header
-          .school-title
-            %h1= @school.display_name
-            - if @school.status != 'Mature' && @school.status != 'Suburban'
-              = @school.status
-          .grades-served= "Grades Served: #{@school.grades_served.first} - #{@school.grades_served.last}"
+          .left
+            .school-title
+              %h1= @school.display_name
+            .grades-served= "Grades Served: #{@school.grades_served.first} - #{@school.grades_served.last}"
+            .icon-text
+              .address-icon
+              = @school.street
+              = @school.council_district
+            .icon-text
+              .phone-icon
+              = @school.phone
+            .icon-text
+              .website-icon
+              = @school.school_url
+          .right
       .container_12.info-region
         #performance
           - if @school.high?
