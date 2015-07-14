@@ -277,7 +277,8 @@ class SchoolsController < ApplicationController
       format.pdf do
         render pdf: @school.display_name,
           template: 'schools/show.pdf.haml',
-          disposition: 'attachment'
+          disposition: params.fetch(:disposition) { 'attachment' },
+          show_as_html: (params.fetch(:debug) { "false" }) == "true"
       end
     end
   end
