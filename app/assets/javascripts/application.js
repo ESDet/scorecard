@@ -4,6 +4,9 @@
 //= require bootstrap
 //= require leaflet
 //= require map
+//= require bar_graph
+//= require two_bar_graph
+//= require three_bar_graph
 
 $(function() {
   var menu = $('.menu').first();
