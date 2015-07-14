@@ -4,7 +4,7 @@ $(function() {
         num = el.data('num');
     if (num != "") {
       num = parseFloat(num);
-      el.css('width', num + '%');
+      el.css('width', (num * 80.0 / 100.0) + '%');
     } else {
       el.css('width', '0px');
     }
