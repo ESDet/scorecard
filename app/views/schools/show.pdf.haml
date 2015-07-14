@@ -24,6 +24,26 @@
               .website-icon
               = @school.school_url
           .right
+            .section
+              .header How is this school ranked?
+              .columns
+                .column
+                  .title Excellent Schools Detroit
+                  .content
+                    - if @school.excellent_schools_grade.present?
+                      .rounded-square.green-background.auto-margin
+                        .grade
+                          = @school.excellent_schools_grade
+                        .small OVERALL GRADE
+                .column
+                  .title State
+                  .content
+                    - if @school.michigan_percentile.present?
+                      .rounded-square.light-cyan-background.auto-margin
+                        .big
+                          = @school.michigan_percentile
+                          .suffix th
+                        .small PERCENTILE OUT OF 100
       .container_12.info-region
         #performance
           - if @school.high?

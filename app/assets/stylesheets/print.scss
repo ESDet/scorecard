@@ -1462,11 +1462,11 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .school-header { height: 220px; }
 .school-header .left {
   float: left;
-  width: 70%;
+  width: 65%;
 }
 .school-header .right {
   float: right;
-  width: 30%;
+  width: 35%;
   height: 100%;
   background-color: #fef4ce;
 }
@@ -1481,4 +1481,15 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .school-header .icon-text {
   float: left;
   margin-top: 20px;
+}
+.school-header .section > .header {
+  font-size: 21px;
+}
+.school-header .section > .columns > .column {
+  width: 35%;
+  margin: 0 25px 0 25px;
+}
+.school-header .section > .columns > .column > .title {
+  height: 40px;
+  font-size: 15px;
 }
