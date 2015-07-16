@@ -44,6 +44,18 @@
                           = @school.michigan_percentile
                           .suffix th
                         .small PERCENTILE OUT OF 100
+              .governance
+                - if @school.governance.present?
+                  .header
+                    %span.key Governance:
+                    = @school.governance
+                - if @school.authorizer.present?
+                  %span Authorizer:
+                  = @school.authorizer
+                  %br
+                - if @school.operator.present?
+                  %span Operator:
+                  = @school.operator
       .container_12.info-region
         #performance
           - if @school.high?
