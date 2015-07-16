@@ -185,7 +185,8 @@
     & > .item {
       width: 100%;
       margin-bottom: 5px;
-      & > .compare { float: left; }
+      & > .btn { float: left; }
+      &:nth-of-type(5) .btn { float: left; }
     }
   }
   .home.middle .container_12.video { height: 400px; }

@@ -940,14 +940,13 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   & > .item {
     padding: 7px 0 0 18px;
     display: inline-block;
-    width: 25%;
+    width: 20%;
     white-space: nowrap;
     float: left;
     font-family: 'Lato Bold';
     font-size: 13px;
-    & > .compare {
+    & > .btn {
       width: 210px;
-      float: right;
       cursor: pointer;
       margin-top: -3px;
       padding: 3px 7px;
@@ -959,7 +958,13 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       & > a { color: white; }
     }
   }
-  & > .item:nth-of-type(4) { float: right; }
+  & > .item:nth-of-type(4) .btn {
+    width: 120px;
+  }
+  & > .item:nth-of-type(5) {
+    float: right;
+    .btn { float: right; }
+  }
 }
 
 .what-this-means {
