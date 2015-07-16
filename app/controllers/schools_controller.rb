@@ -278,7 +278,13 @@ class SchoolsController < ApplicationController
         render pdf: @school.display_name,
           template: 'schools/show.pdf.haml',
           disposition: params.fetch(:disposition) { 'attachment' },
-          show_as_html: (params.fetch(:debug) { "false" }) == "true"
+          show_as_html: (params.fetch(:debug) { "false" }) == "true",
+          footer: {
+            html: {
+              template: 'schools/pdf_footer.html.haml'
+            }
+          },
+          margin: { bottom: 30 }
       end
     end
   end
