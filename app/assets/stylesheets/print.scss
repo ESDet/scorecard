@@ -1485,6 +1485,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .school-header .section > .header {
   font-size: 21px;
 }
+.school-header .section > .columns {
+  margin-bottom: 0px;
+}
 .school-header .section > .columns > .column {
   width: 35%;
   margin: 0 25px 0 25px;
@@ -1492,4 +1495,19 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .school-header .section > .columns > .column > .title {
   height: 40px;
   font-size: 15px;
+}
+.rounded-square {
+  width: 70px;
+  height: 70px;
+}
+.rounded-square .grade {
+  font-size: 29px;
+}
+.rounded-square .big {
+  font-size: 31px;
+}
+.rounded-square .big .suffix {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
