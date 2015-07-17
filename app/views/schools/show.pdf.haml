@@ -151,9 +151,18 @@
               .float-left
                 .heading Hours
                 %span= @school.hours
+                = render 'field_list.html.haml', list: @school.before_after_care
               .float-right
                 .float-left
                   .heading Transportation
+                  = render 'field_list.html.haml', list: @school.transportation
+                .float-left
+                  %span.key Average Distance Traveled:
+                  = "#{@school.average_commute} miles"
+              - if @school.schedule.present?
+                .float-left.margin-top-20.clear-floats
+                  .heading Class Schedule
+                  = render 'field_list.html.haml', list: @school.schedule
             .demographics
               %h2 Demographics
               .heading Number of Students
