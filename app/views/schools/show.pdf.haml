@@ -142,10 +142,30 @@
                       school_average: @school.stay_in_college,
                       detroit_average: @detroit.stay_in_college,
                       state_average: @state.stay_in_college
-      %br
-      %br
-      %br
       .container_12.info-region
+        .secondary-school-header
+          .heading= @school.display_name
+          .school-info-wrapper
+            .school-info
+              %h2 School Information
+              .float-left
+                .heading Hours
+                %span= @school.hours
+              .float-right
+                .float-left
+                  .heading Transportation
+            .demographics
+              %h2 Demographics
+              .heading Number of Students
+              %span= @school.total_enrollment
+            .school-policies
+              %h2 School Policies
+              .float-left.margin-right-30
+                .heading Application Required
+              .float-left.margin-right-30
+                .heading Dress Code
+              .float-left.margin-right-30
+                .heading Bullying Policy
         - if @school.high?
           - if @school.has_academic_programs?
             .section

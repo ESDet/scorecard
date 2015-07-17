@@ -487,8 +487,8 @@ body.schools-index { height: 100%; }
 }
 
 
-.float_right { float: right; }
-.float_left { float: left; }
+.float-right { float: right; }
+.float-left { float: left; }
 .clear_floats { clear: both; }
 .justify { text-align: justify; }
 .centered { text-align: center; }
@@ -1456,7 +1456,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 .middle { width: 100%; }
 .stat-region h2 { letter-spacing: 0.9px; }
 .region-title h2 { letter-spacing: 0px; }
-.section { padding: 10px 0 10px 0; }
+.section { padding: 0px 0 29px 0; }
 .section .governance {
   display: inline-block;
   padding-left: 35px;
@@ -1495,6 +1495,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   float: left;
   margin-top: 20px;
 }
+.school-header > .right > .section {
+  padding-top: 10px;
+}
 .school-header .section .header {
   font-size: 21px;
 }
@@ -1524,3 +1527,47 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   top: 5px;
   right: 5px;
 }
+.secondary-school-header {
+  width: 100%;
+  display: inline-block;
+}
+.secondary-school-header > .heading {
+  background-color: $cyan;
+  padding: 10px 0 10px 0;
+  color: white;
+  text-align: center;
+  font-family: 'Aleo Bold';
+  font-size: 31px;
+}
+.secondary-school-header .school-info-wrapper {
+  padding: 0 20px 0 20px;
+  width: 100%;
+  display: inline-block;
+  background-color: #fef4cd;
+  h2 { color: $navy; }
+  .school-info,
+  .school-policies {
+    float: left;
+    width: 60%;
+    font-family: 'Aleo Bold';
+    display: inline-block;
+    padding-bottom: 30px;
+  }
+  .school-info { border-bottom: 1px solid $navy; }
+  .heading {
+    display: inline-block;
+    background-color: $cyan;
+    padding: 5px;
+    color: white;
+  }
+  .school-info > .float-left,
+  .school-info > .float-right { width: 50%; }
+  .demographics {
+    min-height: 200px;
+    padding-left: 20px;
+    width: 40%;
+    float: right;
+    border-left: 1px solid $navy;
+  }
+}
+.margin-right-30 { margin-right: 30px; }
