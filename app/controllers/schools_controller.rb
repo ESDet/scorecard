@@ -6,7 +6,9 @@ class SchoolsController < ApplicationController
       redirect_to root_path and return
     end
 
-    @loc = params[:loc] = params[:loc].strip.gsub("\u{a0}", "")
+    @loc = if params[:loc].present?
+      params[:loc].strip.gsub("\u{a0}", "")
+    end
     @grade = params[:grade]
     @filters = params[:filters] || []
 
