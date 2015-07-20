@@ -193,7 +193,9 @@
                   .heading Dress Code
                   = render 'yes_no.html.haml', value: @school.dress_code?
               .float-left.margin-right-30
-                .heading Bullying Policy
+                - if @school.bullying_policy?
+                  .heading Bullying Policy
+                  = render 'yes_no.html.haml', value: @school.bullying_policy?
         - if @school.high?
           - if @school.has_academic_programs?
             .section
