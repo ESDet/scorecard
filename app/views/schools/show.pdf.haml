@@ -189,7 +189,9 @@
                   .heading Application Required
                   = render 'yes_no.html.haml', value: @school.application_process?
               .float-left.margin-right-30
-                .heading Dress Code
+                - if @school.dress_code?
+                  .heading Dress Code
+                  = render 'yes_no.html.haml', value: @school.dress_code?
               .float-left.margin-right-30
                 .heading Bullying Policy
         - if @school.high?
