@@ -151,7 +151,7 @@
               .float-left
                 - if @school.hours.present?
                   .heading Hours
-                  %span.margin-bottom-10= @school.hours
+                  %span.margin-left-20.margin-bottom-10= @school.hours
                 .text.inline.margin-right-10
                   .wrapper
                     - if @school.before_after_care.include?("Before school care")
@@ -180,7 +180,7 @@
             .demographics
               %h2 Demographics
               .heading Number of Students
-              %span= @school.total_enrollment
+              %span.margin-left-20= @school.total_enrollment
             .school-policies
               %h2 School Policies
               .float-left.margin-right-30
