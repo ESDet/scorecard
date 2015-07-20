@@ -149,9 +149,23 @@
             .school-info
               %h2 School Information
               .float-left
-                .heading Hours
-                %span= @school.hours
-                = render 'field_list.html.haml', list: @school.before_after_care
+                - if @school.hours.present?
+                  .heading Hours
+                  %span.margin-bottom-10= @school.hours
+                .text.inline.margin-right-10
+                  .wrapper
+                    - if @school.before_after_care.include?("Before school care")
+                      .checked
+                    - else
+                      .unchecked
+                    Before school care
+                .text.inline
+                  .wrapper
+                    - if @school.before_after_care.include?("After school care")
+                      .checked
+                    - else
+                      .unchecked
+                    After school care
               .float-right
                 .float-left
                   .heading Transportation
