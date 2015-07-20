@@ -185,7 +185,9 @@
             .school-policies
               %h2 School Policies
               .float-left.margin-right-30
-                .heading Application Required
+                - if @school.application_process?
+                  .heading Application Required
+                  = render 'yes_no.html.haml', value: @school.application_process?
               .float-left.margin-right-30
                 .heading Dress Code
               .float-left.margin-right-30
