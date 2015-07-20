@@ -1175,26 +1175,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
         display: inline-block;
       }
     }
-    .pie-wrapper {
-      display: inline-block;
-      width: auto;
-      #pie { display: inline-block; }
-      .legend {
-        display: inline-block;
-        margin-left: 10px;
-        width: 190px;
-        .stat {
-          margin: 3px 0;
-          .race {
-            margin-top: 4px;
-            margin-right: 3px;
-            float: left;
-            width: 10px;
-            height: 10px;
-          }
-        }
-      }
-    }
     .left {
       float: left;
       width: 50%;
@@ -1213,6 +1193,27 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   .description {
     text-align: center;
     margin-top: 10px;
+  }
+}
+
+.pie-wrapper {
+  display: inline-block;
+  width: auto;
+  #pie { display: inline-block; }
+  .legend {
+    display: inline-block;
+    margin-left: 10px;
+    width: 190px;
+    .stat {
+      margin: 3px 0;
+      .race {
+        margin-top: 4px;
+        margin-right: 3px;
+        float: left;
+        width: 10px;
+        height: 10px;
+      }
+    }
   }
 }
 
@@ -1569,7 +1570,7 @@ ul {
   .school-policies {
     margin-top: 10px;
     float: left;
-    width: 70%;
+    width: 67%;
     display: inline-block;
     padding-bottom: 30px;
   }
@@ -1587,7 +1588,7 @@ ul {
     margin-top: 10px;
     height: 320px;
     padding-left: 20px;
-    width: 30%;
+    width: 33%;
     float: right;
     border-left: 1px solid $navy;
   }

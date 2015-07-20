@@ -1,0 +1,23 @@
+.pie-wrapper
+  #pie{ "data-aa": "#{school.african_american_enrollment || 0}", "data-a": "#{school.asian_enrollment || 0}", "data-h": "#{school.hispanic_enrollment || 0}", "data-w": "#{school.white_enrollment || 0}", "data-o": "#{school.other_enrollment || 0}" }
+  .legend
+    - if school.african_american_enrollment.present?
+      .stat
+        .race(style="background-color: #2e5b8c")
+        .text= "African American: #{school.african_american_enrollment}%"
+    - if school.asian_enrollment.present?
+      .stat
+        .race(style="background-color: #7cc45c")
+        .text= "Asian: #{school.asian_enrollment}%"
+    - if school.hispanic_enrollment.present?
+      .stat
+        .race(style="background-color: #2b9fc7")
+        .text= "Hispanic: #{school.hispanic_enrollment}%"
+    - if school.white_enrollment.present?
+      .stat
+        .race(style="background-color: #f8ae16")
+        .text= "White: #{school.white_enrollment}%"
+    - if school.other_enrollment.present?
+      .stat
+        .race(style="background-color: #ff690f")
+        .text= "Other: #{school.other_enrollment}%"
