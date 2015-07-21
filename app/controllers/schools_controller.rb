@@ -173,7 +173,7 @@ class SchoolsController < ApplicationController
       ExceptionNotifier.notify_exception(e)
       retries -= 1
       retry if retries > 0
-    rescue Net::ReadTimeout => e
+    rescue Net::ReadTimeout, Net::OpenTimeout => e
       flash[:notice] = "There was an error during " <<
       "the search and we are looking into the issue " <<
       "now. Please try again later."
@@ -217,11 +217,11 @@ class SchoolsController < ApplicationController
     retries = 2
     begin
       school_data = Portal.new.fetch(url)
-    rescue EOFError
+    rescue EOFError => e
       ExceptionNotifier.notify_exception(e)
       retries -= 1
       retry if retries > 0
-    rescue Net::ReadTimeout => e
+    rescue Net::ReadTimeout, Net::OpenTimeout => e
       flash[:notice] = "There was an error " <<
         "retrieving school data and we are looking " <<
         "into the issue now. Please try again later."

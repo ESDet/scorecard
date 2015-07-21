@@ -58,90 +58,140 @@
                   = @school.operator
       .container_12.info-region
         #performance
+          .middle
           - if @school.high?
-            .middle
-              .section.border-bottom
-                .stat-region
-                  %h2 Are students at this school ready for college?
-                  %h3 Average percent of students scoring at the college-ready level on ACT, 2013-14
-                  .content.four
-                    = render 'bar_graph.html.haml', title: 'English',
-                      school_average: @school.english_college_ready,
-                      detroit_average: @detroit.english_college_ready,
-                      state_average: @state.english_college_ready
-                    = render 'bar_graph.html.haml', title: 'Math',
-                      school_average: @school.math_college_ready,
-                      detroit_average: @detroit.math_college_ready,
-                      state_average: @state.math_college_ready
-                    = render 'bar_graph.html.haml', title: 'Reading',
-                      school_average: @school.reading_college_ready,
-                      detroit_average: @detroit.reading_college_ready,
-                      state_average: @state.reading_college_ready
-                    = render 'bar_graph.html.haml', title: 'Science',
-                      school_average: @school.science_college_ready,
-                      detroit_average: @detroit.science_college_ready,
-                      state_average: @state.science_college_ready
-              .section.border-bottom
-                .stat-region
-                  %h2 Did students at this school grow academically?
-                  %h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
-                  .content.growth.two
-                    .labels
-                      .label SCHOOL
-                      .label DETROIT
-                    = render 'two_bar_graph.html.haml', title: 'English',
-                      subject: 'english', scale: 10,
-                      school_growth: @school.english_growth,
-                      detroit_growth: @detroit.english_growth,
-                      zero_bar: 'PREDICTED SCORE'
-                    = render 'two_bar_graph.html.haml', title: 'Math',
-                      subject: 'math', scale: 10,
-                      school_growth: @school.math_growth,
-                      detroit_growth: @detroit.math_growth,
-                      zero_bar: 'PREDICTED SCORE'
-                  .content.growth.two
-                    .labels
-                      .label SCHOOL
-                      .label DETROIT
-                    = render 'two_bar_graph.html.haml', title: 'Reading',
-                      subject: 'reading', scale: 10,
-                      school_growth: @school.reading_growth,
-                      detroit_growth: @detroit.reading_growth,
-                      zero_bar: 'PREDICTED SCORE'
-                    = render 'two_bar_graph.html.haml', title: 'Science',
-                      subject: 'science', scale: 10,
-                      school_growth: @school.science_growth,
-                      detroit_growth: @detroit.science_growth,
-                      zero_bar: 'PREDICTED SCORE'
-              .section
-                .stat-region
-                  %h2 Do students at this school graduate high school, enroll in college and stay in college?
-                  %h3 Average percent of 9th graders who graduate in 4 and 5 years from high school, percent of graduates that enroll in college, and percent of enrollees that persist into a second year of college. Based on graduating classes 2011-14.
-                  .content.four.bar
-                    .labels
-                      .label SCHOOL
-                      .label DETROIT
-                      .label STATE
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Graduate in 4 Years',
-                      school_average: @school.graduate_in_four_years,
-                      detroit_average: @detroit.graduate_in_four_years,
-                      state_average: @state.graduate_in_four_years
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Graduate in 5 Years',
-                      school_average: @school.graduate_in_five_years,
-                      detroit_average: @detroit.graduate_in_five_years,
-                      state_average: @state.graduate_in_five_years
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Enroll in College',
-                      school_average: @school.enroll_in_college,
-                      detroit_average: @detroit.enroll_in_college,
-                      state_average: @state.enroll_in_college
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Stay in College',
-                      school_average: @school.stay_in_college,
-                      detroit_average: @detroit.stay_in_college,
-                      state_average: @state.stay_in_college
+            .section.border-bottom
+              .stat-region
+                %h2 Are students at this school ready for college?
+                %h3 Average percent of students scoring at the college-ready level on ACT, 2013-14
+                .content.four
+                  = render 'bar_graph.html.haml', title: 'English',
+                    school_average: @school.english_college_ready,
+                    detroit_average: @detroit.english_college_ready,
+                    state_average: @state.english_college_ready
+                  = render 'bar_graph.html.haml', title: 'Math',
+                    school_average: @school.math_college_ready,
+                    detroit_average: @detroit.math_college_ready,
+                    state_average: @state.math_college_ready
+                  = render 'bar_graph.html.haml', title: 'Reading',
+                    school_average: @school.reading_college_ready,
+                    detroit_average: @detroit.reading_college_ready,
+                    state_average: @state.reading_college_ready
+                  = render 'bar_graph.html.haml', title: 'Science',
+                    school_average: @school.science_college_ready,
+                    detroit_average: @detroit.science_college_ready,
+                    state_average: @state.science_college_ready
+            .section.border-bottom
+              .stat-region
+                %h2 Did students at this school grow academically?
+                %h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
+                .content.growth.two
+                  .labels
+                    .label SCHOOL
+                    .label DETROIT
+                  = render 'two_bar_graph.html.haml', title: 'English',
+                    subject: 'english', scale: 10,
+                    school_growth: @school.english_growth,
+                    detroit_growth: @detroit.english_growth,
+                    zero_bar: 'PREDICTED SCORE'
+                  = render 'two_bar_graph.html.haml', title: 'Math',
+                    subject: 'math', scale: 10,
+                    school_growth: @school.math_growth,
+                    detroit_growth: @detroit.math_growth,
+                    zero_bar: 'PREDICTED SCORE'
+                .content.growth.two
+                  .labels
+                    .label SCHOOL
+                    .label DETROIT
+                  = render 'two_bar_graph.html.haml', title: 'Reading',
+                    subject: 'reading', scale: 10,
+                    school_growth: @school.reading_growth,
+                    detroit_growth: @detroit.reading_growth,
+                    zero_bar: 'PREDICTED SCORE'
+                  = render 'two_bar_graph.html.haml', title: 'Science',
+                    subject: 'science', scale: 10,
+                    school_growth: @school.science_growth,
+                    detroit_growth: @detroit.science_growth,
+                    zero_bar: 'PREDICTED SCORE'
+            .section
+              .stat-region
+                %h2 Do students at this school graduate high school, enroll in college and stay in college?
+                %h3 Average percent of 9th graders who graduate in 4 and 5 years from high school, percent of graduates that enroll in college, and percent of enrollees that persist into a second year of college. Based on graduating classes 2011-14.
+                .content.four.bar
+                  .labels
+                    .label SCHOOL
+                    .label DETROIT
+                    .label STATE
+                  = render 'three_bar_graph.html.haml',
+                    title: 'Graduate in 4 Years',
+                    school_average: @school.graduate_in_four_years,
+                    detroit_average: @detroit.graduate_in_four_years,
+                    state_average: @state.graduate_in_four_years
+                  = render 'three_bar_graph.html.haml',
+                    title: 'Graduate in 5 Years',
+                    school_average: @school.graduate_in_five_years,
+                    detroit_average: @detroit.graduate_in_five_years,
+                    state_average: @state.graduate_in_five_years
+                  = render 'three_bar_graph.html.haml',
+                    title: 'Enroll in College',
+                    school_average: @school.enroll_in_college,
+                    detroit_average: @detroit.enroll_in_college,
+                    state_average: @state.enroll_in_college
+                  = render 'three_bar_graph.html.haml',
+                    title: 'Stay in College',
+                    school_average: @school.stay_in_college,
+                    detroit_average: @detroit.stay_in_college,
+                    state_average: @state.stay_in_college
+          - else
+            .stat-region.border-bottom
+              %h2 Are students on track and academically prepared?
+              %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
+              .content.four
+                = render 'bar_graph.html.haml', title: 'Math',
+                  school_average: @school.math_prepared,
+                  detroit_average: @detroit.math_prepared,
+                  state_average: @state.math_prepared
+                = render 'bar_graph.html.haml', title: 'Reading and Writing',
+                  school_average: @school.ela_prepared,
+                  detroit_average: @detroit.ela_prepared,
+                  state_average: @state.ela_prepared
+                = render 'bar_graph.html.haml', title: 'Science',
+                  school_average: @school.science_prepared,
+                  detroit_average: @detroit.science_prepared,
+                  state_average: @state.science_prepared
+                = render 'bar_graph.html.haml', title: 'Social Studies',
+                  school_average: @school.socstud_prepared,
+                  detroit_average: @detroit.socstud_prepared,
+                  state_average: @state.socstud_prepared
+            .stat-region.border-bottom
+              %h2 Did students at this school grow academically?
+              %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
+              .content.growth.two
+                .labels
+                  .label SCHOOL
+                  .label DETROIT
+                = render 'two_bar_graph.html.haml', title: 'Math',
+                  subject: 'math', scale: 20,
+                  school_growth: @school.math_growth,
+                  detroit_growth: @detroit.math_growth,
+                  zero_bar: 'STATE'
+                = render 'two_bar_graph.html.haml', title: 'Reading',
+                  subject: 'reading', scale: 20,
+                  school_growth: @school.reading_growth,
+                  detroit_growth: @detroit.reading_growth,
+                  zero_bar: 'STATE'
+            .stat-region.border-bottom
+              %h2 What do students and teachers think about this school?
+              %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+              .content.two.fivee
+                = render 'five_essentials.html.haml',
+                  overall_rating: @school.five_e_overall_rating,
+                  effective_leaders: @school.five_e_effective_leaders,
+                  collaborative_teachers: @school.five_e_collaborative_teachers,
+                  involved_families: @school.five_e_involved_families,
+                  supportive_environment: @school.five_e_supportive_environment,
+                  ambitious_instruction: @school.five_e_ambitious_instruction,
+                  report_id: @school.five_e_report_id
       .container_12.info-region
         .secondary-school-header
           .heading= @school.display_name
@@ -196,70 +246,78 @@
                 - if @school.bullying_policy?
                   .heading Bullying Policy
                   = render 'yes_no.html.haml', value: @school.bullying_policy?
-        - if @school.high?
-          - if @school.has_academic_programs?
-            .section.two-thirds
-              .header
-                .icon-text
-                  .star-icon
-                  Academic Programs
-              .columns.two
-                - if @school.academic_focus.present?
-                  .column
-                    .title Academic Focus
-                    .content.light-cyan-background
-                      = render 'field_list.html.haml',
-                        list: @school.academic_focus
-                - if @school.has_ell?
-                  .column
-                    .title English Language Learners
-                    .content.light-cyan-background
-                      - if @school.ell_level.present?
-                        %span.key Level:
-                        = @school.ell_level
-                        <br/>
-                        <br/>
-                      - if @school.ell_languages.present?
-                        %span.key Languages
-                        = render 'field_list.html.haml', list: @school.ell_languages
-                  = render 'column',
-                    title: 'Personalized Learning Options',
+        .section.two-thirds
+          .header
+            .icon-text
+              .star-icon
+              Academic Programs
+          .columns.two
+            - if @school.academic_focus.present?
+              .column
+                .title Academic Focus
+                .content
+                  = render 'field_list.html.haml',
+                    list: @school.academic_focus
+            - if @school.instructional_model.present?
+              .column
+                .title Personalized Learning Options
+                .content
+                  = render 'field_list.html.haml',
                     list: @school.instructional_model
-                - if @school.special_ed_level.present? || @school.special_ed_programs.present?
-                  .column
-                    .title Special Education
-                    .content.light-cyan-background
-                      - if @school.special_ed_level.present?
-                        %span.key Level:
-                        = @school.special_ed_level
-                        <br/>
-                        <br/>
-                      - if @school.special_ed_programs.present?
-                        %span.key Programs
-                        = render 'field_list.html.haml', list: @school.special_ed_programs
-            .section.one-third
-              .stat-region
-                %h2 What do students and teachers think about this school?
-                %h3 Rating on 5Essentials Student and Teacher Survey, 2015
-                .content.fivee
-                  .visual
-                    .title Overall Rating
-                    .graph(data-rating="#{@school.five_e_overall_rating || 0}")
-                      .text
-                  .visual
-                    .wrapper
-                      .graph
-                        .circle
-                          .outer
-                          .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
-                            Ambitious Instruction
-                        .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
-                          Effective Leaders
-                        .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
-                          Collaborative Teachers
-                        .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
-                          Supportive Environment
-                        .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
-                          Involved Families
-                    .square
-                      .text Did not participate
+            - if @school.has_ell?
+              .column
+                .title English Language Learners
+                .content
+                  - if @school.ell_level.present?
+                    %span.key Level:
+                    = @school.ell_level
+                    <br/>
+                    <br/>
+                  - if @school.ell_languages.present?
+                    %span.key Languages
+                    = render 'field_list.html.haml', list: @school.ell_languages
+            - if @school.parent_involvement.present?
+              .column
+                .title Parent Involvement
+                .content
+                  = render 'field_list.html.haml',
+                    list: @school.parent_involvement
+            - if @school.special_ed_level.present? || @school.special_ed_programs.present?
+              .column
+                .title Special Education
+                .content
+                  - if @school.special_ed_level.present?
+                    %span.key Level:
+                    = @school.special_ed_level
+                    <br/>
+                    <br/>
+                  - if @school.special_ed_programs.present?
+                    %span.key Programs
+                    = render 'field_list.html.haml', list: @school.special_ed_programs
+        - if @school.high?
+          .section.one-third
+            .stat-region
+              %h2 What do students and teachers think about this school?
+              %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+              .content.fivee
+                .visual
+                  .title Overall Rating
+                  .graph(data-rating="#{@school.five_e_overall_rating || 0}")
+                    .text
+                .visual
+                  .wrapper
+                    .graph
+                      .circle
+                        .outer
+                        .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
+                          Ambitious Instruction
+                      .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
+                        Effective Leaders
+                      .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
+                        Collaborative Teachers
+                      .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
+                        Supportive Environment
+                      .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
+                        Involved Families
+                  .square
+                    .text Did not participate
