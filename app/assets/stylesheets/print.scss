@@ -1602,7 +1602,7 @@ ul {
   float: right;
   width: 32%;
 }
-.section > .columns { width: initial; }
+.section > .columns.two { width: 100%; }
 .section.one-third .stat-region h2,
 .section.one-third .stat-region h3 {
   padding: 0 20px 0 20px;
