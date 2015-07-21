@@ -184,14 +184,35 @@
               %h2 What do students and teachers think about this school?
               %h3 Rating on 5Essentials Student and Teacher Survey, 2015
               .content.two.fivee
-                = render 'five_essentials.html.haml',
-                  overall_rating: @school.five_e_overall_rating,
-                  effective_leaders: @school.five_e_effective_leaders,
-                  collaborative_teachers: @school.five_e_collaborative_teachers,
-                  involved_families: @school.five_e_involved_families,
-                  supportive_environment: @school.five_e_supportive_environment,
-                  ambitious_instruction: @school.five_e_ambitious_instruction,
-                  report_id: @school.five_e_report_id
+                .visual
+                  .title Overall Rating
+                  .graph(data-rating="#{@school.five_e_overall_rating}")
+                    .text
+                  .square
+                    .text Did not participate
+                .visual
+                  .wrapper
+                    .graph
+                      .circle
+                        .outer
+                        .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
+                          Ambitious Instruction
+                      .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
+                        Effective Leaders
+                      .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
+                        Collaborative Teachers
+                      .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
+                        Supportive Environment
+                      .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
+                        Involved Families
+                    .legend
+                      Very Strong
+                      .key.green
+                      .key.light-green
+                      .key.yellow
+                      .key.orange
+                      .key.red
+                      Very Weak
       .container_12.info-region
         .secondary-school-header
           .heading= @school.display_name
