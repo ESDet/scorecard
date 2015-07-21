@@ -8,6 +8,7 @@
 //= require two_bar_graph
 //= require three_bar_graph
 //= require pie
+//= require five_essentials
 
 $(function() {
   var menu = $('.menu').first();

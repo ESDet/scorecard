@@ -198,7 +198,7 @@
                   = render 'yes_no.html.haml', value: @school.bullying_policy?
         - if @school.high?
           - if @school.has_academic_programs?
-            .section
+            .section.two-thirds
               .header
                 .icon-text
                   .star-icon
@@ -237,3 +237,29 @@
                       - if @school.special_ed_programs.present?
                         %span.key Programs
                         = render 'field_list.html.haml', list: @school.special_ed_programs
+            .section.one-third
+              .stat-region
+                %h2 What do students and teachers think about this school?
+                %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+                .content.fivee
+                  .visual
+                    .title Overall Rating
+                    .graph(data-rating="#{@school.five_e_overall_rating || 0}")
+                      .text
+                  .visual
+                    .wrapper
+                      .graph
+                        .circle
+                          .outer
+                          .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
+                            Ambitious Instruction
+                        .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
+                          Effective Leaders
+                        .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
+                          Collaborative Teachers
+                        .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
+                          Supportive Environment
+                        .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
+                          Involved Families
+                    .square
+                      .text Did not participate

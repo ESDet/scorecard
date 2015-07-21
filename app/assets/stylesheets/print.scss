@@ -239,7 +239,7 @@
 
   }
 
-  .content.two.fivee {
+  .fivee {
     & > .visual {
       width: 48%;
       margin-right: 0px;
@@ -485,7 +485,6 @@ body.schools-index { height: 100%; }
   font-size: 40px;
   font-family: 'Aleo Regular';
 }
-
 
 .float-right { float: right; }
 .float-left { float: left; }
@@ -1597,4 +1596,37 @@ ul {
 .right .section .column .content:not(:nth-of-type(1)) {
   margin-bottom: 0px;
   padding-bottom: 0px;
+}
+.two-thirds { width: 66%; }
+.one-third {
+  float: right;
+  width: 32%;
+}
+.section > .columns { width: initial; }
+.section.one-third .stat-region h2,
+.section.one-third .stat-region h3 {
+  padding: 0 20px 0 20px;
+}
+.stat-region .content.fivee {
+  > .visual,
+  > .visual:nth-of-type(2) {
+    margin-left: 0px;
+    width: 100%;
+    & > .title,
+    & > .graph {
+      margin-left: auto;
+      margin-right: auto;
+      float: none;
+      width: 80%;
+    }
+  }
+  > .visual > .wrapper {
+    margin-top: 10px;
+    float: none;
+  }
+  > .visual > .square {
+    float: none;
+    margin-top: 10px;
+    margin-left: 90px;
+  }
 }
