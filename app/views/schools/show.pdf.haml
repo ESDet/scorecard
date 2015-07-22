@@ -143,76 +143,79 @@
                       detroit_average: @detroit.stay_in_college,
                       state_average: @state.stay_in_college
             - else
-              .stat-region.border-bottom
-                %h2 Are students on track and academically prepared?
-                %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
-                .content.four
-                  = render 'bar_graph.html.haml', title: 'Math',
-                    school_average: @school.math_prepared,
-                    detroit_average: @detroit.math_prepared,
-                    state_average: @state.math_prepared
-                  = render 'bar_graph.html.haml', title: 'Reading and Writing',
-                    school_average: @school.ela_prepared,
-                    detroit_average: @detroit.ela_prepared,
-                    state_average: @state.ela_prepared
-                  = render 'bar_graph.html.haml', title: 'Science',
-                    school_average: @school.science_prepared,
-                    detroit_average: @detroit.science_prepared,
-                    state_average: @state.science_prepared
-                  = render 'bar_graph.html.haml', title: 'Social Studies',
-                    school_average: @school.socstud_prepared,
-                    detroit_average: @detroit.socstud_prepared,
-                    state_average: @state.socstud_prepared
-              .stat-region.border-bottom
-                %h2 Did students at this school grow academically?
-                %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
-                .content.growth.two
-                  .labels
-                    .label SCHOOL
-                    .label DETROIT
-                  = render 'two_bar_graph.html.haml', title: 'Math',
-                    subject: 'math', scale: 20,
-                    school_growth: @school.math_growth,
-                    detroit_growth: @detroit.math_growth,
-                    zero_bar: 'STATE'
-                  = render 'two_bar_graph.html.haml', title: 'Reading',
-                    subject: 'reading', scale: 20,
-                    school_growth: @school.reading_growth,
-                    detroit_growth: @detroit.reading_growth,
-                    zero_bar: 'STATE'
-              .stat-region.border-bottom
-                %h2 What do students and teachers think about this school?
-                %h3 Rating on 5Essentials Student and Teacher Survey, 2015
-                .content.two.fivee
-                  .visual
-                    .title Overall Rating
-                    .graph(data-rating="#{@school.five_e_overall_rating}")
-                      .text
-                    .square
-                      .text Did not participate
-                  .visual
-                    .wrapper
-                      .graph
-                        .circle
-                          .outer
-                          .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
-                            Ambitious Instruction
-                        .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
-                          Effective Leaders
-                        .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
-                          Collaborative Teachers
-                        .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
-                          Supportive Environment
-                        .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
-                          Involved Families
-                      .legend
-                        Very Strong
-                        .key.green
-                        .key.light-green
-                        .key.yellow
-                        .key.orange
-                        .key.red
-                        Very Weak
+              .section.border-bottom
+                .stat-region.k8
+                  %h2 Are students on track and academically prepared?
+                  %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
+                  .content.four
+                    = render 'bar_graph.html.haml', title: 'Math',
+                      school_average: @school.math_prepared,
+                      detroit_average: @detroit.math_prepared,
+                      state_average: @state.math_prepared
+                    = render 'bar_graph.html.haml', title: 'Reading and Writing',
+                      school_average: @school.ela_prepared,
+                      detroit_average: @detroit.ela_prepared,
+                      state_average: @state.ela_prepared
+                    = render 'bar_graph.html.haml', title: 'Science',
+                      school_average: @school.science_prepared,
+                      detroit_average: @detroit.science_prepared,
+                      state_average: @state.science_prepared
+                    = render 'bar_graph.html.haml', title: 'Social Studies',
+                      school_average: @school.socstud_prepared,
+                      detroit_average: @detroit.socstud_prepared,
+                      state_average: @state.socstud_prepared
+              .section.border-bottom
+                .stat-region.k8
+                  %h2 Did students at this school grow academically?
+                  %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
+                  .content.growth.two
+                    .labels
+                      .label SCHOOL
+                      .label DETROIT
+                    = render 'two_bar_graph.html.haml', title: 'Math',
+                      subject: 'math', scale: 20,
+                      school_growth: @school.math_growth,
+                      detroit_growth: @detroit.math_growth,
+                      zero_bar: 'STATE'
+                    = render 'two_bar_graph.html.haml', title: 'Reading',
+                      subject: 'reading', scale: 20,
+                      school_growth: @school.reading_growth,
+                      detroit_growth: @detroit.reading_growth,
+                      zero_bar: 'STATE'
+              .section
+                .stat-region.k8
+                  %h2 What do students and teachers think about this school?
+                  %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+                  .content.two.fivee
+                    .visual
+                      .title Overall Rating
+                      .graph(data-rating="#{@school.five_e_overall_rating}")
+                        .text
+                      .square
+                        .text Did not participate
+                    .visual
+                      .wrapper
+                        .graph
+                          .circle
+                            .outer
+                            .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
+                              Ambitious Instruction
+                          .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
+                            Effective Leaders
+                          .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
+                            Collaborative Teachers
+                          .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
+                            Supportive Environment
+                          .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
+                            Involved Families
+                        .legend
+                          Very Strong
+                          .key.green
+                          .key.light-green
+                          .key.yellow
+                          .key.orange
+                          .key.red
+                          Very Weak
       .container_12.info-region
         .secondary-school-header
           .heading= @school.display_name
