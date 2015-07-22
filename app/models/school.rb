@@ -336,17 +336,17 @@ module School
 
   def free_reduced_lunch
     n = meap_2014s.andand.ECONOMIC_DISADVANTAGED_ENROLLMENT
-    percentage_of_total_enrollment(n) if n != 9
+    percentage_of_total_enrollment(n) if n && n != 9
   end
 
   def english_learner
     n = meap_2014s.andand.ENGLISH_LANGUAGE_LEARNERS_ENROLLMENT
-    percentage_of_total_enrollment(n) if n != 9
+    percentage_of_total_enrollment(n) if n && n != 9
   end
 
   def special_education
     n = meap_2014s.andand.SPECIAL_EDUCATION_ENROLLMENT
-    percentage_of_total_enrollment(n) if n != 9
+    percentage_of_total_enrollment(n) if n && n != 9
   end
 
   def schedule

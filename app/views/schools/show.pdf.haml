@@ -259,6 +259,16 @@
                 .heading Number of Students
                 %span.margin-left-20= @school.total_enrollment
                 = render 'pie.html.haml', school: @school
+                .other-stats
+                  - if @school.free_reduced_lunch.present?
+                    .text
+                      Free and reduced-price lunch: #{@school.free_reduced_lunch}%
+                  - if @school.english_learner.present?
+                    .text
+                      English language learner: #{@school.english_learner}%
+                  - if @school.special_education.present?
+                    .text
+                      Special Education: #{@school.special_education}%
               .school-policies
                 %h2 School Policies
                 .float-left.margin-right-30
