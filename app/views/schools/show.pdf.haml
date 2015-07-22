@@ -241,16 +241,18 @@
                       .unchecked
                     After school care
               .float-right
-                .float-left
-                  .heading Transportation
-                  = render 'field_list.html.haml', list: @school.transportation
+                - if @school.transportation.present?
+                  .float-left
+                    .heading Transportation
+                    = render 'field_list.html.haml',
+                      list: @school.transportation[0..5]
                 .float-left
                   %span.key Average Distance Traveled:
                   = "#{@school.average_commute} miles"
               - if @school.schedule.present?
                 .float-left.margin-top-20.clear-floats
                   .heading Class Schedule
-                  = render 'field_list.html.haml', list: @school.schedule
+                  = render 'field_list.html.haml', list: @school.schedule[0..5]
             .demographics
               %h2 Demographics
               .heading Number of Students
@@ -282,13 +284,13 @@
                 .title Academic Focus
                 .content
                   = render 'field_list.html.haml',
-                    list: @school.academic_focus
+                    list: @school.academic_focus[0..5]
             - if @school.instructional_model.present?
               .column
                 .title Personalized Learning Options
                 .content
                   = render 'field_list.html.haml',
-                    list: @school.instructional_model
+                    list: @school.instructional_model[0..5]
             - if @school.has_ell?
               .column
                 .title English Language Learners
@@ -300,13 +302,14 @@
                     <br/>
                   - if @school.ell_languages.present?
                     %span.key Languages
-                    = render 'field_list.html.haml', list: @school.ell_languages
+                    = render 'field_list.html.haml',
+                      list: @school.ell_languages[0..5]
             - if @school.parent_involvement.present?
               .column
                 .title Parent Involvement
                 .content
                   = render 'field_list.html.haml',
-                    list: @school.parent_involvement
+                    list: @school.parent_involvement[0..5]
             - if @school.special_ed_level.present? || @school.special_ed_programs.present?
               .column
                 .title Special Education
@@ -318,7 +321,8 @@
                     <br/>
                   - if @school.special_ed_programs.present?
                     %span.key Programs
-                    = render 'field_list.html.haml', list: @school.special_ed_programs
+                    = render 'field_list.html.haml',
+                      list: @school.special_ed_programs[0..5]
           - if @school.has_sports? || @school.has_clubs?
             .header.margin-top-10
               .icon-text
@@ -330,9 +334,11 @@
                 .column
                   .title Sports
                   .content
+                    To see list, go to scorecard.excellentschoolsdetroit.org
                 .column
                   .title Clubs
                   .content
+                    To see list, go to scorecard.excellentschoolsdetroit.org
         .section.one-third
           - if @school.high?
             .stat-region
@@ -371,10 +377,10 @@
                   .title Boy Sports
                   .content
                     = render 'field_list.html.haml',
-                      list: @school.boys_sports
+                      list: @school.boys_sports[0..5]
               .columns.one
                 .column
                   .title Girls Sports
                   .content
                     = render 'field_list.html.haml',
-                      list: @school.girls_sports
+                      list: @school.girls_sports[0..5]
