@@ -87,9 +87,10 @@ module School
 
   def has_academic_programs?
     academic_focus.present? ||
-      has_ell? || instructional_model.present?
-      special_ed_level.present? ||
-      special_ed_programs.present?
+    has_ell? ||
+    instructional_model.present? ||
+    special_ed_level.present? ||
+    special_ed_programs.present?
   end
 
   def academic_focus
@@ -177,7 +178,7 @@ module School
 
   def has_support?
     extra_learning_resources.present? ||
-      staff_resources.present?
+    staff_resources.present?
   end
 
   def extra_learning_resources
@@ -214,8 +215,8 @@ module School
 
   def has_other_student_clubs?
     student_clubs_dance.present? ||
-      student_clubs_language.present? ||
-      student_clubs_other.present?
+    student_clubs_language.present? ||
+    student_clubs_other.present?
   end
 
   def student_clubs
