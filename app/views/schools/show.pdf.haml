@@ -271,10 +271,11 @@
                   .heading Bullying Policy
                   = render 'yes_no.html.haml', value: @school.bullying_policy?
         .section.two-thirds
-          .header
-            .icon-text
-              .star-icon
-              Academic Programs
+          - if @school.has_academic_programs?
+            .header.margin-top-10
+              .icon-text
+                .star-icon
+                Academic Programs
           .columns.two
             - if @school.academic_focus.present?
               .column
@@ -318,8 +319,22 @@
                   - if @school.special_ed_programs.present?
                     %span.key Programs
                     = render 'field_list.html.haml', list: @school.special_ed_programs
-        - if @school.high?
-          .section.one-third
+          - if @school.has_sports? || @school.has_clubs?
+            .header.margin-top-10
+              .icon-text
+                .star-icon
+                .inline.float-left Extracurricular Activities
+                .clubs-icon.inline.float-right.margin-left-10
+            - if @school.has_sports?
+              .columns.two
+                .column
+                  .title Sports
+                  .content
+                .column
+                  .title Clubs
+                  .content
+        .section.one-third
+          - if @school.high?
             .stat-region
               %h2 What do students and teachers think about this school?
               %h3 Rating on 5Essentials Student and Teacher Survey, 2015
@@ -345,3 +360,21 @@
                         Involved Families
                   .square
                     .text Did not participate
+          - else
+            - if @school.has_sports?
+              .header.margin-top-10
+                .icon-text
+                  .sports-icon
+                  Sports
+              .columns.one
+                .column
+                  .title Boy Sports
+                  .content
+                    = render 'field_list.html.haml',
+                      list: @school.boys_sports
+              .columns.one
+                .column
+                  .title Girls Sports
+                  .content
+                    = render 'field_list.html.haml',
+                      list: @school.girls_sports
