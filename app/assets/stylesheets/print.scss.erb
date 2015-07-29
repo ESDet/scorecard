@@ -1441,9 +1441,7 @@ ul {
   }
 }
 
-.two-column {
-  width: 65%;
-}
+.two-column { width: 65%; }
 
 .overview-text {
   padding: 20px 15px 0 15px;
@@ -1513,16 +1511,14 @@ ul {
 .school-header .icon-text {
   float: left;
   margin-top: 20px;
+  margin-right: 15px;
 }
-.school-header > .right > .section {
-  padding-top: 10px;
+.school-header .icon-text:nth-of-type(3) {
+  margin-left: 10px;
 }
-.school-header .section .header {
-  font-size: 21px;
-}
-.school-header .section > .columns {
-  margin-bottom: 0px;
-}
+.school-header > .right > .section { padding-top: 10px; }
+.school-header .section .header { font-size: 21px; }
+.school-header .section > .columns { margin-bottom: 0px; }
 .school-header .section > .columns > .column {
   width: 35%;
   margin: 0 25px 0 25px;
@@ -1535,12 +1531,8 @@ ul {
   width: 70px;
   height: 70px;
 }
-.rounded-square .grade {
-  font-size: 29px;
-}
-.rounded-square .big {
-  font-size: 31px;
-}
+.rounded-square .grade { font-size: 29px; }
+.rounded-square .big { font-size: 31px; }
 .rounded-square .big .suffix {
   position: absolute;
   top: 5px;
@@ -1641,9 +1633,7 @@ ul {
   margin: 20px 0 20px 0;
   padding: 10px 0 10px 0;
 }
-.middle > .section:nth-of-type(3) {
-  padding-bottom: 0px;
-}
+.middle > .section:nth-of-type(3) { padding-bottom: 0px; }
 .star-icon {
   float: left;
   width: 25px;
@@ -1670,4 +1660,34 @@ ul {
   background-image: url(<%= Rails.root.join('app','assets','images','school_icons.png').to_s %>);
   background-repeat: no-repeat;
   background-position: -1px -232px;
+}
+.address-icon {
+  float: left;
+  width: 15px;
+  height: 23px;
+  margin-right: 5px;
+  margin-top: 2px;
+  background-image: url(<%= Rails.root.join('app','assets','images','pdf_icons.png').to_s %>);
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+}
+.phone-icon {
+  float: left;
+  width: 15px;
+  height: 23px;
+  margin-right: 5px;
+  margin-top: 3px;
+  background-image: url(<%= Rails.root.join('app','assets','images','pdf_icons.png').to_s %>);
+  background-repeat: no-repeat;
+  background-position: -40px 0px;
+}
+.website-icon {
+  float: left;
+  width: 15px;
+  height: 23px;
+  margin-right: 5px;
+  margin-top: 2px;
+  background-image: url(<%= Rails.root.join('app','assets','images','pdf_icons.png').to_s %>);
+  background-repeat: no-repeat;
+  background-position: -73px 0px;
 }
