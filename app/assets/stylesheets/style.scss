@@ -950,7 +950,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       cursor: pointer;
       margin-top: -3px;
       padding: 3px 7px;
-      background: $yellow;
+      background-color: $yellow;
       -webkit-border-radius: 9px;
       -moz-border-radius: 9px;
       border-radius: 9px;
@@ -959,6 +959,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     }
   }
   & > .item:nth-of-type(4) .btn {
+    background-color: $navy;
     width: 120px;
   }
   & > .item:nth-of-type(5) {
