@@ -116,7 +116,7 @@
   float: left;
   height: 18px;
   width: 23px;
-  margin: 13px 15px 0 0;
+  margin: 4px 15px 0 0;
   background-image: url(/assets/icons/png/arrow_left.png);
   background-repeat: no-repeat;
 }
@@ -130,4 +130,47 @@
   background-image: url(/assets/icons/png/facebook.png);
   background-repeat: no-repeat;
   background-size: 101%;
+}
+
+.print-icon {
+  float: left;
+  margin-top: 15px;
+  margin-right: 20px;
+  width: 20px;
+  height: 20px;
+  background-image: url(/assets/icons/png/print.png);
+  background-repeat: no-repeat;
+  background-size: 101%;
+}
+
+.download{
+  display: inline-block;
+  width: 1.500em;
+  height: 0.500em;
+  border: 0.250em solid #aeaeae;
+  border-top: none;
+  bottom: 0.188em;
+  position: relative;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+.download:before{
+  content: '';
+  position: absolute;
+  width: 0.438em;
+  height: 0.625em;
+  background: #aeaeae;
+  top: -0.875em;
+  left: 5px;
+}
+.download:after{
+  width: 0em;
+  height: 0em;
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-color: #aeaeae transparent transparent transparent;
+  border-width: 0.500em;
+  left: 1px;
+  top: -0.250em;
 }
