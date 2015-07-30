@@ -3,8 +3,11 @@
     .middle
       .breadcrumbs
         %a.back-arrow-icon(href="#")
-    %h2= @school.display_name
-  .container_12.clear_floats.region-title(data-target="overview")
+        %h2= @school.display_name
+      .float-right(style="width:100px")
+        .print-icon
+        .download
+  .container_12.clear-floats.region-title(data-target="overview")
     %h2 OVERVIEW
   .container_12.info-region
     = render 'overview', school: @school
