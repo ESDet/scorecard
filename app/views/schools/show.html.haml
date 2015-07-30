@@ -5,7 +5,7 @@
         %a.back-arrow-icon(href="#")
         %h2= @school.display_name
       .float-right(style="width:100px")
-        .print-icon
+        %a.print-icon(id="print" target="_blank" href="#{@school.link}.pdf?disposition=inline")
         %a.download(id="download" href="#{@school.link}.pdf")
   .container_12.clear-floats.region-title(data-target="overview")
     %h2 OVERVIEW
