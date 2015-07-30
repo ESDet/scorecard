@@ -23,7 +23,7 @@
             .grade.sub3 #{grade[:total].blank? ? '?' : grade[:total]} / #{grade[:possible].blank? ? '?' : grade[:possible]} pts
           .subscore_wrapper
             = render 'shared/subscores', :scores => grade[:summary_table], :section => section
-            
+
         - if tabs.include? :details
           .tab-pane{id: "#{key}-details"}
             %h2.printonly Details
@@ -35,7 +35,7 @@
                 %p Percentage of students in each grade who are proficient in Math and Reading.
               - grade[:details].each do |k,v|
                 .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='##{key}-details']" }
-                
+
             - elsif section == :climate
               - if grade[:details].empty?
                 %p Sorry, we currently have no 5Essentials data to show for this school.
@@ -48,7 +48,7 @@
                   - grade[:details].delete 'Response rate on teacher survey'
                   - grade[:details].each do |label,val|
                     = render 'shared/fivee', :label => label, :val => val
-            
+
         - if tabs.include? :history
           .tab-pane{id: "#{key}-history"}
             %h2.printonly History
@@ -60,5 +60,5 @@
               %p These charts show the percentage of students proficient in reading and math over the last four years.
             - grade[:history].each do |g,subjects|
               .history{:id => "#{key}_history_#{g}", 'data-grade' => g, 'data-scores' => subjects.to_json, 'data-tab' => "a[href='##{key}-history']" }
-          
-        .clear_floats
+
+        .clear-floats

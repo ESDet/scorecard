@@ -8,13 +8,13 @@
         %li= link_to 'Clear selection', '#'
         - menu[:options].each do |label, key, val|
           %li= link_to label, '#', 'data-key' => (key.is_a?(String) ? key : key.join(',')), 'data-value' => (val.is_a?(String) ? val : val.join(','))
-  
+
   = form_tag '/schools', { :method => :post, :class => 'char-form' } do
     = hidden_field_tag :filter, nil
     = hidden_field_tag :complex, nil
     = text_field_tag :loc, params[:loc], :placeholder => 'Enter your address or 5 digit zip code'
-    %a#char-search.btn.search.clear_floats{:href => '#'} Search &gt;
-  
+    %a#char-search.btn.search.clear-floats{:href => '#'} Search &gt;
+
   :javascript
     $(document).ready(function(e) {
       $('.fourplex .dropdown-menu li a').click(function(e) {
@@ -23,7 +23,7 @@
         var key = $(this).data('key'), value = $(this).data('value');
 
         var lastKey = trigger.data('last-key');
-        if(lastKey) {        
+        if(lastKey) {
           delete charFilters[lastKey];
         }
 

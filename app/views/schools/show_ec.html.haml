@@ -37,9 +37,9 @@
       height: auto;
       max-width: 100%;
     }
-    .float_right { float: right; }
-    .float_left { float: left; }
-    .clear_floats { clear: both; }
+    .float-right { float: right; }
+    .float-left { float: left; }
+    .clear-floats { clear: both; }
     .justify { text-align: justify; }
     .centered { text-align: center; }
     .hide { display: none; }
@@ -1761,7 +1761,7 @@
 
       #ground-wrapper
         #ground
-        .container_12.clear_floats.details.earlychild
+        .container_12.clear-floats.details.earlychild
           %ul.nav.nav-tabs
             %li{:class => 'active'}
               %a{:href => '#overview', 'data-toggle' => 'tab'}
@@ -1867,28 +1867,28 @@
                     %h3.statement Cultural Awareness
                     .explanation.arial The rating is based on how well teachers showed respect to all children regardless of race, culture and ability.
 
-                  %div.clear_floats
+                  %div.clear-floats
                     %h3.score
                       %span.points= @school.community_professionalism_fair_average.round(1)
                       %span / 4.0
                     %h3.statement Professionalism
                     .explanation.arial The rating is based on how teachers and staff behave and treat each other while in the room with children.
 
-                  %div.clear_floats
+                  %div.clear-floats
                     %h3.score
                       %span.points= @school.community_safety_fair_average.round(1)
                       %span / 4.0
                     %h3.statement Program Environment
                     .explanation.arial This rating is based on the conditions of the classroom.
 
-                  %div.clear_floats
+                  %div.clear-floats
                     %h3.score
                       %span.points= @school.community_interactions_fair_average.round(1)
                       %span / 4.0
                     %h3.statement Relationships & Interactions
                     .explanation.arial The rating is based on how well teachers manage the classroom.
 
-                  %div.clear_floats
+                  %div.clear-floats
                     %h3.score
                       %span.points= @school.community_family_fair_average.round(1)
                       %span / 4.0
@@ -1979,25 +1979,25 @@
                       %span / 5.0
                     %h3.statement Program Environment
                     .explanation.arial Program Environment is  the overall feel for all persons, including children, families, and staff, in the program environment. It measures the “it” factor that is often hard to define,  but is necessary for any learning to begin. It measures attributes like an inviting and safe place for children as well as a supportive place for staff to work. It make children, family, and staff feel welcome and respected regardless of differences.
-                  %div.clear_floats
+                  %div.clear-floats
                     %h3.score
                       %span.points= @school.staff_family_community_average.to_f.round(1)
                       %span / 5.0
                     %h3.statement Collaboration
                     .explanation.arial Family and Community Partnerships is the extent to which programs facilitate relationships between families in their program and the community. It includes the extent in which programs invite parents to bring what they know from the community to the program while also building connections to other families and resources in the community.
-                  %div.clear_floats
+                  %div.clear-floats
                     %h3.score
                       %span.points= @school.staff_cultural_linguistic_average.to_f.round(1)
                       %span / 5.0
                     %h3.statement Cultural Awareness
                     .explanation.arial Cultural and Linguistic Competence is the extent to which a program understands and implements cultural and linguistic practice. This includes programs that provide staff with opportunities to learn more about their own backgrounds, teachers who learn more about practices and materials for parents in their home language.
-                  %div.clear_floats
+                  %div.clear-floats
                     %h3.score
                       %span.points= @school.staff_culture_climate_average.to_f.round(1)
                       %span / 5.0
                     %h3.statement General Culture and Climate
                     .explanation.arial General Climate and Culture measures parts of the early learning environment that are supportive, safe, and facilitate children’s learning. It includes caring relationships between educators and children, educators' expectations for children's learning, and to what extent educators believe in children's ability to succeed.
-                .clear_floats
+                .clear-floats
               = render 'legend', school: @school, :tab => :staff
 
 

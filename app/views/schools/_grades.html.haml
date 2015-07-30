@@ -18,9 +18,9 @@
       %p Percentage of students in each grade who are proficient in Math and Reading:
     - grade[:details].each do |k,v|
       .graph{:id => "#{key}_#{k}", 'data-subject' => k, 'data-grades' => v.to_json, 'data-tab' => "a[href='#status']" }
-    .clear_floats
+    .clear-floats
 
-    
+
 - if tabs.include? :history
   %h3.bebas.underlined History
   = render 'shared/tip', :tip => @tips["history_#{section}".to_sym]
