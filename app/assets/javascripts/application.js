@@ -26,7 +26,7 @@ $(function() {
     }
   });
 
-  $('.item:nth-of-type(5) > .btn').mouseover(function() {
+  $('.item:nth-of-type(4) > .btn').mouseover(function() {
     $(this).text('COMING SOON');
   }).mouseout(function() {
     $(this).text('COMPARE TO OTHER SCHOOLS');
