@@ -31,12 +31,12 @@
       .labels
         .label SCHOOL
         .label DETROIT
-      = render 'two_bar_graph', title: 'English',
+      = render 'two_bar_graph', title: 'English Growth',
         subject: 'english', scale: 10,
         school_growth: @school.english_growth,
         detroit_growth: @detroit.english_growth,
         zero_bar: 'PREDICTED SCORE'
-      = render 'two_bar_graph', title: 'Math',
+      = render 'two_bar_graph', title: 'Math Growth',
         subject: 'math', scale: 10,
         school_growth: @school.math_growth,
         detroit_growth: @detroit.math_growth,
@@ -45,12 +45,12 @@
       .labels
         .label SCHOOL
         .label DETROIT
-      = render 'two_bar_graph', title: 'Reading',
+      = render 'two_bar_graph', title: 'Reading Growth',
         subject: 'reading', scale: 10,
         school_growth: @school.reading_growth,
         detroit_growth: @detroit.reading_growth,
         zero_bar: 'PREDICTED SCORE'
-      = render 'two_bar_graph', title: 'Science',
+      = render 'two_bar_graph', title: 'Science Growth',
         subject: 'science', scale: 10,
         school_growth: @school.science_growth,
         detroit_growth: @detroit.science_growth,

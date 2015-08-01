@@ -31,12 +31,12 @@
       .labels
         .label SCHOOL
         .label DETROIT
-      = render 'two_bar_graph', title: 'Math',
+      = render 'two_bar_graph', title: 'Math Growth',
         subject: 'math', scale: 20,
         school_growth: @school.math_growth,
         detroit_growth: @detroit.math_growth,
         zero_bar: 'STATE'
-      = render 'two_bar_graph', title: 'Reading',
+      = render 'two_bar_graph', title: 'Reading Growth',
         subject: 'reading', scale: 20,
         school_growth: @school.reading_growth,
         detroit_growth: @detroit.reading_growth,
