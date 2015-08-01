@@ -60,6 +60,7 @@ body.schools-index { height: 100%; }
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
+.small { font-size: 13px; }
 .ib { display: inline-block; float: none; }
 .printonly { display: none; }
 table td, table th { vertical-align: top; }
@@ -609,10 +610,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   }
   .grades-served {
     position: absolute;
-    bottom: 25px;
-    left: 15px;
+    bottom: 15px;
+    left: 13px;
     width: 60%;
-    margin-top: 35px;
     background-color: $navy;
     padding: 7px 15px;
     font-size: 17px;
@@ -1016,3 +1016,5 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   width: 65%;
   height: 550px;
 }
+
+.school-title .text { margin-top: 5px; }

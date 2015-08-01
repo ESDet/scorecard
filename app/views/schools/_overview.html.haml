@@ -9,6 +9,12 @@
           %h1= school.display_name
           - if school.status != 'Mature' && school.status != 'Suburban'
             = school.status
+            - if school.status == 'New'
+              .text.small
+                New Schools are schools that have been open for less than three years OR have less than 70% of data available to adequately assess performance.
+            - elsif school.status == 'Turnaround'
+              .text.small
+                Turnaround Schools are schools that experienced a restart within the past two years due to failing academic performance. A school is in turnaround if it has changed at least two out of the three:  governance, management, and board.
         .grades-served= "Grades Served: #{school.grades_served.first} - #{school.grades_served.last}"
       .overview-text
         =raw simple_format(school.overview_text)
