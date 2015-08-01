@@ -1044,7 +1044,6 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     }
   }
   .school-title  {
-    float: left;
     width: 60%;
     padding: 20px 0 0 15px;
     background-color: $cyan;
@@ -1499,7 +1498,7 @@ ul {
 }
 .school-header .school-title {
   width: 100%;
-  height: 60%;
+  min-height: 160px;
 }
 .school-header .grades-served {
   width: 95%;
@@ -1508,11 +1507,14 @@ ul {
   margin-top: 10px;
   margin-left: 10px;
 }
+.school-header .icons {
+  margin-left: 13px;
+}
 .school-header .icon-text {
   float: left;
-  margin-top: 20px;
-  margin-right: 15px;
+  margin-top: 10px;
 }
+.school-header .icon-text:nth-of-type(2),
 .school-header .icon-text:nth-of-type(3) {
   margin-left: 10px;
 }

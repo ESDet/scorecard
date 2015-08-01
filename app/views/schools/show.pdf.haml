@@ -21,16 +21,17 @@
                   .text.small
                     Turnaround Schools are schools that experienced a restart within the past two years due to failing academic performance. A school is in turnaround if it has changed at least two out of the three:  governance, management, and board.
             .grades-served= "Grades Served: #{@school.grades_served.first} - #{@school.grades_served.last}"
-            .icon-text
-              .address-icon
-              = @school.street
-              = @school.council_district
-            .icon-text
-              .phone-icon
-              = @school.phone
-            .icon-text
-              .website-icon
-              = @school.school_url
+            .icons
+              .icon-text
+                .address-icon
+                = @school.street
+                = @school.council_district
+              .icon-text
+                .phone-icon
+                = @school.phone
+              .icon-text
+                .website-icon
+                = @school.school_url
           .right
             .section
               .header How is this school ranked?

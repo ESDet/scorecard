@@ -584,22 +584,27 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .school-header {
   position: relative;
-  height: 185px;
+  height: 100%;
+  min-height: 185px;
   background-color: $cyan;
   color: white;
   font-family: 'Aleo Bold';
   .school-image {
     width: 275px;
+    height: inherit;
     float: right;
     img {
+      position: absolute;
       width: 275px;
-      height: 185px;
+      height: inherit;
       float: right;
     }
   }
-  .school-title  {
-    float: left;
+  .school-text {
     width: 60%;
+  }
+  .school-title  {
+    min-height: 120px;
     padding: 20px 0 0 15px;
     background-color: $cyan;
     h1 {
@@ -609,10 +614,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
     }
   }
   .grades-served {
-    position: absolute;
-    bottom: 15px;
-    left: 13px;
-    width: 60%;
+    width: 100%;
+    display: inline-block;
+    margin: 10px 0 10px 13px;
     background-color: $navy;
     padding: 7px 15px;
     font-size: 17px;
