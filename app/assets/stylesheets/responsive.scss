@@ -70,7 +70,7 @@
       width: 100%;
       margin-bottom: 5px;
       & > .btn { float: left; }
-      &:nth-of-type(5) .btn { float: left; }
+      &:nth-of-type(4) .btn { float: left; }
     }
   }
 }
@@ -136,6 +136,7 @@
     & > .item {
       width: 20%;
       margin-bottom: 5px;
+      &:nth-of-type(4) { float: left; }
     }
   }
   .home-index input[type=text] { font-size: 18px; }
@@ -203,4 +204,16 @@
 
 @media only screen and (max-width: 400px) {
   .home.middle .container_12.video { height: 210px; }
+  .nav-actions { width: 60px; }
+  .nav-actions > .print-icon {
+    margin-right: 5px;
+  }
+  .nav-actions > .download-icon {
+    margin-left: 5px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .nav-actions > .download-icon { margin-top: 15px; }
+  .nav-actions > .print-icon { margin-top: 0px; }
 }

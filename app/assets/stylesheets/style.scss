@@ -571,6 +571,11 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 #nav .middle { margin: 0 auto 0 auto; }
 
+.nav-actions {
+  float: right;
+  width: 100px;
+}
+
 .region-title.closed {
   background-color: $yellow;
   h2 { color: white; }
