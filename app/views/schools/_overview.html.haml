@@ -56,7 +56,17 @@
               .rounded-square.light-cyan-background.auto-margin
                 .big
                   = school.michigan_percentile
-                  .suffix th
+                  - if school.michigan_percentile.to_i < 10 || school.michigan_percentile.to_i > 20
+                    - if school.michigan_percentile =~ /1$/
+                      .suffix st
+                    - elsif school.michigan_percentile =~ /2$/
+                      .suffix nd
+                    - elsif school.michigan_percentile =~ /3$/
+                      .suffix rd
+                    - else
+                      .suffix th
+                  - else
+                    .suffix th
                 .small PERCENTILE OUT OF 100
         .column
           .title School Type
