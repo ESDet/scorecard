@@ -328,14 +328,6 @@ class SchoolsController < ApplicationController
     end
   end
 
-  def format_field(val)
-    if val.is_a?(Array)
-      val.join(", ")
-    else
-      val == "0" ? "No" : (val == "1" ? "Yes" : val)
-    end
-  end
-
   def format_phone(ph)
     if ph.length == 10
       "#{ph[0..2]}-#{ph[3..5]}-#{ph[6..-1]}"
