@@ -7,7 +7,7 @@ class SchoolsController < ApplicationController
     end
 
     @loc = if params[:loc].present?
-      params[:loc].strip.gsub("\u{a0}", "")
+      CGI.escape params[:loc].strip.gsub("\u{a0}", "")
     end
     @grade = params[:grade]
     @filters = params[:filters] || []
