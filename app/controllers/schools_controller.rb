@@ -291,82 +291,6 @@ class SchoolsController < ApplicationController
 
 
   def compare
-    str = params[:which] || ""
-    if str == "clear"
-      session[:compare] = []
-      redirect_to "/compare", :notice => "Thank you, you may now choose new schools to compare." and return
-    elsif str.blank?
-      list = session[:compare] || []
-    elsif m = str.match(/^\+([0-9,]+)$/)
-      ids = m[1].split(",").collect { |i| i.to_i }
-      list = (session[:compare] || []) + ids
-    else
-      list = str.split(",")
-    end
-
-    # Limit
-    list = list.collect { |i| i.to_i }.uniq
-    list.shift while list.size > AppConfig.max_compared
-
-    session[:compare] = list
-
-    @schools = School.where(:id => list)
-    @grades = @schools.collect { |s| s.grades }
-
-    @transposed = []
-    @grades.each_with_index do |g,i|
-      s = @schools[i]
-      tx = {}
-
-      if s.earlychild?
-        tx["Overall Rating"]            = s.published_rating
-        tx["Address"]                   = "#{s.address}<br/>#{s.address2}"
-        tx["Total Points"]              = s.points_total
-        tx["Staff Qualifications"]      = s.points_staff
-        tx["Family/Community Partnerships"] = s.points_family
-        tx["Administration"]            = s.points_admin
-        tx["Environment Pts"]           = s.points_env
-        tx["Curriculum"]                = s.points_curriculum
-        tx["Financial Assistance"]      = format_field(s.subsidy)
-        tx["Special Needs Experience"]  = format_field(s.special)
-        tx["Care Setting"]              = s.setting
-        tx["Environment"]               = format_field(s.environment)
-        tx["Meals Provided"]            = format_field(s.meals)
-        tx["Provides Transportation?"]  = format_field(s.transportation)
-
-      else
-        tx["Overall Grade"]     = g[:cumulative][:letter] || "N/A"
-        tx["Academic Status"]   = g[:status][:letter]     || "N/A"
-        tx["Academic Progress"] = g[:progress][:letter]   || "N/A"
-        tx["School Climate"]    = g[:climate][:letter]    || "N/A"
-
-        tx["Address"]           = "#{s.address}<br/>#{s.address2}"
-        tx["Grades Served"]     = s.grades_served || "Unknown"
-        tx["Governance"]        = s.basic.governance || "Unknown"
-      end
-
-      @transposed[i] = tx
-    end
-
-
-    # Turn an array of hashes to a hash of arrays..
-    @chart = {}
-    @transposed.each_with_index do |h,i|
-      h.each do |label,val|
-        @chart[label] ||= []
-        @chart[label][i] = val
-      end
-    end
-
-    # When you go to add others to compare, we want to show only compatible
-    # if only preschools
-    types = @schools.collect { |s| s.school_type }.uniq.reject { |s| s.nil? }.sort.join("_")
-    @filter = {
-      "EC"    => "ec",
-      "HS_K8" => "k8hs",
-      "K8"    => "k8",
-      "HS"    => "hs",
-    }[types] || "all"
   end
 
   private
@@ -379,6 +303,7 @@ class SchoolsController < ApplicationController
       s.merge(included: includes)
     end
   end
+
   def valid_includes?(includes, school)
     if includes["type"] == "school_profiles"
       if school["links"]["school_profile"]
