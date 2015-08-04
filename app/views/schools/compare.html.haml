@@ -1,28 +1,22 @@
-.summary
-  .container_12
-    .grid_12
-      %h2 Compare Schools
+.container_12
+  .middle
+    %h2 Compare Schools
 
-      - if @schools.size == 0
-        %p Please #{link_to 'search for schools', schools_path} and choose several to compare.
-
-      - else
-        = link_to 'Add a school', schools_path(:filter => @filter), :class => 'btn'
-        = link_to "Reset the chart", "/compare/clear", :class => 'btn'
-
-        %table.compare
-          %thead
-            %tr
-              %th
-              - @schools.each do |s|
-                %th
-                  = link_to 'x', "/compare/#{(session[:compare] - [s.id]).join(',')}", :class => 'close label float-right'
-                  %h3
-                    = link_to s.name, s
-
-          %tbody
-            - @chart.each do |label, arr|
-              %tr
-                %td= label
-                - arr.each do |s|
-                  %td= raw s
+    .compare
+      - @schools.each do |s|
+        .school.rounded
+          .name= link_to s.display_name, s.link
+          .type
+            - grades = s.grades_served || s.age_groups
+            = "#{s.governance} | #{grades.first} - #{grades.last}"
+          .rating
+            - if s.earlychild?
+              = "#{s.early_childhood_rating}"
+            - else
+              = "#{s.excellent_schools_grade} | #{s.michigan_percentile}"
+          .group
+            %h2 Overview
+          .group
+            %h2 Performance
+          .group
+            %h2 Programs
