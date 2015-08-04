@@ -259,7 +259,10 @@ class SchoolsController < ApplicationController
         school.extend(EarlyChildhood)
       else
         school.extend(School)
+        school.extend(HighSchool) if school.high?
+        school.extend(K8School) if school.k8?
       end
+      school
     end
   end
 
