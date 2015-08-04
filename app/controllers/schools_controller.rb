@@ -9,6 +9,7 @@ class SchoolsController < ApplicationController
     @loc = if params[:loc].present?
       CGI.escape params[:loc].strip.gsub("\u{a0}", "")
     end
+
     @grade = params[:grade]
     @filters = params[:filters] || []
 
@@ -186,9 +187,7 @@ class SchoolsController < ApplicationController
     render :text => "" and return if params[:id] == "PIE" # PIE.htc requests
 
     redirect_to root_path and return unless params[:id]
-
     id, school_type = params[:id].split("-")[0..1]
-
     redirect_to root_path and return unless id.to_i != 0
 
     if !school_type.in? ["ecs", "k8", "hs", "high"]
@@ -197,63 +196,18 @@ class SchoolsController < ApplicationController
 
     school_type = "hs" if school_type == "high"
 
-    if school_type == "ecs"
-      url = "ecs"
-      includes = "ec_profile,esd_el_2015," <<
-        "most_recent_ec_state_rating"
-    else
-      url = "schools"
-      includes = "school_profile,meap_2014," <<
-        "fiveessentials_2015,esd_#{school_type}_2015," <<
-        "k12_supplemental_2015"
-    end
-
-    url << "/#{id}.json?flatten_fields=true&includes=#{includes}"
+    school_data = fetch_school_data(id, school_type)
 
     if school_type != "ecs"
-      url << "&include_option_labels=true"
+      @detroit, @state = fetch_detroit_and_state_data(school_type)
     end
 
-    retries = 2
-    begin
-      school_data = Portal.new.fetch(url)
-    rescue EOFError => e
-      ExceptionNotifier.notify_exception(e)
-      retries -= 1
-      retry if retries > 0
-    rescue Net::ReadTimeout, Net::OpenTimeout => e
-      flash[:notice] = "There was an error " <<
-        "retrieving school data and we are looking " <<
-        "into the issue now. Please try again later."
-      ExceptionNotifier.notify_exception(e)
-      redirect_to root_path and return
+    if school_data.first =~ /does not exist/
+      (redirect_to root_path and return)
     end
 
-    if school_type != "ecs"
-      url = "schools.json?flatten_fields=true" <<
-        "&include_option_labels=true" <<
-        "&includes=school_profile,esd_#{school_type}_2015" <<
-        "&filter[field_bcode]=88888,99999" <<
-        "&filter_op[field_bcode]=IN"
-      response = Portal.new.fetch(url)
-      if response != ["request error"] && response["data"]
-        detroit_and_state = response["data"].each do |s|
-          if s["field_bcode"] == "88888"
-            includes = response["included"].
-              select { |i| i["id"] == "88888" }
-            @detroit = SchoolData.new s.merge(included: includes)
-          elsif s["field_bcode"] == "99999"
-            includes = response["included"].
-              select { |i| i["id"] == "99999" }
-            @state = SchoolData.new s.merge(included: includes)
-          end
-        end
-      end
-    end
-
-    (redirect_to root_path and return) if school_data.first =~ /does not exist/
-
-    @school = SchoolData.new school_data["data"].merge(included: school_data["included"])
+    @school = SchoolData.new school_data["data"].
+      merge(included: school_data["included"])
 
     if @school.earlychild?
       @school.extend(EarlyChildhood)
@@ -289,11 +243,87 @@ class SchoolsController < ApplicationController
     end
   end
 
-
   def compare
   end
 
   private
+
+  def fetch_school_data(id, school_type)
+    if school_type == "ecs"
+      url = "ecs"
+      includes = "ec_profile,esd_el_2015," <<
+        "most_recent_ec_state_rating"
+    else
+      url = "schools"
+      includes = "school_profile,meap_2014," <<
+        "fiveessentials_2015,esd_#{school_type}_2015," <<
+        "k12_supplemental_2015"
+    end
+
+    url << "/#{id}.json?flatten_fields=true&includes=#{includes}"
+
+    if school_type != "ecs"
+      url << "&include_option_labels=true"
+    end
+
+    retries = 2
+    begin
+      school_data = Portal.new.fetch(url)
+    rescue EOFError => e
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+    rescue Net::ReadTimeout, Net::OpenTimeout => e
+      flash[:notice] = "There was an error " <<
+        "retrieving school data and we are looking " <<
+        "into the issue now. Please try again later."
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+      redirect_to root_path and return
+    end
+    school_data
+  end
+
+  def fetch_detroit_and_state_data(school_type)
+    url = "schools.json?flatten_fields=true" <<
+      "&include_option_labels=true" <<
+      "&includes=school_profile,esd_#{school_type}_2015" <<
+      "&filter[field_bcode]=88888,99999" <<
+      "&filter_op[field_bcode]=IN"
+    retries = 2
+    begin
+      response = Portal.new.fetch(url)
+    rescue EOFError => e
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+    rescue Net::ReadTimeout, Net::OpenTimeout => e
+      flash[:notice] = "There was an error " <<
+        "retrieving school data and we are looking " <<
+        "into the issue now. Please try again later."
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+      redirect_to root_path and return
+    end
+
+    detroit_data, state_data = nil
+    if response != ["request error"] && response["data"]
+      response["data"].each do |s|
+        if s["field_bcode"] == "88888"
+          includes = response["included"].
+            select { |i| i["id"] == "88888" }
+          detroit_data = SchoolData.new s.merge(included: includes)
+        elsif s["field_bcode"] == "99999"
+          includes = response["included"].
+            select { |i| i["id"] == "99999" }
+          state_data = SchoolData.new s.merge(included: includes)
+        end
+      end
+    end
+    [detroit_data, state_data]
+  end
 
   def gather_included_fields(response)
     response["data"].map do |s|
