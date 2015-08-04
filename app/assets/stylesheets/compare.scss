@@ -8,8 +8,9 @@
 .compare .school {
   display: inline-block;
   float: left;
-  margin-right: 20px;
   width: 235px;
+  margin-right: 20px;
+  padding: 0 10px 0 10px;
   min-height: 400px;
   border: 2px solid $gainsboro;
   border-radius: 5px;
@@ -18,4 +19,21 @@
 }
 
 .compare .school .group {
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.compare .school .group {
+  display: inline-block;
+}
+
+.compare .school .group .line {
+  display: inline-block;
+  width: 100%;
+  padding: 1px 0 1px 0;
+}
+
+.compare .school .group .line .name {
+  height: 50px;
 }
