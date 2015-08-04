@@ -138,6 +138,7 @@ class SchoolsController < ApplicationController
             select { |s| !s["field_geo"].nil? }.
             map { |s| SchoolData.new(s) }
         end
+
         ecs_response = Portal.new.fetch(ecs_url)
         if ecs_response != ["request error"] && ecs_response["data"]
           ecs_data = gather_included_fields(ecs_response).
@@ -175,10 +176,12 @@ class SchoolsController < ApplicationController
       retries -= 1
       retry if retries > 0
     rescue Net::ReadTimeout, Net::OpenTimeout => e
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
       flash[:notice] = "There was an error during " <<
       "the search and we are looking into the issue " <<
       "now. Please try again later."
-      ExceptionNotifier.notify_exception(e)
       redirect_to root_path and return
     end
   end
@@ -244,6 +247,20 @@ class SchoolsController < ApplicationController
   end
 
   def compare
+    redirect_to root_path and return unless params[:school_ids]
+    school_ids = params[:school_ids].split(",")
+
+    @schools = school_ids.map do |i|
+      id, school_type = i.split("-")[0..1]
+      school_data = fetch_school_data(id, school_type)
+      school = SchoolData.new school_data["data"].
+        merge(included: school_data["included"])
+      if school_type == "ecs"
+        school.extend(EarlyChildhood)
+      else
+        school.extend(School)
+      end
+    end
   end
 
   private
@@ -273,13 +290,17 @@ class SchoolsController < ApplicationController
       ExceptionNotifier.notify_exception(e)
       retries -= 1
       retry if retries > 0
-    rescue Net::ReadTimeout, Net::OpenTimeout => e
       flash[:notice] = "There was an error " <<
         "retrieving school data and we are looking " <<
         "into the issue now. Please try again later."
+      redirect_to root_path and return
+    rescue Net::ReadTimeout, Net::OpenTimeout => e
       ExceptionNotifier.notify_exception(e)
       retries -= 1
       retry if retries > 0
+      flash[:notice] = "There was an error " <<
+        "retrieving school data and we are looking " <<
+        "into the issue now. Please try again later."
       redirect_to root_path and return
     end
     school_data
@@ -291,6 +312,7 @@ class SchoolsController < ApplicationController
       "&includes=school_profile,esd_#{school_type}_2015" <<
       "&filter[field_bcode]=88888,99999" <<
       "&filter_op[field_bcode]=IN"
+
     retries = 2
     begin
       response = Portal.new.fetch(url)
