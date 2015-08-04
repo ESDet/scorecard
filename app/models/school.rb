@@ -141,7 +141,7 @@ module School
   end
 
   def ap_classes
-    school_profiles.andand.field_ap_classes
+    list_labels school_profiles.andand.field_ap_classes
   end
 
   def dual_enrollment
