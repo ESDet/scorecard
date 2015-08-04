@@ -10,7 +10,7 @@
   float: left;
   width: 235px;
   margin-right: 20px;
-  padding: 0 10px 0 10px;
+  padding: 0 10px 20px 10px;
   min-height: 400px;
   border: 2px solid $gainsboro;
   border-radius: 5px;
@@ -26,6 +26,7 @@
 
 .compare .school .group {
   display: inline-block;
+  h3 { margin: 7px 0 7px 0; }
 }
 
 .compare .school .group .line {
@@ -39,5 +40,5 @@
 }
 
 .compare .school .group .line .name {
-  height: 50px;
+  height: 60px;
 }

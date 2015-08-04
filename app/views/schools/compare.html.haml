@@ -26,9 +26,9 @@
             .line.clear-floats
               .float-left State
               .float-right= s.michigan_percentile
-          .group.clear-floats
-            .region-title
-              %h2 Overview
+          .region-title
+            %h2 Overview
+          .group
             .line
               .float-left Students Enrolled
               .float-right= s.total_enrollment
@@ -53,9 +53,9 @@
                   .checked
                 - else
                   .unchecked
+          .region-title
+            %h2 Performance
           .group
-            .region-title
-              %h2 Performance
             - if s.earlychild?
             - else
               - if s.k8?
@@ -125,9 +125,9 @@
                 .line.clear-floats
                   .float-left 5Essentials Rating
                   .float-right= s.five_e_overall_rating
+          .region-title
+            %h2 Programs
           .group
-            .region-title
-              %h2 Programs
             - if s.earlychild?
             - else
               .line
