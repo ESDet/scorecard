@@ -127,7 +127,10 @@ a.external, a.external:visited {
   height: 100%;
   width: 65%;
   position: relative;
-  border: 1px solid $navy;
+  border: 2px solid $gainsboro;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
 }
 
 .school-map-wrapper {
@@ -170,7 +173,8 @@ a.external, a.external:visited {
       img { max-width: 50px; }
     }
     .info {
-      margin-left: 60px;
+      margin-left: 5px;
+      width: 67%;
       color: $onyx;
       font-family: 'Lato Regular';
       h3 {
