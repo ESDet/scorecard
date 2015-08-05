@@ -8,7 +8,7 @@
           .group
             .line
               .name
-                %h2= link_to s.display_name, s.link
+                %h2= link_to s.display_name, "/schools/#{s.link}"
             .line.clear-floats
               .float-left Type
               .float-right= s.governance
