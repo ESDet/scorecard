@@ -1,14 +1,17 @@
 .container_12
   .middle
     .compare
-      #map
+      .top
+        .nav
+          %a.btn(href="/") Search for schools
+        #map
 
       - @schools.each do |s|
         .school
           .group
             .line
               .name
-                %h2= link_to s.display_name, "/schools/#{s.link}"
+                %h2= link_to s.display_name, school_path(s.id)
             .line.clear-floats
               .float-left Type
               .float-right= s.governance
