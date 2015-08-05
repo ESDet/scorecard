@@ -21,12 +21,14 @@
 .compare .school .group {
   display: inline-block;
   width: 100%;
-  margin-top: 10px;
 }
 
 .compare .school .group {
   display: inline-block;
-  h3 { margin: 7px 0 7px 0; }
+  h3 {
+    margin: 7px 0 7px 0;
+    color: $navy;
+  }
 }
 
 .compare .school .group .line {
@@ -41,4 +43,8 @@
 
 .compare .school .group .line .name {
   height: 60px;
+}
+
+.compare .school .group .line .float-right {
+  font-family: 'Aleo Bold';
 }
