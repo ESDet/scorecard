@@ -132,10 +132,14 @@
             - else
               .line
                 .float-left Special Ed
-                .float-right= s.special_ed
+                .float-right
+                  - if s.special_ed_level.present?
+                    = s.special_ed_level.split(' - ').first
               .line.clear-floats
                 .float-left ELL
-                .float-right= s.ell
+                .float-right
+                  - if s.ell_level.present?
+                    = s.ell_level.split(' - ').first
               .line.clear-floats
                 .float-left World Language
                 .float-right
@@ -143,15 +147,24 @@
               .line.clear-floats
                 .float-left Clubs
                 .float-right
-                //Clubs (# or Check mark)
+                  - if s.has_clubs?
+                    .checked
+                  - else
+                    .unchecked
               .line.clear-floats
                 .float-left Sports
                 .float-right
-                //Sports (# or Check mark)
+                  - if s.has_sports?
+                    .checked
+                  - else
+                    .unchecked
               .line.clear-floats
                 .float-left Arts & Music
                 .float-right
-                //Arts & Music (# or Check mark)
+                  - if s.has_arts?
+                    .checked
+                  - else
+                    .unchecked
               .line.list.clear-floats
                 %h3 Facilities
                 = render 'field_list', list: s.facilities[0..5]
