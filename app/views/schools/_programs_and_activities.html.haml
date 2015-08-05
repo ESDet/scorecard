@@ -31,9 +31,9 @@
                 - if school.ell_languages.present?
                   %span.key Languages
                   = render 'field_list', list: school.ell_languages
-            = render 'column',
-              title: 'Personalized Learning Options',
-              list: school.instructional_model
+          = render 'column',
+            title: 'Personalized Learning Options',
+            list: school.instructional_model
           - if school.special_ed_level.present? || school.special_ed_programs.present?
             .column
               .title Special Education
