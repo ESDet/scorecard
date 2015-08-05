@@ -62,16 +62,16 @@
                 %h3 Proficiency
                 .line.clear-floats
                   .float-left Math
-                  .float-right= "#{s.math_prepared}%"
+                  .float-right= "#{s.math_prepared}%" if s.math_prepared.present?
                 .line.clear-floats
                   .float-left Reading and Writing
-                  .float-right= "#{s.ela_prepared}%"
+                  .float-right= "#{s.ela_prepared}%" if s.ela_prepared.present?
                 .line.clear-floats
                   .float-left Science
-                  .float-right= "#{s.science_prepared}%"
+                  .float-right= "#{s.science_prepared}%" if s.science_prepared.present?
                 .line.clear-floats
                   .float-left Social Studies
-                  .float-right= "#{s.socstud_prepared}%"
+                  .float-right= "#{s.socstud_prepared}%" if s.socstud_prepared.present?
                 %h3 Growth
                 .line.clear-floats
                   .float-left Math Growth
@@ -86,16 +86,16 @@
                 %h3 Proficiency
                 .line.clear-floats
                   .float-left English
-                  .float-right= "#{s.english_college_ready}%"
+                  .float-right= "#{s.english_college_ready}%" if s.english_college_ready.present?
                 .line.clear-floats
                   .float-left Math
-                  .float-right= "#{s.math_college_ready}%"
+                  .float-right= "#{s.math_college_ready}%" if s.math_college_ready.present?
                 .line.clear-floats
                   .float-left Reading
-                  .float-right= "#{s.reading_college_ready}%"
+                  .float-right= "#{s.reading_college_ready}%" if s.reading_college_ready.present?
                 .line.clear-floats
                   .float-left Science
-                  .float-right= "#{s.science_college_ready}%"
+                  .float-right= "#{s.science_college_ready}%" if s.science_college_ready.present?
                 %h3 Growth
                 .line.clear-floats
                   .float-left English Growth
@@ -112,16 +112,16 @@
                 %h3 College
                 .line.clear-floats
                   .float-left 4-Year Grad
-                  .float-right= "#{s.graduate_in_four_years}%"
+                  .float-right= "#{s.graduate_in_four_years}%" if s.graduate_in_four_years.present?
                 .line.clear-floats
                   .float-left 5-Year Grad
-                  .float-right= "#{s.graduate_in_five_years}%"
+                  .float-right= "#{s.graduate_in_five_years}%" if s.graduate_in_five_years.present?
                 .line.clear-floats
                   .float-left Enroll in College
-                  .float-right= "#{s.enroll_in_college}%"
+                  .float-right= "#{s.enroll_in_college}%" if s.enroll_in_college.present?
                 .line.clear-floats
                   .float-left Stay in College
-                  .float-right= "#{s.stay_in_college}%"
+                  .float-right= "#{s.stay_in_college}%" if s.stay_in_college.present?
                 .line.clear-floats
                   .float-left 5Essentials
                   .float-right
