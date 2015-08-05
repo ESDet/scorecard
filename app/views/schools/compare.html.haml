@@ -123,8 +123,19 @@
                   .float-left Stay in College
                   .float-right= "#{s.stay_in_college}%"
                 .line.clear-floats
-                  .float-left 5Essentials Rating
-                  .float-right= s.five_e_overall_rating
+                  .float-left 5Essentials
+                  .float-right
+                    - case s.five_e_overall_rating.to_i
+                    - when 1
+                      Not Yet Organized
+                    - when 2
+                      Partially Organized
+                    - when 3
+                      Moderately Organized
+                    - when 4
+                      Organized
+                    - when 5
+                      Well Organized
           .region-title
             %h2 Programs
           .group
