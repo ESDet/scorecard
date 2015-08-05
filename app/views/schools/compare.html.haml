@@ -1,8 +1,8 @@
 .container_12
   .middle
-    %h2 Compare Schools
-
     .compare
+      #map
+
       - @schools.each do |s|
         .school
           .group
@@ -182,3 +182,12 @@
               .line.list
                 %h3 AP Classes
                 = render 'field_list', list: s.ap_classes[0..5]
+
+    :javascript
+      $(function() {
+        var map = Map({
+          center: [42.36, -83.09],
+          markers: #{@schools.map(&:marker).to_json},
+          zoom: 11
+        });
+      });
