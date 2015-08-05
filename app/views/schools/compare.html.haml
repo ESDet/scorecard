@@ -24,8 +24,8 @@
                 .float-left ESD Grade
                 .float-right= s.excellent_schools_grade
             .line.clear-floats
-              .float-left State
-              .float-right= s.michigan_percentile
+              .float-left State Ranking
+              .float-right= "#{s.michigan_percentile}#{percentile_suffix(s.michigan_percentile)} percentile"
           .region-title
             %h2 Overview
           .group
@@ -152,7 +152,7 @@
                   - if s.ell_level.present?
                     = s.ell_level.split(' - ').first
               .line.clear-floats
-                .float-left World Language
+                .float-left Foreign Languages
                 .float-right
                   - if s.has_foreign_language?
                     .checked
