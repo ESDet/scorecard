@@ -42,14 +42,14 @@
             .line.clear-floats
               .float-left Before Care
               .float-right
-                - if s.transportation_options.present?
+                - if s.before_after_care_keys.include?("before")
                   .checked
                 - else
                   .unchecked
             .line.clear-floats
               .float-left After Care
               .float-right
-                - if s.transportation_options.present?
+                - if s.before_after_care_keys.include?("after")
                   .checked
                 - else
                   .unchecked

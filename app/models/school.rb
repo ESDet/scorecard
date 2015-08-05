@@ -268,9 +268,14 @@ module School
     school_profiles.andand.hours
   end
 
+  def before_after_care_keys
+    school_profiles.andand.field_before_after_care.
+      andand.map { |f| f['machine_name'] }
+  end
+
   def before_after_care
-    school_profiles.andand.field_before_after_care.andand.
-      map { |c| c['label'] }.andand.reverse || []
+    list_labels school_profiles.andand.
+      field_before_after_care.andand.reverse || []
   end
 
   def council_district
@@ -278,8 +283,8 @@ module School
   end
 
   def transportation_options
-    school_profiles.andand.field_transportation_options.
-      andand.map { |t| t['label'] }
+    list_labels school_profiles.andand.
+      field_transportation_options
   end
 
   def average_commute
