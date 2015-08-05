@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
   Map = function(args) {
     L.Icon.Default.imagePath = '/assets';
 

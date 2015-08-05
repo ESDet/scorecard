@@ -142,19 +142,22 @@
             - if s.earlychild?
             - else
               .line
-                .float-left Special Ed
+                .float-left Special Ed Level
                 .float-right
                   - if s.special_ed_level.present?
                     = s.special_ed_level.split(' - ').first
               .line.clear-floats
-                .float-left ELL
+                .float-left ELL Level
                 .float-right
                   - if s.ell_level.present?
                     = s.ell_level.split(' - ').first
               .line.clear-floats
                 .float-left World Language
                 .float-right
-                //World language (# or Check mark)
+                  - if s.has_foreign_language?
+                    .checked
+                  - else
+                    .unchecked
               .line.clear-floats
                 .float-left Clubs
                 .float-right
