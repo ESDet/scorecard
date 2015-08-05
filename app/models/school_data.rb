@@ -146,12 +146,16 @@ class SchoolData < OpenStruct
     field_address.andand.administrative_area if field_address
   end
 
-  def link
+  def id
     if earlychild?
       "#{tid}-ecs-#{transliterate(name)}"
     else
       "#{tid}-#{school_type}-#{transliterate(name)}"
     end
+  end
+
+  def short_id
+    earlychild? ? "#{tid}-ecs" : "#{tid}-#{school_type}"
   end
 
   def grades_served
