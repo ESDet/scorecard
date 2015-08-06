@@ -40,38 +40,24 @@
         }
       });
 
-      //$('body').on('change', 'input.compare-check', function(e) {
-      //  var count = $('input.compare-check:checked').length;
-      //  if(count > 0) {
-      //    $('a.do-compare').removeClass('hide');
-      //  } else {
-      //    $('a.do-compare').addClass('hide');
-      //  }
-      //  return true;
-      //});
+      $('body').on('change', 'input.compare-check', function(e) {
+        var count = $('input.compare-check:checked').length;
+        if(count > 0) {
+          $('a.do-compare').removeClass('hide');
+        } else {
+          $('a.do-compare').addClass('hide');
+        }
+        return true;
+      });
 
-      //$('a.do-compare').click(function(e) {
-      //  ids = [];
-      //  $('input.compare-check:checked').each(function(idx, el) {
-      //    ids.push($(el).val());
-      //  });
-      //  window.location = "/compare/+" + ids.join(',');
-      //  return false;
-      //});
+      $('a.do-compare').click(function(e) {
+        ids = [];
+        $('input.compare-check:checked').each(function(idx, el) {
+          ids.push($(el).val());
+        });
+        window.location = "/compare/?school_ids=" + ids.join(',');
+        return false;
+      });
     });
 
-      //%a.do-compare.btn.hide{:href => '#'} Compare Selected Schools
-
-/  :erb
-/    <script id='list-template' type='text/html'>
-/    {{#features}}{{#properties}}
-/      <li class='school'>
-/        <img src='/assets/{{seal}}' class='mini-el-icon'/>
-/        <h3><a href='/schools/{{slug}}'>{{name}}</a></h3>
-/        {{#grades_served}}<div>Grades {{grades_served}}</div>{{/grades_served}}
-/        <label><input class='compare-check' name='compare[]' type='checkbox' value='{{id}}'/> Compare</label>
-/      </li>
-/    {{/properties}}{{/features}}";
-/    </script>
-/
-
+  %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools

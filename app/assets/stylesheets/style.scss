@@ -262,21 +262,7 @@ $med: 100px;
 }
 
 .site-logo img { max-width: 100%; height: auto; }
-
-table.compare {
-  margin: 2em 0; font-size: 0.9em;
-  tbody tr:nth-child(odd) { background-color: #f4f8ff; }
-  td, th {
-    border-collapse: collapse;
-    max-width: 300px; padding: 0.5em 1em; text-align: left;
-    &:first-child { text-align: right; }
-    h3 { margin-top: 0; }
-    a.close { font-size: 0.7em; color: white; margin-left: 10px;}
-  }
-}
-
 .overall-stars { font-size: 2em; padding-top: 10px; }
-
 .el-icon, .mini-el-icon { width: 60%; height: auto; }
 .overall-seal .centered.nomobile { display: block !important; }
 .el-icon.overview { margin-top: 0; }
@@ -1026,3 +1012,12 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 }
 
 .school-title .text { margin-top: 5px; }
+
+.do-compare.btn {
+  background-color: $fivee_orange;
+  position: absolute;
+  z-index: 1000;
+  top: 90px;
+  left: 40%;
+  &:hover { color: white; }
+}
