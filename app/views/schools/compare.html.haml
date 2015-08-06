@@ -194,8 +194,14 @@
         var map = Map({
           center: [42.36, -83.09],
           markers: #{@schools.map(&:marker).to_json},
-          zoom: 11
+          zoom: 11,
+          zoomControl: false,
+          touchZoom: false,
+          scrollWheelZoom: false,
+          doubleClickZoom: false,
+          boxZoom: false
         });
+
         $('.nav a.btn').click(function() {
           if (document.referrer.indexOf("/schools") != 0) {
             window.history.back();
