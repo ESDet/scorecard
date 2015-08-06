@@ -3,7 +3,7 @@
     .compare
       .top
         .nav
-          %a.btn(href="/") Search for schools
+          %a.btn(href="#") Add schools
         #map
 
       - @schools.each do |s|
@@ -195,5 +195,13 @@
           center: [42.36, -83.09],
           markers: #{@schools.map(&:marker).to_json},
           zoom: 11
+        });
+        $('.nav a.btn').click(function() {
+          if (document.referrer.indexOf("/schools") != 0) {
+            window.history.back();
+          } else {
+            document.location.href = "/";
+          }
+          return false;
         });
       });
