@@ -8,11 +8,11 @@ module SchoolsHelper
   end
 
   def percentile_suffix(percentile)
-    p = percentile.to_i
-    if p < 10 || p > 20
-      return "st" if percentile.end_with?("1")
-      return "nd" if percentile.end_with?("2")
-      return "rd" if percentile.end_with?("3")
+    p = percentile || "0"
+    if p.to_i < 10 || p.to_i > 20
+      return "st" if p.end_with?("1")
+      return "nd" if p.end_with?("2")
+      return "rd" if p.end_with?("3")
       "th"
     else
       "th"
