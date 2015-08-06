@@ -83,8 +83,16 @@
                   .float-left Reading Growth
                   .float-right= s.reading_growth
                 .line.clear-floats
-                  .float-left 5Essentials Rating
-                  .float-right= s.five_e_overall_rating
+                  .fivee
+                    = render 'five_essentials',
+                      title: '5Essentials Rating',
+                      overall_rating: s.five_e_overall_rating,
+                      effective_leaders: s.five_e_effective_leaders,
+                      collaborative_teachers: s.five_e_collaborative_teachers,
+                      involved_families: s.five_e_involved_families,
+                      supportive_environment: s.five_e_supportive_environment,
+                      ambitious_instruction: s.five_e_ambitious_instruction,
+                      report_id: s.five_e_report_id
               - else
                 %h3 Proficiency
                 .line.clear-floats
@@ -126,19 +134,16 @@
                   .float-left Stay in College
                   .float-right= "#{s.stay_in_college}%" if s.stay_in_college.present?
                 .line.clear-floats
-                  .float-left 5Essentials
-                  .float-right
-                    - case s.five_e_overall_rating.to_i
-                    - when 1
-                      Not Yet Organized
-                    - when 2
-                      Partially Organized
-                    - when 3
-                      Moderately Organized
-                    - when 4
-                      Organized
-                    - when 5
-                      Well Organized
+                  .fivee
+                    = render 'five_essentials',
+                      title: '5Essentials Rating',
+                      overall_rating: s.five_e_overall_rating,
+                      effective_leaders: s.five_e_effective_leaders,
+                      collaborative_teachers: s.five_e_collaborative_teachers,
+                      involved_families: s.five_e_involved_families,
+                      supportive_environment: s.five_e_supportive_environment,
+                      ambitious_instruction: s.five_e_ambitious_instruction,
+                      report_id: s.five_e_report_id
           .region-title
             %h2 Programs
           .group
@@ -210,4 +215,11 @@
           }
           return false;
         });
+        $('.fivee').each(function(i, el) {
+          var e = $(el);
+          e.find('.visual > .square').appendTo(
+            e.find('.visual > .wrapper')
+          );
+        });
+
       });

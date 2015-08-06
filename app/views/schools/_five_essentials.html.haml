@@ -1,5 +1,5 @@
 .visual
-  .title Overall Rating
+  .title= title
   .graph(data-rating="#{overall_rating}")
     .text
   .square
@@ -20,13 +20,13 @@
       .bottom-right.fivee-category(data-num="#{involved_families}")
         Involved Families
     .legend
-      Very Strong
+      .key Very Strong
       .key.green
       .key.light-green
       .key.yellow
       .key.orange
       .key.red
-      Very Weak
+      .key Very Weak
       - if report_id
         .link
           %a(href="https://detroit.5-essentials.org/2015/s/#{report_id}" target="_blank")

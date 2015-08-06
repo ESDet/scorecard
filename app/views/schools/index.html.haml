@@ -42,6 +42,9 @@
 
       $('body').on('change', 'input.compare-check', function(e) {
         var count = $('input.compare-check:checked').length;
+        if (count > 4) {
+          $(e.currentTarget).attr('checked', false);
+        }
         if(count > 0) {
           $('a.do-compare').removeClass('hide');
         } else {

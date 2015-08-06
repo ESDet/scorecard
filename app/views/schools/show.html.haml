@@ -5,8 +5,8 @@
         %a.back-arrow-icon(href="#")
         %h2= @school.display_name
       .nav-actions
-        %a.print-icon(id="print" title="Print" target="_blank" href="#{@school.link}.pdf?disposition=inline")
-        %a.download-icon(id="download" title="Download" href="#{@school.link}.pdf")
+        %a.print-icon(id="print" title="Print" target="_blank" href="/schools/#{@school.id}.pdf?disposition=inline")
+        %a.download-icon(id="download" title="Download" href="/schools/#{@school.id}.pdf")
   .container_12.clear-floats.region-title(data-target="overview")
     %h2 OVERVIEW
   .container_12.info-region
