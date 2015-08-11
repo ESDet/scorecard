@@ -425,6 +425,8 @@
         width: 20px;
         height: 20px;
       }
+      & > .key:nth-of-type(1),
+      & > .key:nth-of-type(7) { margin-bottom: 15px; }
       .green { background-color: $fivee_green; }
       .light-green { background-color: $fivee_light_green; }
       .yellow { background-color: $fivee_yellow; }

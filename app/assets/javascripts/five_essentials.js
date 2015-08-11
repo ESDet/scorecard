@@ -1,26 +1,28 @@
 $(function() {
-  var rating = parseInt($('.graph[data-rating]').data('rating'));
-  var ratingEl = $('.fivee > .visual:nth-of-type(1) > .graph');
-  var text = ratingEl.find('> .text');
-  if (rating == 0) {
-    text.text('');
-    text.css('color', 'grey');
-  } else if (rating == 1) {
-    ratingEl.css('background-color', '#c32947');
-    text.text('NOT YET ORGANIZED');
-  } else if (rating == 2) {
-    ratingEl.css('background-color', '#ff690f');
-    text.text('PARTIALLY ORGANIZED');
-  } else if (rating == 3) {
-    ratingEl.css('background-color', '#ffc700');
-    text.text('MODERATELY ORGANIZED');
-  } else if (rating == 4) {
-    ratingEl.css('background-color', '#a2c100');
-    text.text('ORGANIZED');
-  } else if (rating == 5) {
-    ratingEl.css('background-color', '#319400');
-    text.text('WELL ORGANIZED');
-  }
+  $('.graph[data-rating]').each(function(i, el) {
+    var ratingEl = $(el);
+    var rating = parseInt(ratingEl.data('rating'));
+    var text = ratingEl.find('> .text');
+    if (rating == 0) {
+      text.html("<br/>");
+      text.css('background-color', 'grey');
+    } else if (rating == 1) {
+      ratingEl.css('background-color', '#c32947');
+      text.text('NOT YET ORGANIZED');
+    } else if (rating == 2) {
+      ratingEl.css('background-color', '#ff690f');
+      text.text('PARTIALLY ORGANIZED');
+    } else if (rating == 3) {
+      ratingEl.css('background-color', '#ffc700');
+      text.text('MODERATELY ORGANIZED');
+    } else if (rating == 4) {
+      ratingEl.css('background-color', '#a2c100');
+      text.text('ORGANIZED');
+    } else if (rating == 5) {
+      ratingEl.css('background-color', '#319400');
+      text.text('WELL ORGANIZED');
+    }
+  });
 
   $('.fivee-category').each(function(i, el) {
     var n = $(el);
