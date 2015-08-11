@@ -440,6 +440,9 @@
   }
 }
 
+.compare .fivee {
+  margin-top: 5px;
+}
 .compare .fivee,
 .compare .fivee .visual,
 .compare .fivee .visual:nth-of-type(2) {
@@ -447,7 +450,6 @@
   width: 100%;
   margin-left: 0px;
   margin-right: 0px;
-  margin-bottom: 10px;
 }
 .compare .fivee .visual .title,
 .compare .fivee .visual .graph {
