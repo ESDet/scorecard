@@ -1,5 +1,5 @@
 - cache(@school.cache_key, condition: @school.can_cache?) do
-  .container_12
+  #actions.container_12
     .middle
       .breadcrumbs
         %a.back-arrow-icon(href="#")
@@ -174,4 +174,15 @@
       }
       moveText();
       w.resize(function() { moveText(); });
+
+      var nav = $("#actions");
+      var pos = nav.position();
+      $(window).scroll(function() {
+        var windowpos = $(window).scrollTop();
+        if (windowpos >= pos.top) {
+          nav.addClass("stick");
+        } else {
+          nav.removeClass("stick");
+        }
+      });
     });

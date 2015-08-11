@@ -533,6 +533,11 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   margin-bottom: 10px;
 }
 
+#actions {
+  background-color: white;
+  z-index: 1000;
+}
+
 .breadcrumbs {
   float: left;
   padding: 10px 5px 10px 0px;
@@ -1020,4 +1025,10 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   top: 90px;
   left: 40%;
   &:hover { color: white; }
+}
+
+.stick {
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid $gainsboro;
 }
