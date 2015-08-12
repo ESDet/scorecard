@@ -944,7 +944,7 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   & > .item {
     padding: 7px 0 0 18px;
     display: inline-block;
-    width: 25%;
+    width: 38%;
     white-space: nowrap;
     float: left;
     font-family: 'Lato Bold';
@@ -962,9 +962,9 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
       & > a { color: white; }
     }
   }
-  & > .item:nth-of-type(4) {
+  & > .item:nth-of-type(3) {
     float: right;
-    .btn { float: right; }
+    width: 22%;
   }
 }
 
