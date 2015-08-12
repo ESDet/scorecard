@@ -32,7 +32,6 @@
 }
 
 @media only screen and (max-width: 990px) {
-  .info-bar > .item:not(:nth-of-type(4)) { width: 20%; }
   #performance .stat-region .content.four.bar {
     & > .visual {
       width: 40%;
@@ -208,16 +207,4 @@
 
 @media only screen and (max-width: 400px) {
   .home.middle .container_12.video { height: 210px; }
-  .nav-actions { width: 60px; }
-  .nav-actions > .print-icon {
-    margin-right: 5px;
-  }
-  .nav-actions > .download-icon {
-    margin-left: 5px;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .nav-actions > .download-icon { margin-top: 15px; }
-  .nav-actions > .print-icon { margin-top: 0px; }
 }
