@@ -14,6 +14,7 @@
     var ajax = false;
     var listSpinner = null;
     var searching = false;
+    var schoolIds = #{@school_ids.split(",").to_json};
 
     $(function(e) {
       var map = Map({
@@ -40,6 +41,10 @@
         }
       });
 
+      $(schoolIds).each(function(i, id) {
+        $('#' + id).attr('checked', 'checked');
+      });
+
       $('body').on('change', 'input.compare-check', function(e) {
         var count = $('input.compare-check:checked').length;
         if (count > 4) {
@@ -58,7 +63,7 @@
         $('input.compare-check:checked').each(function(idx, el) {
           ids.push($(el).val());
         });
-        window.location = "/compare/?school_ids=" + ids.join(',');
+        window.location = "/compare?school_ids=" + ids.join(',');
         return false;
       });
     });
