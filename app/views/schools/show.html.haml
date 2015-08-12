@@ -42,7 +42,16 @@
         keyboard: false
       });
 
-      $('.back-arrow-icon').attr('href', document.referrer);
+      if (document.referrer.indexOf("?") != -1 || document.referrer.match(/schools$/)) {
+        $('.back-arrow-icon').attr('href', document.referrer);
+        var schoolIds = document.referrer.indexOf('&school_ids');
+        if (checkId == -1) {
+          $('.graph-icon').attr('href', document.referrer + "&school_ids=" + "#{@school.short_id}");
+        }
+      } else {
+        $('.back-arrow-icon').attr('href', "/");
+        $('.graph-icon').remove();
+      }
 
       if (!$('.overview-text').first().text().trim()) {
         $('#overview .fields')
