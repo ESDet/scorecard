@@ -20,5 +20,5 @@
 
   .float-right
     %label
-      = check_box_tag 'school_ids', school.short_id, false, :class => 'compare-check'
+      = check_box_tag 'school_ids', school.short_id, false, :class => 'compare-check', id: school.short_id
       Compare
