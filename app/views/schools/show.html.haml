@@ -5,6 +5,7 @@
         %a.back-arrow-icon(href="#")
         %h2= @school.display_name
       .nav-actions
+        %a.graph-icon(id="compare" title="Compare to other schools" href="")
         %a.print-icon(id="print" title="Print" target="_blank" href="/schools/#{@school.id}.pdf?disposition=inline")
         %a.download-icon(id="download" title="Download" href="/schools/#{@school.id}.pdf")
   .container_12.clear-floats.region-title(data-target="overview")
