@@ -3,7 +3,7 @@
     .compare
       .top
         .nav
-          %a.btn(href="#") Add schools
+          %a.btn(id="add-schools" href="#") Add schools
         #map
 
       - @schools.each do |s|
@@ -207,14 +207,19 @@
           boxZoom: false
         });
 
-        $('.nav a.btn').click(function() {
-          if (document.referrer.indexOf("/schools") != 0) {
-            window.history.back();
+        var lastPage = document.referrer;
+        if (lastPage.indexOf("/schools") != -1) {
+          if (lastPage.indexOf("&school_ids") != -1) {
+            $('#add-schools').attr('href',
+              lastPage.replace(/&school_ids.*/, "&school_ids=#{@school_ids}")
+            );
           } else {
-            document.location.href = "/";
+            $('#add-schools').attr('href', lastPage.referrer);
           }
-          return false;
-        });
+        } else {
+          $('#add-schools').attr('href', '/');
+        }
+
         $('.fivee').each(function(i, el) {
           var e = $(el);
           e.find('.visual > .square').appendTo(
