@@ -14,7 +14,7 @@
     var ajax = false;
     var listSpinner = null;
     var searching = false;
-    var schoolIds = #{@school_ids.split(",").to_json};
+    var schoolIds = #{(@school_ids || []).split(",").to_json};
 
     $(function(e) {
       var map = Map({
@@ -45,7 +45,7 @@
         $('#' + id).attr('checked', 'checked');
       });
 
-      $('body').on('change', 'input.compare-check', function(e) {
+      var compareCount = function() {
         var count = $('input.compare-check:checked').length;
         if (count > 4) {
           $(e.currentTarget).attr('checked', false);
@@ -55,8 +55,14 @@
         } else {
           $('a.do-compare').addClass('hide');
         }
+      };
+
+      $('body').on('change', 'input.compare-check', function(e) {
+        compareCount();
         return true;
       });
+
+      compareCount();
 
       $('a.do-compare').click(function(e) {
         ids = [];
