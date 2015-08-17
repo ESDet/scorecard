@@ -2,7 +2,9 @@ class SchoolsController < ApplicationController
   helper_method :format_phone
 
   def index
-    @school_ids = params[:school_ids]
+    school_ids = params[:school_ids]
+    school_ids = school_ids.split(",") if school_ids
+    @school_ids = school_ids.uniq[0..3].join(",") if school_ids
 
     if @grade.present? && !@grade.in?(["ecs", "k8", "hs", "high"])
       redirect_to root_path and return
