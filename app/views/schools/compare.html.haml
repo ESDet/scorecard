@@ -208,14 +208,8 @@
         });
 
         var lastPage = document.referrer;
-        if (lastPage.indexOf("/schools") != -1) {
-          if (lastPage.indexOf("&school_ids") != -1) {
-            $('#add-schools').attr('href',
-              lastPage.replace(/&school_ids.*/, "&school_ids=#{@school_ids}")
-            );
-          } else {
-            $('#add-schools').attr('href', lastPage.referrer);
-          }
+        if (lastPage.match(/schools/)) {
+          $('#add-schools').attr('href', localStorage.getItem('lastSearch')) ||  lastPage;
         } else {
           $('#add-schools').attr('href', '/');
         }

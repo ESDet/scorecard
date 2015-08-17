@@ -10,6 +10,8 @@
         - @schools.each do |s|
           = render 'item', { :school => s }
 
+  %a.do-compare.btn.hide{:href => '/'} Compare Selected Schools
+
   :javascript
     var ajax = false;
     var listSpinner = null;
@@ -45,13 +47,17 @@
         $('#' + id).attr('checked', 'checked');
       });
 
+      var selectedSchools = function() {
+        return $('input.compare-check:checked');
+      };
+
       var compareCount = function() {
-        var count = $('input.compare-check:checked').length;
-        if (count > 4) {
-          $(e.currentTarget).attr('checked', false);
-        }
+        var count = selectedSchools().length;
         if(count > 0) {
           $('a.do-compare').removeClass('hide');
+          if (count > 4) {
+            $(e.currentTarget).attr('checked', false);
+          }
         } else {
           $('a.do-compare').addClass('hide');
         }
@@ -69,9 +75,19 @@
         $('input.compare-check:checked').each(function(idx, el) {
           ids.push($(el).val());
         });
-        window.location = "/compare?school_ids=" + ids.join(',');
+        var schoolIdParams = "school_ids=" + ids.join(',');
+        var lastSearch;
+        if (location.href.match(/&school_ids/)) {
+          lastSearch = location.href.replace(
+            /school_ids.*/,
+            "school_ids=" + ids.join(',')
+          );
+        } else {
+          lastSearch = location.href + "&" + schoolIdParams
+        }
+        localStorage.setItem('lastSearch', lastSearch);
+        window.location = "/compare?" + schoolIdParams;
         return false;
       });
     });
 
-  %a.do-compare.btn.hide{:href => '#'} Compare Selected Schools

@@ -43,13 +43,22 @@
       });
 
       var lastPage = document.referrer;
-      if (lastPage.indexOf("?") != -1 || lastPage.match(/schools$/)) {
+      var lastSearch = localStorage.getItem('lastSearch');
+      if (lastPage.match(/schools/)) {
         $('.back-arrow-icon').attr('href', lastPage);
-        if (lastPage.indexOf('&school_ids') != -1) {
-          $('.graph-icon').attr('href',
-            lastPage.replace(/school_ids.*/, "school_ids=#{@school.short_id}")
-          );
+        var schoolId = "#{@school.short_id}";
+        if (lastPage.match(/&school_ids/)) {
+          if (lastPage.indexOf(schoolId) != -1) {
+            $('.graph-icon').attr('href', lastSearch);
+          } else {
+            $('.graph-icon').attr('href', lastSearch + "," + schoolId);
+          }
+        } else {
+          $('.graph-icon').attr('href', lastPage + "&school_ids=" + schoolId);
         }
+      } else if (lastPage.match(/compare/)) {
+        $('.back-arrow-icon').attr('href', lastPage);
+        $('.graph-icon').attr('href', lastPage);
       } else {
         $('.back-arrow-icon').attr('href', "/");
         $('.graph-icon').remove();

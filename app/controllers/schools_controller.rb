@@ -250,9 +250,8 @@ class SchoolsController < ApplicationController
 
   def compare
     redirect_to root_path and return unless params[:school_ids]
-    @school_ids = params[:school_ids]
 
-    @schools = @school_ids.split(",").map do |i|
+    @schools = params[:school_ids].split(",").map do |i|
       id, school_type = i.split("-")[0..1]
       school_data = fetch_school_data(id, school_type)
       school = SchoolData.new school_data["data"].
