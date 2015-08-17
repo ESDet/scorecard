@@ -51,7 +51,7 @@ body.schools-index { height: 100%; }
 .centered { text-align: center; }
 .auto-margin { margin: auto; }
 .left-text { text-align: left; }
-.hide { display: none; }
+.hide { display: none !important; }
 .inline { display: inline-block; }
 .relative { position: relative; }
 .rounded {
