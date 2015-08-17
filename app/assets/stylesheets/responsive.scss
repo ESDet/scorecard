@@ -203,6 +203,28 @@
   .home.middle .container_12.video { height: 300px; }
   .schools-wrapper > .schools-map-wrapper { display: none; }
   .schools-wrapper > .results { height: 100%; }
+  .compare > .top > #map { display: none; }
+  .compare > .top > .nav,
+  .compare > .school {
+    width: 80%;
+    margin: auto;
+    display: block;
+    float: none;
+  }
+  .compare .school:nth-of-type(5) { margin: auto; }
+  .scroll {
+    float: right;
+    margin-right: 10px;
+    width: 70px;
+    text-align: right;
+    font-size: 21px;
+  }
+  .do-compare.btn {
+    top: initial;
+    left: initial;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 
 @media only screen and (max-width: 400px) {
