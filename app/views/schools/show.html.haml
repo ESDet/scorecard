@@ -198,8 +198,8 @@
 
       var nav = $("#actions");
       var pos = nav.position();
-      $(window).scroll(function() {
-        var windowpos = $(window).scrollTop();
+      w.scroll(function() {
+        var windowpos = w.scrollTop();
         if (windowpos >= pos.top) {
           nav.addClass("stick");
         } else {

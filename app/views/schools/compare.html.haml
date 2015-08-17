@@ -4,6 +4,10 @@
       .top
         .nav
           %a.btn(id="add-schools" href="#") Add schools
+          .scroll.right
+            %a &#x276f;
+          .scroll.left
+            %a &#x276e;
         #map
 
       - @schools.each do |s|
@@ -220,5 +224,28 @@
             e.find('.visual > .wrapper')
           );
         });
+
+        if ($(window).width() < 700) {
+          $('.compare > .school:not(:nth-of-type(2))').
+            addClass('hide');
+          $('.scroll.right').click(function() {
+            var currentSchool = $('.compare > .school').not('.hide').first();
+            var next = currentSchool.next();
+            if (next.hasClass('school')) {
+              currentSchool.addClass('hide');
+              next.removeClass('hide');
+            }
+            return false;
+          });
+          $('.scroll.left').click(function() {
+            var currentSchool = $('.compare > .school').not('.hide').first();
+            var previous = currentSchool.prev();
+            if (previous.hasClass('school')) {
+              currentSchool.addClass('hide');
+              previous.removeClass('hide');
+            }
+            return false;
+          });
+        }
 
       });
