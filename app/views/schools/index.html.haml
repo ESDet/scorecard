@@ -57,16 +57,17 @@
           $('a.do-compare').removeClass('hide');
           if (count > 4) {
             $(e.currentTarget).attr('checked', false);
+            return false;
           }
         } else {
           $('a.do-compare').addClass('hide');
         }
+        return true;
       };
 
-      $('body').on('change', 'input.compare-check', function(e) {
-        compareCount();
-        return true;
-      });
+      $('.compare-check').
+        on('click', compareCount).
+        on('touchend', compareCount);
 
       compareCount();
 
