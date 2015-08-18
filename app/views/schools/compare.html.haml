@@ -4,10 +4,14 @@
       .top
         .nav
           %a.btn(id="add-schools" href="#") Add schools
-          .scroll.right.hide
-            %a &#x276f;
-          .scroll.left.hide
-            %a &#x276e;
+          .scroll
+            %span &nbsp;
+            .right.hide
+              %a &#x276f;
+          .scroll
+            %span &nbsp;
+            .left.hide
+              %a &#x276e;
         #map
 
       - @schools.each do |s|
@@ -228,24 +232,44 @@
         if ($(window).width() < 700) {
           $('.compare > .school:not(:nth-of-type(2))').
             addClass('hide');
-          $('.scroll').removeClass('hide');
-          $('.scroll.right').click(function() {
-            var currentSchool = $('.compare > .school').not('.hide').first();
-            var next = currentSchool.next();
-            if (next.hasClass('school')) {
+          $('.scroll > div').removeClass('hide');
+
+          var hideScroll = function(nextSchool, scrollEl) {
+            if (!nextSchool.hasClass('school')) {
+              scrollEl.addClass('hide');
+            } else {
+              $('.scroll > div').removeClass('hide');
+            }
+          };
+
+          var showSchool = function(arg) {
+            var currentSchool = $('.compare > .school').
+              not('.hide').first();
+
+            var showSchool, arrowEl;
+            if (arg == 'next') {
+              showSchool = currentSchool.next();
+              hideScroll(showSchool.next(), $('.scroll > .right'));
+            } else if (arg == 'prev') {
+              showSchool = currentSchool.prev();
+              hideScroll(showSchool.prev(), $('.scroll > .left'));
+            }
+
+            if (showSchool.hasClass('school')) {
               currentSchool.addClass('hide');
-              next.removeClass('hide');
+              showSchool.removeClass('hide');
             }
             return false;
-          });
-          $('.scroll.left').click(function() {
-            var currentSchool = $('.compare > .school').not('.hide').first();
-            var previous = currentSchool.prev();
-            if (previous.hasClass('school')) {
-              currentSchool.addClass('hide');
-              previous.removeClass('hide');
-            }
-            return false;
-          });
+          };
+
+          hideScroll(
+            $('.compare > .school:nth-of-type(2)').prev(),
+            $('.scroll > .left')
+          );
+
+          var showNext = function() { showSchool('next'); }
+          var showPrev = function() { showSchool('prev'); }
+          $('.scroll > .right').click(showNext);
+          $('.scroll > .left').click(showPrev);
         }
       });
