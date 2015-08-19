@@ -1,19 +1,19 @@
 .container_12
   .middle
-    .compare
-      .top
-        .nav
-          %a.btn(id="add-schools" href="#") Add schools
-          .scroll
-            %span &nbsp;
-            .right.hide
-              %a &#x276f;
-          .scroll
-            %span &nbsp;
-            .left.hide
-              %a &#x276e;
-        #map
+    .top
+      .nav
+        %a.btn(id="add-schools" href="#") Add schools
+        .scroll
+          %span &nbsp;
+          .right.hide
+            %a &#x276f;
+        .scroll
+          %span &nbsp;
+          .left.hide
+            %a &#x276e;
+      #map
 
+    .compare
       - @schools.each do |s|
         .school
           .group
@@ -229,7 +229,8 @@
           );
         });
 
-        if ($(window).width() < 700) {
+        var w = $(window);
+        if (w.width() < 700) {
           $('.compare > .school:not(:nth-of-type(2))').
             addClass('hide');
           $('.scroll > div').removeClass('hide');
@@ -272,4 +273,16 @@
           $('.scroll > .right').click(showNext);
           $('.scroll > .left').click(showPrev);
         }
+
+
+        var nav = $(".top").first();
+        var pos = nav.position();
+        w.scroll(function() {
+          var windowpos = w.scrollTop();
+          if (windowpos >= pos.top) {
+            nav.addClass("stick");
+          } else {
+            nav.removeClass("stick");
+          }
+      });
       });
