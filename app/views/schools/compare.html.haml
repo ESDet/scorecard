@@ -274,15 +274,16 @@
           $('.scroll > .left').click(showPrev);
         }
 
-
-        var nav = $(".top").first();
-        var pos = nav.position();
-        w.scroll(function() {
-          var windowpos = w.scrollTop();
-          if (windowpos >= pos.top) {
-            nav.addClass("stick");
-          } else {
-            nav.removeClass("stick");
-          }
-      });
+        if (w.width() < 501) {
+          var nav = $(".top").first();
+          var pos = nav.position();
+          w.scroll(function() {
+            var windowpos = w.scrollTop();
+            if (windowpos >= pos.top) {
+              nav.addClass("stick");
+            } else {
+              nav.removeClass("stick");
+            }
+          });
+        }
       });
