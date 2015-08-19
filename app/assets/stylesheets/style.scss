@@ -1031,4 +1031,5 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   position: fixed;
   top: 0;
   border-bottom: 1px solid $gainsboro;
+  z-index: 10000;
 }
