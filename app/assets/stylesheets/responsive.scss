@@ -200,6 +200,7 @@
 
 @media only screen and (max-width: 700px) {
   .home.middle .container_12.video { height: 400px; }
+  .school-list .school .info { width: 50%; }
   .top > .middle #map { display: none; }
   .top > .nav {
     display: block;
@@ -230,7 +231,6 @@
     bottom: 20px;
     right: 20px;
   }
-  .school-list .school .info { width: 60%; }
 }
 
 @media only screen and (max-width: 400px) {
