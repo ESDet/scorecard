@@ -100,21 +100,21 @@
 
     var showGradeFilters = function(grade) {
       if (grade == 'ec') {
-        $('#ec-filters').show();
-        $('#k8-filters').hide();
-        $('#hs-filters').hide();
+        $('#ec-filters').removeClass('hide');
+        $('#k8-filters').addClass('hide');
+        $('#hs-filters').addClass('hide');
       } else if (grade == 'k8') {
-        $('#ec-filters').hide();
-        $('#k8-filters').show();
-        $('#hs-filters').hide();
+        $('#ec-filters').addClass('hide');
+        $('#k8-filters').removeClass('hide');
+        $('#hs-filters').addClass('hide');
       } else if (grade == 'hs') {
-        $('#ec-filters').hide();
-        $('#k8-filters').hide();
-        $('#hs-filters').show();
+        $('#ec-filters').addClass('hide');
+        $('#k8-filters').addClass('hide');
+        $('#hs-filters').removeClass('hide');
       } else if (grade == 'none') {
-        $('#ec-filters').hide();
-        $('#k8-filters').hide();
-        $('#hs-filters').hide();
+        $('#ec-filters').addClass('hide');
+        $('#k8-filters').addClass('hide');
+        $('#hs-filters').addClass('hide');
       }
       $('#grade').attr('value', grade);
 
