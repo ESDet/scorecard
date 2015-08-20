@@ -244,8 +244,14 @@
             $('.compare > .school:nth-of-type(1)').prev(),
             $('.scroll > .left')
           );
-          var showNext = function() { compare.showSchool('next'); }
-          var showPrev = function() { compare.showSchool('prev'); }
+          var showNext = function() {
+            compare.showSchool('next');
+            return false;
+          }
+          var showPrev = function() {
+            compare.showSchool('prev');
+            return false;
+          }
           $('.scroll > .right').click(showNext);
           $('.scroll > .left').click(showPrev);
         }
