@@ -197,12 +197,7 @@
 
 @media only screen and (max-width: 700px) {
   .home.middle .container_12.video { height: 400px; }
-}
-
-@media only screen and (max-width: 500px) {
-  .home.middle .container_12.video { height: 300px; }
-  .schools-wrapper > .schools-map-wrapper { display: none; }
-  .schools-wrapper > .results { height: 100%; }
+  .top > #map { display: none; }
   .compare {
     display: block;
     width: 80%;
@@ -219,7 +214,6 @@
     margin: auto;
   }
   .top > .nav > .name h2 { margin: 10px 0 0 0; }
-  .top > #map { display: none; }
   .compare > .school {
     width: 100%;
     margin: auto;
@@ -228,6 +222,12 @@
   }
   .top > .nav a { display: inline-block; }
   .compare .school:nth-of-type(5) { margin: auto; }
+}
+
+@media only screen and (max-width: 500px) {
+  .home.middle .container_12.video { height: 300px; }
+  .schools-wrapper > .schools-map-wrapper { display: none; }
+  .schools-wrapper > .results { height: 100%; }
   .do-compare.btn {
     top: initial;
     left: initial;

@@ -9,6 +9,7 @@
 //= require three_bar_graph
 //= require pie
 //= require five_essentials
+//= require compare
 
 $(function() {
   var menu = $('.menu').first();
