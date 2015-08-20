@@ -1,7 +1,7 @@
 .container_12
-  .middle
-    .top
-      .nav
+  .top
+    .nav
+      .middle
         %a.btn(id="add-schools" href="#") Add schools
         .scroll
           %span &nbsp;
@@ -11,9 +11,11 @@
           %span &nbsp;
           .left.hide
             %a(href="") &#x276e;
-    .top
+  .top
+    .middle
       #map
 
+  .middle
     .compare
       - @schools.each do |s|
         .school

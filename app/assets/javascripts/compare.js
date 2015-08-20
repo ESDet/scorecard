@@ -4,20 +4,32 @@ var Compare = function(w) {
   var _navPos = _nav.position();
 
   var _updateNavName = function(windowpos, navPos) {
-    if (_w.width() < 701) {
-      var currentSchool = $('.compare > .school').not('.hide').first();
-      var schoolNameLine = currentSchool.find('.group:nth-of-type(1) .line:nth-of-type(1)');
-      if (windowpos >= navPos.top) {
-        var newName = schoolNameLine.find('.name');
-        var oldName = $('.nav .name');
-        if (oldName.length == 0) {
-          newName.clone().appendTo('.nav');
-        } else if (newName != oldName) {
-          oldName.remove();
-          newName.clone().appendTo('.nav');
-        }
+    if (_w.width() > 701) {
+      var currentSchools = $('.compare > .school').
+        not('.hide');
+      var schoolNameLines = currentSchools.
+        find('.group:nth-of-type(1) .line:nth-of-type(1)');
+      if (windowpos >= schoolNameLines.first().top) {
+        console.log(schoolNameLines);
       } else {
         $('.nav .name').remove();
+      }
+    } else {
+      if (windowpos >= navPos.top) {
+        var currentSchool = $('.compare > .school').
+          not('.hide').first();
+        var schoolNameLine = currentSchool.
+          find('.group:nth-of-type(1) .line:nth-of-type(1)');
+        var newName = schoolNameLine.find('.name');
+        var oldName = $('.nav .middle .name');
+        if (oldName.length == 0) {
+          newName.clone().appendTo('.nav .middle');
+        } else if (newName != oldName) {
+          oldName.remove();
+          newName.clone().appendTo('.nav .middle');
+        }
+      } else {
+        $('.nav .middle .name').remove();
       }
     }
   };

@@ -17,6 +17,9 @@
   #nav a.btn:hover { background-color: white; }
 }
 
+@media only screen and (max-width: 1200px) {
+}
+
 @media only screen and (max-width: 1175px) {
   .middle { width: 85%; }
 }
@@ -197,30 +200,23 @@
 
 @media only screen and (max-width: 700px) {
   .home.middle .container_12.video { height: 400px; }
-  .top > #map { display: none; }
-  .compare {
-    display: block;
-    width: 80%;
-    margin: auto;
-  }
-  .top {
-    width: 100%;
-    margin: 0;
-  }
-  .top.stick { width: 95%; }
+  .top > .middle #map { display: none; }
   .top > .nav {
     display: block;
     width: 80%;
     margin: auto;
   }
-  .top > .nav > .name h2 { margin: 10px 0 0 0; }
+  .compare {
+    display: block;
+    width: 80%;
+    margin: auto;
+  }
   .compare > .school {
     width: 100%;
     margin: auto;
     display: inline-block;
     float: none;
   }
-  .top > .nav a { display: inline-block; }
   .compare .school:nth-of-type(5) { margin: auto; }
 }
 
