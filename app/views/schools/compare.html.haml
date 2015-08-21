@@ -5,11 +5,11 @@
         %a.btn(id="add-schools" href="#") Add schools
         .scroll
           %span &nbsp;
-          .right.hide
+          .right
             %a(href="") &#x276f;
         .scroll
           %span &nbsp;
-          .left.hide
+          .left
             %a(href="") &#x276e;
   .top
     .middle
@@ -240,22 +240,16 @@
         w.resize(compare.setStickyNav);
         w.scroll(compare.setStickyNav);
 
-        if (w.width() < 701) {
-          compare.hideSchools(1);
-          compare.hideScroll(
-            $('.compare > .school:nth-of-type(1)').prev(),
-            $('.scroll > .left')
-          );
-          var showNext = function() {
-            compare.showSchool('next');
-            return false;
-          }
-          var showPrev = function() {
-            compare.showSchool('prev');
-            return false;
-          }
-          $('.scroll > .right').click(showNext);
-          $('.scroll > .left').click(showPrev);
+        var showNext = function() {
+          compare.showSchool('next');
+          return false;
         }
+        var showPrev = function() {
+          compare.showSchool('prev');
+          return false;
+        }
+
+        $('.scroll > .right').click(showNext);
+        $('.scroll > .left').click(showPrev);
 
       });

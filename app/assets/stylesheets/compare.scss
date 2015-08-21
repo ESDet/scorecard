@@ -21,6 +21,8 @@
 }
 .scroll:nth-of-type(1) span { float: left; }
 .scroll:nth-of-type(2) span { float: right; }
+.scroll .left,
+.scroll .right { display: none; }
 
 .top {
   width: 100%;
@@ -34,7 +36,9 @@
   padding: 15px 0;
 }
 .top .nav .middle { margin-bottom: 0; }
-.top .nav .name h2 { margin: 10px 0 0 0; }
+.top .nav .middle .name {
+}
+.top .nav .middle .name h2 { margin: 10px 0 0 0; }
 .top .nav a { display: inline-block; }
 .top #map {
   width: 100%;
@@ -43,6 +47,14 @@
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
+}
+
+.nameStick {
+  position: fixed;
+  z-index: 10000;
+  top: 60px;
+  width: 10%;
+  background-color: white;
 }
 
 .compare .school {
