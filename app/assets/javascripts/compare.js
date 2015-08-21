@@ -39,6 +39,7 @@ var Compare = function(w) {
   };
 
   var _showSchool = function(arg) {
+    if (w.width() < 501)
     var currentSchool = $('.compare > .school').
       not('.hide').first();
 
@@ -54,6 +55,7 @@ var Compare = function(w) {
     if (showSchool.hasClass('school')) {
       currentSchool.addClass('hide');
       showSchool.removeClass('hide');
+      showSchool.css('display', 'inline-block');
       _updateNavName(_w.scrollTop(), _navPos);
     }
     return false;
