@@ -23,6 +23,12 @@
 .scroll:nth-of-type(2) span { float: right; }
 .scroll .left,
 .scroll .right { display: none; }
+.left-arrow-icon:before {
+  content: "\276e";
+}
+.right-arrow-icon:before {
+  content: "\276f";
+}
 
 .top {
   width: 100%;

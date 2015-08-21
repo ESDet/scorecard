@@ -6,11 +6,13 @@
         .scroll
           %span &nbsp;
           .right
-            %a(href="") &#x276f;
+            %a(href="")
+              .right-arrow-icon
         .scroll
           %span &nbsp;
           .left
-            %a(href="") &#x276e;
+            %a(href="")
+              .left-arrow-icon
   .top
     .middle
       #map
@@ -251,5 +253,13 @@
 
         $('.scroll > .right').click(showNext);
         $('.scroll > .left').click(showPrev);
+
+        if (w.width() < 501) {
+          compare.hideSchools(1);
+          compare.hideScroll(
+            $('.compare > .school:nth-of-type(1)').prev(),
+            $('.scroll > .left')
+          );
+        }
 
       });
