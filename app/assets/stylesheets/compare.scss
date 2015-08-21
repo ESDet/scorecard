@@ -24,10 +24,12 @@
 .scroll .left,
 .scroll .right { display: none; }
 .left-arrow-icon:before {
-  content: "\276e";
+  font-size: 31px;
+  content: "\003C";
 }
 .right-arrow-icon:before {
-  content: "\276f";
+  font-size: 31px;
+  content: "\003E";
 }
 
 .top {
