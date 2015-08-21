@@ -4,17 +4,7 @@ var Compare = function(w) {
   var _navPos = _nav.position();
 
   var _updateNavName = function(windowpos, navPos) {
-    if (_w.width() > 701) {
-      var currentSchools = $('.compare > .school').
-        not('.hide');
-      var schoolNameLines = currentSchools.
-        find('.group:nth-of-type(1) .line:nth-of-type(1)');
-      if (windowpos >= schoolNameLines.first().top) {
-        console.log(schoolNameLines);
-      } else {
-        $('.nav .name').remove();
-      }
-    } else {
+    if (w.width() < 541) {
       if (windowpos >= navPos.top) {
         var currentSchool = $('.compare > .school').
           not('.hide').first();
