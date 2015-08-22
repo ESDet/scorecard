@@ -239,7 +239,10 @@
         var w = $(window);
         var compare = Compare(w);
 
-        w.resize(compare.setStickyNav);
+        w.resize(function() {
+          compare.setStickyNav();
+          compare.setHidden();
+        });
         w.scroll(compare.setStickyNav);
 
         var showNext = function() {
@@ -254,12 +257,12 @@
         $('.scroll > .right').click(showNext);
         $('.scroll > .left').click(showPrev);
 
-        if (w.width() < 501) {
+        if (w.width() < 1272) {
           compare.hideSchools(1);
           compare.hideScroll(
             $('.compare > .school:nth-of-type(1)').prev(),
             $('.scroll > .left')
           );
         }
-
+        compare.setHidden();
       });
