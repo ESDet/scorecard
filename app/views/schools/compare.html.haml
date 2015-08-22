@@ -260,4 +260,8 @@
         $('.scroll > .left').click(showPrev);
 
         compare.setHidden();
+        compare.hideScroll(
+          $('.compare > .school:nth-of-type(1)').prev(),
+          $('.scroll > .left')
+        );
       });
