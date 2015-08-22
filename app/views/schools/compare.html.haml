@@ -237,11 +237,14 @@
         });
 
         var w = $(window);
+        var windowWidth = w.width();
         var compare = Compare(w);
 
         w.resize(function() {
-          compare.setStickyNav();
-          compare.setHidden();
+          if (windowWidth != w.width()) {
+            compare.setStickyNav();
+            compare.setHidden();
+          }
         });
         w.scroll(compare.setStickyNav);
 
@@ -253,16 +256,8 @@
           compare.showSchool('prev');
           return false;
         }
-
         $('.scroll > .right').click(showNext);
         $('.scroll > .left').click(showPrev);
 
-        if (w.width() < 1272) {
-          compare.hideSchools(1);
-          compare.hideScroll(
-            $('.compare > .school:nth-of-type(1)').prev(),
-            $('.scroll > .left')
-          );
-        }
         compare.setHidden();
       });

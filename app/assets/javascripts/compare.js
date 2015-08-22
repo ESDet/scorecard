@@ -4,32 +4,22 @@ var Compare = function(w) {
   var _navPos = _nav.position();
 
   var _updateNavName = function(windowpos, navPos) {
-    if (w.width() < 541) {
-      if (windowpos >= navPos.top) {
-        var currentSchool = $('.compare > .school').
-          not('.hide').first();
-        var schoolNameLine = currentSchool.
-          find('.group:nth-of-type(1) .line:nth-of-type(1)');
-        var newName = schoolNameLine.find('.name');
-        var oldName = $('.nav .middle .name');
-        if (oldName.length == 0) {
-          newName.clone().appendTo('.nav .middle');
-        } else if (newName != oldName) {
-          oldName.remove();
-          newName.clone().appendTo('.nav .middle');
-        }
-      } else {
-        $('.nav .middle .name').remove();
+    if (w.width() < 541 && windowpos >= navPos.top) {
+      var currentSchool = $('.compare > .school').
+        not('.hide').first();
+      var schoolNameLine = currentSchool.
+        find('.group:nth-of-type(1) .line:nth-of-type(1)');
+      var newName = schoolNameLine.find('.name');
+      var oldName = $('.nav .middle .name');
+      if (oldName.length == 0) {
+        newName.clone().appendTo('.nav .middle');
+      } else if (newName != oldName) {
+        oldName.remove();
+        newName.clone().appendTo('.nav .middle');
       }
     } else {
       $('.nav .middle .name').remove();
     }
-  };
-
-  var _hideSchools = function(index) {
-    $('.compare > .school:not(:nth-of-type(' + index + '))').
-      addClass('hide');
-    $('.scroll > div').removeClass('hide');
   };
 
   var _hideScroll = function(nextSchool, scrollEl) {
@@ -156,7 +146,6 @@ var Compare = function(w) {
   return {
     updateNavName: _updateNavName,
     hideScroll: _hideScroll,
-    hideSchools: _hideSchools,
     showSchool: _showSchool,
     setStickyNav: _setStickyNav,
     setHidden: _setHidden
