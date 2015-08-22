@@ -45,59 +45,46 @@ var Compare = function(w) {
     var width = _w.width();
     if (width > 1271) {
       schools.removeClass('hide').
-        css('display', 'inline-block').
-        css('margin-left', '0');
+        css('display', 'inline-block');
     } else if (width < 1272 && width > 801) {
       $(schools[0]).
         removeClass('hide').
-        css('display', 'inline-block').
-        css('margin-left', '6%');
+        css('display', 'inline-block');
       $(schools[1]).
         removeClass('hide').
-        css('display', 'inline-block').
-        css('margin-left', '0');
+        css('display', 'inline-block');
       $(schools[2]).
         removeClass('hide').
-        css('display', 'inline-block').
-        css('margin-left', '0');
+        css('display', 'inline-block');
       $(schools[3]).
         addClass('hide').
-        css('display', 'none').
-        css('margin-left', '0');
+        css('display', 'none');
     } else if (width < 802 && width > 540) {
       $(schools[0]).
         removeClass('hide').
-        css('display', 'inline-block').
-        css('margin-left', '2%');
+        css('display', 'inline-block');
       $(schools[1]).
         removeClass('hide').
-        css('display', 'inline-block').
-        css('margin-left', '0');
+        css('display', 'inline-block');
       $(schools[2]).
         addClass('hide').
-        css('display', 'none').
-        css('margin-left', '0');
+        css('display', 'none');
       $(schools[3]).
         addClass('hide').
-        css('display', 'none').
-        css('margin-left', '0');
+        css('display', 'none');
     } else if (width < 541) {
       $(schools[0]).
         removeClass('hide').
-        css('display', 'inline-block').
-        css('margin-left', '2%');
+        css('display', 'inline-block');
       $(schools[1]).
         addClass('hide').
-        css('display', 'none').
-        css('margin-left', '0');
+        css('display', 'none');
       $(schools[2]).
         addClass('hide').
-        css('display', 'none').
-        css('margin-left', '0');
+        css('display', 'none');
       $(schools[3]).
         addClass('hide').
-        css('display', 'none').
-        css('margin-left', '0');
+        css('display', 'none');
     }
   };
 
