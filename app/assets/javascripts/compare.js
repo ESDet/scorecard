@@ -21,6 +21,8 @@ var Compare = function(w) {
       } else {
         $('.nav .middle .name').remove();
       }
+    } else {
+      $('.nav .middle .name').remove();
     }
   };
 
