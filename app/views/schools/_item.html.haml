@@ -1,12 +1,12 @@
-%a.school{href: school_path(school.id), "data-tid" => school.tid}
-  .icon
+.school{"data-tid" => school.tid}
+  %a.icon{href: school_path(school.id)}
     - if school.earlychild?
       %img(src="#{school.early_childhood_image(:mini, nil)}")
     - else
       .rounded-square.green-background.small
         .grade
           = school.excellent_schools_grade
-  .info.float-left
+  %a.info.float-left{href: school_path(school.id)}
     %h3= school.display_name
     - grades = school.grades_served || school.age_groups
     - if grades.size > 1
@@ -19,6 +19,6 @@
       %div= "Age Groups: #{grades}"
 
   .float-right
+    = check_box_tag 'school_ids', school.short_id, false, :class => 'compare-check checkbox-icon', id: school.short_id
     %label
-      = check_box_tag 'school_ids', school.short_id, false, :class => 'compare-check', id: school.short_id
-      Compare
+    %span.compare-icon

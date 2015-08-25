@@ -52,12 +52,18 @@
       };
 
       var compareCount = function() {
+        var checkbox = $(this).find('> .checkbox-icon');
+        if (checkbox.prop('checked')) {
+          checkbox.prop('checked', false);
+        } else {
+          checkbox.prop('checked', true);
+        }
+
         var count = selectedSchools().length;
-        if(count > 0) {
+        if (count > 0) {
           $('a.do-compare').removeClass('hide');
           if (count > 4) {
-            $(e.currentTarget).attr('checked', false);
-            return false;
+            checkbox.removeAttr('checked');
           }
         } else {
           $('a.do-compare').addClass('hide');
@@ -65,9 +71,7 @@
         return true;
       };
 
-      $('.compare-check').
-        on('click', compareCount).
-        on('touchend', compareCount);
+      $('.school .float-right').on('click', compareCount);
 
       compareCount();
 

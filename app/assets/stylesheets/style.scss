@@ -160,6 +160,12 @@ a.external, a.external:visited {
 
 .school-list {
   .school {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     display: block;
     height: 70px;
     clear: left;
@@ -174,7 +180,7 @@ a.external, a.external:visited {
     }
     .info {
       margin-left: 5px;
-      width: 67%;
+      width: 60%;
       color: $onyx;
       font-family: 'Lato Regular';
       h3 {
@@ -183,6 +189,10 @@ a.external, a.external:visited {
         color: $navy;
         font-family: 'Aleo Regular';
       }
+    }
+    .float-right {
+      width: initial;
+      height: initial;
     }
   }
   .school:hover {
