@@ -203,9 +203,10 @@
               .line.list.clear-floats
                 %h3 Facilities
                 = render 'field_list', list: s.facilities[0..5]
-              .line.list
-                %h3 AP Classes
-                = render 'field_list', list: s.ap_classes[0..5]
+              - if s.high?
+                .line.list
+                  %h3 AP Classes
+                  = render 'field_list', list: s.ap_classes[0..5]
 
     :javascript
       $(function() {
