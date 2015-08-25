@@ -119,3 +119,43 @@
 .compare .school .group .line .float-right {
   font-family: 'Aleo Bold';
 }
+
+.compare-icon {
+  display: inline-block;
+  width: 55px;
+  height: 40px;
+  background: url(/assets/compare-icon-text.png);
+  background-repeat: no-repeat;
+  background-position: 9px 0px;
+  background-size: 76%;
+}
+
+input.checkbox-icon[type="checkbox"] {
+  display: none;
+}
+
+input.checkbox-icon[type="checkbox"] + label {
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  border: 1px solid grey;
+  background-color: white;
+}
+
+input.checkbox-icon[type="checkbox"]:checked + label {
+  cursor: pointer;
+  display: inline-block;
+  background-color: $green;
+}
+
+//input.checkbox-icon[type="checkbox"]:checked:before + label {
+//  content: "\2714\0020";
+//  color: white;
+//  font-size: 14px;
+//  padding-left: 3px;
+//}
