@@ -202,11 +202,17 @@
                     .unchecked
               .line.list.clear-floats
                 %h3 Facilities
-                = render 'field_list', list: s.facilities[0..5]
+                - if s.facilities.present?
+                  = render 'field_list', list: s.facilities[0..5]
+                - else
+                  None reported for this school
               - if s.high?
                 .line.list
                   %h3 AP Classes
-                  = render 'field_list', list: s.ap_classes[0..5]
+                  - if s.ap_classes.present?
+                    = render 'field_list', list: s.ap_classes[0..5]
+                  - else
+                    None reported for this school
 
     :javascript
       $(function() {
