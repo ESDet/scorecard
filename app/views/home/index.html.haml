@@ -7,7 +7,7 @@
 
     #search
       = form_tag '/schools', { :method => :get, :autocomplete => 'off', :id => 'school-search-form' } do
-        = text_field_tag :loc, params[:loc], :placeholder => 'Zip code or school name (optional)'
+        = text_field_tag :loc, params[:loc], :placeholder => '(optional) Zip code or school name'
         = hidden_field_tag :grade, nil
         .dropdown
           %a.trigger(data-group="grade" data-title="Grade Level" data-toggle="dropdown" href="#")
