@@ -1072,3 +1072,11 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
   border-bottom: 1px solid $gainsboro;
   z-index: 10000;
 }
+
+.home > .container_12 > .btn {
+  margin-right: 20px;
+  &:hover { color: white; }
+}
+.home #search {
+  margin-top: 30px;
+}

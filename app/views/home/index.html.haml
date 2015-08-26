@@ -5,6 +5,9 @@
 
     %h1 Find the best Detroit schools for your family.
 
+    %a.btn(href="/schools?grade=ec") See all Pre-K
+    %a.btn(href="/schools?grade=k8") See all K-8
+    %a.btn(href="/schools?grade=hs") See all HS
     #search
       = form_tag '/schools', { :method => :get, :autocomplete => 'off', :id => 'school-search-form' } do
         = text_field_tag :loc, params[:loc], :placeholder => '(optional) Zip code or school name'
