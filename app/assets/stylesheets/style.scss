@@ -192,7 +192,14 @@ a.external, a.external:visited {
     }
     .float-right {
       width: initial;
-      height: initial;
+      height: inherit;
+      .compare-icon { margin-left: 10px; }
+      .icon-text {
+        display: block;
+        font-size: 10px;
+        margin-left: 10px;
+        color: grey;
+      }
     }
   }
   .school:hover {
@@ -579,7 +586,29 @@ a, a:visited, a:active, a:hover, a.external, a.external:visited {
 
 .nav-actions {
   float: right;
-  width: 140px;
+  width: 150px;
+  padding: 5px;
+  .compare-icon,
+  .print-icon,
+  .download-icon {
+    float: right;
+  }
+  .compare-icon,
+  .print-icon { margin-right: 25px; }
+  .download-icon { margin-left: 5px; }
+  .icon-text {
+    font-family: 'Lato Regular';
+    display: block;
+    font-size: 8px;
+    color: #aeaeae;
+    margin-top: 25px;
+  }
+  .download-icon .icon-text {
+    margin-top: 13px;
+    margin-left: -15px;
+  }
+  .compare-icon .icon-text {
+  }
 }
 
 .region-title.closed {

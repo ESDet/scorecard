@@ -19,6 +19,9 @@
       %div= "Age Groups: #{grades}"
 
   .float-right
-    = check_box_tag 'school_ids', school.short_id, false, :class => 'compare-check checkbox-icon', id: school.short_id
-    %label
-    %span.compare-icon
+    .float-left
+      = check_box_tag 'school_ids', school.short_id, false, :class => 'compare-check checkbox-icon', id: school.short_id
+      %label
+    .float-right
+      %span.compare-icon
+      %span.icon-text COMPARE

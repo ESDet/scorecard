@@ -5,9 +5,12 @@
         %a.back-arrow-icon(href="#")
         %h2= @school.display_name
       .nav-actions
-        %a.graph-icon(id="compare" title="Compare to other schools" href="")
-        %a.print-icon(id="print" title="Print" target="_blank" href="/schools/#{@school.id}.pdf?disposition=inline")
         %a.download-icon(id="download" title="Download" href="/schools/#{@school.id}.pdf")
+          %span.icon-text DOWNLOAD
+        %a.print-icon(id="print" title="Print" target="_blank" href="/schools/#{@school.id}.pdf?disposition=inline")
+          %span.icon-text PRINT
+        %a.compare-icon(id="compare" title="Compare to other schools" href="")
+          %span.icon-text COMPARE
   .container_12.clear-floats.region-title(data-target="overview")
     %h2 OVERVIEW
   .container_12.info-region
@@ -49,19 +52,19 @@
         var schoolId = "#{@school.short_id}";
         if (lastPage.match(/&school_ids/)) {
           if (lastPage.indexOf(schoolId) != -1) {
-            $('.graph-icon').attr('href', lastSearch);
+            $('.compare-icon').attr('href', lastSearch);
           } else {
-            $('.graph-icon').attr('href', lastSearch + "," + schoolId);
+            $('.compare-icon').attr('href', lastSearch + "," + schoolId);
           }
         } else {
-          $('.graph-icon').attr('href', lastPage + "&school_ids=" + schoolId);
+          $('.compare-icon').attr('href', lastPage + "&school_ids=" + schoolId);
         }
       } else if (lastPage.match(/compare/)) {
         $('.back-arrow-icon').attr('href', lastPage);
-        $('.graph-icon').attr('href', lastPage);
+        $('.compare-icon').attr('href', lastPage);
       } else {
         $('.back-arrow-icon').attr('href', "/");
-        $('.graph-icon').remove();
+        $('.compare-icon').remove();
       }
 
       if (!$('.overview-text').first().text().trim()) {

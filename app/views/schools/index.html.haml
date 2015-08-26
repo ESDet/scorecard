@@ -52,7 +52,7 @@
       };
 
       var compareCount = function() {
-        var checkbox = $(this).find('> .checkbox-icon');
+        var checkbox = $(this).find('.checkbox-icon');
         if (checkbox.prop('checked')) {
           checkbox.prop('checked', false);
         } else {
@@ -71,7 +71,7 @@
         return true;
       };
 
-      $('.school .float-right').on('click', compareCount);
+      $('.school > .float-right').on('click', compareCount);
 
       compareCount();
 
