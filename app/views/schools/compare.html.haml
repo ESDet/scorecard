@@ -33,7 +33,8 @@
                 .float-right= s.street
               .line
                 .float-left Overall Rating
-                .float-right= image_tag s.early_childhood_image(:mini, nil), class: 'mini-el-icon'
+                .rating-image
+                  = image_tag s.early_childhood_image(:overall, nil), class: 'el-icon overall'
             - else
               .line.clear-floats
                 .float-left Type

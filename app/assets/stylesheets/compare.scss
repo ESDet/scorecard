@@ -123,6 +123,14 @@
   font-family: 'Aleo Bold';
 }
 
+.compare .school .group .line .rating-image {
+  display: inline-block;
+  img {
+    margin: 10px auto 0px auto;
+    display: block;
+  }
+}
+
 input.checkbox-icon[type="checkbox"] {
   display: none;
 }
