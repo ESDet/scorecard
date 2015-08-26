@@ -121,6 +121,7 @@
 }
 
 .compare-icon {
+  float: right;
   display: inline-block;
   width: 55px;
   height: 40px;
@@ -136,26 +137,28 @@ input.checkbox-icon[type="checkbox"] {
 
 input.checkbox-icon[type="checkbox"] + label {
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-top: 13px;
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+  width: 17px;
+  height: 17px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
   border: 1px solid grey;
   background-color: white;
 }
 
 input.checkbox-icon[type="checkbox"]:checked + label {
+  position: relative;
   cursor: pointer;
   display: inline-block;
   background-color: $green;
 }
 
-//input.checkbox-icon[type="checkbox"]:checked:before + label {
-//  content: "\2714\0020";
-//  color: white;
-//  font-size: 14px;
-//  padding-left: 3px;
-//}
+input.checkbox-icon[type="checkbox"]:checked + label:before {
+  position: absolute;
+  content: "\2714\0020";
+  color: white;
+  font-size: 14px;
+  padding-left: 2px;
+}
