@@ -27,54 +27,133 @@
             .line
               .name
                 %h2= link_to s.display_name, school_path(s.id)
-            .line.clear-floats
-              .float-left Type
-              .float-right= s.governance
-            .line.clear-floats
-              .float-left Grades
-              .float-right
-                - grades = s.grades_served || s.age_groups
-                = "#{grades.first} - #{grades.last}"
-            .line.clear-floats
-              - if s.earlychild?
-                = "#{s.early_childhood_rating}"
-              - else
-                .float-left ESD Grade
-                .float-right= s.excellent_schools_grade
-            .line.clear-floats
-              .float-left State Ranking
-              .float-right= "#{s.michigan_percentile}#{percentile_suffix(s.michigan_percentile)} percentile"
+            - if s.earlychild?
+              .line.height-40
+                .float-left Address
+                .float-right= s.street
+              .line
+                .float-left Overall Rating
+                .float-right= image_tag s.early_childhood_image(:mini, nil), class: 'mini-el-icon'
+            - else
+              .line.clear-floats
+                .float-left Type
+                .float-right= s.governance
+              .line.clear-floats
+                .float-left Grades
+                .float-right
+                  - grades = s.grades_served || s.age_groups
+                  = "#{grades.first} - #{grades.last}"
+              .line.clear-floats
+                - if s.earlychild?
+                  = "#{s.early_childhood_rating}"
+                - else
+                  .float-left ESD Grade
+                  .float-right= s.excellent_schools_grade
+              .line.clear-floats
+                .float-left State Ranking
+                .float-right= "#{s.michigan_percentile}#{percentile_suffix(s.michigan_percentile)} percentile"
           .region-title
             %h2 Overview
           .group
-            .line
-              .float-left Students Enrolled
-              .float-right= s.total_enrollment
-            .line.clear-floats
-              .float-left Transportation
-              .float-right
-                - if s.transportation_options.present?
-                  .checked
-                - else
-                  .unchecked
-            .line.clear-floats
-              .float-left Before Care
-              .float-right
-                - if s.before_after_care_keys.include?("before")
-                  .checked
-                - else
-                  .unchecked
-            .line.clear-floats
-              .float-left After Care
-              .float-right
-                - if s.before_after_care_keys.include?("after")
-                  .checked
-                - else
-                  .unchecked
+            - if s.earlychild?
+              .line
+                .float-left Age Groups
+                .float-right
+                  %span.margin-right-5 Infant
+                  .float-right
+                    - if s.age_groups.include?('Infant')
+                      .checked
+                    - else
+                      .unchecked
+                .float-right.clear-floats
+                  %span.margin-right-5 Toddler
+                  .float-right
+                    - if s.age_groups.include?('Toddler')
+                      .checked
+                    - else
+                      .unchecked
+                .float-right.clear-floats
+                  %span.margin-right-5 Preschool
+                  .float-right
+                    - if s.age_groups.include?('Preschool')
+                      .checked
+                    - else
+                      .unchecked
+              .line
+                .float-left Open Days
+                .float-right
+                  %span.margin-right-5 Monday
+                  .float-right
+                    - if s.monday_open.present?
+                      .checked
+                    - else
+                      .unchecked
+                .float-right.clear-floats
+                  %span.margin-right-5 Tuesday
+                  .float-right
+                    - if s.tuesday_open.present?
+                      .checked
+                    - else
+                      .unchecked
+                .float-right.clear-floats
+                  %span.margin-right-5 Wednesday
+                  .float-right
+                    - if s.wednesday_open.present?
+                      .checked
+                    - else
+                      .unchecked
+                .float-right.clear-floats
+                  %span.margin-right-5 Thursday
+                  .float-right
+                    - if s.thursday_open.present?
+                      .checked
+                    - else
+                      .unchecked
+                .float-right.clear-floats
+                  %span.margin-right-5 Friday
+                  .float-right
+                    - if s.friday_open.present?
+                      .checked
+                    - else
+                      .unchecked
+            - else
+              .line
+                .float-left Students Enrolled
+                .float-right= s.total_enrollment
+              .line.clear-floats
+                .float-left Transportation
+                .float-right
+                  - if s.transportation_options.present?
+                    .checked
+                  - else
+                    .unchecked
+              .line.clear-floats
+                .float-left Before Care
+                .float-right
+                  - if s.before_after_care_keys.include?("before")
+                    .checked
+                  - else
+                    .unchecked
+              .line.clear-floats
+                .float-left After Care
+                .float-right
+                  - if s.before_after_care_keys.include?("after")
+                    .checked
+                  - else
+                    .unchecked
           .region-title
             %h2 Performance
           .group
             - if s.earlychild?
+              .line
+                .float-left Community Rating
+                .float-right= image_tag s.early_childhood_image(:mini, s.site_visit_rating), class: 'mini-el-icon'
+              .line.clear-floats
+                .float-left State Rating
+                .float-right= image_tag s.early_childhood_image(:mini, s.sas_score_rating), class: 'mini-el-icon'
+              .line.clear-floats
+                .float-left Staff Rating
+                .float-right= image_tag s.early_childhood_image(:mini, s.teacher_survey_rating), class: 'mini-el-icon'
             - else
               - if s.k8?
                 %h3 Proficiency
@@ -163,6 +242,12 @@
             %h2 Programs
           .group
             - if s.earlychild?
+              .line.list
+                %h3 Enrichment Opportunities
+                - if s.enrichment.present?
+                  = render 'field_list', list: s.enrichment[0..5]
+                - else
+                  None reported for this school
             - else
               .line
                 .float-left Special Ed Level
@@ -202,12 +287,6 @@
                     .checked
                   - else
                     .unchecked
-              .line.list.clear-floats
-                %h3 Facilities
-                - if s.facilities.present?
-                  = render 'field_list', list: s.facilities[0..5]
-                - else
-                  None reported for this school
               - if s.high?
                 .line.list
                   %h3 AP Classes
@@ -215,6 +294,12 @@
                     = render 'field_list', list: s.ap_classes[0..5]
                   - else
                     None reported for this school
+            .line.list.clear-floats
+              %h3 Facilities
+              - if s.facilities.present?
+                = render 'field_list', list: s.facilities[0..5]
+              - else
+                None reported for this school
 
     :javascript
       $(function() {
