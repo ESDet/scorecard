@@ -70,6 +70,9 @@
     width: 100%;
   }
   .schools-wrapper > .results { width: 100%; }
+  .do-compare.btn {
+    top: 335px;
+  }
 }
 
 @media only screen and (max-width: 930px) {
@@ -247,10 +250,8 @@
   .schools-wrapper > .schools-map-wrapper { display: none; }
   .schools-wrapper > .results { height: 100%; }
   .do-compare.btn {
-    top: initial;
-    left: initial;
-    bottom: 20px;
-    right: 20px;
+    top: 85px;
+    left: 20px;
   }
   .nav-actions {
     margin-bottom: 15px;

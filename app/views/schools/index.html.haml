@@ -62,11 +62,17 @@
         var count = selectedSchools().length;
         if (count > 0) {
           $('a.do-compare').removeClass('hide');
+          $('.schools-wrapper .results').
+            css('margin-top', '55px').
+            css('padding-top', '0px');
           if (count > 4) {
             checkbox.removeAttr('checked');
           }
         } else {
           $('a.do-compare').addClass('hide');
+          $('.schools-wrapper .results').
+            css('padding-top', '10px').
+            css('margin-top', '0px');
         }
         return true;
       };
