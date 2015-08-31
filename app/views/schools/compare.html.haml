@@ -295,7 +295,7 @@
                   - else
                     .unchecked
               - if s.high?
-                .line.list
+                #ap-classes.line.list
                   %h3 AP Classes
                   - if s.ap_classes.present?
                     = render 'field_list', list: s.ap_classes[0..5]
