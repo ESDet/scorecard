@@ -108,8 +108,8 @@
     hr {
       height: 1px;
       border: none;
-      color: #35bff2;
-      background-color: #35bff2;
+      color: #2e5b8c;
+      background-color: #2e5b8c;
     }
     .wf-loading h1,
     .wf-loading h2,
@@ -124,7 +124,7 @@
     }
     .nav.nav-pills a,
     .nav.nav-tabs a {
-      border-color: #35bff2;
+      border-color: #2e5b8c;
       border-bottom: none;
       margin-right: 0;
     }
@@ -136,11 +136,11 @@
     .nav.nav-tabs .active a,
     .nav.nav-pills .active a:hover,
     .nav.nav-tabs .active a:hover {
-      border-color: #35bff2;
+      border-color: #2e5b8c;
       border-bottom-color: transparent;
     }
     .tab-content {
-      border: 1px solid #35bff2;
+      border: 1px solid #2e5b8c;
       border-top: 0;
       margin-bottom: 20px;
       position: relative;
@@ -201,7 +201,7 @@
       bottom: 0px;
       box-sizing: border-box;
       padding: 1em;
-      border-right: 1px solid #35bff2;
+      border-right: 1px solid #2e5b8c;
       overflow-x: hidden;
       overflow-y: scroll;
       z-index: 10;
@@ -284,7 +284,7 @@
     table#climate-help h3,
     #overview table h3 {
       margin: 0;
-      color: #35bff2;
+      color: #2e5b8c;
     }
     #other_profile table,
     #overview table { width: 100%; }
@@ -468,11 +468,11 @@
     }
     .k12 .subscore_wrapper table.scores { width: 100%; }
     .k12 .subscore_wrapper table.scores h3 {
-      color: #35bff2;
+      color: #2e5b8c;
       margin: 0;
     }
     .k12 .subscore_wrapper table.scores tr {
-      border-bottom: 1px solid #35bff2;
+      border-bottom: 1px solid #2e5b8c;
     }
     .k12 .subscore_wrapper table.scores td,
     .k12 .subscore_wrapper table.scores th {
@@ -648,8 +648,8 @@
       color: #f05a29;
     }
     .summary .hours h3 {
-      color: #35bff2;
-      border-bottom: 1px solid #35bff2;
+      color: #2e5b8c;
+      border-bottom: 1px solid #2e5b8c;
     }
     .summary .hours .arial {
       font-size: 0.9em;
@@ -726,7 +726,7 @@
     }
     ul.nav .question {
       color: #466778;
-      border-bottom: 1px solid #35bff2;
+      border-bottom: 1px solid #2e5b8c;
       display: block;
       padding: 0 9px 9px 9px;
       font-family: 'Lato Regular';
@@ -742,7 +742,7 @@
       font-size: 2em;
     }
     ul.nav li.active .question {
-      color: #35bff2;
+      color: #2e5b8c;
     }
     .overall-stars {
       font-size: 2em;
@@ -752,10 +752,10 @@
       color: #466778;
     }
     .earlychild .community_line:first-of-type {
-      border-top: 1px solid #35bff2;
+      border-top: 1px solid #2e5b8c;
     }
     .earlychild #state p {
-      border-bottom: 1px solid #35bff2;
+      border-bottom: 1px solid #2e5b8c;
       padding-bottom: 1em;
     }
     .earlychild #state table {
@@ -770,7 +770,7 @@
     .earlychild #state table td,
     .earlychild #state table th {
       padding: 9px 20px;
-      border-bottom: 1px solid #35bff2;
+      border-bottom: 1px solid #2e5b8c;
     }
     .earlychild #state table td:first-child,
     .earlychild #state table th:first-child {
@@ -842,14 +842,14 @@
     .earlychild #staff .staff-rating .pointer.score {
       bottom: 0px;
       padding-top: 35px;
-      color: #35bff2;
-      border-color: #35bff2;
+      color: #2e5b8c;
+      border-color: #2e5b8c;
     }
     .earlychild .points {
-      color: #35bff2;
+      color: #2e5b8c;
     }
     .earlychild .stars {
-      color: #35bff2;
+      color: #2e5b8c;
       letter-spacing: -2px;
       font-size: 1.4em;
       margin-right: 9px;
@@ -928,7 +928,7 @@
     }
     .earlychild .community_line .statement,
     .k12 .community_line .statement {
-      color: #35bff2;
+      color: #2e5b8c;
       margin-bottom: 3px;
     }
     .earlychild .community_line.level-0,
@@ -970,13 +970,13 @@
     .home-index .block {
       background-color: white;
       padding: 1em 2em;
-      border: 1px solid #35bff2;
+      border: 1px solid #2e5b8c;
     }
     .home-index #top-tabs.nav-tabs > li.active > a {
       background-color: #dae1e4;
     }
     .home-index #top-tabs.nav-tabs > li.active > a .question {
-      border-bottom: 1px solid #35bff2;
+      border-bottom: 1px solid #2e5b8c;
       color: #466778;
     }
     .home-index #top {
@@ -1819,36 +1819,60 @@
                 = render 'ec_profile_field', label: 'Written Contract', val: @school.contract
                 = render 'ec_profile_field', label: 'Financial Assistance', val: @school.subsidy
                 = render 'ec_profile_field', label: 'Program Eligibility Criteria', val: @school.eligibility
-                = render 'ec_profile_field', label: 'Special Needs Experience', val: @school.special
                 = render 'ec_profile_field', label: 'Care Setting', val: @school.setting
-                = render 'ec_profile_field', label: 'Environment', val: @school.environment
-                = render 'ec_profile_field', label: 'Meals Provided', val: @school.meals
                 = render 'ec_profile_field', label: 'Payment Schedule', val: @school.pay_schedule
                 = render 'ec_profile_field', label: 'Application / Registration Fee', val: sprintf("$%.2f", @school.fee)
                 = render 'ec_profile_field', label: 'Provides Transportation', val: @school.transportation
                 = render 'ec_profile_field', label: 'Additional program information', val: @school.additional_info
                 = render 'ec_profile_field', label: 'Age Groups', val: @school.age_groups
-                = render 'ec_profile_field', label: 'Enrichment opportunities', val: @school.enrichment
                 = render 'ec_profile_field', label: 'Teacher Evaluations', val: @school.evaluation
-                = render 'ec_profile_field', label: 'Field trips and other extended programming', val: @school.extended
-                = render 'ec_profile_field', label: 'Facilities Available', val: @school.facilities
-                = render 'ec_profile_field', label: 'Frequency of feedback provided to parents on child’s progress', val: @school.feedback_freq
-                = render 'ec_profile_field', label: 'Type of feedback provided to parents on child\'s progress', val: @school.feedback_type
                 = render 'ec_profile_field', label: 'Languages spoken by program staff', val: @school.language
-                = render 'ec_profile_field', label: 'Health/Dental/Vision Care', val: @school.medical
-                = render 'ec_profile_field', label: 'Access to mental health services', val: @school.mental
                 = render 'ec_profile_field', label: 'Partner name - 1', val: @school.partner_one
                 = render 'ec_profile_field', label: 'Details of partnership - 1', val: @school.partner_one_detail
                 = render 'ec_profile_field', label: 'Partner name - 2', val: @school.partner_two
                 = render 'ec_profile_field', label: 'Details of partnership - 2', val: @school.partner_two_detail
                 = render 'ec_profile_field', label: 'Partner name - 3', val: @school.partner_three
                 = render 'ec_profile_field', label: 'Details of partnership - 3', val: @school.partner_three_detail
-                = render 'ec_profile_field', label: 'Playground and/or physical activity space on site', val: @school.physical_activity
-                = render 'ec_profile_field', label: 'Family and community support', val: @school.support
                 = render 'ec_profile_field', label: 'Actual Enrollment', val: @school.actual_enrollment
                 = render 'ec_profile_field', label: 'Licensed Enrollment', val: @school.licensed_enrollment
                 = render 'ec_profile_field', label: 'Number of children with special needs', val: @school.special_enrollment
                 = render 'ec_profile_field', label: 'Number of children receiving subsidy', val: @school.subsidy_enrollment
+              = render 'one_col_field_list',
+                label: 'Special Needs Experience',
+                list: @school.special
+              = render 'one_col_field_list',
+                label: 'Environment',
+                list: @school.environment
+              = render 'one_col_field_list',
+                label: 'Meals Provided',
+                list: @school.meals
+              = render 'one_col_field_list',
+                label: 'Enrichment opportunities',
+                list: @school.enrichment
+              = render 'one_col_field_list',
+                label: 'Field trips and other extended programming',
+                list: @school.extended
+              = render 'one_col_field_list',
+                label: 'Facilities Available',
+                list: @school.facilities
+              = render 'one_col_field_list',
+                label: 'Frequency of feedback provided to parents on child’s progress',
+                list: @school.feedback_freq
+              = render 'one_col_field_list',
+                label: 'Type of feedback provided to parents on child\'s progress',
+                list: @school.feedback_type
+              = render 'one_col_field_list',
+                label: 'Health/Dental/Vision Care',
+                list: @school.medical
+              = render 'one_col_field_list',
+                label: 'Access to mental health services',
+                list: @school.mental
+              = render 'one_col_field_list',
+                label: 'Playground and/or physical activity space on site',
+                list: @school.physical_activity
+              = render 'one_col_field_list',
+                label: 'Family and community support',
+                list: @school.support
               = render 'legend', :school => @school, :tab => :overall
 
             #community.tab-pane
