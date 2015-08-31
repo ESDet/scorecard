@@ -457,10 +457,16 @@ $med: 100px;
   }
 }
 
-a, a:visited, a:active, a:hover, a.external, a.external:visited {
+a, a:visited, a:active, a:hover,
+a.external, a.external:visited {
   text-decoration: none;
   color: $navy;
   font-family: 'Aleo Regular';
+}
+
+a.btn, a.btn:visited, a.btn:active, a.btn:hover,
+a.btn.external, a.btn.external:visited {
+  color: white;
 }
 
 .brand {
