@@ -4,13 +4,14 @@
       #map
 
     .results
+      .compare-select.hide
+        %a.do-compare.btn{:href => '/'} Compare Selected Schools
       .school-list
         - if @schools.empty?
           %h3 There are no schools that fit your selection(s) right now.
         - @schools.each do |s|
           = render 'item', { :school => s }
 
-  %a.do-compare.btn.hide{:href => '/'} Compare Selected Schools
 
   :javascript
     var ajax = false;
@@ -61,18 +62,12 @@
 
         var count = selectedSchools().length;
         if (count > 0) {
-          $('a.do-compare').removeClass('hide');
-          $('.schools-wrapper .results').
-            css('margin-top', '55px').
-            css('padding-top', '0px');
+          $('.compare-select').removeClass('hide');
           if (count > 4) {
             checkbox.removeAttr('checked');
           }
         } else {
-          $('a.do-compare').addClass('hide');
-          $('.schools-wrapper .results').
-            css('padding-top', '10px').
-            css('margin-top', '0px');
+          $('.compare-select').addClass('hide');
         }
         return true;
       };

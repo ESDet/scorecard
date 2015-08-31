@@ -1064,13 +1064,16 @@ a.btn.external, a.btn.external:visited {
 
 .school-title .text { margin-top: 5px; }
 
-.do-compare.btn {
-  background-color: $fivee_orange;
-  position: absolute;
-  z-index: 1000;
-  top: 85px;
-  left: 20px;
-  color: white;
+.compare-select {
+  padding: 20px 5px;
+  .do-compare.btn {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    background-color: $fivee_orange;
+    color: white;
+    font-size: 21px;
+  }
 }
 
 .stick {
