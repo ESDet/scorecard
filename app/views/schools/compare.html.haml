@@ -249,6 +249,12 @@
                   = render 'field_list', list: s.enrichment[0..5]
                 - else
                   None reported for this school
+              .line.list
+                %h3 Field Trips / Extended Programming
+                - if s.extended.present?
+                  = render 'field_list', list: s.extended[0..5]
+                - else
+                  None reported for this school
             - else
               .line
                 .float-left Special Ed Level
