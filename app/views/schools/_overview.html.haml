@@ -21,20 +21,17 @@
         =raw simple_format(school.overview_text)
       .info-bar
         .item
-          .contact
+          %a.contact(href="mailto:#{school.email}")
             .email-icon
-            %a{href: "mailto:#{school.email}"} Email
-            this school
+            Email this school
         .item
-          .contact
+          %a.contact(href="tel:#{school.phone}")
             .phone-icon
-            %a{href: "tel:#{school.phone}"} Call
-            this school
+            Call this school
         .item
-          .contact
+          %a.contact(href="#{school.school_url}" target="_blank")
             .website-icon
-            %a.external{:href => school.school_url, :target => '_blank'} Visit
-            this school's website
+            Visit this school's website
     .section.border-bottom
       .header
         .left-header How is this school ranked?

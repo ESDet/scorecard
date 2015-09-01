@@ -1007,6 +1007,7 @@ a.btn.external, a.btn.external:visited {
       color: white;
       & > a { color: white; }
     }
+    .contact { width: inherit; }
   }
   & > .item:nth-of-type(3) {
     float: right;
