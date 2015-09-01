@@ -211,11 +211,15 @@
       });
 
       $('.rounded-square > a').click(function() {
-        var buffer = 50;
+        var buffer;
+        if (w.scrollTop() >= pos.top) {
+          buffer = 55;
+        } else {
+          buffer = 100;
+        }
         if (w.width() < 601) {
           $('.region-title').removeClass('closed');
           $('.info-region > div').removeClass('hide');
-          buffer = 100;
         }
         $('body').animate({
           scrollTop: $('.region-title[data-target="performance"]').offset().top - buffer
