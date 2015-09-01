@@ -209,4 +209,16 @@
           nav.removeClass("stick");
         }
       });
+
+      $('.rounded-square > a').click(function() {
+        var buffer = 50;
+        if (w.width() < 601) {
+          $('.region-title').removeClass('closed');
+          $('.info-region > div').removeClass('hide');
+          buffer = 100;
+        }
+        $('body').animate({
+          scrollTop: $('.region-title[data-target="performance"]').offset().top - buffer
+        }, 1000);
+      });
     });
