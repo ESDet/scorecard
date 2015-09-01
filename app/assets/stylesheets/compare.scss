@@ -176,3 +176,15 @@ input.checkbox-icon[type="checkbox"]:checked + label:before {
   font-size: 14px;
   padding-left: 2px;
 }
+
+.visual .wrapper {
+  text-align: center;
+}
+
+.visual .inline-wrapper {
+  display: inline-block;
+}
+
+.compare .fivee > .visual:nth-of-type(2) .graph {
+  margin-left: 0;
+}

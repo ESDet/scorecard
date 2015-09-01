@@ -6,16 +6,16 @@ class SchoolsController < ApplicationController
     school_ids = school_ids.split(",") if school_ids
     @school_ids = school_ids.uniq[0..3].join(",") if school_ids
 
-    if @grade.present? && !@grade.in?(["ecs", "k8", "hs", "high"])
+    @grade = params[:grade]
+    @filters = params[:filters] || []
+
+    if @grade.present? && !@grade.in?(["ec", "k8", "hs", "high"])
       redirect_to root_path and return
     end
 
     @loc = if params[:loc].present?
       CGI.escape params[:loc].strip.gsub("\u{a0}", "")
     end
-
-    @grade = params[:grade]
-    @filters = params[:filters] || []
 
     special_filters = []
     license_types = []
