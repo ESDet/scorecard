@@ -115,6 +115,9 @@
     color: $navy;
   }
 }
+.compare .school .group.hide {
+  display: none;
+}
 
 .compare .school .group .line {
   display: inline-block;

@@ -53,9 +53,9 @@
               .line.clear-floats
                 .float-left State Ranking
                 .float-right= "#{s.michigan_percentile}#{percentile_suffix(s.michigan_percentile)} percentile"
-          .region-title
+          .region-title(data-target="overview")
             %h2 Overview
-          .group
+          #overview.group
             - if s.earlychild?
               .line
                 .float-left Age Groups
@@ -142,9 +142,9 @@
                     .checked
                   - else
                     .unchecked
-          .region-title
+          .region-title(data-target="performance")
             %h2 Performance
-          .group
+          #performance.group
             - if s.earlychild?
               .line
                 .float-left Community Rating
@@ -239,9 +239,9 @@
                       supportive_environment: s.five_e_supportive_environment,
                       ambitious_instruction: s.five_e_ambitious_instruction,
                       report_id: s.five_e_report_id
-          .region-title
+          .region-title(data-target="programs")
             %h2 Programs
-          .group
+          #programs.group
             - if s.earlychild?
               .line.list
                 %h3 Enrichment Opportunities
@@ -365,4 +365,16 @@
           $('.compare > .school:nth-of-type(1)').prev(),
           $('.scroll > .left')
         );
+
+        $('.region-title').click(function() {
+          var me = $(this);
+          var target = me.parent().find('#' + me.data('target'));
+          if (target.hasClass('hide')) {
+            me.removeClass('closed');
+            target.removeClass('hide');
+          } else {
+            me.addClass('closed');
+            target.addClass('hide');
+          }
+        });
       });
