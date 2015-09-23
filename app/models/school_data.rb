@@ -116,7 +116,7 @@ class SchoolData < OpenStruct
   end
 
   def center
-    if field_geo
+    if field_geo && field_geo.lat && field_geo.lon
       [field_geo.lat.to_f, field_geo.lon.to_f]
     end
   end
