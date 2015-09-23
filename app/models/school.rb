@@ -261,7 +261,7 @@ module School
   end
 
   def street
-    field_address.thoroughfare
+    field_address.andand.thoroughfare
   end
 
   def hours
