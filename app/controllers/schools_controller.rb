@@ -129,7 +129,6 @@ class SchoolsController < ApplicationController
         response = Portal.new.fetch(url)
         if response != ["request error"] && response["data"]
           @schools = gather_included_fields(response).
-            select { |s| !s["field_geo"].nil? }.
             map { |s| SchoolData.new(s) }
         else
           flash[:notice] = "No results found"
