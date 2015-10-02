@@ -5,7 +5,7 @@ class Portal
   BASE = if Rails.env.in?(['staging', 'production'])
     'https://portal.excellentschoolsdetroit.org/api/1.0/'
   else
-    'https://ec-scorecard-api-3mhev6qb5ihtc.us.platform.sh/api/1.0/'
+    'https://8-ec-ratings-3mhev6qb5ihtc.us.platform.sh/api/1.0/'
   end
 
   def list_vocabularies

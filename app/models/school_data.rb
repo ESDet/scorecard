@@ -60,7 +60,7 @@ class SchoolData < OpenStruct
 
   def early_childhood_rating
     if earlychild?
-      esd_el_2015s.andand.overall_rating
+      ec_state_ratings.andand.overall_rating
     end
   end
 

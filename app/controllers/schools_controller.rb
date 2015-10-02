@@ -22,8 +22,8 @@ class SchoolsController < ApplicationController
     case @grade
     when "ec"
       url = "ecs.json?limit=50&flatten_fields=true" <<
-        "&includes=ec_profile,esd_el_2015" <<
-        "&sort_by_special=ec_total_pts" <<
+        "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
+        "&sort_by_special=ec_state_ratings.total_points" <<
         "&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
@@ -44,7 +44,7 @@ class SchoolsController < ApplicationController
         when "center_based"
           license_types << 2415
         when "high_rating"
-          special_filters << "esd_el_2015_highscore"
+          special_filters << "esd_el_highscore"
         end
       end
     when "k8", "hs", "high"
@@ -91,9 +91,9 @@ class SchoolsController < ApplicationController
         "&sort_order_special=DESC"
 
       ecs_url = "ecs.json?limit=25&flatten_fields=true" <<
-        "&includes=ec_profile,esd_el_2015" <<
+        "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
         "&filter[field_scorecard_display]=1" <<
-        "&sort_by_special=ec_total_pts" <<
+        "&sort_by_special=ec_state_ratings.total_points" <<
         "&sort_order_special=DESC"
 
       if @loc.andand.match /^[0-9]{5}$/
@@ -148,8 +148,8 @@ class SchoolsController < ApplicationController
             select { |s| !s["field_geo"].nil? }.
             map do |s|
               school = SchoolData.new(s)
-              pts = school.esd_el_2015s.total_points.to_f
-              school.esd_el_2015s.total_points = pts * (100 / 15.0)
+              pts = school.ec_state_ratings.total_points.to_f
+              school.ec_state_ratings.total_points = pts * (100 / 15.0)
               school
             end
         end
@@ -158,7 +158,7 @@ class SchoolsController < ApplicationController
         if @schools.present?
           @schools.sort_by! do |s|
             if s.earlychild?
-              s.esd_el_2015s.total_points.to_f
+              s.ec_state_ratings.total_points.to_f
             elsif s.k8?
               if s.esd_k8_2015s.total_pts.to_f < 1
                 s.esd_k8_2015s.total_pts.to_f * 100
@@ -369,6 +369,12 @@ class SchoolsController < ApplicationController
     elsif includes["type"] == "ec_profiles"
       if school["links"]["ec_profile"]
         includes["id"] == school["links"]["ec_profile"]["linkage"]["id"]
+      end
+    elsif includes["type"] == "ec_state_ratings"
+      if school["links"]["most_recent_ec_state_rating"]
+        if school["links"]["most_recent_ec_state_rating"].present?
+          includes["id"] == school["links"]["most_recent_ec_state_rating"]["linkage"]["id"]
+        end
       end
     elsif includes["type"] == "esd_k8_2015s"
       if school["links"]["esd_k8_2015"]
