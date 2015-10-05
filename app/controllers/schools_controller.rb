@@ -148,8 +148,17 @@ class SchoolsController < ApplicationController
             select { |s| !s["field_geo"].nil? }.
             map do |s|
               school = SchoolData.new(s)
-              pts = school.ec_state_ratings.total_points.to_f
-              school.ec_state_ratings.total_points = pts * (100 / 15.0)
+              pts = if school.ec_state_ratings
+                pts = school.ec_state_ratings.total_points.to_f
+                school.ec_state_ratings.total_points = pts * (100 / 15.0)
+              else
+                def school.ec_state_ratings
+                  o = Object.new
+                  def o.total_points; 0 end
+                  def o.overall_rating; 'Incomplete' end
+                  o
+                end
+              end
               school
             end
         end
