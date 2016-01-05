@@ -6,12 +6,9 @@ gem 'rake'
 gem 'rails'
 gem 'andand'
 gem 'awesome_print'
-gem 'better_errors'
-gem 'binding_of_caller'
 gem 'dalli'
-gem 'dotenv', groups: [:development, :test]
 gem 'exception_notification'
-gem 'flamegraph', group: :development
+gem 'foundation-rails'
 gem 'google_drive'
 gem 'google-webfonts-rails'
 gem 'haml-rails'
@@ -20,8 +17,6 @@ gem 'jquery-rails'
 gem 'json'
 gem 'newrelic_rpm'
 gem 'puma'
-gem 'pry-rails'
-gem 'pry-byebug'
 gem 'psych', '1.3.4'
 gem 'rack-mini-profiler', require: false
 gem 'sass-rails'
@@ -30,5 +25,14 @@ gem 'therubyracer'
 gem 'uglifier'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-
 gem 'rails_12factor', group: :production
+
+group :development do
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'flamegraph'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+gem 'dotenv', groups: [:development, :test]
