@@ -2,11 +2,7 @@ class Portal
   include HTTParty
   default_timeout 30
 
-  BASE = if Rails.env.in?(['staging', 'production'])
-    'https://portal.excellentschoolsdetroit.org/api/1.0/'
-  else
-    'https://8-ec-ratings-3mhev6qb5ihtc.us.platform.sh/api/1.0/'
-  end
+  BASE = 'https://portal.excellentschoolsdetroit.org/api/1.0/'
 
   def list_vocabularies
     fetch 'taxonomy_vocabulary.json/'
