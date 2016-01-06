@@ -29,12 +29,6 @@ $(function() {
     }
   });
 
-  $('.item:nth-of-type(4) > .btn').mouseover(function() {
-    $(this).text('COMING SOON');
-  }).mouseout(function() {
-    $(this).text('COMPARE TO OTHER SCHOOLS');
-  });
-
   var grade = $('.rounded-square .grade');
   if (grade.text().trim() == 'NEW') {
     grade.css('font-size', '31px').
