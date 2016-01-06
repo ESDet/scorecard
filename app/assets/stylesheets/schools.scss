@@ -1,0 +1,40 @@
+.school-banner {
+  height: 410px;
+  background: url(school_banner_bg) no-repeat;
+  background-size: cover;
+}
+
+.overview {
+  width: 40%;
+  margin: 0 auto;
+  padding-top: 3%;
+}
+
+.school-image-wrapper,
+.school-image,
+.school-name,
+.school-type,
+.overall-performance,
+.contact-info,
+.website-info,
+.hours,
+.general-info {
+  text-align: center;
+  width: auto;
+  margin: 0 auto;
+  color: white;
+}
+
+.school-image-wrapper {
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  border: 4px white solid;
+}
+
+.school-image {
+  width: 150px;
+}
