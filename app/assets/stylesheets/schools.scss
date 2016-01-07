@@ -1,11 +1,13 @@
+@import 'colors';
+
 .school-banner {
-  height: 410px;
+  min-height: 465px;
   background: url(school_banner_bg) no-repeat;
   background-size: cover;
 }
 
 .overview {
-  width: 40%;
+  width: 80%;
   margin: 0 auto;
   padding-top: 3%;
 }
@@ -38,3 +40,65 @@
 .school-image {
   width: 150px;
 }
+
+.school-name h1 {
+  color: white;
+  font-family: 'Aleo Regular';
+  font-size: 43px;
+  letter-spacing: 2px;
+  line-height: 43px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.overall-performance {
+  margin: 5px 0;
+}
+
+.more-ratings {
+  margin-top: 5px;
+}
+
+.contact-info .info {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+.info-box {
+  margin: 0 10px;
+  display: inline-block;
+  background-color: white;
+  font-family: 'Aleo Bold';
+  color: $navy;
+}
+
+.info-box--small {
+  width: 170px;
+}
+
+.info-box__title {
+  min-height: 35px;
+  font-size: 17px;
+  border: 4px solid $grey;
+}
+
+.info-box__content {
+  position: relative;
+  min-height: 50px;
+  border: 4px solid $grey;
+  border-top: none;
+  font-size: 65px;
+  line-height: 65px;
+}
+
+.info-box__content__text {
+  margin-left: -21px;
+}
+
+.suffix {
+  position: absolute;
+  top: -10px;
+  display: inline-block;
+  font-size: 35px;
+}
+

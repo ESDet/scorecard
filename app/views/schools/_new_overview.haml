@@ -1,0 +1,66 @@
+.school-banner
+  .overview
+    .school-image-wrapper
+      .school-image
+        %img(src="#{school.photo}")
+    .school-name
+      %h1= school.display_name
+    .school-type
+      = school.governance
+      - if school.authorizer.present?
+        | #{school.authorizer}
+      - elsif school.operator.present?
+        | #{school.operator}
+    .overall-performance
+      .info-boxes
+        .info-box.info-box--small
+          .info-box__title Overall Grade
+          .info-box__content
+            = school.excellent_schools_grade
+        .info-box.info-box--small
+          .info-box__title State
+          .info-box__content
+            .info-box__content__text
+              = school.michigan_percentile
+              .suffix= percentile_suffix(school.michigan_percentile)
+      .more-ratings
+        See more rankings:
+        %a(href="http://www.greatschools.org/michigan/detroit/" target="_blank")
+          Great Schools
+          .link-icon
+        - if school.k8?
+          %a(href="https://www.mackinac.org/depts/epi/performance.aspx?report=3" target="_blank")
+            Mackinac
+            .link-icon
+        - else
+          %a(href="https://www.mackinac.org/depts/epi/performance.aspx" target="_blank")
+            Mackinac
+            .link-icon
+        %a(href="http://bridgemi.com/2015/02/asc-resultspage/?Dbcode=#{school.district_code}-#{school.building_code}" target="_blank")
+          Bridge
+          .link-icon
+    .contact-info
+      .info= school.street
+      .info= school.phone
+      .info= school.fax
+    .website-info
+      %a.contact(href="#{school.school_url}" target="_blank")
+        VISIT WEBSITE
+      %a.download-icon(id="download" title="Download" href="/schools/#{school.id}.pdf")
+      %a.print-icon(id="print" title="Print" target="_blank" href="/schools/#{school.id}.pdf?disposition=inline")
+      %a.compare-icon(id="compare" title="Compare to other schools" href="")
+    .hours
+      = school.before_after_care
+    .general-info
+
+.school-ranking
+  .college-readiness
+  .growth
+  .graduation
+  .post-secondary
+  .climate
+  .demographics
+
+.school-performance
+
+.school-programs

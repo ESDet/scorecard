@@ -1,22 +1,22 @@
+/  #actions.container_12
+/    .middle
+/      .breadcrumbs
+/        %a.back-arrow-icon(href="#")
+/        %h2= @school.display_name
+/      .nav-actions
+/        %a.download-icon(id="download" title="Download" href="/schools/#{@school.id}.pdf")
+/          %span.icon-text DOWNLOAD
+/        %a.print-icon(id="print" title="Print" target="_blank" href="/schools/#{@school.id}.pdf?disposition=inline")
+/          %span.icon-text PRINT
+/        %a.compare-icon(id="compare" title="Compare to other schools" href="")
+/          %span.icon-text COMPARE
+/  .container_12.clear-floats.region-title(data-target="overview")
+/    %h2 OVERVIEW
+
 - cache(@school.cache_key, condition: @school.can_cache?) do
-  #actions.container_12
-    .middle
-      .breadcrumbs
-        %a.back-arrow-icon(href="#")
-        %h2= @school.display_name
-      .nav-actions
-        %a.download-icon(id="download" title="Download" href="/schools/#{@school.id}.pdf")
-          %span.icon-text DOWNLOAD
-        %a.print-icon(id="print" title="Print" target="_blank" href="/schools/#{@school.id}.pdf?disposition=inline")
-          %span.icon-text PRINT
-        %a.compare-icon(id="compare" title="Compare to other schools" href="")
-          %span.icon-text COMPARE
-  .container_12.clear-floats.region-title(data-target="overview")
-    %h2 OVERVIEW
-  .container_12.info-region
-    = render 'overview', school: @school
-  .container_12.closed.region-title(data-target="performance")
-    %h2 SCHOOL PERFORMANCE
+  = render 'new_overview', school: @school
+  .closed.region-title(data-target="performance")
+    %h2 HOW IS THIS SCHOOL RANKED?
   .container_12.info-region
     #performance.hide
       - if @school.high?
@@ -31,19 +31,19 @@
   :javascript
     var w = $(window);
     $(document).ready(function(e) {
-      Map({
-        center: #{@school.center.to_json},
-        markers: #{[@school.marker].to_json},
-        zoom: 15,
-        zoomControl: false,
-        dragging: false,
-        touchZoom: false,
-        scrollWheelZoom: false,
-        doubleClickZoom: false,
-        boxZoom: false,
-        tap: false,
-        keyboard: false
-      });
+      //Map({
+      //  center: #{@school.center.to_json},
+      //  markers: #{[@school.marker].to_json},
+      //  zoom: 15,
+      //  zoomControl: false,
+      //  dragging: false,
+      //  touchZoom: false,
+      //  scrollWheelZoom: false,
+      //  doubleClickZoom: false,
+      //  boxZoom: false,
+      //  tap: false,
+      //  keyboard: false
+      //});
 
       var lastPage = document.referrer;
       var lastSearch = localStorage.getItem('lastSearch');
@@ -201,14 +201,14 @@
 
       var nav = $("#actions");
       var pos = nav.position();
-      w.scroll(function() {
-        var windowpos = w.scrollTop();
-        if (windowpos >= pos.top) {
-          nav.addClass("stick");
-        } else {
-          nav.removeClass("stick");
-        }
-      });
+      //w.scroll(function() {
+      //  var windowpos = w.scrollTop();
+      //  if (windowpos >= pos.top) {
+      //    nav.addClass("stick");
+      //  } else {
+      //    nav.removeClass("stick");
+      //  }
+      //});
 
       $('.rounded-square > a').click(function() {
         var buffer;
