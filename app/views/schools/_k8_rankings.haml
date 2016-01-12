@@ -1,0 +1,13 @@
+.info-boxes
+  .info-box
+    .info-box__title Proficiency
+    .info-box__content
+      = rank_text(school.college_readiness_ranking)
+  .info-box
+    .info-box__title Growth
+    .info-box__content
+      = rank_text(school.growth_ranking)
+  .info-box
+    .info-box__title School Climate
+    .info-box__content
+      = climate_text(school.climate_ranking, :k8)

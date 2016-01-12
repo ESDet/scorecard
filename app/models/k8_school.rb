@@ -9,8 +9,24 @@ module K8School
     o[:reading_growth] = float_value(o, :esd_k8_2015s, "mean_pctl_reading")
   end
 
+  def current_stats
+    self.andand.esd_k8_2015s
+  end
+
   def excellent_schools_grade
-    esd_k8_2015s.andand.total_ltrgrade
+    current_stats.andand.total_ltrgrade
+  end
+
+  def proficiency_ranking
+    current_stats.andand.prof_cat_pts.andand.to_i
+  end
+
+  def growth_ranking
+    current_stats.andand.growth_cat_pts.andand.to_i
+  end
+
+  def climate_ranking
+    current_stats.andand.net5e_cat_pts.andand.to_i
   end
 
   private

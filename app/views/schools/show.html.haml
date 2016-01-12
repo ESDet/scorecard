@@ -15,17 +15,25 @@
 
 - cache(@school.cache_key, condition: @school.can_cache?) do
   = render 'new_overview', school: @school
-  .closed.region-title(data-target="performance")
+  .closed.region-title(data-target="rakings")
     %h2 HOW IS THIS SCHOOL RANKED?
-  .container_12.info-region
+  .info-region
+    #rankings
+      - if @school.high?
+        = render 'hs_rankings', school: @school
+      - else
+        = render 'k8_rankings', school: @school
+  .closed.region-title(data-target="performance")
+    %h2 SCHOOL PERFORMANCE
+  .info-region
     #performance.hide
       - if @school.high?
         = render "high_school_academics"
       - else
         = render "k_8_academics"
-  .container_12.closed.region-title(data-target="programs")
+  .closed.region-title(data-target="programs")
     %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
-  .container_12.info-region
+  .info-region
     = render 'programs_and_activities', school: @school
 
   :javascript

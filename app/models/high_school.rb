@@ -28,6 +28,30 @@ module HighSchool
     HighSchool.int_value(self, :esd_hs_2015s, :col_persist_pct)
   end
 
+  def current_stats
+    self.andand.esd_hs_2015s
+  end
+
+  def college_readiness_ranking
+    current_stats.andand.cr_cat_pts.andand.to_i
+  end
+
+  def growth_ranking
+    current_stats.andand.adj_act_cat_pts.andand.to_i
+  end
+
+  def graduation_ranking
+    current_stats.andand.gradrate_cat_pts.andand.to_i
+  end
+
+  def post_secondary_ranking
+    current_stats.andand.col_cat_pts.andand.to_i
+  end
+
+  def climate_ranking
+    current_stats.andand.net5e_cat_pts.andand.to_i
+  end
+
   private
 
   def self.int_value(o, set, value)

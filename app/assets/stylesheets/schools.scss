@@ -1,4 +1,5 @@
 @import 'colors';
+@import "foundation/components/grid";
 
 .school-banner {
   min-height: 465px;
@@ -64,7 +65,17 @@
   margin: 0 20px;
 }
 
+.info-boxes {
+  @include grid-row();
+}
+
 .info-box {
+  @extend .large-2, .medium-4, .small-12, .columns;
+  @include grid-column(
+    $center: true,
+    $collapse: true
+  );
+  text-align: center;
   margin: 0 10px;
   display: inline-block;
   background-color: white;
@@ -72,8 +83,11 @@
   color: $navy;
 }
 
+.info-box + .info-box:last-child {
+  float: none;
+}
+
 .info-box--small {
-  width: 170px;
 }
 
 .info-box__title {
@@ -84,15 +98,37 @@
 
 .info-box__content {
   position: relative;
-  min-height: 50px;
+  min-height: 70px;
   border: 4px solid $grey;
   border-top: none;
+}
+
+.info-box__content--overview {
   font-size: 65px;
   line-height: 65px;
 }
 
-.info-box__content__text {
-  margin-left: -21px;
+.info-box__content--rank {
+  font-size: 25px;
+  line-height: 25px;
+  height: 120px;
+}
+
+.very-weak   { color: $rank_red; }
+.weak        { color: $rank_orange; }
+.average     { color: $rank_yellow; }
+.strong      { color: $rank_green; }
+.very-strong { color: $rank_light_green; }
+
+.content-text {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.content-text--overview {
+  width: 75%;
 }
 
 .suffix {
