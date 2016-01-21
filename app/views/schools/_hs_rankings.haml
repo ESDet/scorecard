@@ -1,26 +1,32 @@
-.info-boxes
-  .info-box
-    .info-box__title College Readiness
-    .info-box__content.info-box__content--rank
-      .content-text
-        = sanitize rank_text(school.college_readiness_ranking)
-  .info-box
-    .info-box__title Growth
-    .info-box__content.info-box__content--rank
-      .content-text
-        = sanitize rank_text(school.growth_ranking)
-  .info-box
-    .info-box__title Graduation
-    .info-box__content.info-box__content--rank
-      .content-text
-        = sanitize rank_text(school.graduation_ranking)
-  .info-box
-    .info-box__title Post-Secondary
-    .info-box__content.info-box__content--rank
-      .content-text
-        = sanitize rank_text(school.post_secondary_ranking)
-  .info-box
-    .info-box__title School Climate
-    .info-box__content.info-box__content--rank
-      .content-text
-        = sanitize climate_text(school.climate_ranking, :hs)
+.section
+  .columns
+    .column
+      .info-box
+        .info-box__title College Readiness
+        .info-box__content.info-box__content--rank
+          .content-text
+            = sanitize rank_text(school.college_readiness_ranking)
+    .column
+      .info-box
+        .info-box__title Growth
+        .info-box__content.info-box__content--rank
+          .content-text
+            = sanitize rank_text(school.growth_ranking)
+    .column
+      .info-box
+        .info-box__title Graduation
+        .info-box__content.info-box__content--rank
+          .content-text
+            = sanitize rank_text(school.graduation_ranking)
+    .column
+      .info-box
+        .info-box__title Post-Secondary
+        .info-box__content.info-box__content--rank
+          .content-text
+            = sanitize rank_text(school.post_secondary_ranking)
+    .column
+      .info-box
+        .info-box__title School Climate
+        .info-box__content.info-box__content--rank
+          .content-text
+            = sanitize climate_text(school.climate_ranking, :hs)

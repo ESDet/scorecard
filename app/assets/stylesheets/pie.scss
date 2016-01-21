@@ -1,0 +1,36 @@
+.pie-wrapper {
+  display: inline-block;
+  width: auto;
+  margin-bottom: 20px;
+}
+
+.pie-wrapper #pie {
+  display: inline-block;
+  vertical-align: middle;
+  height: 115px;
+}
+
+.pie-wrapper .legend {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -10px;
+}
+
+.pie-wrapper .legend .stat {
+  text-align: left;
+  margin: 3px 0;
+}
+
+.pie-wrapper .legend .stat .race {
+  margin-top: 4px;
+  margin-right: 3px;
+  float: left;
+  width: 10px;
+  height: 10px;
+  border: 1px solid white;
+}
+
+.pie-wrapper .legend .stat .text {
+  display: inline-block;
+  font-size: 14px;
+}

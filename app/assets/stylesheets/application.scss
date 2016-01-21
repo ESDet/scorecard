@@ -1,13 +1,14 @@
-/*
- *= require foundation_and_overrides
- *= require leaflet
- *= require colors
- *= require fonts
- *= require icons
- *= require style
- *= require graphs
- *= require schools
- *= require compare
- *= require responsive
- */
-
+@import '960';
+@import 'leaflet';
+@import 'theme';
+@import 'colors';
+@import 'fonts';
+@import 'icons';
+@import 'style';
+@import 'columns';
+@import 'pie';
+@import 'info-box';
+@import 'graphs';
+@import 'schools';
+@import 'compare';
+@import 'responsive';

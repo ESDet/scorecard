@@ -1,8 +1,8 @@
 $(function() {
   var drawPie = function(element, data) {
-  var w = 75,
-    h = 75,
-    radius = 37.5,
+  var w = 115,
+    h = 115,
+    radius = w / 2,
     color = d3.scale.category20(),
     pie = d3.scale.linear().
       domain([0, 50]).

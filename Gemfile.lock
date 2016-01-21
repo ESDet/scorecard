@@ -71,9 +71,6 @@ GEM
       rake-compiler
     flamegraph (0.1.0)
       fast_stack
-    foundation-rails (5.5.2.1)
-      railties (>= 3.1.0)
-      sass (>= 3.3.0, < 3.5)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     google-api-client (0.8.6)
@@ -164,6 +161,8 @@ GEM
     psych (1.3.4)
     puma (2.11.3)
       rack (>= 1.1, < 2.0)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.1)
     rack-mini-profiler (0.9.3)
       rack (>= 1.1.3)
@@ -254,7 +253,6 @@ DEPENDENCIES
   dotenv
   exception_notification
   flamegraph
-  foundation-rails
   google-webfonts-rails
   google_drive
   haml-rails
@@ -266,6 +264,7 @@ DEPENDENCIES
   pry-rails
   psych (= 1.3.4)
   puma
+  quiet_assets
   rack-mini-profiler
   rails
   rails_12factor

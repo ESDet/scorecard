@@ -8,7 +8,6 @@ gem 'andand'
 gem 'awesome_print'
 gem 'dalli'
 gem 'exception_notification'
-gem 'foundation-rails'
 gem 'google_drive'
 gem 'google-webfonts-rails'
 gem 'haml-rails'
@@ -33,6 +32,7 @@ group :development do
   gem 'flamegraph'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'quiet_assets'
 end
 
 gem 'dotenv', groups: [:development, :test]

@@ -1,6 +1,5 @@
 //= require jquery
 //= require jquery_ujs
-//= require foundation
 //= require d3
 //= require leaflet
 //= require map
@@ -12,8 +11,6 @@
 //= require compare
 
 $(function() {
-  $(document).foundation();
-
   var menu = $('.menu').first();
   $('a#hamburger').click(function(e) {
     menu.toggleClass('active');

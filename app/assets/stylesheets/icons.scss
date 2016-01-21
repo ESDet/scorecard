@@ -1,5 +1,3 @@
-@import 'colors';
-
 .email-icon {
   width: 20px;
   height: 15px;
@@ -133,42 +131,44 @@
 }
 
 .print-icon {
-  width: 20px;
-  height: 20px;
-  background-image: url(/assets/icons/png/print.png);
+  display: inline-block;
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  background-image: url(/assets/print-icon.png);
   background-repeat: no-repeat;
-  background-size: 101%;
+  background-size: 100%;
 }
 
 .download-icon {
   display: inline-block;
-  width: 1.500em;
-  height: 0.500em;
-  border: 0.250em solid #aeaeae;
-  border-top: none;
-  bottom: 0.188em;
-  position: relative;
-  margin-top: 15px;
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  background-image: url(/assets/download-icon.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
-.download-icon:before {
-  content: '';
-  position: absolute;
-  width: 0.438em;
-  height: 0.625em;
-  background: #aeaeae;
-  top: -0.875em;
-  left: 5px;
+
+.visit-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background-image: url(/assets/visit-icon.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
-.download-icon:after {
-  width: 0em;
-  height: 0em;
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-color: #aeaeae transparent transparent transparent;
-  border-width: 0.500em;
-  left: 1px;
-  top: -0.250em;
+
+.visit-icon.reverse {
+  width: 15px;
+  height: 15px;
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
 }
 
 .graph-icon {

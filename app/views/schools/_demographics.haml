@@ -1,0 +1,39 @@
+#demographics
+  %h2 DEMOGRAPHICS
+  .section
+    .columns
+      .column
+        .info-box.info-box--blue
+          .info-box__title Number of Students
+          .info-box__content
+            - if school.total_enrollment.present? && school.total_enrollment > 0
+              .student-number= school.total_enrollment
+            = render 'pie', school: @school
+      .column
+        .info-box.info-box--blue
+          .info-box__title Student Profile
+          .info-box__content.left
+            - if school.male_enrollment.present?
+              .text
+                %span.big #{school.male_enrollment}%
+                Male
+            - if school.female_enrollment.present?
+              .text
+                %span.big #{school.female_enrollment}%
+                Female
+            - if school.free_reduced_lunch.present?
+              .text
+                %span.big #{school.free_reduced_lunch}%
+                Free and reduced-price lunch
+            - if school.english_learner.present?
+              .text
+                %span.big #{school.english_learner}%
+                English language learner
+            - if school.special_education.present?
+              .text
+                %span.big #{school.special_education}%
+                Special education
+      .column
+        .info-box.info-box--blue
+          .info-box__title Attendance Rate
+          .info-box__content
