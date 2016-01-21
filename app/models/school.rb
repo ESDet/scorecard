@@ -76,9 +76,13 @@ module School
       andand.machine_name.present?
   end
 
-  def bullying_policy?
+  def bullying_policy
     school_profiles.andand.field_bullying_policy.
-      andand.machine_name.present?
+      andand.label
+  end
+
+  def attendance
+    k12_supplemental_2015s.andand.attendance_all
   end
 
   def parent_involvement

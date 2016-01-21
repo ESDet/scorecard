@@ -14,26 +14,51 @@
           .info-box__title Student Profile
           .info-box__content.left
             - if school.male_enrollment.present?
-              .text
-                %span.big #{school.male_enrollment}%
-                Male
+              .enrollment
+                .enrollment-percentage
+                  #{school.male_enrollment}%
+                .enrollment-label
+                  Male
             - if school.female_enrollment.present?
-              .text
-                %span.big #{school.female_enrollment}%
-                Female
+              .enrollment
+                .enrollment-percentage
+                  #{school.female_enrollment}%
+                .enrollment-label
+                  Female
             - if school.free_reduced_lunch.present?
-              .text
-                %span.big #{school.free_reduced_lunch}%
-                Free and reduced-price lunch
+              .enrollment
+                .enrollment-percentage
+                  #{school.free_reduced_lunch}%
+                .enrollment-label
+                  Free and reduced-price lunch
             - if school.english_learner.present?
-              .text
-                %span.big #{school.english_learner}%
-                English language learner
+              .enrollment
+                .enrollment-percentage
+                  #{school.english_learner}%
+                .enrollment-label
+                  English language learner
             - if school.special_education.present?
-              .text
-                %span.big #{school.special_education}%
-                Special education
+              .enrollment
+                .enrollment-percentage
+                  #{school.special_education}%
+                .enrollment-label
+                  Special education
       .column
         .info-box.info-box--blue
           .info-box__title Attendance Rate
-          .info-box__content
+          .info-box__content.small
+            .text
+              - if school.attendance.present?
+                #{school.attendance.to_f * 100}%
+              - else
+                Data Not Available
+          .info-box__title School Policies
+          .info-box__content.small
+            .text
+          .info-box__title Bullying Policy
+          .info-box__content.small
+            .text
+              - if school.bullying_policy.present?
+                = school.bullying_policy
+              - else
+                Data Not Available

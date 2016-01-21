@@ -1,0 +1,56 @@
+#demographics {
+  text-align: center;
+  color: $light-grey;
+  background-color: $blue;
+  margin-top: 30px;
+}
+
+#demographics h2 {
+  margin: 30px 0;
+}
+
+#demographics .column {
+  width: 30%;
+}
+
+#demographics .info-box__content {
+  min-height: 230px;
+}
+
+#demographics .info-box__content.small {
+  min-height: 53px;
+  line-height: 53px;
+  font-size: 23px;
+}
+
+#demographics .info-box__content.small .text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.student-number {
+  font-size: 55px;
+  padding: 15px 0;
+}
+
+.enrollment {
+  display: inline-block;
+  width: 100%;
+  padding: 4.5px 0 4.5px 15px;
+  line-height: 28px;
+}
+
+.enrollment:first-child {
+  padding-top: 20px;
+}
+
+.enrollment-percentage {
+  width: 26%;
+  float: left;
+  font-size: 25px;
+}
+
+.enrollment-label {
+  width: 74%;
+  float: right;
+}

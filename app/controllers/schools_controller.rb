@@ -397,6 +397,10 @@ class SchoolsController < ApplicationController
       if school["links"]["esd_el_2015"]
         includes["id"] == school["links"]["esd_el_2015"]["linkage"]["id"]
       end
+    elsif includes["type"] == "k12_supplemental_2015s"
+      if school["links"]["k12_supplemental_2015"]
+        includes["id"] == school["links"]["k12_supplemental_2015"]["linkage"]["id"]
+      end
     end
   end
 
