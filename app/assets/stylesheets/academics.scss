@@ -1,0 +1,56 @@
+#graduation-rates {
+  background-color: $blue;
+  color: white;
+  padding: 15px;
+}
+
+#graduation-rates h2,
+#graduation-rates h3 {
+  color: white;
+}
+
+#graduation-rates .column {
+  width: 23%;
+  margin: 0 10px;
+}
+
+#graduation-rates .column .info-box__title {
+  position: relative;
+  z-index: 100;
+  background-color: $blue;
+}
+
+#graduation-rates .info-box__content--circle {
+  position: relative;
+  z-index: 1;
+  margin: -30px auto 0 auto;
+}
+
+#graduation-rates .info-box__content--circle .circle-text {
+  margin: -10px 0 15px 0;
+  font-size: 17px;
+}
+
+#graduation-rates .info-box__content--circle .grad-rate {
+  width: 170px;
+  margin-top: 25px;
+  font-size: 85px;
+}
+
+#graduation-rates .info-box__content--circle .grad-rate .percent {
+  position: absolute;
+  margin: 10px 0 0px 0px;
+  display: inline-block;
+  font-family: 'Aleo Regular';
+  font-size: 45px;
+}
+
+#graduation-rates .info-box .text {
+  margin: 5px 0;
+  font-size: 20px;
+  font-family: 'Aleo Regular';
+}
+
+#graduation-rates .info-box .text:nth-child(3) {
+  margin-top: 25px;
+}

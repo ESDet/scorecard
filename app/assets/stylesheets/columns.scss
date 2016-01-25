@@ -8,95 +8,105 @@
 .section > .columns > .column {
   float: left;
   width: 31%;
-  & > .title {
-    height: 26px;
-    background-color: $cyan;
+}
+
+.section > .columns > .column > .title {
+  height: 26px;
+  background-color: $cyan;
+  font-family: 'Aleo Bold';
+  font-size: 17px;
+  padding-top: 3px;
+  color: white;
+  text-align: center;
+}
+
+.section > .columns > .column > .content {
+  display: inline-block;
+  width: 100%;
+  &.no-padding { padding: 0; }
+  font-family: 'Lato Regular';
+  font-size: 15px;
+  margin-top: 4px;
+  padding: 7px 15px;
+}
+
+.section > .columns > .column > .content > .header {
+  margin-bottom: 10px;
+  font-family: 'Lato Bold';
+  font-size: 16px;
+  text-align: center;
+  &.big { font-size: 25px; }
+}
+
+.section > .columns > .column > .content .key-value {
+  display: inline-block;
+  margin: 5px 0;
+  width: 100%;
+  & > .key {
+    float: left;
     font-family: 'Aleo Bold';
-    font-size: 17px;
-    padding-top: 3px;
-    color: white;
-    text-align: center;
+    color: $cyan;
   }
-  & > .content {
-    display: inline-block;
-    width: 100%;
-    &.no-padding { padding: 0; }
+  & > .value {
+    float: right;
+    margin-left: 7px;
     font-family: 'Lato Regular';
-    font-size: 15px;
-    margin-top: 4px;
-    padding: 7px 15px;
-    & > .header {
-      margin-bottom: 10px;
-      font-family: 'Lato Bold';
-      font-size: 16px;
-      text-align: center;
-      &.big { font-size: 25px; }
-    }
-    & .key-value {
-      display: inline-block;
-      margin: 5px 0;
-      width: 100%;
-      & > .key {
-        float: left;
-        font-family: 'Aleo Bold';
-        color: $cyan;
-      }
-      & > .value {
-        float: right;
-        margin-left: 7px;
-        font-family: 'Lato Regular';
-        text-align: left;
-      }
-    }
-    .key {
-      font-family: 'Aleo Bold';
-      color: $cyan;
-      margin-right: 5px;
-    }
-    ul {
-      display: inline-block;
-      list-style: none;
-      width: 100%;
-      font-family: 'Lato Regular';
-      margin: 2px 0 2px 20px;
-      padding-left: 0px;
-      padding-right: 25px;
-      text-indent: -15px;
-      & > li { margin: 5px 0; }
-      & > li:before {
-        position: relative;
-        content: "\002022";
-        color: $cyan;
-        padding-right: 5px;
-      }
-    }
-    & > .text {
-      width: 100%;
-      margin: 5px 0;
-      padding-left: 7px;
-      .wrapper {
-        display: inline-block;
-      }
-    }
-    .left {
-      float: left;
-      width: 50%;
-    }
-    .right {
-      float: right;
-      width: 50%;
-    }
-    .twenty-five {
-      width: 25%;
-    }
+    text-align: left;
   }
-  & > .content:not(:nth-of-type(1)) {
-    margin-bottom: 10px;
+}
+
+.section > .columns > .column > .content .key {
+  font-family: 'Aleo Bold';
+  color: $cyan;
+  margin-right: 5px;
+}
+
+.section > .columns > .column > .content ul {
+  display: inline-block;
+  list-style: none;
+  width: 100%;
+  font-family: 'Lato Regular';
+  margin: 2px 0 2px 20px;
+  padding-left: 0px;
+  padding-right: 25px;
+  text-indent: -15px;
+  & > li { margin: 5px 0; }
+  & > li:before {
+    position: relative;
+    content: "\002022";
+    color: $cyan;
+    padding-right: 5px;
   }
-  .description {
-    text-align: center;
-    margin-top: 10px;
-  }
+}
+
+.section > .columns > .column > .content > .text {
+  width: 100%;
+  margin: 5px 0;
+  padding-left: 7px;
+  .wrapper { display: inline-block; }
+}
+
+.section > .columns > .column > .content .left {
+  float: left;
+  width: 50%;
+}
+
+.section > .columns > .column > .content .right {
+  float: right;
+  width: 50%;
+}
+
+.section > .columns > .column > .content .twenty-five {
+  width: 25%;
+}
+
+.section > .columns > .column > .content:not(:nth-of-type(1)) {
+  margin-bottom: 10px;
+}
+
+.section > .columns > .column .description {
+  text-align: center;
+  margin-top: 10px;
 }
 
 .section > .columns > .column:nth-of-type(2) {

@@ -43,6 +43,16 @@
   border-top: none;
 }
 
+.info-box__content--circle {
+  width: 190px;
+  height: 190px;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -o-border-radius: 100px;
+  border-radius: 100px;
+  border: 1px solid white;
+}
+
 .info-box__content--overview {
   font-size: 65px;
   line-height: 65px;
