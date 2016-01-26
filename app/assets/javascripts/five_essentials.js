@@ -1,25 +1,25 @@
 $(function() {
-  $('.graph[data-rating]').each(function(i, el) {
+  $('.fivee-overall-rating[data-rating]').each(function(i, el) {
     var ratingEl = $(el);
     var rating = parseInt(ratingEl.data('rating'));
-    var text = ratingEl.find('> .text');
+    var text = ratingEl.find('> .fivee-rating-text');
     if (rating == 0) {
       text.html("<br/>");
-      text.css('background-color', 'grey');
+      text.css('color', 'grey');
     } else if (rating == 1) {
-      ratingEl.css('background-color', '#c32947');
+      text.css('color', '#c32947');
       text.text('NOT YET ORGANIZED');
     } else if (rating == 2) {
-      ratingEl.css('background-color', '#ff690f');
+      text.css('color', '#ff690f');
       text.text('PARTIALLY ORGANIZED');
     } else if (rating == 3) {
-      ratingEl.css('background-color', '#ffc700');
+      text.css('color', '#ffc700');
       text.text('MODERATELY ORGANIZED');
     } else if (rating == 4) {
-      ratingEl.css('background-color', '#a2c100');
+      text.css('color', '#a2c100');
       text.text('ORGANIZED');
     } else if (rating == 5) {
-      ratingEl.css('background-color', '#319400');
+      text.css('color', '#319400');
       text.text('WELL ORGANIZED');
     }
   });
