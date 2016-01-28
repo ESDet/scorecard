@@ -34,93 +34,6 @@
       height: 190px;
       background-color: white;
     }
-    .top-left, .top-right,
-    .bottom-left, .bottom-right {
-      font-family: 'Lato Bold';
-      font-size: 14px;
-      position: absolute;
-      background-color: grey;
-      width: 92.5px;
-      height: 92.5px;
-    }
-    .top-left, .top-right {
-      padding-top: 9px;
-      top: 0;
-    }
-    .top-left, .bottom-left {
-      text-align: left;
-      padding-left: 8px;
-      left: 0;
-    }
-    .top-right, .bottom-right {
-      text-align: right;
-      padding-right: 8px;
-      right: 0;
-    }
-    .bottom-left, .bottom-right {
-      padding-top: 50px;
-      bottom: 0;
-    }
-    .top-left {
-      -moz-border-radius: 0 0 -50px 0;
-      -webkit-border-radius: 0 0 -50px 0;
-      border-radius: 0 0 -50px 0;
-    }
-    .circle {
-      .outer {
-        position: absolute;
-        top: 45px;
-        left: 45px;
-        background-color: white;
-        width: 100px;
-        height: 100px;
-        z-index: 1000;
-        -moz-border-radius: 50px;
-        -webkit-border-radius: 50px;
-        border-radius: 50px;
-      }
-      .inner {
-        padding-top: 25px;
-        font-family: 'Lato Bold';
-        font-size: 14px;
-        position: absolute;
-        top: 50px;
-        left: 50px;
-        z-index: 2000;
-        background-color: grey;
-        width: 90px;
-        height: 90px;
-        -moz-border-radius: 45px;
-        -webkit-border-radius: 45px;
-        border-radius: 45px;
-      }
-    }
-    .legend {
-      float: left;
-      margin-left: 10px;
-      font-family: 'Lato Regular';
-      font-size: 13px;
-      width: 50px;
-      text-align: left;
-      & > .key {
-        margin: 2px 0;
-        width: 20px;
-        height: 20px;
-      }
-      & > .key:nth-of-type(1),
-      & > .key:nth-of-type(7) { margin-bottom: 15px; }
-      .green { background-color: $fivee_green; }
-      .light-green { background-color: $fivee_light_green; }
-      .yellow { background-color: $fivee_yellow; }
-      .orange { background-color: $fivee_orange; }
-      .red { background-color: $fivee_red; }
-    }
-    .link {
-      width: 110px;
-      margin-top: 4px;
-      font-family: 'Lato Bold';
-      font-size: 13px;
-    }
   }
 }
 
@@ -151,38 +64,17 @@
 .compare .fivee > .visual:nth-of-type(2) .graph {
   margin-left: 18px;
 }
-.compare .fivee .visual:nth-of-type(2) .wrapper {
-  width: 100%;
-}
-.compare .fivee .visual:nth-of-type(2) .wrapper .legend {
-  margin-top: 10px;
-  margin-left: 0px;
-  width: 220px;
-}
-.compare .fivee .visual:nth-of-type(2) .wrapper .legend .key {
-  margin-left: 5px;
-  float: right;
-}
-.compare .fivee .visual:nth-of-type(2) .wrapper .legend .key:nth-of-type(1) {
-  margin-right: 25px;
-  margin-left: 8px;
-}
-.compare .fivee .visual:nth-of-type(2) .wrapper .legend .key:nth-of-type(7) {
-  margin-right: 15px;
-}
-.compare .fivee .visual:nth-of-type(2) .wrapper .legend .link {
-  display: none;
-}
 
 .fivee .info-box__content {
-  line-height: 180px;
+  line-height: 170px;
+  padding: 0 20px;
 }
 
 .fivee-rating-text {
   display: inline-block;
   vertical-align: middle;
   text-align: center;
-  font-size: 50px;
+  font-size: 45px;
 }
 
 .bottom-text {
@@ -197,4 +89,126 @@
   background-color: grey;
   display: inline-block;
   vertical-align: middle;
+}
+
+.fivee .visual .info-box {
+  width: auto;
+}
+
+.fivee-graph {
+  vertical-align: top;
+  position: relative;
+  display: inline-block;
+  min-height: 273px;
+  width: 285px;
+}
+
+.fivee-graph .row {
+  float: left;
+  width: 100%;
+  height: 130px;
+  margin-bottom: 3px;
+}
+
+.fivee-graph .box {
+  display: inline-block;
+  width: 140px;
+  height: 130px;
+}
+
+.fivee-graph .circle .outer {
+  position: absolute;
+  top: 71px;
+  left: 82px;
+  background-color: white;
+  width: 120px;
+  height: 120px;
+  z-index: 1000;
+  -moz-border-radius: 60px;
+  -webkit-border-radius: 60px;
+  border-radius: 60px;
+}
+
+.fivee-graph .circle .inner {
+  padding-top: 25px;
+  font-family: 'Lato Bold';
+  font-size: 14px;
+  line-height: 56px;
+  position: absolute;
+  top: 76px;
+  left: 87px;
+  z-index: 2000;
+  background-color: grey;
+  width: 110px;
+  height: 110px;
+  -moz-border-radius: 55px;
+  -webkit-border-radius: 55px;
+  border-radius: 55px;
+}
+
+.fivee-graph .circle .inner .text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.fivee-graph .fivee-category {
+  position: relative;
+  padding: 10px;
+}
+
+.fivee-graph .fivee-category .text {
+  font-size: 17px;
+  line-height: 17px;
+  color: white;
+  width: 120px;
+}
+
+.fivee-category .text.left {
+  text-align: left;
+}
+
+.fivee-category .text.right {
+  text-align: right;
+}
+
+.fivee-category .text.bottom {
+  position: absolute;
+  bottom: 10px;
+}
+
+.fivee .visual .legend {
+  display: inline-block;
+  vertical-align: top;
+  width: 120px;
+  font-family: 'Lato Regular';
+  font-size: 13px;
+  text-align: left;
+  .green { background-color: $fivee_green; }
+  .light-green { background-color: $fivee_light_green; }
+  .yellow { background-color: $fivee_yellow; }
+  .orange { background-color: $fivee_orange; }
+  .red { background-color: $fivee_red; }
+}
+
+.fivee .visual .legend .key {
+  height: 50px;
+  width: 100%;
+  display: inline-block;
+}
+
+.fivee .visual .legend .key .box {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+
+.fivee .visual .legend .key .label {
+  display: inline-block;
+  width: 47%;
+}
+
+.fivee .section .link {
+  margin-top: 10px;
+  font-family: 'Lato Bold';
+  font-size: 15px;
 }
