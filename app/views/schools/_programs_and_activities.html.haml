@@ -1,7 +1,7 @@
 #programs.hide
   .middle
     - if school.schedule.present? || school.parent_involvement.present?
-      .section.border-bottom
+      .section
         .columns.two
           = render 'column',
             title: 'Class Schedule',
@@ -10,7 +10,7 @@
             title: 'Parent Involvement',
             list: school.parent_involvement
     - if school.has_academic_programs?
-      .section.border-bottom
+      .section
         .header
           .icon-text
             .star-icon
@@ -21,16 +21,17 @@
             list: school.academic_focus
           - if school.has_ell?
             .column
-              .title English Language Learners
-              .content.light-cyan-background
-                - if school.ell_level.present?
-                  %span.key Level:
-                  = school.ell_level
-                  <br/>
-                  <br/>
-                - if school.ell_languages.present?
-                  %span.key Languages
-                  = render 'field_list', list: school.ell_languages
+              .info-box
+                .info-box__title English Language Learners
+                .info-box__content
+                  - if school.ell_level.present?
+                    %span.key Level:
+                    = school.ell_level
+                    <br/>
+                    <br/>
+                  - if school.ell_languages.present?
+                    %span.key Languages
+                    = render 'field_list', list: school.ell_languages
           = render 'column',
             title: 'Personalized Learning Options',
             list: school.instructional_model
@@ -47,7 +48,7 @@
                   %span.key Programs
                   = render 'field_list', list: school.special_ed_programs
     - if school.has_classes?
-      .section.border-bottom
+      .section
         .header
           .icon-text
             .classes-icon
@@ -55,37 +56,39 @@
         .columns.two
           - if school.has_arts?
             .column
-              .title Arts
-              .content.light-cyan-background
-                - if school.arts_media.present?
-                  %span.key Media
-                  = render 'field_list', list: school.arts_media
-                  <br/>
-                - if school.arts_music.present?
-                  %span.key Music
-                  = render 'field_list', list: school.arts_music
-                  <br/>
-                - if school.arts_performing_written.present?
-                  %span.key Performing & Written
-                  = render 'field_list', list: school.arts_performing_written
-                  <br/>
-                - if school.arts_visual.present?
-                  %span.key Visual
-                  = render 'field_list', list: school.arts_visual
+              .info-box
+                .info-box__title Arts
+                .info-box__content
+                  - if school.arts_media.present?
+                    %span.key Media
+                    = render 'field_list', list: school.arts_media
+                    <br/>
+                  - if school.arts_music.present?
+                    %span.key Music
+                    = render 'field_list', list: school.arts_music
+                    <br/>
+                  - if school.arts_performing_written.present?
+                    %span.key Performing & Written
+                    = render 'field_list', list: school.arts_performing_written
+                    <br/>
+                  - if school.arts_visual.present?
+                    %span.key Visual
+                    = render 'field_list', list: school.arts_visual
           - if school.has_foreign_language?
             .column
-              .title Foreign Language
-              .content.light-cyan-background
-                - if school.immersion.present?
-                  %span.key Language Immersion:
-                  = school.immersion
-                  <br/>
-                  <br/>
-                - if school.foreign_languages.present?
-                  %span.key Languages Offered
-                  = render 'field_list', list: school.foreign_languages
+              .info-box
+                .info-box__title Foreign Language
+                .info-box__content
+                  - if school.immersion.present?
+                    %span.key Language Immersion:
+                    = school.immersion
+                    <br/>
+                    <br/>
+                  - if school.foreign_languages.present?
+                    %span.key Languages Offered
+                    = render 'field_list', list: school.foreign_languages
     - if school.has_support?
-      .section.border-bottom
+      .section
         .header
           .icon-text
             .support-icon
@@ -98,19 +101,21 @@
             title: 'Staff Resources for Students',
             list: school.staff_resources
     - if school.facilities.present?
-      .section.border-bottom
-        .header
-          .icon-text
-            .facilities-icon
-            Facilities
+      .section
         .columns.one
           - if school.facilities.present?
             .column
-              .content.light-cyan-background
-                = render 'four_col_field_list', list: school.facilities
+              .info-box
+                .info-box__title
+                  .header
+                    .icon-text
+                      .facilities-icon
+                      Facilities
+                .info-box__content
+                  = render 'four_col_field_list', list: school.facilities
 
     - if school.has_sports?
-      .section.border-bottom
+      .section
         .header
           .icon-text
             .sports-icon

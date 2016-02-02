@@ -1,5 +1,6 @@
 - if list.present?
   .column
-    = render 'column_content',
-      title: title,
-      list: list
+    .info-box
+      .info-box__title= title
+      .info-box__content
+        = render 'field_list', list: list

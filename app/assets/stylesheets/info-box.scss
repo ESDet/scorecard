@@ -67,3 +67,10 @@
 .info-box__content.left {
   text-align: left;
 }
+
+.info-box__content ul {
+  margin: 0;
+  padding: 10px 40px;
+  text-align: left;
+  color: $grey-1;
+}
