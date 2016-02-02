@@ -18,15 +18,15 @@ module K8School
   end
 
   def proficiency_ranking
-    current_stats.andand.prof_cat_pts.andand.to_i
+    current_stats.andand.prof_cat_points.andand.to_f
   end
 
   def growth_ranking
-    current_stats.andand.growth_cat_pts.andand.to_i
+    current_stats.andand.growth_cat_points.andand.to_f
   end
 
   def climate_ranking
-    current_stats.andand.net5e_cat_pts.andand.to_i
+    current_stats.andand.net5e_cat_pts.andand.to_f
   end
 
   private

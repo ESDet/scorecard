@@ -1,16 +1,22 @@
-.row
-  .ranking-column.column.large-2
-    .info-box
-      .info-box__title Proficiency
-      .info-box__content
-        = rank_text(school.college_readiness_ranking)
-  .ranking-column.column.large-2
-    .info-box
-      .info-box__title Growth
-      .info-box__content
-        = rank_text(school.growth_ranking)
-  .ranking-column.column.large-2
-    .info-box
-      .info-box__title School Climate
-      .info-box__content
-        = climate_text(school.climate_ranking, :k8)
+.section
+  .columns
+    .column
+      .info-box
+    .column
+      .info-box
+        .info-box__title Proficiency
+        .info-box__content.info-box__content--rank
+          .text
+            = rank_text(school.proficiency_ranking)
+    .column
+      .info-box
+        .info-box__title Growth
+        .info-box__content.info-box__content--rank
+          .text
+            = rank_text(school.growth_ranking)
+    .column
+      .info-box
+        .info-box__title School Climate
+        .info-box__content.info-box__content--rank
+          .text
+            = climate_text(school.climate_ranking, :k8)

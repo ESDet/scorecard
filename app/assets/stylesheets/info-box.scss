@@ -59,9 +59,19 @@
 }
 
 .info-box__content--rank {
+  height: 120px;
+  line-height: 110px;
+}
+
+.info-box__content--rank .text {
+  display: inline-block;
+  vertical-align: middle;
   font-size: 25px;
   line-height: 25px;
-  height: 120px;
+}
+
+.info-box__content--overview .text.percentile {
+  width: 78%;
 }
 
 .info-box__content.left {

@@ -30,7 +30,7 @@ module SchoolsHelper
       "<span class='strong'>STRONG</span>"
     elsif value >= 8 && value <= 10
       "<span class='very-strong'>VERY STRONG</span>"
-    end
+    end.html_safe
   end
 
   def climate_text(value, school_level)

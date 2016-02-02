@@ -16,13 +16,13 @@
             .info-box.info-box--small
               .info-box__title Overall Grade
               .info-box__content.info-box__content--overview
-                .content-text
+                .text
                   = school.excellent_schools_grade
           .column
             .info-box.info-box--small
               .info-box__title State
               .info-box__content.info-box__content--overview
-                .content-text.content-text--overview
+                .text.percentile
                   = school.michigan_percentile
                   .suffix= percentile_suffix(school.michigan_percentile)
       .more-rankings
