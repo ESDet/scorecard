@@ -1,29 +1,35 @@
-.middle
-  .stat-region
-    %h2 Are students at this school ready for college?
-    %h3 Average percent of students scoring at the college-ready level on ACT, 2013-14
-    .content.four
-      = render 'bar_graph', title: 'English',
-        school_average: @school.english_college_ready,
-        detroit_average: @detroit.english_college_ready,
-        state_average: @state.english_college_ready
-      = render 'bar_graph', title: 'Math',
-        school_average: @school.math_college_ready,
-        detroit_average: @detroit.math_college_ready,
-        state_average: @state.math_college_ready
-      = render 'bar_graph', title: 'Reading',
-        school_average: @school.reading_college_ready,
-        detroit_average: @detroit.reading_college_ready,
-        state_average: @state.reading_college_ready
-      = render 'bar_graph', title: 'Science',
-        school_average: @school.science_college_ready,
-        detroit_average: @detroit.science_college_ready,
-        state_average: @state.science_college_ready
-    .what-this-means
-      .question-mark
-      WHAT THIS MEANS
-      .text.hide
-        This graph shows the percentage of students at this school who scored at the "College-Ready" level or higher on the ACT in 2013-2014. It compares this school's students to students in Detroit and in Michigan who also scored at the "College-Ready" level or higher on the ACT in 2013-2014.
+#college-ready
+  .middle
+    .stat-region
+      %h2 Are students at this school ready for college?
+      %h3 Average percent of students scoring at the college-ready level on ACT, 2013-14
+      .content.four
+        = render 'bar_graph', title: 'English',
+          school_average: @school.english_college_ready,
+          school_average_points: @school.english_college_ready_points,
+          detroit_average: @detroit.english_college_ready,
+          state_average: @state.english_college_ready
+        = render 'bar_graph', title: 'Math',
+          school_average: @school.math_college_ready,
+          school_average_points: @school.math_college_ready_points,
+          detroit_average: @detroit.math_college_ready,
+          state_average: @state.math_college_ready
+        = render 'bar_graph', title: 'Reading',
+          school_average: @school.reading_college_ready,
+          school_average_points: @school.reading_college_ready_points,
+          detroit_average: @detroit.reading_college_ready,
+          state_average: @state.reading_college_ready
+        = render 'bar_graph', title: 'Science',
+          school_average: @school.science_college_ready,
+          school_average_points: @school.science_college_ready_points,
+          detroit_average: @detroit.science_college_ready,
+          state_average: @state.science_college_ready
+      //.what-this-means
+      //  .question-mark
+      //  WHAT THIS MEANS
+      //  .text.hide
+      //    This graph shows the percentage of students at this school who scored at the "College-Ready" level or higher on the ACT in 2013-2014. It compares this school's students to students in Detroit and in Michigan who also scored at the "College-Ready" level or higher on the ACT in 2013-2014.
+#growth
   .stat-region
     %h2 Did students at this school grow academically?
     %h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.

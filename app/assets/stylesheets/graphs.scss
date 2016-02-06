@@ -1,7 +1,8 @@
 .stat-region {
   h2 {
-    margin-top: 20px;
-    color: $navy;
+    margin-top: 0px;
+    padding-top: 20px;
+    color: black;
     font-size: 19px;
     font-family: 'Aleo Bold';
     letter-spacing: 1.3px;
@@ -9,7 +10,7 @@
   }
   h3 {
     margin-top: -10px;
-    color: $onyx;
+    color: $navy;
     font-size: 17px;
     font-family: 'Lato Italic';
     text-align: center;
@@ -103,6 +104,47 @@
 
 .stat-region .content.four .graph {
   height: 55px;
+}
+
+.bar-graph {
+  margin-top: 15px;
+  position: relative;
+  width: 100%;
+  height: 25px;
+  border: 4px solid $grey;
+}
+
+.bar-graph .fill {
+  position: absolute;
+  height: 100%;
+  background-color: red;
+}
+
+.bar-graph .left-bounds,
+.bar-graph .right-bounds {
+  position: absolute;
+  top: 20px;
+}
+
+.bar-graph .left-bounds { left: 0; }
+
+.bar-graph .right-bounds { right: 0; }
+
+.bar-graph .line-marker,
+.bar-graph .line-marker-text {
+  position: absolute;
+}
+
+.bar-graph .line-marker {
+  height: 100%;
+  top: 8px;
+  border-right: 3px solid $rank_orange;
+}
+
+.bar-graph .line-marker-text {
+  font-size: 12px;
+  margin-top: 35px;
+  font-size: 12px;
 }
 
 .stat-region .visual .bounds {

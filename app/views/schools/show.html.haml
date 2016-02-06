@@ -26,7 +26,7 @@
       = render 'demographics', school: @school
   .closed.region-title(data-target="performance")
     %h2 SCHOOL PERFORMANCE
-  .info-region
+  .info-region.background-grey
     #performance.hide
       - if @school.high?
         = render "high_school_academics"

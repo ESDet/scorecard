@@ -1,20 +1,18 @@
-.visual
-  .title= title
-  .graph
-    .number(data-num="#{school_average}")
-      .text
-        = school_average ? "#{school_average}%" : ""
-  .bounds
+.visual.performance
+  .info-box
+    .info-box__title= title
+    .info-box__content
+      .text.description
+        = school_average ? rank_text(school_average_points) : "Data Not Available"
+      .text.percentage
+        = school_average ? "#{school_average}%" : "Data Not Available"
+  .bar-graph
+    .fill(data-num="#{school_average}")
     .left-bounds 0%
-    .line-graph
-      .line-marker.detroit(data-num="#{detroit_average}")
-        .wrapper
-          .text DETROIT
-          .number
-            = detroit_average ? "#{detroit_average}%" : ""
-      .line-marker.state(data-num="#{state_average}")
-        .wrapper
-          .text STATE
-          .number
-            = state_average ? "#{state_average}%" : ""
+    .line-marker(data-num="#{detroit_average}")
+    .line-marker-text.detroit(data-num="#{detroit_average}")
+      .text DETROIT
+    .line-marker(data-num="#{state_average}")
+    .line-marker-text.state(data-num="#{state_average}")
+      .text STATE
     .right-bounds 100%

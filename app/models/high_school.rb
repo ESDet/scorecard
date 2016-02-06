@@ -8,6 +8,12 @@ module HighSchool
         int_value(o, :esd_hs_2015s, "act#{s}cr")
       end
 
+      ['eng', 'math', 'read', 'sci'].each do |t|
+        if s =~ /#{t}/
+          o["#{s}_college_ready_points".to_sym] = float_value(o, :esd_hs_2015s, "#{t}_cr_pts")
+        end
+      end
+
       o["#{s}_growth".to_sym] = float_value(o, :esd_hs_2015s, "adj_act#{s}")
     end
   end

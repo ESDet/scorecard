@@ -33,6 +33,20 @@ module SchoolsHelper
     end.html_safe
   end
 
+  def rank_text_color(value)
+    if value < 2
+      'very-weak'
+    elsif value >= 2 && value < 4
+      'weak'
+    elsif value >= 4 && value < 6
+      'average'
+    elsif value >= 6 && value < 8
+      'strong'
+    elsif value >= 8 && value <= 10
+      'very-strong'
+    end
+  end
+
   def climate_text(value, school_level)
     case school_level
     when :hs
