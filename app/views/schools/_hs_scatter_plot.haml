@@ -1,0 +1,27 @@
+.scatter-plot
+  .scatter-plot-nav
+    %a.subject.active(data-target="english") English
+    %a.subject(data-target="math") Math
+    %a.subject(data-target="reading") Reading
+    %a.subject(data-target="science") Science
+  .scatter-plot-graph
+    .axis.x
+    .axis-legend.proficiency
+      .title Proficiency
+      .sub-title State Average
+    .axis.y
+    .axis-legend.growth
+      .title Growth
+      .sub-title State Average
+    .graph-points.english
+      .graph-point.school(data-proficiency="#{english[:school_proficiency]}" data-growth="#{english[:school_growth]}")
+      .graph-point.detroit(data-proficiency="#{english[:detroit_proficiency]}" data-growth="#{english[:detroit_growth]}")
+    .graph-points.math.hide
+      .graph-point.school(data-proficiency="#{math[:school_proficiency]}" data-growth="#{math[:school_growth]}")
+      .graph-point.detroit(data-proficiency="#{math[:detroit_proficiency]}" data-growth="#{math[:detroit_growth]}")
+    .graph-points.reading.hide
+      .graph-point.school(data-proficiency="#{reading[:school_proficiency]}" data-growth="#{reading[:school_growth]}")
+      .graph-point.detroit(data-proficiency="#{reading[:detroit_proficiency]}" data-growth="#{reading[:detroit_growth]}")
+    .graph-points.science.hide
+      .graph-point.school(data-proficiency="#{science[:school_proficiency]}" data-growth="#{science[:school_growth]}")
+      .graph-point.detroit(data-proficiency="#{science[:detroit_proficiency]}" data-growth="#{science[:detroit_growth]}")

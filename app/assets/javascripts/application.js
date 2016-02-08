@@ -9,6 +9,7 @@
 //= require pie
 //= require five_essentials
 //= require compare
+//= require scatter_plot
 
 $(function() {
   var menu = $('.menu').first();

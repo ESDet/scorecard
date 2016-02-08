@@ -30,52 +30,31 @@
       //  .text.hide
       //    This graph shows the percentage of students at this school who scored at the "College-Ready" level or higher on the ACT in 2013-2014. It compares this school's students to students in Detroit and in Michigan who also scored at the "College-Ready" level or higher on the ACT in 2013-2014.
 #growth
-  .stat-region
-    %h2 Did students at this school grow academically?
-    %h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
-    .content.growth.two
-      .labels
-        .label SCHOOL
-        .label DETROIT
-      = render 'two_bar_graph', title: 'English Growth',
-        subject: 'english', scale: 10,
-        school_growth: @school.english_growth,
-        detroit_growth: @detroit.english_growth,
-        zero_bar: 'PREDICTED SCORE'
-      = render 'two_bar_graph', title: 'Math Growth',
-        subject: 'math', scale: 10,
-        school_growth: @school.math_growth,
-        detroit_growth: @detroit.math_growth,
-        zero_bar: 'PREDICTED SCORE'
-    .content.growth.two
-      .labels
-        .label SCHOOL
-        .label DETROIT
-      = render 'two_bar_graph', title: 'Reading Growth',
-        subject: 'reading', scale: 10,
-        school_growth: @school.reading_growth,
-        detroit_growth: @detroit.reading_growth,
-        zero_bar: 'PREDICTED SCORE'
-      = render 'two_bar_graph', title: 'Science Growth',
-        subject: 'science', scale: 10,
-        school_growth: @school.science_growth,
-        detroit_growth: @detroit.science_growth,
-        zero_bar: 'PREDICTED SCORE'
-    .what-this-means
-      .question-mark
-      WHAT THIS MEANS
-      .text.hide
-        This graph provides information about whether students at a school are moving toward college readiness at a faster or slower pace relative to their academic peers across the state. The graph shows the difference between a school's average student actual ACT score and predicted ACT score. The predicted ACT score is based on a peer group of Michigan students who scored within a similar range on the 7th and 8th grade MEAP tests.
-        %h4
-          %b How it's calculated
-        %b STEP #1:
-        %p In 2008-2009, Student B (let’s call her Alicia) is a 9th grader at her high school. We know that Alicia scored a 715 on the 7th grade MEAP reading test and a 802 on the 8th grade MEAP reading test.<br/><br/>
-        %b STEP #2:
-        %p Alicia is then matched with all other 9th graders across Michigan who also scored roughly the same on the 7th and 8th grade MEAP reading exams. We’ll call them Alicia’s Academic Peers.<br/><br/>
-        %b STEP #3:
-        %p Three years later, Alicia is in the 11th grade. Her Academic Peers take the ACT and score a 22, on average. This is Alicia’s predicted ACT score. When Alicia takes the ACT that same year, she scores 18. Alicia has fallen behind. This difference in Alicia’s predicted versus actual growth is her growth score. In Alicia’s case, it’s negative.<br/><br/>
-        %b STEP #4:
-        %p To find the growth of an entire Detroit school, we calculate each individual student’s growth using this method and averaged them altogether.
+  .middle
+    .stat-region
+      %h2 Is this school's performance showing growth?
+      //%h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
+      .content
+        = render 'hs_scatter_plot',
+          english: { school_proficiency: @school.english_college_ready_points, school_growth: @school.english_growth, detroit_proficiency: @detroit.english_college_ready_points, detroit_growth: @detroit.english_growth },
+          math: { school_proficiency: @school.math_college_ready_points, school_growth: @school.math_growth, detroit_proficiency: @detroit.math_college_ready_points, detroit_growth: @detroit.math_growth },
+          reading: { school_proficiency: @school.reading_college_ready_points, school_growth: @school.reading_growth, detroit_proficiency: @detroit.reading_college_ready_points, detroit_growth: @detroit.reading_growth },
+          science: { school_proficiency: @school.science_college_ready_points, school_growth: @school.science_growth, detroit_proficiency: @detroit.science_college_ready_points, detroit_growth: @detroit.science_growth }
+      //.what-this-means
+      //  .question-mark
+      //  WHAT THIS MEANS
+      //  .text.hide
+      //    This graph provides information about whether students at a school are moving toward college readiness at a faster or slower pace relative to their academic peers across the state. The graph shows the difference between a school's average student actual ACT score and predicted ACT score. The predicted ACT score is based on a peer group of Michigan students who scored within a similar range on the 7th and 8th grade MEAP tests.
+      //    %h4
+      //      %b How it's calculated
+      //    %b STEP #1:
+      //    %p In 2008-2009, Student B (let’s call her Alicia) is a 9th grader at her high school. We know that Alicia scored a 715 on the 7th grade MEAP reading test and a 802 on the 8th grade MEAP reading test.<br/><br/>
+      //    %b STEP #2:
+      //    %p Alicia is then matched with all other 9th graders across Michigan who also scored roughly the same on the 7th and 8th grade MEAP reading exams. We’ll call them Alicia’s Academic Peers.<br/><br/>
+      //    %b STEP #3:
+      //    %p Three years later, Alicia is in the 11th grade. Her Academic Peers take the ACT and score a 22, on average. This is Alicia’s predicted ACT score. When Alicia takes the ACT that same year, she scores 18. Alicia has fallen behind. This difference in Alicia’s predicted versus actual growth is her growth score. In Alicia’s case, it’s negative.<br/><br/>
+      //    %b STEP #4:
+      //    %p To find the growth of an entire Detroit school, we calculate each individual student’s growth using this method and averaged them altogether.
 #graduation-rates
   .middle
     .stat-region
@@ -127,15 +106,15 @@
         ambitious_instruction: @school.five_e_ambitious_instruction,
         report_id: @school.five_e_report_id
 
-    .what-this-means
-      .question-mark
-      WHAT THIS MEANS
-      .text.hide
-        This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
-        %ul
-          %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
-          %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
-          %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
-          %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
-          %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
-        Parents also took the survey. Find out more about how they rated this school. (Coming Soon)
+    //.what-this-means
+    //  .question-mark
+    //  WHAT THIS MEANS
+    //  .text.hide
+    //    This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
+    //    %ul
+    //      %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
+    //      %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
+    //      %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
+    //      %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
+    //      %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
+    //    Parents also took the survey. Find out more about how they rated this school. (Coming Soon)

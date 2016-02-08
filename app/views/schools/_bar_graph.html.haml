@@ -4,7 +4,7 @@
     .info-box__content
       .text.description
         = school_average ? rank_text(school_average_points) : "Data Not Available"
-      .text.percentage
+      .text.percentage(class="#{rank_text_color(school_average_points)}")
         = school_average ? "#{school_average}%" : "Data Not Available"
   .bar-graph
     .fill(data-num="#{school_average}")
