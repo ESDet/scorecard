@@ -41,6 +41,7 @@
         = content_for :scatter_plot_points do
           .graph-points.math
             = render 'scatter_subject_points',
+              hs: @school.high?,
               school_name: @school.display_name,
               subject: 'math',
               school_proficiency: @school.math_prepared,
@@ -54,6 +55,7 @@
               state_proficiency: @state.math_prepared
           .graph-points.reading.hide
             = render 'scatter_subject_points',
+              hs: @school.high?,
               school_name: @school.display_name,
               subject: 'reading',
               school_proficiency: @school.reading_prepared,

@@ -9,7 +9,10 @@
         .big
           #{school_proficiency}%
         .small
-          COLLEGE READY
+          - if hs
+            COLLEGE READY
+          -else
+            PROFICIENT
       .right
         .state
           %span.medium #{state_proficiency}%
@@ -20,8 +23,11 @@
     .row.no-padding
       .left
         .growth #{school_growth}
-      .right.act-desc
-        ACT growth points compared to state
+      .right.growth-desc
+        - if hs
+          ACT growth points compared to state
+        - else
+          Growth percentile compared to state
 .graph-point.detroit(data-proficiency="#{detroit_proficiency}" data-growth="#{detroit_growth}")
   .point-popup.hide
     .row
@@ -30,4 +36,7 @@
       .subject= subject.upcase
     .row.detroit-prof
       %span.big #{detroit_proficiency}%
-      %span COLLEGE READY
+      - if hs
+        %span COLLEGE READY
+      - else
+        %span PROFICIENT

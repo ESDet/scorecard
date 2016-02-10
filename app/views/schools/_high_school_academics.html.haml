@@ -43,6 +43,7 @@
         = content_for :scatter_plot_points do
           .graph-points.english
             = render 'scatter_subject_points',
+              hs: @school.high?,
               school_name: @school.display_name,
               subject: 'english',
               school_proficiency: @school.english_college_ready,
@@ -56,6 +57,7 @@
               state_proficiency: @state.english_college_ready
           .graph-points.math.hide
             = render 'scatter_subject_points',
+              hs: @school.high?,
               school_name: @school.display_name,
               subject: 'math',
               school_proficiency: @school.math_college_ready,
@@ -69,6 +71,7 @@
               state_proficiency: @state.math_college_ready
           .graph-points.reading.hide
             = render 'scatter_subject_points',
+              hs: @school.high?,
               school_name: @school.display_name,
               subject: 'reading',
               school_proficiency: @school.reading_college_ready,
@@ -82,6 +85,7 @@
               state_proficiency: @state.reading_college_ready
           .graph-points.science.hide
             = render 'scatter_subject_points',
+              hs: @school.high?,
               school_name: @school.display_name,
               subject: 'science',
               school_proficiency: @school.science_college_ready,
