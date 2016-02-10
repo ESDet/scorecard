@@ -4,34 +4,30 @@
       .name= school_name
     .row
       .subject= subject.upcase
-    .row
+    .row.no-padding.big
       .left
-        .text.big
-        .text.small
+        .big
+          #{school_proficiency}%
+        .small
           COLLEGE READY
       .right
         .state
-          #{state_proficiency}%
+          %span.medium #{state_proficiency}%
           %span STATE
         .detroit
-          #{detroit_proficiency}%
+          %span.medium #{detroit_proficiency}%
           %span DETROIT
-    .row
-      .act-growth
-        .left
-        .right
+    .row.no-padding
+      .left
+        .growth #{school_growth}
+      .right.act-desc
+        ACT growth points compared to state
 .graph-point.detroit(data-proficiency="#{detroit_proficiency}" data-growth="#{detroit_growth}")
   .point-popup.hide
     .row
       .name Detroit
     .row
       .subject= subject.upcase
-    .row
-      .college-ready
-        .text.big
-        .text.small
-          COLLEGE READY
-    .row
-      .act-growth
-        .left
-        .right
+    .row.detroit-prof
+      %span.big #{detroit_proficiency}%
+      %span COLLEGE READY

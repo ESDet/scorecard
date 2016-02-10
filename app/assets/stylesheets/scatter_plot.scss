@@ -170,20 +170,39 @@
 
 .scatter-plot-graph .point-popup {
   background-color: white;
-  opacity: 0.8;
   margin-right: 50%;
   z-index: 1000;
-  width: 260px;
+  width: 280px;
   border: 3px solid $grey;
+}
+
+.scatter-plot-graph .graph-point.detroit .point-popup {
+  width: 260px;
 }
 
 .scatter-plot-graph .point-popup .row {
   position: relative;
-  display: inline-block;
   width: 100%;
+  min-height: 50px;
   padding: 15px;
   border-bottom: 3px solid $grey;
   font-family: 'Aleo Bold';
+}
+
+.scatter-plot-graph .point-popup .row.no-padding {
+  padding: 0;
+}
+
+.scatter-plot-graph .point-popup .row:last-child {
+  border-bottom: 0;
+}
+
+.scatter-plot-graph .point-popup .row.detroit-prof {
+  line-height: 27px;
+}
+
+.scatter-plot-graph .point-popup .row.detroit-prof span {
+  vertical-align: middle;
 }
 
 .scatter-plot-graph .point-popup .name {
@@ -194,19 +213,60 @@
   color: $navy;
 }
 
-.scatter-plot-graph .point-popup .left {
+.scatter-plot-graph .point-popup .left,
+.scatter-plot-graph .point-popup .right {
   position: absolute;
-  left: 0;
   top: 0;
   width: 50%;
   height: 100%;
+//  padding: 10px;
+}
+
+.scatter-plot-graph .point-popup .left {
+  left: 0;
   border-right: 2px solid $grey;
 }
 
+.scatter-plot-graph .point-popup .big {
+  font-size: 48px;
+}
+
+.scatter-plot-graph .point-popup .row .growth {
+  font-size: 42px;
+}
+
+.scatter-plot-graph .point-popup .row .act-desc {
+  padding: 10px;
+  font-size: 13px;
+}
+
 .scatter-plot-graph .point-popup .right {
-  position: absolute;
   right: 0;
-  top: 0;
-  width: 50%;
-  height: 100%;
+  text-align: left;
+}
+
+.scatter-plot-graph .point-popup .right .state,
+.scatter-plot-graph .point-popup .right .detroit {
+  height: 50%;
+  line-height: 22px;
+  padding: 5px;
+}
+.scatter-plot-graph .point-popup .right .state {
+  border-bottom: 1px solid $grey;
+}
+
+.scatter-plot-graph .point-popup .right span {
+  font-size: 15px;
+  color: $grey;
+  vertical-align: middle;
+}
+
+.scatter-plot-graph .point-popup .right span.medium {
+  font-size: 27px;
+  color: $navy;
+}
+
+.scatter-plot-graph .point-popup .row.no-padding.big {
+  height: 80px;
+  padding: 2px 0 0;
 }
