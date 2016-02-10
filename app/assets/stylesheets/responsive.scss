@@ -2,19 +2,6 @@
 
 @media only screen and (min-width: 850px) {
   #nav #hamburger { display: none; }
-  .menu {
-    width: 230px;
-    position: absolute;
-    display: inline-block;
-    border: none;
-    top: 27px;
-    left: 12%;
-    & > a.btn {
-      padding: 0px 20px 0 0;
-      display: inline;
-    }
-  }
-  #nav a.btn:hover { background-color: white; }
 }
 
 @media only screen and (max-width: 1272px) {
@@ -40,7 +27,6 @@
 
 @media only screen and (max-width: 1045px) {
   .middle { width: 95%; }
-  .menu { left: 4%; }
 }
 
 @media only screen and (max-width: 990px) {

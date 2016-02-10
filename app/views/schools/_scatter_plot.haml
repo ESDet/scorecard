@@ -1,0 +1,17 @@
+.scatter-plot
+  .scatter-plot-nav
+    = yield :scatter_plot_nav
+  .scatter-plot-graph
+    .label.top-left Low Proficiency, HIGH GROWTH
+    .label.top-right High Proficiency, HIGH GROWTH
+    .label.bottom-left Low Proficiency, LOW GROWTH
+    .label.bottom-right High Proficiency, LOW GROWTH
+    .axis.x
+    .axis.y
+    .axis-legend.proficiency
+      .title Proficiency
+      .sub-title State Average
+    .axis-legend.growth
+      .title Growth
+      .sub-title State Average
+    = yield :scatter_plot_points

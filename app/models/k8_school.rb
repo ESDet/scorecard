@@ -4,9 +4,16 @@ module K8School
     ['math', 'ela', 'science', 'socstud'].each do |s|
       o["#{s}_prepared".to_sym] = int_value(o, :esd_k8_2015s, "frac_prof#{s}")
 
+      sub = s == 'socstud' ? 'ss' : s
+      sub = s == 'science' ? 'sci' : sub
+      o["#{s}_prepared_points".to_sym] = float_value(o, :esd_k8_2015s, "pr2_#{sub}_pts")
+
       o["#{s}_growth".to_sym] = float_value(o, :esd_k8_2015s, "mean_pctl_#{s}")
+
     end
     o[:reading_growth] = float_value(o, :esd_k8_2015s, "mean_pctl_reading")
+    o[:reading_growth_points] = float_value(o, :esd_k8_2015s, :pts_progress_read)
+    o[:math_growth_points] = float_value(o, :esd_k8_2015s, :pts_progress_math)
   end
 
   def current_stats

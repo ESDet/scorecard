@@ -1,4 +1,3 @@
-#growth { padding-bottom: 20px; }
 .scatter-plot {
   display: inline-block;
   width: 100%;
@@ -7,10 +6,10 @@
 .scatter-plot-nav .subject {
   position: relative;
   display: inline-block;
-  float: left;
+  margin: 0;
+  margin-left: -3px;
   width: 25%;
   border: 4px solid $grey;
-  margin: 0;
   padding: 12px;
   text-align: center;
   font-size: 21px;
@@ -57,33 +56,68 @@
   margin-top: 25px;
 }
 
-.axis {
+.scatter-plot-graph .label {
+  position: absolute;
+  font-size: 21px;
+  font-family: 'Aleo Bold';
+}
+
+.scatter-plot-graph .label.top-left { color: $rank_orange; }
+
+.scatter-plot-graph .label.top-right { color: $rank_light_green; }
+
+.scatter-plot-graph .label.bottom-left { color: $rank_red; }
+
+.scatter-plot-graph .label.bottom-right { color: $rank_yellow; }
+
+.scatter-plot-graph .label.top-left,
+.scatter-plot-graph .label.top-right {
+  top: 20%;
+}
+
+.scatter-plot-graph .label.bottom-left,
+.scatter-plot-graph .label.bottom-right {
+  bottom: 20%;
+}
+
+.scatter-plot-graph .label.top-left,
+.scatter-plot-graph .label.bottom-left {
+  left: 7%;
+}
+
+.scatter-plot-graph .label.top-right,
+.scatter-plot-graph .label.bottom-right {
+  right: 7%;
+}
+
+.scatter-plot-graph .axis {
   position: absolute;
   border: 2px solid $grey;
 }
 
-.axis.x {
+.scatter-plot-graph .axis.x {
   height: 0px;
   width: 100%;
   top: 50%;
 }
 
-.axis.y {
-  left: 50%;
+.scatter-plot-graph .axis.y {
+  left: 49.5%;
   height: 100%;
   width: 0px;
 }
 
-.axis-legend {
+.scatter-plot-graph .axis-legend {
   position: absolute;
+  background-color: white;
   border: 4px solid $grey;
   width: 140px;
 }
 
-.axis-legend.proficiency {
+.scatter-plot-graph .axis-legend.proficiency {
   padding-top: 5px;
   height: 52px;
-  left: -46px;
+  left: -44px;
   top: 42%;
   border-top: 0;
   /* FF3.5+ */
@@ -98,25 +132,25 @@
   transform: rotate(-90.0deg);
 }
 
-.axis-legend.growth {
+.scatter-plot-graph .axis-legend.growth {
   bottom: 0;
   left: 44%;
   height: 46px;
   border-bottom: 0;
 }
 
-.axis-legend .title {
+.scatter-plot-graph .axis-legend .title {
 }
 
-.axis-legend .sub-title {
+.scatter-plot-graph .axis-legend .sub-title {
 }
 
-.graph-point {
+.scatter-plot-graph .graph-point {
   position: absolute;
   border: 2px solid $grey;
 }
 
-.graph-point.school {
+.scatter-plot-graph .graph-point.school {
   background-color: $graph-point-blue;
   width: 40px;
   height: 40px;
@@ -125,11 +159,54 @@
   border-radius: 20px;
 }
 
-.graph-point.detroit {
+.scatter-plot-graph .graph-point.detroit {
   background-color: black;
   width: 20px;
   height: 20px;
   -moz-border-radius: 10px;
   -webkitborder-radius: 10px;
   border-radius: 10px;
+}
+
+.scatter-plot-graph .point-popup {
+  background-color: white;
+  opacity: 0.8;
+  margin-right: 50%;
+  z-index: 1000;
+  width: 260px;
+  border: 3px solid $grey;
+}
+
+.scatter-plot-graph .point-popup .row {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 15px;
+  border-bottom: 3px solid $grey;
+  font-family: 'Aleo Bold';
+}
+
+.scatter-plot-graph .point-popup .name {
+  font-size: 17px;
+}
+
+.scatter-plot-graph .point-popup .subject {
+  color: $navy;
+}
+
+.scatter-plot-graph .point-popup .left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  border-right: 2px solid $grey;
+}
+
+.scatter-plot-graph .point-popup .right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
 }

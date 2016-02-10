@@ -1,4 +1,4 @@
-#college-ready
+#proficiency.section
   .middle
     .stat-region
       %h2 Are students at this school ready for college?
@@ -29,17 +29,71 @@
       //  WHAT THIS MEANS
       //  .text.hide
       //    This graph shows the percentage of students at this school who scored at the "College-Ready" level or higher on the ACT in 2013-2014. It compares this school's students to students in Detroit and in Michigan who also scored at the "College-Ready" level or higher on the ACT in 2013-2014.
-#growth
+#growth.section
   .middle
     .stat-region
       %h2 Is this school's performance showing growth?
       //%h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
       .content
-        = render 'hs_scatter_plot',
-          english: { school_proficiency: @school.english_college_ready_points, school_growth: @school.english_growth, detroit_proficiency: @detroit.english_college_ready_points, detroit_growth: @detroit.english_growth },
-          math: { school_proficiency: @school.math_college_ready_points, school_growth: @school.math_growth, detroit_proficiency: @detroit.math_college_ready_points, detroit_growth: @detroit.math_growth },
-          reading: { school_proficiency: @school.reading_college_ready_points, school_growth: @school.reading_growth, detroit_proficiency: @detroit.reading_college_ready_points, detroit_growth: @detroit.reading_growth },
-          science: { school_proficiency: @school.science_college_ready_points, school_growth: @school.science_growth, detroit_proficiency: @detroit.science_college_ready_points, detroit_growth: @detroit.science_growth }
+        = content_for :scatter_plot_nav do
+          %a.subject.active(data-target="english") English
+          %a.subject(data-target="math") Math
+          %a.subject(data-target="reading") Reading
+          %a.subject(data-target="science") Science
+        = content_for :scatter_plot_points do
+          .graph-points.english
+            = render 'scatter_subject_points',
+              school_name: @school.display_name,
+              subject: 'english',
+              school_proficiency: @school.english_college_ready,
+              school_growth: @school.english_growth,
+              school_proficiency_points: @school.english_college_ready_points,
+              school_growth_points: @school.english_growth_points,
+              detroit_proficiency: @detroit.english_college_ready,
+              detroit_growth: @detroit.english_growth,
+              detroit_proficiency_points: @detroit.english_college_ready_points,
+              detroit_growth_points: @detroit.english_growth_points,
+              state_proficiency: @state.english_college_ready
+          .graph-points.math.hide
+            = render 'scatter_subject_points',
+              school_name: @school.display_name,
+              subject: 'math',
+              school_proficiency: @school.math_college_ready,
+              school_growth: @school.math_growth,
+              school_proficiency_points: @school.math_college_ready_points,
+              school_growth_points: @school.math_growth_points,
+              detroit_proficiency: @detroit.math_college_ready,
+              detroit_growth: @detroit.math_growth,
+              detroit_proficiency_points: @detroit.math_college_ready_points,
+              detroit_growth_points: @detroit.math_growth_points,
+              state_proficiency: @state.math_college_ready
+          .graph-points.reading.hide
+            = render 'scatter_subject_points',
+              school_name: @school.display_name,
+              subject: 'reading',
+              school_proficiency: @school.reading_college_ready,
+              school_growth: @school.reading_growth,
+              school_proficiency_points: @school.reading_college_ready_points,
+              school_growth_points: @school.reading_growth_points,
+              detroit_proficiency: @detroit.reading_college_ready,
+              detroit_growth: @detroit.reading_growth,
+              detroit_proficiency_points: @detroit.reading_college_ready_points,
+              detroit_growth_points: @detroit.reading_growth_points,
+              state_proficiency: @state.reading_college_ready
+          .graph-points.science.hide
+            = render 'scatter_subject_points',
+              school_name: @school.display_name,
+              subject: 'science',
+              school_proficiency: @school.science_college_ready,
+              school_growth: @school.science_growth,
+              school_proficiency_points: @school.science_college_ready_points,
+              school_growth_points: @school.science_growth_points,
+              detroit_proficiency: @detroit.science_college_ready,
+              detroit_growth: @detroit.science_growth,
+              detroit_proficiency_points: @detroit.science_college_ready_points,
+              detroit_growth_points: @detroit.science_growth_points,
+              state_proficiency: @state.science_college_ready
+        = render 'scatter_plot'
       //.what-this-means
       //  .question-mark
       //  WHAT THIS MEANS
@@ -55,7 +109,7 @@
       //    %p Three years later, Alicia is in the 11th grade. Her Academic Peers take the ACT and score a 22, on average. This is Alicia’s predicted ACT score. When Alicia takes the ACT that same year, she scores 18. Alicia has fallen behind. This difference in Alicia’s predicted versus actual growth is her growth score. In Alicia’s case, it’s negative.<br/><br/>
       //    %b STEP #4:
       //    %p To find the growth of an entire Detroit school, we calculate each individual student’s growth using this method and averaged them altogether.
-#graduation-rates
+#graduation-rates.section
   .middle
     .stat-region
       %h2 Do students at this school graduate high school, enroll in college and stay in college?
@@ -91,30 +145,31 @@
       //  WHAT THIS MEANS
       //  .text.hide
       //    These graphs shows the percentage of students at the school who: graduate from high school within four years, graduate from high school within five years, enroll in college within two years of graduation, stay in college for two years in a row. All school percents are compared to those of Detroit and Michigan.
-.middle
-  .stat-region
-    %h2 What do students and teachers think about this school?
-    %h3 Rating on 5Essentials Student and Teacher Survey, 2015
-    .content.two.fivee
-      = render 'five_essentials',
-        title: 'Overall Rating',
-        overall_rating: @school.five_e_overall_rating,
-        effective_leaders: @school.five_e_effective_leaders,
-        collaborative_teachers: @school.five_e_collaborative_teachers,
-        involved_families: @school.five_e_involved_families,
-        supportive_environment: @school.five_e_supportive_environment,
-        ambitious_instruction: @school.five_e_ambitious_instruction,
-        report_id: @school.five_e_report_id
+.section
+  .middle
+    .stat-region
+      %h2 What do students and teachers think about this school?
+      %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+      .content.two.fivee
+        = render 'five_essentials',
+          title: 'Overall Rating',
+          overall_rating: @school.five_e_overall_rating,
+          effective_leaders: @school.five_e_effective_leaders,
+          collaborative_teachers: @school.five_e_collaborative_teachers,
+          involved_families: @school.five_e_involved_families,
+          supportive_environment: @school.five_e_supportive_environment,
+          ambitious_instruction: @school.five_e_ambitious_instruction,
+          report_id: @school.five_e_report_id
 
-    //.what-this-means
-    //  .question-mark
-    //  WHAT THIS MEANS
-    //  .text.hide
-    //    This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
-    //    %ul
-    //      %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
-    //      %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
-    //      %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
-    //      %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
-    //      %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
-    //    Parents also took the survey. Find out more about how they rated this school. (Coming Soon)
+      //.what-this-means
+      //  .question-mark
+      //  WHAT THIS MEANS
+      //  .text.hide
+      //    This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
+      //    %ul
+      //      %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
+      //      %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
+      //      %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
+      //      %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
+      //      %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
+      //    Parents also took the survey. Find out more about how they rated this school. (Coming Soon)

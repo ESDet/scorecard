@@ -4,19 +4,18 @@
   - home = current_page?(root_path)
   %body{:class => "#{params[:controller]}-#{params[:action]}"}
     .container
-      /%header#nav
-      /  .middle
-      /    .container_12
-      /      %a#hamburger{:href => '#'}
-      /        %div
-      /        %div
-      /        %div
-      /      .centered
-      /        = link_to 'Scorecard', root_path, class: 'brand'
-      /  .menu
-      /    = link_to 'Home', root_path, :class => 'btn'
-      /    = link_to 'Resources', '/resources', :class => 'btn'
-      /    = yield :compare
+      %header#nav
+        .left
+          = link_to 'Scorecard', root_path, class: 'brand'
+          %a#hamburger{:href => '#'}
+            %div
+            %div
+            %div
+        .right
+          .menu
+            = link_to 'Home', root_path, :class => 'btn'
+            = link_to 'Resources', '/resources', :class => 'btn'
+            = yield :compare
 
       = yield
 

@@ -71,6 +71,8 @@ h1 { color: $onyx; }
   .container_12.video { height: 500px; }
 }
 
+.home.middle:nth-child(2) { padding-top: 80px; }
+
 #search {
   display: inline-block;
   margin-bottom: 20px;
@@ -473,39 +475,39 @@ a.btn.external, a.btn.external:visited {
   :hover { color: $navy; }
 }
 
-.menu {
-  position: absolute;
-  width: 100%;
-  margin-left: -20px;
-  z-index: 1000;
-  border-bottom: 1px solid $gainsboro;
-  text-align: right;
-  float: right;
-  display: none;
-  text-align: left;
-  background-color: white;
-  &.active {
-    display: block;
-    float: none;
-  }
-  a.btn {
-    display: block;
-    clear: both;
-    padding: 0.5em 1em;
-  }
-}
-
 .school-nav-title {
   color: #4e4040;
 }
 
-#nav {
-  padding: 10px 20px;
+.schools-index #nav,
+.home-index #nav {
+  border-bottom: 1px solid $gainsboro;
+}
+.schools-index #nav a.btn,
+.schools-index #nav a.brand,
+.schools-index #nav a,
+.home-index #nav a.btn,
+.home-index #nav a.brand,
+.home-index #nav a {
   color: $navy;
-  border-bottom: 2px solid $gainsboro;
+}
 
+#nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 10px 20px;
+  color: white;
+
+  .left { float: left; }
+  .right {
+    margin-top: 20px;
+    float: right;
+  }
+
+  a.brand { color: white; }
   a span {
-    color: $cyan;
+    color: white;
     font-family: 'Aleo Regular';
     font-size: 25px;
   }
@@ -540,13 +542,10 @@ a.btn.external, a.btn.external:visited {
   }
 
   a.btn {
-    background-color: white;
-    color: $navy;
+    color: white;
     font-family: 'Aleo Regular';
     font-size: 20px;
-    &:hover {
-      background-color: $gainsboro;
-    }
+    background-color: transparent;
   }
 }
 
@@ -684,9 +683,13 @@ a.btn.external, a.btn.external:visited {
 }
 
 .section {
-  padding: 14px 0px;
+  padding: 40px 0px;
   display: inline-block;
   width: 100%;
+}
+
+.section .section {
+  padding: 20px 0px;
 }
 
 .section > .links {

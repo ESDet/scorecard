@@ -1,84 +1,111 @@
-.middle
-  .stat-region
-    %h2 Are students on track and academically prepared?
-    %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
-    .content.four
-      = render 'bar_graph', title: 'Math',
-        school_average: @school.math_prepared,
-        detroit_average: @detroit.math_prepared,
-        state_average: @state.math_prepared
-      = render 'bar_graph', title: 'Reading and Writing',
-        school_average: @school.ela_prepared,
-        detroit_average: @detroit.ela_prepared,
-        state_average: @state.ela_prepared
-      = render 'bar_graph', title: 'Science',
-        school_average: @school.science_prepared,
-        detroit_average: @detroit.science_prepared,
-        state_average: @state.science_prepared
-      = render 'bar_graph', title: 'Social Studies',
-        school_average: @school.socstud_prepared,
-        detroit_average: @detroit.socstud_prepared,
-        state_average: @state.socstud_prepared
-      .what-this-means
-        .question-mark
-        WHAT THIS MEANS
-        .text.hide
-          This graph uses 2013-2014 MEAP data to compare the percentage of proficient or higher students at this school to the percentage of proficient or higher students in Detroit and in Michigan.
-  .stat-region
-    %h2 Did students at this school grow academically?
-    %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
-    .content.growth.two
-      .labels
-        .label SCHOOL
-        .label DETROIT
-      = render 'two_bar_graph', title: 'Math Growth',
-        subject: 'math', scale: 20,
-        school_growth: @school.math_growth,
-        detroit_growth: @detroit.math_growth,
-        zero_bar: 'STATE'
-      = render 'two_bar_graph', title: 'Reading Growth',
-        subject: 'reading', scale: 20,
-        school_growth: @school.reading_growth,
-        detroit_growth: @detroit.reading_growth,
-        zero_bar: 'STATE'
-      .what-this-means
-        .question-mark
-        WHAT THIS MEANS
-        .text.hide
-          This graph provides information about whether students at a school are growing at a faster or slower pace relative to their academic peers across the state in Math and Reading. The graph shows the school's average growth compared to the average growth of other schools in Detroit and in Michigan.
-          %h4
-            %b How it's calculated
-          %b STEP #1:
-          %p In 2012, Student A (let’s call him Will) scored a 397 on the 4th grade MEAP reading test.<br/>
-          %b STEP #2:
-          %p Will is then matched with all other 4th graders across Michigan who also scored roughly 397 on the MEAP reading exam in 2012. We’ll call them Will’s Academic Peers.<br/>
-          %b STEP #3:
-          %p One year later, in 2013, Will and his Academic Peers take the 5th grade MEAP reading test. Will scored 522, while his Academic Peers scored 509 on average. Compared to his peers, Will has grown further. This difference in growth is Will’s growth measure, and in Will’s case, its positive.<br/>
-          %b STEP #4
-          %p To find the growth of an entire Detroit school, we calculated each individual student’s growth using this method and averaged them altogether.
-  .stat-region
-    %h2 What do students and teachers think about this school?
-    %h3 Rating on 5Essentials Student and Teacher Survey, 2015
-    .content.two.fivee
-      = render 'five_essentials',
-        title: 'Overall Rating',
-        overall_rating: @school.five_e_overall_rating,
-        effective_leaders: @school.five_e_effective_leaders,
-        collaborative_teachers: @school.five_e_collaborative_teachers,
-        involved_families: @school.five_e_involved_families,
-        supportive_environment: @school.five_e_supportive_environment,
-        ambitious_instruction: @school.five_e_ambitious_instruction,
-        report_id: @school.five_e_report_id
+#proficiency.section
+  .middle
+    .stat-region
+      %h2 Are students on track and academically prepared?
+      %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
+      .content.four
+        = render 'bar_graph', title: 'Math',
+          school_average: @school.math_prepared,
+          school_average_points: @school.math_prepared_points,
+          detroit_average: @detroit.math_prepared,
+          state_average: @state.math_prepared
+        = render 'bar_graph', title: 'Reading and Writing',
+          school_average: @school.ela_prepared,
+          school_average_points: @school.ela_prepared_points,
+          detroit_average: @detroit.ela_prepared,
+          state_average: @state.ela_prepared
+        = render 'bar_graph', title: 'Science',
+          school_average: @school.science_prepared,
+          school_average_points: @school.science_prepared_points,
+          detroit_average: @detroit.science_prepared,
+          state_average: @state.science_prepared
+        = render 'bar_graph', title: 'Social Studies',
+          school_average: @school.socstud_prepared,
+          school_average_points: @school.socstud_prepared,
+          detroit_average: @detroit.socstud_prepared,
+          state_average: @state.socstud_prepared
+        //.what-this-means
+        //  .question-mark
+        //  WHAT THIS MEANS
+        //  .text.hide
+        //    This graph uses 2013-2014 MEAP data to compare the percentage of proficient or higher students at this school to the percentage of proficient or higher students in Detroit and in Michigan.
+#growth.section
+  .middle
+    .stat-region
+      %h2 Is this school's performance showing growth?
+      //%h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
+      .content
+        = content_for :scatter_plot_nav do
+          %a.subject.active(data-target="math") Math
+          %a.subject(data-target="reading") Reading
+        = content_for :scatter_plot_points do
+          .graph-points.math
+            = render 'scatter_subject_points',
+              school_name: @school.display_name,
+              subject: 'math',
+              school_proficiency: @school.math_prepared,
+              school_growth: @school.math_growth,
+              school_proficiency_points: @school.math_prepared_points,
+              school_growth_points: @school.math_growth_points,
+              detroit_proficiency: @detroit.math_prepared,
+              detroit_growth: @detroit.math_growth,
+              detroit_proficiency_points: @detroit.math_prepared_points,
+              detroit_growth_points: @detroit.math_growth_points,
+              state_proficiency: @state.math_prepared
+          .graph-points.reading.hide
+            = render 'scatter_subject_points',
+              school_name: @school.display_name,
+              subject: 'reading',
+              school_proficiency: @school.reading_prepared,
+              school_growth: @school.reading_growth,
+              school_proficiency_points: @school.reading_prepared_points,
+              school_growth_points: @school.reading_growth_points,
+              detroit_proficiency: @detroit.reading_prepared,
+              detroit_growth: @detroit.reading_growth,
+              detroit_proficiency_points: @detroit.reading_prepared_points,
+              detroit_growth_points: @detroit.reading_growth_points,
+              state_proficiency: @state.reading_prepared
+        = render 'scatter_plot'
+        //.what-this-means
+        //  .question-mark
+        //  WHAT THIS MEANS
+        //  .text.hide
+        //    This graph provides information about whether students at a school are growing at a faster or slower pace relative to their academic peers across the state in Math and Reading. The graph shows the school's average growth compared to the average growth of other schools in Detroit and in Michigan.
+        //    %h4
+        //      %b How it's calculated
+        //    %b STEP #1:
+        //    %p In 2012, Student A (let’s call him Will) scored a 397 on the 4th grade MEAP reading test.<br/>
+        //    %b STEP #2:
+        //    %p Will is then matched with all other 4th graders across Michigan who also scored roughly 397 on the MEAP reading exam in 2012. We’ll call them Will’s Academic Peers.<br/>
+        //    %b STEP #3:
+        //    %p One year later, in 2013, Will and his Academic Peers take the 5th grade MEAP reading test. Will scored 522, while his Academic Peers scored 509 on average. Compared to his peers, Will has grown further. This difference in growth is Will’s growth measure, and in Will’s case, its positive.<br/>
+        //    %b STEP #4
+        //    %p To find the growth of an entire Detroit school, we calculated each individual student’s growth using this method and averaged them altogether.
+.section
+  .middle
+    .stat-region
+      %h2 What do students and teachers think about this school?
+      %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+      .content.two.fivee
+        = render 'five_essentials',
+          title: 'Overall Rating',
+          overall_rating: @school.five_e_overall_rating,
+          effective_leaders: @school.five_e_effective_leaders,
+          collaborative_teachers: @school.five_e_collaborative_teachers,
+          involved_families: @school.five_e_involved_families,
+          supportive_environment: @school.five_e_supportive_environment,
+          ambitious_instruction: @school.five_e_ambitious_instruction,
+          report_id: @school.five_e_report_id
 
-    .what-this-means
-      .question-mark
-      WHAT THIS MEANS
-      .text.hide
-        This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
-        %ul
-          %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
-          %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
-          %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
-          %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
-          %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
-        Parents also took the survey. Find out more about how they rated this school. (Coming Soon)
+      //.what-this-means
+      //  .question-mark
+      //  WHAT THIS MEANS
+      //  .text.hide
+      //    This chart measures school culture, or how students and teachers feel about their school. Students and teachers provide this information through the 5Essentials Student and Teacher Survey.
+      //    %ul
+      //      %li <b>Effective Leaders:</b> The principal works with teachers to implement a clear and strategic vision for school success.
+      //      %li <b>Collaborative Teachers:</b> The staff is committed to the school, receives strong professional development, and works together to improve the school.
+      //      %li <b>Involved Families:</b> The entire school staff builds strong relationships with families and communities to support learning.
+      //      %li <b>Supportive Environment:</b> The school is safe and orderly. Teachers have high expectations for students. Students are supported by their teachers and peers.
+      //      %li <b>Ambitious Instruction:</b> Classes are academically demanding and engage students by emphasizing the application of knowledge.
+      //    Parents also took the survey. Find out more about how they rated this school. (Coming Soon)
