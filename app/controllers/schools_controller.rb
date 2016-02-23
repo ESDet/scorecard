@@ -166,7 +166,7 @@ class SchoolsController < ApplicationController
         @schools += ecs_data if ecs_data
         if @schools.present?
           @schools.sort_by! do |s|
-            if s.earlychild?
+            if s.ec?
               s.ec_state_ratings.total_points.to_f
             elsif s.k8?
               if s.esd_k8_2015s.total_pts.to_f < 1
@@ -224,12 +224,12 @@ class SchoolsController < ApplicationController
     @school = SchoolData.new school_data["data"].
       merge(included: school_data["included"])
 
-    if @school.earlychild?
+    if @school.ec?
       @school.extend(EarlyChildhood)
       render "show_ec" and return
     else
       @school.extend(School)
-      if @school.high?
+      if @school.hs?
         @school.extend(HighSchool)
         @detroit.extend(HighSchool)
         @state.extend(HighSchool)
@@ -270,7 +270,7 @@ class SchoolsController < ApplicationController
         school.extend(EarlyChildhood)
       else
         school.extend(School)
-        school.extend(HighSchool) if school.high?
+        school.extend(HighSchool) if school.hs?
         school.extend(K8School) if school.k8?
       end
       school

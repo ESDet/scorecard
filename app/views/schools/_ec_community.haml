@@ -1,0 +1,47 @@
+#community.ratings
+  .section
+    .middle
+      = render layout: 'ec_overall_rating', locals: { title: 'COMMUNITY', medal: school.site_visit_rating, year: school.site_visit_rating_year } do
+        .text The Community rating is based on surveys conducted on-site at the program by a group of trained reviewers from the community.  After spending four hours observing and taking notes, reviewers answer questions on a four-point scale that measures how much they agree with the statements below (I do not agree at all, I somewhat agree, I mostly agree, and I completely agree). A score of 4.0.0 out of 4.0.0 is considered an "excellent" rating.
+      .columns.five
+        .column
+          = render 'ec_rating_box',
+            title: 'Cultural Awareness',
+            rank_type: :community,
+            points: school.community_clc_fair_average.round(1),
+            possible_points: 4.0,
+            explanation: "The rating is based on how well teachers showed respect to all children regardless of race, culture and ability."
+
+        .column
+          = render 'ec_rating_box',
+            title: 'Professionalism',
+            rank_type: :community,
+            points: school.community_professionalism_fair_average.round(1),
+            possible_points: 4.0,
+            explanation: "The rating is based on how teachers and staff behave and treat each other while in the room with children."
+
+        .column
+          = render 'ec_rating_box',
+            title: 'Program Environment',
+            rank_type: :community,
+            points: school.community_safety_fair_average.round(1),
+            possible_points: 4.0,
+            explanation: "This rating is based on the conditions of the classroom."
+
+        .column
+          = render 'ec_rating_box',
+            title: 'Relationships & Interactions',
+            rank_type: :community,
+            points: school.community_interactions_fair_average.round(1),
+            possible_points: 4.0,
+            explanation: "The rating is based on how well teachers manage the classroom."
+
+        .column
+          = render 'ec_rating_box',
+            title: 'Collaboration',
+            rank_type: :community,
+            points: school.community_family_fair_average.round(1),
+            possible_points: 4.0,
+            explanation: "The rating is based on how the family, community and school work together."
+
+  = render 'legend', school: school, :tab => :community

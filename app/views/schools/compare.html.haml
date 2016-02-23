@@ -27,7 +27,7 @@
             .line
               .name
                 %h2= link_to s.display_name, school_path(s.id)
-            - if s.earlychild?
+            - if s.ec?
               .line.height-40
                 .float-left Address
                 .float-right= s.street
@@ -45,7 +45,7 @@
                   - grades = s.grades_served || s.age_groups
                   = "#{grades.first} - #{grades.last}"
               .line.clear-floats
-                - if s.earlychild?
+                - if s.ec?
                   = "#{s.early_childhood_rating}"
                 - else
                   .float-left ESD Grade
@@ -56,7 +56,7 @@
           .region-title(data-target="overview")
             %h2 Overview
           #overview.group
-            - if s.earlychild?
+            - if s.ec?
               .line
                 .float-left Age Groups
                 .float-right
@@ -145,7 +145,7 @@
           .region-title(data-target="performance")
             %h2 Performance
           #performance.group
-            - if s.earlychild?
+            - if s.ec?
               .line
                 .float-left Community Rating
                 .float-right= image_tag s.early_childhood_image(:mini, s.site_visit_rating), class: 'mini-el-icon'
@@ -242,7 +242,7 @@
           .region-title(data-target="programs")
             %h2 Programs
           #programs.group
-            - if s.earlychild?
+            - if s.ec?
               .line.list
                 %h3 Enrichment Opportunities
                 - if s.enrichment.present?
@@ -294,7 +294,7 @@
                     .checked
                   - else
                     .unchecked
-              - if s.high?
+              - if s.hs?
                 #ap-classes.line.list
                   %h3 AP Classes
                   - if s.ap_classes.present?

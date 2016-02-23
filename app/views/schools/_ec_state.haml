@@ -1,0 +1,74 @@
+#state.ratings
+  .section
+    .middle
+      = render layout: 'ec_overall_rating', locals: { title: 'STATE', medal: 'SILVER', year: '2015' } do
+        .text The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS), which is a state-run program. The points in each category are from the program's self-assessment.
+        .stars
+          = render 'stars', :n => [school.published_rating.to_i, 0].max
+        .overall-points
+          %span.points #{school.points_total}
+          %span.grey /50
+          %span.text OVERALL SCORE
+      .columns.five
+        .column
+          = render 'ec_rating_box',
+            title: 'Staff Qualifications and Professional Development',
+            rank_type: :state,
+            points: school.points_staff.to_i,
+            possible_points: 16,
+            explanation: ""
+        .column
+          = render 'ec_rating_box',
+            title: 'Family and Community Partnerships',
+            rank_type: :state,
+            points: school.points_family.to_i,
+            possible_points: 8,
+            explanation: ""
+        .column
+          = render 'ec_rating_box',
+            title: 'Administration and Management',
+            rank_type: :state,
+            points: school.points_admin.to_i,
+            possible_points: 6,
+            explanation: ""
+        .column
+          = render 'ec_rating_box',
+            title: 'Environment',
+            rank_type: :state,
+            points: school.points_env.to_i,
+            possible_points: 8,
+            explanation: ""
+        .column
+          = render 'ec_rating_box',
+            title: 'Curriculum and Instruction',
+            rank_type: :state,
+            points: school.points_curriculum.to_i,
+            possible_points: 12,
+            explanation: ""
+
+      .star-rating-explanation
+        .left
+          %h3 Here is what the star ratings mean:
+          %div
+            = render 'stars', :n => 0
+            %span.text Program meets state licensing requirements
+          %div
+            = render 'stars', :n => 1
+            %span.text Program meets state licensing requirements and is participating in Great Start to Quality
+          %div
+            = render 'stars', :n => 2
+            %span.text Program demonstrates quality across some standards
+          %div
+            = render 'stars', :n => 3
+            %span.text Program demonstrates quality across several standards
+          %div
+            = render 'stars', :n => 4
+            %span.text Program demonstrates quality across almost all standards
+          %div
+            = render 'stars', :n => 5
+            %span.text Program demonstrates highest quality
+        .right
+          = image_tag 'el_icons/gs_logo.png', :class => 'gs-logo'
+
+
+  = render 'legend', school: school, :tab => :state

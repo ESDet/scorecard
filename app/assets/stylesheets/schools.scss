@@ -4,31 +4,31 @@
   background-size: cover;
 }
 
-.overview {
+.school-banner .overview {
   width: 80%;
   margin: 0 auto;
   padding-top: 3%;
 }
 
-.overview a,
-.overview a:visited,
-.overview a:active,
-.overview a:hover,
-.overview a.external,
-.overview a.external:visited {
+.school-banner .overview a,
+.school-banner .overview a:visited,
+.school-banner .overview a:active,
+.school-banner .overview a:hover,
+.school-banner .overview a.external,
+.school-banner .overview a.external:visited {
   color: white;
 }
 
-.overview .section {
+.school-banner .overview .section {
   padding: 7px 0;
 }
 
-.overview .section .columns {
+.school-banner .overview .section .columns {
   width: auto;
   margin-bottom: 0;
 }
 
-.overview .section .columns .column {
+.school-banner .overview .section .columns .column {
   width: 170px;
 }
 

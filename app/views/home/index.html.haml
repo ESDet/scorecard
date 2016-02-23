@@ -138,7 +138,10 @@
       );
     };
 
-    $('#loc').typeahead({ source: #{@school_names} });
+    if (#{!@school_names.empty?}) {
+      $('#loc').typeahead({ source: #{@school_names} });
+    }
+
     if(gradeFilter) {
       showGradeFilters(gradeFilter);
       for(var k in charFilters) {

@@ -1,0 +1,39 @@
+.school-banner
+  .overview
+    .school-image(style="background-image:url(#{school.early_childhood_image(:community, school.visit_site_rating)})")
+    .school-name
+      %h1= school.display_name
+    .contact-info
+      .info= school.street
+      - if school.phone.present? || school.fax.present?
+        .info
+          Phone: #{school.phone} &nbsp;&nbsp;&nbsp;
+          - if school.fax.present?
+            | &nbsp;&nbsp;&nbsp;Fax: #{school.fax}
+    .website-info
+      .info
+        %a(href="#{school.school_url}" target="_blank")
+          %span.visit-icon
+          VISIT WEBSITE
+      .info
+        %a(id="print" title="Print" target="_blank" href="/schools/#{school.id}.pdf?disposition=inline")
+          %span.print-icon
+        %a(id="download" title="Download" href="/schools/#{school.id}.pdf")
+          %span.download-icon
+    .hours
+      .column
+        - days = []
+        - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |d|
+          - if (s = school.send("#{d}_open".to_sym)).present?
+            - days << { day: d, open: s, close: school.send("#{d}_close".to_sym) }
+        .info HOURS: #{days.first[:day].capitalize} - #{days.last[:day].capitalize}: #{days.first[:open]} - #{days.last[:close]}
+      .column
+        - unless @school.contact.blank?
+          .info Contact Person: #{school.contact}
+        - unless @school.email.blank?
+          .info Email: #{school.email}
+        - unless @school.phone.blank?
+          .info Phone: #{school.phone}
+      .column
+        - unless @school.contact.blank?
+          .info AGE GROUPS: #{school.age_groups.join(",")}

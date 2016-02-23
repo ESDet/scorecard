@@ -1,10 +1,9 @@
 - if list.present?
   .section.clear-floats
-    .header
-      .icon-text
-        = label
     .columns.one
       .column
-        .content.light-cyan-background
-          = render 'four_col_field_list',
-            list: list
+        .info-box
+          .info-box__title= label
+          .info-box__content
+            = render 'four_col_field_list',
+              list: list

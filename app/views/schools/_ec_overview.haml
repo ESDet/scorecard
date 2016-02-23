@@ -1,0 +1,50 @@
+#overview
+  .middle.overview
+    .section
+      %h2 Overview
+      %h3= school.message
+      .columns
+        .column
+          .info-box
+            .info-box__title PROGRAM SPECIALTY
+            .info-box__content
+              .text= school.specialty.join(", ")
+          .info-box
+            .info-box__title WRITTEN CONTRACT
+            .info-box__content
+              .text= school.contract
+          .info-box
+            .info-box__title APPLICATION FEE
+            .info-box__content
+              .text $#{school.fee.round(0)}
+        .column
+          .info-box
+            .info-box__title SCHEDULE TYPE
+            .info-box__content
+              .text= school.schedule.join(", ")
+          .info-box
+            .info-box__title FINANCIAL ASSISTANCE
+            .info-box__content
+              .text= school.subsidy.join(", ")
+          .info-box
+            .info-box__title LANGUAGES SPOKEN
+            .info-box__content
+              .text= school.language.join(", ")
+        .column
+          .info-box
+            .info-box__title LICENSED CAPACITY
+            .info-box__content
+              .text= school.capacity
+          .info-box
+            .info-box__title PROGRAM ELIGIBILITY CRITERIA
+            .info-box__content
+              .text= school.eligibility
+          .info-box
+            .info-box__title PARTNERSHIP
+            .info-box__content
+              .text
+                = school.partner_one
+                %br
+                = school.partner_two
+                %br
+                = school.partner_three

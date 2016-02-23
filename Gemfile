@@ -27,8 +27,9 @@ gem 'wkhtmltopdf-binary'
 gem 'rails_12factor', group: :production
 
 group :development do
+  gem 'pry-byebug', '=1.3.3'
   gem 'pry-rails'
-  gem 'pry-byebug'
+  gem 'pry-remote'
   gem 'flamegraph'
   gem 'better_errors'
   gem 'binding_of_caller'

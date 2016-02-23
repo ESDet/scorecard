@@ -1,6 +1,6 @@
 .school{"data-tid" => school.tid}
   %a.icon{href: school_path(school.id)}
-    - if school.earlychild?
+    - if school.ec?
       %img(src="#{school.early_childhood_image(:mini, nil)}")
     - else
       .rounded-square.green-background.small

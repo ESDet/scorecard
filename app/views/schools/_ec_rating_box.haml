@@ -1,0 +1,13 @@
+.info-box.rating
+  .info-box__title
+    - if title.split(" ").size > 3
+      .small= title
+    - else
+      %div= title
+  .info-box__content
+    .text
+      = ec_rank_html(:text, rank_type, possible_points, points)
+      %br
+      %span(class="points #{ec_rank_html(:class, rank_type, possible_points, points)}")= points
+      %span / #{possible_points}
+.explanation= explanation

@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def og_image
-    if @school.earlychild?
+    if @school.ec?
       @school.early_childhood_image(:overall, @school.early_childhood_rating)
     else
       "/assets/icon.png"

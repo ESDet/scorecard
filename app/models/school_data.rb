@@ -22,7 +22,7 @@ class SchoolData < OpenStruct
   end
 
   def display_name
-    profile = earlychild? ? ec_profiles : school_profiles
+    profile = ec? ? ec_profiles : school_profiles
     if profile.andand.title
       profile.andand.title
     else
@@ -38,11 +38,11 @@ class SchoolData < OpenStruct
     end
   end
 
-  def earlychild?
+  def ec?
     type == 'ecs'
   end
 
-  def high?
+  def hs?
     school_type == 'hs'
   end
 
@@ -53,13 +53,13 @@ class SchoolData < OpenStruct
   def excellent_schools_grade
     if k8?
       esd_k8_2015s.andand.total_ltrgrade
-    elsif high?
+    elsif hs?
       esd_hs_2015s.andand.total_ltrgrade
     end
   end
 
   def early_childhood_rating
-    if earlychild?
+    if ec?
       ec_state_ratings.andand.overall_rating
     end
   end
@@ -147,7 +147,7 @@ class SchoolData < OpenStruct
   end
 
   def id
-    if earlychild?
+    if ec?
       "#{tid}-ecs-#{transliterate(name)}"
     else
       "#{tid}-#{school_type}-#{transliterate(name)}"
@@ -155,11 +155,11 @@ class SchoolData < OpenStruct
   end
 
   def short_id
-    earlychild? ? "#{tid}-ecs" : "#{tid}-#{school_type}"
+    ec? ? "#{tid}-ecs" : "#{tid}-#{school_type}"
   end
 
   def grades_served
-    unless earlychild?
+    unless ec?
       if school_profiles
         school_profiles.field_grades_served.andand.
           map { |g| g['label'] }
@@ -168,7 +168,7 @@ class SchoolData < OpenStruct
   end
 
   def age_groups
-    if earlychild?
+    if ec?
       ec_profiles.andand.field_ec_agegroups.andand.
         map { |a| a['name'] }
     end

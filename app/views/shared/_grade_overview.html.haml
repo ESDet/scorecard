@@ -29,7 +29,7 @@
             %h2.printonly Details
             = render 'shared/tip', :tip => @tips["detail_#{section}".to_sym]
             - if section == :status
-              - if @school.high?
+              - if @school.hs?
                 %p For each subject tested on ACT, these percentages reflect ACT’s definition of college readiness on each specific subject.
               - else
                 %p Percentage of students in each grade who are proficient in Math and Reading.

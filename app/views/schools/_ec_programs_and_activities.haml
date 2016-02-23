@@ -1,0 +1,50 @@
+#programs
+  .middle
+    = render 'one_col_field_list',
+      label: 'SPECIAL NEEDS EXPERIENCE',
+      list: @school.special
+    .section
+      .columns.two
+        = render 'column',
+          title: 'ENVIRONMENT',
+          list: @school.environment
+        = render 'column',
+          title: 'MEALS PROVIDED',
+          list: @school.meals
+    .section
+      .columns.two
+        = render 'column',
+          title: 'ENRICHMENT OPPORTUNITIES',
+          list: @school.enrichment
+        = render 'column',
+          title: 'FIELD TRIPS AND OTHER EXTENDED PROGRAMMING',
+          list: @school.extended
+    .section
+      .columns.two
+        = render 'column',
+          title: 'FACILITIES AVAILABLE',
+          list: @school.facilities
+        = render 'column',
+          title: 'FREQUENCY OF FEEDBACK PROVIDED TO PARENTS ON CHILD’S PROGRESS',
+          list: @school.feedback_freq
+    .section
+      .columns.two
+        = render 'column',
+          title: 'TYPE OF FEEDBACK PROVIDED TO PARENTS ON CHILD\'S PROGRESS',
+          list: @school.feedback_type
+        = render 'column',
+          title: 'HEALTH/DENTAL/VISION CARE',
+          list: @school.medical
+    .section
+      .columns.two
+        = render 'column',
+          title: 'ACCESS TO MENTAL HEALTH SERVICES',
+          list: @school.mental
+        = render 'column',
+          title: 'PLAYGROUND AND/OR PHYSICAL ACTIVITY SPACE ON SITE',
+          list: @school.physical_activity
+    .section
+      .columns.two
+        = render 'column',
+          title: 'FAMILY AND COMMUNITY SUPPORT',
+          list: @school.support

@@ -1,26 +1,19 @@
-%br/
-%br/
-%h3.bebas.underlined Grade Legend
-.grade-legend
-  .clear-floats
-    = image_tag school.early_childhood_image(tab, 'Gold')
-    %h3 Superior Quality Program
-  .clear-floats
-    = image_tag school.early_childhood_image(tab, 'Silver')
-    %h3 High Quality Program
-  .clear-floats
-    = image_tag school.early_childhood_image(tab, 'Bronze')
-    %h3 Quality Program
-  .clear-floats
-    = image_tag school.early_childhood_image(tab, 'Below Bronze')
-    %h3 On the path to medal-level quality
-  .clear-floats
-    = image_tag school.early_childhood_image(tab, 'Not Rated')
-    - if tab == :overall
-      %h3 Not enough information to designate a rating
-    - else
-      %h3 Not enough information to designate a rating or this program did not participate
-  - if tab == :overall
-    .clear-floats
-      = image_tag school.early_childhood_image(tab, 'None')
-      %h3 This program did not participate
+.grade-legend.background-grey
+  %h2 GRADE LEGEND
+  .middle
+    .columns.five
+      .column
+        = image_tag school.early_childhood_image(tab, 'Gold')
+        %h3 Superior Quality Program
+      .column
+        = image_tag school.early_childhood_image(tab, 'Silver')
+        %h3 High Quality Program
+      .column
+        = image_tag school.early_childhood_image(tab, 'Bronze')
+        %h3 Quality Program
+      .column
+        = image_tag school.early_childhood_image(tab, 'Below Bronze')
+        %h3 On the path to medal-level quality
+      .column
+        = image_tag school.early_childhood_image(tab, 'Not Rated')
+        %h3 Not enough information to designate a rating or this program did not participate

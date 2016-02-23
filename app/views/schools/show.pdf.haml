@@ -78,7 +78,7 @@
       .container_12.info-region
         #performance
           .middle
-            - if @school.high?
+            - if @school.hs?
               .section.border-bottom
                 .stat-region
                   %h2 Are students at this school ready for college?
@@ -352,7 +352,7 @@
                     %span.key Programs
                     = render 'field_list.html.haml',
                       list: @school.special_ed_programs[0..5]
-          - if @school.high?
+          - if @school.hs?
             - if @school.has_sports? || @school.has_clubs?
               .header.margin-top-10
                 .icon-text
@@ -382,7 +382,7 @@
                     = render 'field_list.html.haml',
                       list: @school.student_clubs
         .section.one-third
-          - if @school.high?
+          - if @school.hs?
             .stat-region
               %h2 What do students and teachers think about this school?
               %h3 Rating on 5Essentials Student and Teacher Survey, 2015
