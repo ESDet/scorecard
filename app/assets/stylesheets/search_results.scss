@@ -25,9 +25,10 @@
 .search-results .compare-select {
   padding: 20px 5px;
   .do-compare.btn {
-    display: inline-block;
+    margin: 0 auto;
+    display: block;
     text-align: center;
-    width: 100%;
+    width: 80%;
     background-color: $fivee_orange;
     color: white;
     font-size: 21px;
