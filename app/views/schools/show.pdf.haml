@@ -7,7 +7,7 @@
     = csrf_meta_tag
   %body
     .container
-      .container_12.info-region
+      .info-region
         .school-header
           .left
             .school-title
@@ -75,7 +75,7 @@
                 - if @school.operator.present?
                   %span Operator:
                   = @school.operator
-      .container_12.info-region
+      .info-region
         #performance
           .middle
             - if @school.hs?
@@ -235,7 +235,7 @@
                           .key.orange
                           .key.red
                           Very Weak
-      .container_12.info-region
+      .info-region
         .secondary-school-header
           .heading= @school.display_name
           .school-info-wrapper
