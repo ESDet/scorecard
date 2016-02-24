@@ -143,38 +143,6 @@
   }
 }
 
-input.checkbox-icon[type="checkbox"] {
-  display: none;
-}
-
-input.checkbox-icon[type="checkbox"] + label {
-  cursor: pointer;
-  margin-top: 13px;
-  display: inline-block;
-  width: 17px;
-  height: 17px;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
-  border: 1px solid grey;
-  background-color: white;
-}
-
-input.checkbox-icon[type="checkbox"]:checked + label {
-  position: relative;
-  cursor: pointer;
-  display: inline-block;
-  background-color: $green;
-}
-
-input.checkbox-icon[type="checkbox"]:checked + label:before {
-  position: absolute;
-  content: "\2714\0020";
-  color: white;
-  font-size: 14px;
-  padding-left: 2px;
-}
-
 .visual .wrapper {
   text-align: center;
 }

@@ -1,16 +1,26 @@
 - cache(schools_cache_key) do
-  .schools-wrapper
+  .search-results
     .schools-map-wrapper
       #map
 
     .results
+      .sort-by-bar
+        .float-left Sort By:
+        .float-right
+          %a#rating-link(href='')
+            .text RATINGS
+          |
+          %a#favorites-link(href='')
+            .star &#9734;
+            .number
+            .text FAVORITES
       .compare-select.hide
         %a.do-compare.btn{:href => '/'} Compare Selected Schools
       .school-list
         - if @schools.empty?
           %h3 There are no schools that fit your selection(s) right now.
         - @schools.each do |s|
-          = render 'item', { :school => s }
+          = render 'search_result', school: s
 
 
   :javascript

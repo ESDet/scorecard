@@ -135,15 +135,15 @@ class SchoolData < OpenStruct
   end
 
   def street
-    field_address.andand.thoroughfare if field_address
+    field_address.andand.thoroughfare
   end
 
   def city
-    field_address.andand.locality if field_address
+    field_address.andand.locality
   end
 
   def state
-    field_address.andand.administrative_area if field_address
+    field_address.andand.administrative_area
   end
 
   def id
@@ -174,6 +174,21 @@ class SchoolData < OpenStruct
     end
   end
 
+  def school_url
+    if ec?
+      normalize_url(ec_profiles.andand.field_website.andand.url)
+    else
+      normalize_url(school_profiles.andand.field_school_url)
+    end
+  end
+
+  def phone
+    if ec?
+      field_address.andand.phone_number
+    else
+      school_profiles.andand.field_general_contact_phone
+    end
+  end
 
   private
 

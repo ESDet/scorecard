@@ -50,11 +50,11 @@ class SchoolsController < ApplicationController
     when "k8", "hs", "high"
       @grade = "hs" if @grade == "high"
 
-      url = "schools.json?limit=50&flatten_fields=true&" <<
+      url = "schools.json?limit=50&flatten_fields=true" <<
+        "&includes=school_profile,esd_#{@grade}_2015" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC" <<
-        "&filter[field_scorecard_display]=1" <<
-        "&includes=school_profile,esd_#{@grade}_2015"
+        "&filter[field_scorecard_display]=1"
 
       if @grade == "k8"
         url << "&filter[field_school_type]=10"
@@ -84,8 +84,8 @@ class SchoolsController < ApplicationController
       end
     else
       schools_url = "schools.json?limit=25" <<
-        "&flatten_fields=true&" <<
-        "includes=school_profile,esd_k8_2015," <<
+        "&flatten_fields=true" <<
+        "&includes=school_profile,esd_k8_2015," <<
         "esd_hs_2015&filter[field_scorecard_display]=1" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC"

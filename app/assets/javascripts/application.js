@@ -1,8 +1,10 @@
 //= require jquery
 //= require jquery_ujs
+//= require js.cookie
 //= require d3
 //= require leaflet
 //= require map
+//= require search_results
 //= require bar_graph
 //= require two_bar_graph
 //= require three_bar_graph

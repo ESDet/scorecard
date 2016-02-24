@@ -1,0 +1,42 @@
+.school{"data-tid" => school.tid}
+  .rating
+    %a.icon{href: school_path(school.id)}
+      - if school.ec?
+        %img(src="#{school.early_childhood_image(:mini, nil)}")
+      - else
+        .rounded-square.green-background.small
+          .grade
+            = school.excellent_schools_grade
+    %a.favorite(href='' data-id="#{school.tid}") &#9734;
+  .name
+    %a{href: school_path(school.id)}
+      %h3= school.display_name
+  .info
+    %a{href: school_path(school.id)}
+      - grades = school.grades_served || school.age_groups
+      - if grades.size > 1
+        - grades = "#{grades.first} - #{grades.last}"
+      - else
+        - grades = grades.first
+
+      .grades
+        - if school.grades_served.present?
+          = "Grades: #{grades}"
+        - elsif school.age_groups.present?
+          = "Age Groups: #{grades}"
+    .links
+      - if school.street.present?
+        %a.link(href="#{school.gmaps_url}" target="_blank")= school.street
+      - if school.school_url.present?
+        %a.link(href="#{school.school_url}" target="_blank") Website
+      - if school.phone.present?
+        %a.link(href="tel:#{school.phone}")= school.phone
+
+  .float-right
+    .compare-link
+      = check_box_tag 'school_ids',
+        school.short_id, false,
+        class: 'compare-check checkbox-icon',
+        id: school.short_id
+      %label
+      .icon-text COMPARE

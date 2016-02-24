@@ -35,7 +35,7 @@ class Portal
     url = url_for(path)
     query = data.blank? ? "" : "?#{data.to_query}"
     if method == :get
-      puts "Getting: #{url + query}"
+      Rails.logger.info "Getting: #{url + query}"
       response = Portal.get(url + query, verify: false)
     elsif method == :post
       headers = { 'Content-Type' => 'application/json' }

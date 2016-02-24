@@ -114,25 +114,6 @@ a.external, a.external:visited {
   display: block; width: 20px; height: 20px; position: absolute; right: 8px; top: 8px; cursor: pointer;
 }
 
-.schools-wrapper {
-  position: absolute;
-  top: 72px;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-}
-
-.schools-map-wrapper {
-  float: right;
-  height: 100%;
-  width: 65%;
-  position: relative;
-  border: 2px solid $gainsboro;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-}
-
 .school-map-wrapper {
   clear: both;
   height: 160px;
@@ -156,56 +137,6 @@ a.external, a.external:visited {
 }
 .form-byname {
   input[type=text] { width: 270px; max-width: 100%; }
-}
-
-.school-list {
-  .school {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    display: block;
-    height: 70px;
-    clear: left;
-    padding: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    .icon {
-      float: left;
-      img { max-width: 50px; }
-    }
-    .info {
-      margin-left: 5px;
-      width: 60%;
-      color: $onyx;
-      font-family: 'Lato Regular';
-      h3 {
-        margin-top: 0;
-        margin-bottom: 0;
-        color: $navy;
-        font-family: 'Aleo Regular';
-      }
-    }
-    .float-right {
-      width: initial;
-      height: inherit;
-      .compare-icon { margin-left: 10px; }
-      .icon-text {
-        display: block;
-        font-size: 10px;
-        margin-left: 10px;
-        color: grey;
-      }
-    }
-  }
-  .school:hover {
-    cursor: pointer;
-    background-color: $light_cyan;
-  }
 }
 
 #block-boxes-school-score-widget.block.block--boxes.block--boxes-simple.block--boxes-school-score-widget.by-name .score-right {
@@ -898,34 +829,7 @@ a.btn.external, a.btn.external:visited {
   font-size: 16px;
 }
 
-.schools-index .results {
-  padding: 10px 10px 10px 10px;
-  float: left;
-  width: 35%;
-  height: 100%;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.schools-index .wrapper {
-  float: right;
-  width: 65%;
-  height: 550px;
-}
-
 .school-title .text { margin-top: 5px; }
-
-.compare-select {
-  padding: 20px 5px;
-  .do-compare.btn {
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-    background-color: $fivee_orange;
-    color: white;
-    font-size: 21px;
-  }
-}
 
 .stick {
   position: fixed;

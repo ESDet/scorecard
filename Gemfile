@@ -14,6 +14,7 @@ gem 'haml-rails'
 gem 'httparty'
 gem 'jquery-rails'
 gem 'json'
+gem 'js_cookie_rails'
 gem 'newrelic_rpm'
 gem 'puma'
 gem 'psych', '1.3.4'
@@ -34,6 +35,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'quiet_assets'
+  gem 'web-console'
 end
 
 gem 'dotenv', groups: [:development, :test]

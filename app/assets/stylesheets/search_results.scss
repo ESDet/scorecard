@@ -1,0 +1,201 @@
+.search-results {
+  position: absolute;
+  top: 72px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.search-results .schools-map-wrapper {
+  float: right;
+  height: 100%;
+  width: 65%;
+  position: relative;
+  border: 2px solid $gainsboro;
+}
+
+.search-results .results {
+  float: left;
+  width: 35%;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.search-results .compare-select {
+  padding: 20px 5px;
+  .do-compare.btn {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    background-color: $fivee_orange;
+    color: white;
+    font-size: 21px;
+  }
+}
+
+.search-results .results .sort-by-bar {
+  background-color: #e5e5e5;
+  height: 50px;
+  width: 100%;
+  padding: 10px;
+  color: #787878;
+  line-height: 27px;
+  font-family: 'Aleo Bold';
+}
+
+.search-results .results .sort-by-bar #rating-link,
+.search-results .results .sort-by-bar #favorites-link {
+  font-family: 'Aleo Bold';
+}
+.search-results .results .sort-by-bar #rating-link {
+  color: #565656;
+  margin-right: 10px;
+}
+
+.search-results .results .sort-by-bar #favorites-link {
+  color: #9a9a9a;
+  margin-left: 5px;
+}
+
+.search-results .results .sort-by-bar .star {
+  font-size: 27px;
+  color: #efc928;
+}
+
+.search-results .results .sort-by-bar .float-left,
+.search-results .results .sort-by-bar .float-right {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.search-results .results .sort-by-bar .star,
+.search-results .results .sort-by-bar .number,
+.search-results .results .sort-by-bar .text {
+  display: inline-block;
+}
+
+.search-results .results .sort-by-bar .text {
+}
+
+.search-results .school-list .school {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: block;
+  clear: left;
+  padding: 20px 10px;
+  overflow: hidden;
+  border-bottom: 1px solid #bcbcbc;
+  cursor: auto;
+}
+
+.search-results .school-list .school.hide {
+  display: none;
+}
+
+.search-results .school .rating {
+  float: left;
+  text-align: center;
+}
+
+.search-results .school-list .school .rating .icon {
+  float: left;
+  img { max-width: 50px; }
+}
+
+.search-results .school .rating .favorite {
+  display: block;
+  color: #bcbcbc;
+  font-size: 21px;
+  margin-top: 54px;
+}
+
+.search-results .school-list .school .info {
+  float: left;
+  margin-left: 10px;
+  width: 70%;
+  color: $onyx;
+  font-family: 'Aleo Regular';
+}
+
+.search-results .school-list .school .name {
+  width: 80%;
+  float: left;
+  margin-left: 10px;
+}
+
+.search-results .school-list .school .name h3 {
+  margin: 0;
+  color: $navy;
+  font-family: 'Aleo Bold';
+}
+
+.search-results .school-list .school .info .grades{
+  color: #232323;
+}
+
+.search-results .school-list .school .info .links {
+  margin-top: 10px;
+}
+
+.search-results .school-list .school .info .links .link {
+  margin: 5px 0;
+  color: #898989;
+}
+
+.search-results .school-list .school .info a {
+  display: block;
+}
+
+.search-results .school-list .school .icon-text {
+  display: block;
+  font-size: 10px;
+  font-family: 'Aleo Bold';
+  color: $navy;
+  margin-left: -16px;
+  margin-top: 6px;
+}
+
+.search-results .school-list .school:hover {
+  background-color: $light_cyan;
+}
+
+.search-results .school-list .school .icon-text {
+  cursor: pointer;
+}
+
+.search-results .school-list .school input.checkbox-icon[type="checkbox"] {
+  display: none;
+}
+
+.search-results .school-list .school .compare-link {
+  margin-top: 55px;
+}
+
+.search-results .school-list .school .compare-link input.checkbox-icon[type="checkbox"] + label {
+  cursor: pointer;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid $grey-1;
+  background-color: white;
+}
+
+.search-results .school-list .school .compare-link input.checkbox-icon[type="checkbox"]:checked + label {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  background-color: $green;
+}
+
+.search-results .school-list .school .compare-link input.checkbox-icon[type="checkbox"]:checked + label:before {
+  position: absolute;
+  content: "\2714\0020";
+  color: white;
+  font-size: 14px;
+  padding-left: 2px;
+}
