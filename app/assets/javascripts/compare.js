@@ -1,7 +1,7 @@
 var Compare = function(w) {
   var _w = w;
-  var _nav = $(".top").first();
-  var _navPos = _nav.position();
+  var _nav = $('.compare-nav');
+  var _navPos = _nav.offset();
 
   var _updateNavName = function(windowpos, navPos) {
     if (w.width() < 541 && windowpos >= navPos.top) {
@@ -113,8 +113,8 @@ var Compare = function(w) {
       currentSchools = visibleSchools();
       currentSchools.css('margin-left', '0');
       currentSchools.first().css('margin-left', margin);
-      _hideScroll(currentSchools.first().prev(), $('.scroll > .left'));
-      _hideScroll(currentSchools.last().next(), $('.scroll > .right'));
+      _hideScroll(currentSchools.first().prev(), $('.page.prev'));
+      _hideScroll(currentSchools.last().next(), $('.page.next'));
     } else {
       var currentSchool = currentSchools.first();
       if (arg == 'next') {
@@ -127,8 +127,8 @@ var Compare = function(w) {
       currentSchools.css('margin-left', '0');
       currentSchool = currentSchools.first();
       currentSchool.css('margin-left', margin);
-      _hideScroll(currentSchool.prev(), $('.scroll > .left'));
-      _hideScroll(currentSchool.next(), $('.scroll > .right'));
+      _hideScroll(currentSchool.prev(), $('.page.prev'));
+      _hideScroll(currentSchool.next(), $('.page.next'));
     }
     return false;
   };

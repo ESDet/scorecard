@@ -1,22 +1,19 @@
-.top
-  .nav
-    .middle
-      %a.btn(id="add-schools" href="#") Add schools
-      .scroll
-        %span &nbsp;
-        .right
-          %a(href="")
-            .right-arrow-icon
-            .text Next
-      .scroll
-        %span &nbsp;
-        .left
-          %a(href="")
-            .left-arrow-icon
-            .text Prev
-.top
+.compare-nav
   .middle
-    #map
+    .float-left
+      %a.btn(id="add-schools" href="#") Add schools
+    .page.next
+      %span &nbsp;
+      %a(href="")
+        .right-arrow-icon
+        .text Next
+    .page.prev
+      %span &nbsp;
+      %a(href="")
+        .left-arrow-icon
+        .text Prev
+.middle
+  #map
 
 .middle
   .compare
@@ -26,32 +23,18 @@
           .line
             .name
               %h2= link_to s.display_name, school_path(s.id)
-          - if s.ec?
-            .line.height-40
-              .float-left Address
-              .float-right= s.street
-            .line
-              .float-left Overall Rating
+              = link_to s.street, s.gmaps_url, target: '_blank'
+        .region-title(data-target="overall-rating")
+          %h2 Overall Rating
+        #overall-rating.group
+          .line
+            - if s.ec?
               .rating-image
                 = image_tag s.early_childhood_image(:overall, nil), class: 'el-icon overall'
-          - else
-            .line.clear-floats
-              .float-left Type
-              .float-right= s.governance
-            .line.clear-floats
-              .float-left Grades
-              .float-right
-                - grades = s.grades_served || s.age_groups
-                = "#{grades.first} - #{grades.last}"
-            .line.clear-floats
-              - if s.ec?
-                = "#{s.early_childhood_rating}"
-              - else
-                .float-left ESD Grade
-                .float-right= s.excellent_schools_grade
-            .line.clear-floats
-              .float-left State Ranking
-              .float-right= "#{s.michigan_percentile}#{percentile_suffix(s.michigan_percentile)} percentile"
+            - else
+              .rounded-square.green-background.big
+                .grade
+                  = s.excellent_schools_grade
         .region-title(data-target="overview")
           %h2 Overview
         #overview.group
@@ -117,6 +100,17 @@
                   - else
                     .unchecked
           - else
+            .line.clear-floats
+              .float-left Type
+              .float-right= s.governance
+            .line.clear-floats
+              .float-left Grades
+              .float-right
+                - grades = s.grades_served || s.age_groups
+                = "#{grades.first} - #{grades.last}"
+            .line.clear-floats
+              .float-left State Ranking
+              .float-right= "#{s.michigan_percentile}#{percentile_suffix(s.michigan_percentile)} percentile"
             .line
               .float-left Students Enrolled
               .float-right= s.total_enrollment
@@ -176,17 +170,16 @@
               .line.clear-floats
                 .float-left Reading Growth
                 .float-right= s.reading_growth
-              .line.clear-floats
-                .fivee
-                  = render 'five_essentials',
-                    title: '5Essentials Rating',
-                    overall_rating: s.five_e_overall_rating,
-                    effective_leaders: s.five_e_effective_leaders,
-                    collaborative_teachers: s.five_e_collaborative_teachers,
-                    involved_families: s.five_e_involved_families,
-                    supportive_environment: s.five_e_supportive_environment,
-                    ambitious_instruction: s.five_e_ambitious_instruction,
-                    report_id: s.five_e_report_id
+              .line.fivee.clear-floats
+                = render 'five_essentials',
+                  title: '5Essentials Rating',
+                  overall_rating: s.five_e_overall_rating,
+                  effective_leaders: s.five_e_effective_leaders,
+                  collaborative_teachers: s.five_e_collaborative_teachers,
+                  involved_families: s.five_e_involved_families,
+                  supportive_environment: s.five_e_supportive_environment,
+                  ambitious_instruction: s.five_e_ambitious_instruction,
+                  report_id: s.five_e_report_id
             - else
               %h3 Proficiency
               .line.clear-floats
@@ -227,17 +220,16 @@
               .line.clear-floats
                 .float-left Stay in College
                 .float-right= "#{s.stay_in_college}%" if s.stay_in_college.present?
-              .line.clear-floats
-                .fivee
-                  = render 'five_essentials',
-                    title: '5Essentials Rating',
-                    overall_rating: s.five_e_overall_rating,
-                    effective_leaders: s.five_e_effective_leaders,
-                    collaborative_teachers: s.five_e_collaborative_teachers,
-                    involved_families: s.five_e_involved_families,
-                    supportive_environment: s.five_e_supportive_environment,
-                    ambitious_instruction: s.five_e_ambitious_instruction,
-                    report_id: s.five_e_report_id
+              .line.fivee.clear-floats
+                = render 'five_essentials',
+                  title: '5Essentials Rating',
+                  overall_rating: s.five_e_overall_rating,
+                  effective_leaders: s.five_e_effective_leaders,
+                  collaborative_teachers: s.five_e_collaborative_teachers,
+                  involved_families: s.five_e_involved_families,
+                  supportive_environment: s.five_e_supportive_environment,
+                  ambitious_instruction: s.five_e_ambitious_instruction,
+                  report_id: s.five_e_report_id
         .region-title(data-target="programs")
           %h2 Programs
         #programs.group
@@ -344,6 +336,7 @@
         if (windowWidth != w.width()) {
           compare.setStickyNav();
           compare.setHidden();
+          compare.showSchool('prev');
         }
       });
       w.scroll(compare.setStickyNav);
@@ -356,14 +349,13 @@
         compare.showSchool('prev');
         return false;
       }
-      $('.scroll > .right').click(showNext);
-      $('.scroll > .left').click(showPrev);
+      $('.page.next').click(showNext);
+      $('.page.prev').click(showPrev);
 
       compare.setHidden();
-      compare.hideScroll(
-        $('.compare > .school:nth-of-type(1)').prev(),
-        $('.scroll > .left')
-      );
+      if (windowWidth > 1271) {
+        compare.showSchool('next');
+      }
 
       $('.region-title').click(function() {
         var me = $(this);

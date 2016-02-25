@@ -1,16 +1,39 @@
-.compare {
+.schools-compare .compare {
   width: 100%;
   display: inline-block;
   margin: 20px 0 20px 0;
 }
 
-.top {
+.schools-compare .compare-nav {
   display: inline-block;
   width: 100%;
   background-color: white;
+  margin-top: 90px;
 }
 
-.scroll {
+.schools-compare .compare-nav {
+  width: 100%;
+  display: inline-block;
+  .btn { display: inline-block; }
+  .btn:hover { color: white; }
+  padding: 15px 0;
+}
+
+.schools-compare .compare-nav .middle {
+  margin-bottom: 0;
+}
+
+.schools-compare .compare-nav .middle .name {
+  h2 {
+    margin: 10px 0 0 0;
+  }
+}
+
+.schools-compare .compare-nav a {
+  display: inline-block;
+}
+
+.schools-compare .scroll {
   float: right;
   margin-right: 10px;
   width: 70px;
@@ -23,46 +46,36 @@
   -ms-user-select: none;
   user-select: none;
 }
-.scroll:nth-of-type(1) span { float: left; }
-.scroll:nth-of-type(2) span { float: right; }
-.scroll .left,
-.scroll .right { display: none; }
-.left-arrow-icon:before {
-  font-size: 31px;
-  content: "\003C";
-}
-.right-arrow-icon {
-  text-align: left;
-}
-.right-arrow-icon:before {
-  font-size: 31px;
-  content: "\003E";
+
+.schools-compare .compare-nav .scroll span {
+  display: inline-block;
 }
 
-.top {
-  width: 100%;
-  margin: 0;
+.schools-compare .compare-nav .page {
+  float: right;
 }
-.top > .nav {
-  width: 100%;
-  display: inline-block;
-  .btn { display: inline-block; }
-  .btn:hover { color: white; }
-  padding: 15px 0;
-}
-.top .nav .middle { margin-bottom: 0; }
-.top .nav .middle .name {
-}
-.top .nav .middle .name h2 { margin: 10px 0 0 0; }
-.top .nav a { display: inline-block; }
-.top .nav .scroll a {
+
+.schools-compare .compare-nav .page a {
   font-family: 'Lato Regular';
   .text {
     margin-top: -7px;
     font-size: 13px;
   }
 }
-.top #map {
+
+.schools-compare .page.next .right-arrow-icon {
+  text-align: left;
+}
+.schools-compare .page.next .right-arrow-icon:before {
+  font-size: 31px;
+  content: "\003E";
+}
+.schools-compare .page.prev .left-arrow-icon:before {
+  font-size: 31px;
+  content: "\003C";
+}
+
+.schools-compare #map {
   width: 100%;
   height: 250px;
   border: 2px solid $gainsboro;
@@ -71,71 +84,91 @@
   -moz-border-radius: 10px;
 }
 
-.nameStick {
+.schools-compare .compare-nav.stick {
+  margin-top: 0px;
   position: fixed;
   z-index: 10000;
-  top: 60px;
-  width: 10%;
+  top: 0px;
+  width: 100%;
   background-color: white;
 }
 
-.compare .school {
+.schools-compare .compare .school {
   display: inline-block;
   float: left;
   width: 24.2%;
   min-width: 247px;
   margin-right: 0.95%;
-  padding: 0 10px 20px 10px;
   min-height: 400px;
-  border: 2px solid $gainsboro;
+  border: 4px solid $grey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
 }
 
-.compare .school:nth-of-type(4) {
+.schools-compare .compare .school:nth-of-type(4) {
   margin-right: 0;
 }
 
-.compare .school .group {
+.schools-compare .compare .school .region-title {
+  line-height: 40px;
+  background-color: white;
+  border-top: 4px solid $grey;
+  border-bottom: 4px solid $grey;
+  h2 {
+    color: $navy;
+  }
+}
+
+.schools-compare .compare .school .group {
   display: inline-block;
   width: 100%;
-}
-
-.compare .school .group #ap-classes {
-  margin-top: 15px;
-}
-
-.compare .school .group {
-  display: inline-block;
+  padding: 20px 0;
   h3 {
     margin: 7px 0 7px 0;
     color: $navy;
   }
 }
-.compare .school .group.hide {
+
+.schools-compare .compare .school .group #ap-classes {
+  margin-top: 15px;
+}
+
+.schools-compare .compare .school .group.hide {
   display: none;
 }
 
-.compare .school .group .line {
+.schools-compare .compare .school .group .line {
   display: inline-block;
   width: 100%;
-  padding: 1px 0 1px 0;
+  padding: 1px 10px;
 }
 
-.compare .school .group .line.list {
+.schools-compare .compare .school .group .line.list {
   height: 185px;
+  li {
+    list-style-type: none;
+  }
 }
 
-.compare .school .group .line .name {
+.schools-compare .compare .school .group .line .name {
   height: 75px;
+  text-align: center;
+  a {
+    color: $grey-1;
+  }
+  h2 a {
+    font-family: 'Aleo Bold';
+    color: $onyx;
+    word-wrap: break-word;
+  }
 }
 
-.compare .school .group .line .float-right {
+.schools-compare .compare .school .group .line .float-right {
   font-family: 'Aleo Bold';
 }
 
-.compare .school .group .line .rating-image {
+.schools-compare .compare .school .group .line .rating-image {
   display: inline-block;
   img {
     margin: 10px auto 0px auto;
@@ -143,14 +176,76 @@
   }
 }
 
-.visual .wrapper {
+.schools-compare .compare .school .group .line .rounded-square {
+  margin: 0 auto;
+  .grade { font-size: 51px; }
+}
+
+.schools-compare .visual .wrapper {
   text-align: center;
 }
 
-.visual .inline-wrapper {
+.schools-compare .visual .inline-wrapper {
   display: inline-block;
 }
 
-.compare .fivee > .visual:nth-of-type(2) .graph {
-  margin-left: 0;
+.schools-compare .compare .school .group .line.fivee {
+  padding: 0;
+}
+
+.schools-compare .compare .school .group .line.fivee .info-box__content{
+  line-height: 55px;
+  .fivee-rating-text {
+    font-size: 23px;
+  }
+}
+
+.schools-compare .compare .line.fivee .info-box__title,
+.schools-compare .compare .line.fivee .info-box__content {
+  border-left: 0;
+  border-right: 0;
+}
+
+.schools-compare .compare .school .group .line.fivee {
+  .fivee-graph {
+    width: 100%;
+  }
+  .fivee-graph .box {
+    width: 49.3%;
+  }
+  .fivee-graph .box .text.right {
+    padding-right: 12px;
+  }
+  .fivee-graph .circle {
+    position: absolute;
+    top: -1%;
+    left: -7%;
+  }
+  .visual .legend {
+    width: 100%;
+  }
+  .visual .key {
+    width: 19%;
+    vertical-align: top;
+    text-align: center;
+  }
+  .visual .key .box {
+    width: 25px;
+    height: 25px;
+    margin: 0 auto;
+    float: none;
+  }
+  .visual .key .label {
+    font-size: 9px;
+  }
+  .visual .bottom-text {
+    padding-bottom: 15px;
+  }
+  .visual .square {
+    margin-top: 0;
+  }
+  .section {
+    padding: 0;
+    text-align: center;
+  }
 }

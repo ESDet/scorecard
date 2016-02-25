@@ -410,16 +410,21 @@ a.btn.external, a.btn.external:visited {
   color: #4e4040;
 }
 
+.home-index #nav,
 .schools-index #nav,
-.home-index #nav {
+.schools-compare #nav {
   border-bottom: 1px solid $gainsboro;
 }
-.schools-index #nav a.btn,
-.schools-index #nav a.brand,
-.schools-index #nav a,
+
 .home-index #nav a.btn,
 .home-index #nav a.brand,
-.home-index #nav a {
+.home-index #nav a,
+.schools-compare #nav a.btn,
+.schools-compare #nav a.brand,
+.schools-compare #nav a,
+.schools-index #nav a.btn,
+.schools-index #nav a.brand,
+.schools-index #nav a {
   color: $navy;
 }
 

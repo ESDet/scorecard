@@ -37,6 +37,8 @@ $(function() {
       n.css('background-color', '#a2c100');
     } else if (num > 79 && num < 101) {
       n.css('background-color', '#319400');
+    } else {
+      n.css('background-color', 'grey');
     }
   });
 });
