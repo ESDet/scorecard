@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require js.cookie
 //= require d3
+//= require bootstrap
 //= require leaflet
 //= require map
 //= require search_results
