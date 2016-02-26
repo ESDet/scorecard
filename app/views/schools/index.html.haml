@@ -4,16 +4,18 @@
       #map
 
     .results
-      .sort-by-bar
-        .float-left Sort By:
+      .filter
         .float-right
-          %a#rating-link(href='')
-            .text RATINGS
-          |
-          %a#favorites-link(href='')
-            .star &#9734;
-            .number
-            .text FAVORITES
+          .dropdown
+            %a.trigger(data-group="filter" data-title="Filter" data-toggle="dropdown" href="#")
+              %span.title Filter
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                .filter-row
+                  #favorites-link.filter-link(href='')
+                    .text FAVORITES
+                    .star &#9734;
       .compare-select.hide
         %a.do-compare.btn{:href => '/'} Compare Selected Schools
       .school-list

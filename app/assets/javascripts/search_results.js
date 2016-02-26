@@ -44,21 +44,27 @@ $(function() {
   });
 
   $('#favorites-link').click(function() {
-    var favorites = $('.search-results .school-list .school').
-      not('[data-favorited]').addClass('hide');
-    $('#rating-link .text').css('color', '#9a9a9a');
     var el = $(this);
-    el.find('.text').css('color', '#565656');
-    el.find('.star').html('&#9733;');
+    if (el.attr('on') != undefined) {
+      $('.search-results .school-list .school').removeClass('hide');
+      el.find('.star').html('&#9734;');
+      el.removeAttr('on')
+    } else {
+      var favorites = $('.search-results .school-list .school').
+        not('[data-favorited]').addClass('hide');
+      el.find('.star').html('&#9733;');
+      el.attr('on', true);
+    }
     return false;
   });
 
-  $('#rating-link').click(function() {
-    $('.search-results .school-list .school').removeClass('hide');
-    $(this).find('.text').css('color', '#565656')
-    var favoritesLink = $('#favorites-link');
-    favoritesLink.find('.text').css('color', '#9a9a9a');
-    favoritesLink.find('.star').html('&#9734;');
+  $('.panel-heading').click(function() {
+    var panel = $($(this).find('a').attr('href'));
+    if (panel.hasClass('in')) {
+      $(panel).collapse('hide');
+    } else {
+      $(panel).collapse('show');
+    }
     return false;
   });
 });

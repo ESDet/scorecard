@@ -35,7 +35,7 @@
   }
 }
 
-.search-results .results .sort-by-bar {
+.search-results .results .filter {
   background-color: #e5e5e5;
   height: 50px;
   width: 100%;
@@ -45,38 +45,92 @@
   font-family: 'Aleo Bold';
 }
 
-.search-results .results .sort-by-bar #rating-link,
-.search-results .results .sort-by-bar #favorites-link {
-  font-family: 'Aleo Bold';
-}
-.search-results .results .sort-by-bar #rating-link {
-  color: #565656;
-  margin-right: 10px;
-}
-
-.search-results .results .sort-by-bar #favorites-link {
-  color: #9a9a9a;
-  margin-left: 5px;
+.search-results .results .filter .dropdown a.trigger {
+  background: transparent;
+  border: none;
+  .caret {
+    margin-left: 10px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #000000;
+  }
 }
 
-.search-results .results .sort-by-bar .star {
-  font-size: 27px;
-  color: #efc928;
+.search-results .results .filter .dropdown-menu {
+  padding: 0;
+  top: 40px;
+  right: 0px;
+  left: initial;
+  width: 250px;
 }
 
-.search-results .results .sort-by-bar .float-left,
-.search-results .results .sort-by-bar .float-right {
+.search-results .results .filter .dropdown-menu li {
+  padding: 8px 0;
+  cursor: pointer;
+  border-bottom: 1px solid $grey;
+}
+
+.search-results .results .filter .filter-row {
+  width: 100%;
   display: inline-block;
   vertical-align: middle;
 }
 
-.search-results .results .sort-by-bar .star,
-.search-results .results .sort-by-bar .number,
-.search-results .results .sort-by-bar .text {
+.search-results .results .filter .filter-row .panel-group {
+  margin-bottom: 0px;
+}
+
+.search-results .results .filter .filter-row .panel,
+.search-results .results .filter .filter-row .panel-default,
+.search-results .results .filter .filter-row .panel-body {
+  border: none;
+  padding: 0;
+}
+
+.search-results .results .filter .filter-row .panel-body {
+  ul {
+    width: 100%;
+    padding: 0;
+    margin-top: 25px;
+  }
+  li {
+    width: 100%;
+    list-style-type: none;
+    text-align: right;
+    padding: 0 10px;
+    border: none;
+  }
+}
+
+.search-results .results .filter .filter-row .panel-heading {
+  background-color: #fff;
+  padding: 0;
+}
+
+.search-results .results .filter .filter-link {
+  float: right;
+  font-family: 'Aleo Bold';
+  color: #9a9a9a;
+  margin-right: 15px;
+}
+
+.search-results .results .filter .star {
+  font-size: 27px;
+  color: #efc928;
+}
+
+.search-results .results .filter .float-right {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.search-results .results .filter .star,
+.search-results .results .filter .number,
+.search-results .results .filter .text {
   display: inline-block;
 }
 
-.search-results .results .sort-by-bar .text {
+.search-results .results .filter .text {
 }
 
 .search-results .school-list .school {
