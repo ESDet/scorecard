@@ -16,11 +16,15 @@
             .star-icon
             Academic Programs
         .columns.two
-          = render 'column',
-            title: 'Academic Focus',
-            list: school.academic_focus
-          - if school.has_ell?
-            .column
+          .column
+            = render 'column_content',
+              title: 'Academic Focus',
+              list: school.academic_focus
+            = render 'column_content',
+              title: 'Personalized Learning Options',
+              list: school.instructional_model
+          .column
+            - if school.has_ell?
               .info-box
                 .info-box__title English Language Learners
                 .info-box__content
@@ -32,21 +36,18 @@
                   - if school.ell_languages.present?
                     %span.key Languages
                     = render 'field_list', list: school.ell_languages
-          = render 'column',
-            title: 'Personalized Learning Options',
-            list: school.instructional_model
-          - if school.special_ed_level.present? || school.special_ed_programs.present?
-            .column
-              .title Special Education
-              .content.light-cyan-background
-                - if school.special_ed_level.present?
-                  %span.key Level:
-                  = school.special_ed_level
-                  <br/>
-                  <br/>
-                - if school.special_ed_programs.present?
-                  %span.key Programs
-                  = render 'field_list', list: school.special_ed_programs
+            - if school.special_ed_level.present? || school.special_ed_programs.present?
+              .info-box
+                .info-box__title Special Education
+                .info-box__content
+                  - if school.special_ed_level.present?
+                    %span.key Level:
+                    = school.special_ed_level
+                    <br/>
+                    <br/>
+                  - if school.special_ed_programs.present?
+                    %span.key Programs
+                    = render 'field_list', list: school.special_ed_programs
     - if school.has_classes?
       .section
         .header

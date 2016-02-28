@@ -47,6 +47,7 @@
 }
 
 .info-box__content {
+  padding: 10px;
   position: relative;
   display: inline-block;
   width: 100%;
@@ -98,7 +99,7 @@
 
 .info-box__content ul {
   margin: 0;
-  padding: 10px 40px;
+  padding: 5px 30px;
   text-align: left;
   color: $grey-1;
 }

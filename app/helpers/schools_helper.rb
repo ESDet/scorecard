@@ -70,17 +70,21 @@ module SchoolsHelper
   end
 
   def rank_text(value)
-    if value < 2
-      "<span class='very-weak'>VERY WEAK</span>"
-    elsif value >= 2 && value < 4
-      "<span class='weak'>WEAK</span>"
-    elsif value >= 4 && value < 6
-      "<span class='average'>AVERAGE</span>"
-    elsif value >= 6 && value < 8
-      "<span class='strong'>STRONG</span>"
-    elsif value >= 8 && value <= 10
-      "<span class='very-strong'>VERY STRONG</span>"
-    end.html_safe
+    if value.present?
+      if value < 2
+        "<span class='very-weak'>VERY WEAK</span>"
+      elsif value >= 2 && value < 4
+        "<span class='weak'>WEAK</span>"
+      elsif value >= 4 && value < 6
+        "<span class='average'>AVERAGE</span>"
+      elsif value >= 6 && value < 8
+        "<span class='strong'>STRONG</span>"
+      elsif value >= 8 && value <= 10
+        "<span class='very-strong'>VERY STRONG</span>"
+      end.html_safe
+    else
+      'Missing Data'
+    end
   end
 
   def rank_text_color(value)
@@ -98,35 +102,39 @@ module SchoolsHelper
   end
 
   def climate_text(value, school_level)
-    case school_level
-    when :hs
-      if value == 0
-        'Did not participate'
-      elsif value == 2
-        'Not yet organized'
-      elsif value == 4
-        'Partially Organized'
-      elsif value == 6
-        'Moderately Organized'
-      elsif value == 8
-        'Organized'
-      elsif value == 10
-        'Well Organized'
+    if value.present?
+      case school_level
+      when :hs
+        if value == 0
+          'Did not participate'
+        elsif value == 2
+          'Not yet organized'
+        elsif value == 4
+          'Partially Organized'
+        elsif value == 6
+          'Moderately Organized'
+        elsif value == 8
+          'Organized'
+        elsif value == 10
+          'Well Organized'
+        end
+      when :k8
+        if value == 0
+          'Did not participate'
+        elsif value == 1
+          'Not yet organized'
+        elsif value == 2
+          'Partially Organized'
+        elsif value == 3
+          'Moderately Organized'
+        elsif value == 4
+          'Organized'
+        elsif value == 5
+          'Well Organized'
+        end
       end
-    when :k8
-      if value == 0
-        'Did not participate'
-      elsif value == 1
-        'Not yet organized'
-      elsif value == 2
-        'Partially Organized'
-      elsif value == 3
-        'Moderately Organized'
-      elsif value == 4
-        'Organized'
-      elsif value == 5
-        'Well Organized'
-      end
+    else
+      'Missing Data'
     end
   end
 end

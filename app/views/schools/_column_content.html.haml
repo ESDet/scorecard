@@ -1,4 +1,5 @@
 - if list.present?
-  .title= title
-  .content.light-cyan-background
-    = render 'field_list', list: list
+  .info-box
+    .info-box__title= title
+    .info-box__content
+      = render 'field_list', list: list
