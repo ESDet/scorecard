@@ -1,6 +1,4 @@
 class SchoolsController < ApplicationController
-  helper_method :format_phone
-
   def index
     school_ids = params[:school_ids]
     school_ids = school_ids.split(",") if school_ids
@@ -96,20 +94,25 @@ class SchoolsController < ApplicationController
         "&sort_by_special=ec_state_ratings.total_points" <<
         "&sort_order_special=DESC"
 
-      if @loc.andand.match /^[0-9]{5}$/
-        schools_url << "&filter[field_address:postal_code]=#{@loc}"
-        ecs_url << "&filter[field_address:postal_code]=#{@loc}"
+      if is_zip_search?
+        schools_url << zip_search_params
+        ecs_url << zip_search_params
+      elsif is_address_search?
+        schools_url << address_search_params
+        ecs_url << address_search_params
       elsif @loc.present?
-        schools_url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
-        ecs_url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+        schools_url << school_search_params
+        ecs_url << school_search_params
       end
     end
 
     if @grade.present?
-      if @loc.andand.match /^[0-9]{5}$/
-        url << "&filter[field_address:postal_code]=#{@loc}"
+      if is_zip_search?
+        url << zip_search_params
+      elsif is_address_search?
+        url << address_search_params
       elsif @loc.present?
-        url << "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+        url << school_search_params
       end
 
       if special_filters.present?
@@ -279,6 +282,27 @@ class SchoolsController < ApplicationController
 
   private
 
+  def is_zip_search?
+    @loc.andand.match /\A\d{5}\Z/
+  end
+
+  def is_address_search?
+    @loc.andand.match /\A\d+.+\Z/
+  end
+
+  def zip_search_params
+    "&filter[field_address:postal_code]=#{@loc}"
+  end
+
+  def address_search_params
+    lat_lon = Portal.new.fetch("geocoder/google.json?data=#{@loc}+Detroit+MI")['coordinates'].reverse.join(",")
+    "&near_latlon=#{lat_lon}&near_miles=1"
+  end
+
+  def school_search_params
+    "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+  end
+
   def fetch_school_data(id, school_type)
     if school_type == "ecs"
       url = "ecs"
@@ -403,15 +427,4 @@ class SchoolsController < ApplicationController
       end
     end
   end
-
-  def format_phone(ph)
-    if ph.length == 10
-      "#{ph[0..2]}-#{ph[3..5]}-#{ph[6..-1]}"
-    elsif ph.length == 7
-      "#{ph[0..2]}-#{ph[3..-1]}"
-    else
-      ph
-    end
-  end
-
 end

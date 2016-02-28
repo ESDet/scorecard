@@ -1,12 +1,6 @@
 class HomeController < ApplicationController
-  before_filter :password_protect, :only => [:tips]
-
   def index
     @school_names = []
-    request.format = :html
-    respond_to do |format|
-      format.html
-    end
   end
 
   def resources
