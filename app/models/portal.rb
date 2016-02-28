@@ -2,8 +2,6 @@ class Portal
   include HTTParty
   default_timeout 30
 
-  BASE = 'https://portal.excellentschoolsdetroit.org/api/1.0/'
-
   def list_vocabularies
     fetch 'taxonomy_vocabulary.json/'
   end
@@ -28,7 +26,7 @@ class Portal
   end
 
   def url_for(path)
-    "#{BASE}#{path}"
+    "#{ENV['PORTAL_URL']}#{path}"
   end
 
   def fetch(path, data={}, method=:get)
@@ -38,8 +36,9 @@ class Portal
       Rails.logger.info "Getting: #{url + query}"
       response = Portal.get(url + query, verify: false)
     elsif method == :post
+      Rails.logger.info "Getting: #{url + query}"
       headers = { 'Content-Type' => 'application/json' }
-      response = Portal.post(url, { :body => data.to_json, :headers => headers }, verify: false)
+      response = Portal.post(url, body: data.to_json, headers: headers)
     end
     JSON.parse(response.body) if response.body != ""
   end

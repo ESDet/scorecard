@@ -39,4 +39,4 @@ group :development do
   gem 'web-console'
 end
 
-gem 'dotenv', groups: [:development, :test]
+gem 'dotenv-rails', groups: [:development, :test]
