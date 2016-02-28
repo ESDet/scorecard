@@ -83,7 +83,7 @@ module SchoolsHelper
         "<span class='very-strong'>VERY STRONG</span>"
       end.html_safe
     else
-      'Missing Data'
+      'Data Missing'
     end
   end
 
@@ -134,7 +134,7 @@ module SchoolsHelper
         end
       end
     else
-      'Missing Data'
+      'Data Missing'
     end
   end
 end
