@@ -5,17 +5,51 @@
 
     .results
       .filter
-        .float-right
+        .float-left
+          #favorites-link.filter-link(href='')
+            .text FAVORITES
+            .star &#9734;
+        .float-right.filter-dropdown
           .dropdown
             %a.trigger(data-group="filter" data-title="Filter" data-toggle="dropdown" href="#")
               %span.title Filter
               %span.caret
             %ul.dropdown-menu
-              %li
+              - if @grade.blank?
+                %li#school-type-filter
+                  .filter-row
+                    = render 'filter_panel',
+                      title: 'SCHOOL TYPE',
+                      list: @school_type_filters
+              %li#grade-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
                 .filter-row
-                  #favorites-link.filter-link(href='')
-                    .text FAVORITES
-                    .star &#9734;
+                  = render 'filter_panel',
+                    title: 'Grades',
+                    list: @grade_filters
+              %li#age-group-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+                .filter-row
+                  = render 'filter_panel',
+                    title: 'Age Groups',
+                    list: @age_group_filters
+              //%li#special-ed-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              //  = render 'filter_panel',
+              //    title: 'SPECIAL EDUCATION PROGRAMS',
+              //    list: @special_ed_filters
+              //%li#transportation-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              //  = render 'filter_panel',
+              //    title: 'TRANSPORTATION OPTIONS',
+              //    list: @special_ed_filters
+              %li#governance-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+                .filter-row
+                  = render 'filter_panel',
+                    title: 'GOVERNANCE',
+                    list: @governance_filters
+              %li#operator-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+                .filter-row
+                  = render 'filter_panel',
+                    title: 'OPERATOR',
+                    list: @operator_filters
+
       .compare-select.hide
         %a.do-compare.btn{:href => '/'} Compare Selected Schools
       .school-list

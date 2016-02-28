@@ -1,4 +1,6 @@
 class SchoolsController < ApplicationController
+  before_action :set_filters
+
   def index
     school_ids = params[:school_ids]
     school_ids = school_ids.split(",") if school_ids
@@ -426,5 +428,66 @@ class SchoolsController < ApplicationController
         includes["id"] == school["links"]["k12_supplemental_2015"]["linkage"]["id"]
       end
     end
+  end
+
+  def set_filters
+    @school_type_filters = [
+      { name: 'All', id: 0 },
+      { name: 'Early Childhood', id: 'ecs' },
+      { name: 'K8 and HS', id: 'k8-hs' },
+    ]
+
+    @grade_filters = [
+      { name: 'All', id: 0, type: 'checkbox' },
+      { name: 'Elementary (K-5)', id: 'K,1,2,3,4,5', type: 'checkbox' },
+      { name: 'Middle (6-8)', id: '6,7,8', type: 'checkbox' },
+      { name: 'High (9-12)', id: '9,10,11,12', type: 'checkbox' }
+    ]
+
+    @age_group_filters = [
+      { name: 'All', id: 0, type: 'checkbox'},
+      { name: 'Infant', id: 'Infant', type: 'checkbox' },
+      { name: 'Toddler', id: 'Toddler', type: 'checkbox' },
+      { name: 'Preschool', id: 'Preschool', type: 'checkbox' },
+      { name: 'School-age', id: 'School-age', type: 'checkbox' }
+    ]
+
+    #@special_ed_filters = [
+    #  { name: 'Autism', id: 0},
+    #  { name: 'Visual Impairments', id: 0},
+    #  { name: 'Hearing Impairments', id: 0},
+    #  { name: 'Emotional Behavioral Disabilities', id: 0},
+    #  { name: 'Speech and Language Impairments', id: 0},
+    #  { name: 'Specific Learning Disabilities', id: 0},
+    #  { name: 'Significant Developmental Delay', id: 0},
+    #  { name: 'Orthopedic Impairments', id: 0},
+    #  { name: 'Multiple Disabilities', id: 0},
+    #  { name: 'Cognitive Disability', id: 0},
+    #  { name: 'Other Health Impairments', id: 0}
+    #]
+
+    #@transportation_filters = [
+    #]
+
+    @governance_filters = [
+      { name: 'All', id: 0 },
+      { name: 'Charter', id: "904,906,1974" },
+      { name: 'DPS', id: 905 },
+      { name: 'EAA', id: 908 },
+      { name: 'Independent', id: 914 }
+    ]
+
+    @operator_filters = [
+      { name: 'All', id: 0 },
+      { name: 'C.S. Partners', id: 1286 },
+      { name: 'Cornerstone Charter Schools', id: 1090 },
+      { name: 'Detroit 90/90', id: 1172 },
+      { name: 'Education Management and Networks', id: 1041 },
+      { name: 'Equity Education Management Solutions', id: 1017 },
+      { name: 'Global Educational Excellence', id: 974 },
+      { name: 'Leona Group', id: 956 },
+      { name: 'National Heritage Academies', id: 1013 },
+      { name: 'New Paradigm for Education', id: 1123 }
+    ]
   end
 end

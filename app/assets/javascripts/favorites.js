@@ -57,14 +57,4 @@ $(function() {
     }
     return false;
   });
-
-  $('.panel-heading').click(function() {
-    var panel = $($(this).find('a').attr('href'));
-    if (panel.hasClass('in')) {
-      $(panel).collapse('hide');
-    } else {
-      $(panel).collapse('show');
-    }
-    return false;
-  });
 });

@@ -1,0 +1,21 @@
+- label = title.downcase.gsub(/ /, "_")
+- heading_id = "#{label}_heading"
+- panel_id = "#{heading_id}_panel"
+- accordion_id = "#{heading_id}_accordion"
+.panel-group{id: accordion_id, "aria-multiselectable" => "true", :role => "tablist"}
+  .panel.panel-default
+    .panel-heading{id: heading_id, role: "tab"}
+      %h4.panel-title
+        %a.filter-link.collapsed{"aria-controls" => panel_id, "aria-expanded" => "false", "data-parent" => accordion_id, "data-toggle" => "collapse", href: "##{panel_id}", :role => "button"}
+          = title
+          %span.caret
+    .panel-collapse.collapse{id: panel_id, "aria-labelledby" => heading_id, :role => "tabpanel"}
+      .panel-body
+        %ul
+          %form(id="#{label}_form")
+            - list.each do |l|
+              %li
+                .name
+                  = l[:name]
+                .radio
+                  %input(type="#{l[:type] || 'radio'}" name="#{label}" value="#{l[:id]}"){ checked: l[:id] == 0 }

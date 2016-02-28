@@ -45,9 +45,21 @@
   font-family: 'Aleo Bold';
 }
 
+.search-results .results .filter .filter-dropdown {
+  height: 50px;
+  margin-top: -10px;
+  border-left: 1px solid #cdcdcb;
+}
+
+.search-results .results .filter .dropdown {
+  border-left: 1px solid $grey;
+}
+
 .search-results .results .filter .dropdown a.trigger {
   background: transparent;
   border: none;
+  padding-top: 14px;
+  padding-left: 20px;
   .caret {
     margin-left: 10px;
     border-left: 8px solid transparent;
@@ -59,18 +71,18 @@
 .search-results .results .filter .dropdown-menu {
   padding: 0;
   top: 40px;
-  right: 0px;
-  left: initial;
   width: 250px;
+  left: -138px;
 }
 
-.search-results .results .filter .dropdown-menu li {
+.search-results .results .filter .dropdown-menu > li {
   padding: 8px 0;
   cursor: pointer;
   border-bottom: 1px solid $grey;
 }
 
 .search-results .results .filter .filter-row {
+  cursor: pointer;
   width: 100%;
   display: inline-block;
   vertical-align: middle;
@@ -100,6 +112,15 @@
     padding: 0 10px;
     border: none;
   }
+  .name {
+    text-align: left;
+    float: left;
+    width: 90%;
+  }
+  .radio {
+    float: right;
+    width: 10%;
+  }
 }
 
 .search-results .results .filter .filter-row .panel-heading {
@@ -108,6 +129,7 @@
 }
 
 .search-results .results .filter .filter-link {
+  cursor: pointer;
   float: right;
   font-family: 'Aleo Bold';
   color: #9a9a9a;

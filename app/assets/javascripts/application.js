@@ -6,7 +6,8 @@
 //= require bootstrap/collapse
 //= require leaflet
 //= require map
-//= require search_results
+//= require favorites
+//= require filters
 //= require bar_graph
 //= require two_bar_graph
 //= require three_bar_graph
