@@ -1,0 +1,29 @@
+<% new_count = 0 %>
+<% new_ecs_count = 0 %>
+
+var markers = []
+var schools = []
+<% @schools.each do |s| %>
+  var id = <%= s.tid %>
+  if ($('.school[data-tid=' + id + ']').length == 0) {
+    $('.more-results').before("<%= raw render('search_result', school: s).split("\n").join(" ") %>");
+    <% if s.school_type == 'ecs' %>
+      <% new_ecs_count += 1 %>
+    <% else %>
+      <% new_count += 1 %>
+    <% end %>
+    markers.push(<%= s.marker.to_json.html_safe %>);
+    schools.push($('.school[data-tid=' + id + ']')[0]);
+  }
+<% end %>
+
+schoolsMap.addMarkersToMap(markers);
+setMarkerHover($(schools));
+
+var loadMore = $('#load-more-results');
+
+var offsetString = '&offset=' + <%= @offset.to_i + new_count %>;
+var ecsOffsetString = '&ecs_offset=' + <%= @offset.to_i + new_ecs_count %>;
+
+loadMore.attr('href', loadMore.attr('href').replace(/&offset=(\d+)/, offsetString));
+loadMore.attr('href', loadMore.attr('href').replace(/&ecs_offset=(\d+)/, ecsOffsetString));

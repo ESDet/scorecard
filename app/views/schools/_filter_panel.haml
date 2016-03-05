@@ -11,11 +11,11 @@
           %span.caret
     .panel-collapse.collapse{id: panel_id, "aria-labelledby" => heading_id, :role => "tabpanel"}
       .panel-body
-        %ul
-          %form(id="#{label}_form")
-            - list.each do |l|
+        %form(id="#{label}_form")
+          %ul
+            - list.each_with_index do |l, i|
               %li
                 .name
                   = l[:name]
                 .radio
-                  %input(type="#{l[:type] || 'radio'}" name="#{label}" value="#{l[:id]}"){ checked: l[:id] == 0 }
+                  %input(type='#{l[:type] || 'radio'}' name='#{label}' value='#{l[:id]}'){ checked: l[:id] == 0 }

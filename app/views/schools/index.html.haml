@@ -58,6 +58,12 @@
         - @schools.each do |s|
           = render 'search_result', school: s
 
+        .more-results
+          = link_to 'Load more results',
+            request.url.gsub(/offset=\d+/, 'offset=' + (@offset.to_i + 25).to_s),
+            remote: true,
+            id: 'load-more-results',
+            class: 'btn'
 
   :javascript
     var ajax = false;
@@ -66,21 +72,25 @@
     var schoolIds = #{(@school_ids || []).split(",").to_json};
 
     $(function(e) {
-      var map = Map({
+      schoolsMap = Map({
         center: [42.36, -83.09],
         markers: #{@schools.map(&:marker).to_json},
         zoom: 11
       });
 
-      $('.school-list .school').mouseover(function(e) {
-        var tid = $(this).data('tid');
-        for(var i in map.layers) {
-          if(tid == map.layers[i].options.id) {
-            map.layers[i].openPopup();
+      setMarkerHover = function(elements) {
+        elements.mouseover(function(e) {
+          var tid = $(this).data('tid');
+          for(var i in schoolsMap.layers) {
+            if(tid == schoolsMap.layers[i].options.id) {
+              schoolsMap.layers[i].openPopup();
+            }
           }
-        }
-        return true;
-      });
+          return true;
+        });
+      };
+
+      setMarkerHover($('.school-list .school'));
 
       $('.rounded-square.small .grade').each(function(i, n) {
         var grade = $(n);
@@ -142,4 +152,3 @@
         return false;
       });
     });
-

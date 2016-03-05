@@ -5,6 +5,9 @@ class SchoolsController < ApplicationController
     school_ids = params[:school_ids]
     school_ids = school_ids.split(",") if school_ids
     @school_ids = school_ids.uniq[0..3].join(",") if school_ids
+    @offset = params[:offset] || 0
+    @ecs_offset = params[:ecs_offset] || 0
+    @limit = params[:limit] || 25
 
     @grade = params[:grade]
     @filters = params[:filters] || []
@@ -21,7 +24,7 @@ class SchoolsController < ApplicationController
     license_types = []
     case @grade
     when "ec"
-      url = "ecs.json?limit=50&flatten_fields=true" <<
+      url = "ecs.json?limit=#{@limit}&offset=#{@ecs_offset}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
         "&sort_by_special=ec_state_ratings.total_points" <<
         "&sort_order_special=DESC" <<
@@ -50,7 +53,7 @@ class SchoolsController < ApplicationController
     when "k8", "hs", "high"
       @grade = "hs" if @grade == "high"
 
-      url = "schools.json?limit=50&flatten_fields=true" <<
+      url = "schools.json?limit=#{@limit}&offset=#{@offset}&flatten_fields=true" <<
         "&includes=school_profile,esd_#{@grade}_2015" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC" <<
@@ -83,14 +86,14 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      schools_url = "schools.json?limit=25" <<
+      schools_url = "schools.json?limit=#{@limit}&offset=#{@offset}" <<
         "&flatten_fields=true" <<
         "&includes=school_profile,esd_k8_2015," <<
         "esd_hs_2015&filter[field_scorecard_display]=1" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC"
 
-      ecs_url = "ecs.json?limit=25&flatten_fields=true" <<
+      ecs_url = "ecs.json?limit=#{@limit}&offset=#{@ecs_offset}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
         "&filter[field_scorecard_display]=1" <<
         "&sort_by_special=ec_state_ratings.total_points" <<
@@ -137,7 +140,7 @@ class SchoolsController < ApplicationController
             map { |s| SchoolData.new(s) }
         else
           flash[:notice] = "No results found"
-          redirect_to root_path
+          redirect_to root_path and return
         end
       else
         schools_response = Portal.new.fetch(schools_url)
@@ -185,8 +188,12 @@ class SchoolsController < ApplicationController
           end.reverse!
         else
           flash[:notice] = "No results found"
-          redirect_to root_path
+          redirect_to root_path and return
         end
+      end
+      respond_to do |format|
+        format.html
+        format.js
       end
     rescue EOFError => e
       ExceptionNotifier.notify_exception(e)

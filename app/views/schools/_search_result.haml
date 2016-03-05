@@ -16,8 +16,6 @@
       - grades = school.grades_served || school.age_groups
       - if grades.present? && grades.size > 1
         - grades = "#{grades.first} - #{grades.last}"
-      - else
-        - grades = grades.first
 
       .grades
         - if school.grades_served.present?
@@ -34,9 +32,6 @@
 
   .float-right
     .compare-link
-      = check_box_tag 'school_ids',
-        school.short_id, false,
-        class: 'compare-check checkbox-icon',
-        id: school.short_id
+      %input(type='checkbox' name='school_ids' id='#{school.short_id}' value='#{school.short_id}' class='compare-check checkbox-icon')
       %label
       .icon-text COMPARE

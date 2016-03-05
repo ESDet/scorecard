@@ -6,6 +6,7 @@
 //= require bootstrap/collapse
 //= require leaflet
 //= require map
+//= require search_results
 //= require favorites
 //= require filters
 //= require bar_graph
@@ -15,6 +16,7 @@
 //= require five_essentials
 //= require compare
 //= require scatter_plot
+//= require spin
 
 $(function() {
   var menu = $('.menu').first();

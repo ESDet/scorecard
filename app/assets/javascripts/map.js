@@ -9,6 +9,19 @@ $(function() {
     var _zoom = args.zoom;
     delete args['zoom'];
 
+    var _addMarkersToMap = function(schools) {
+      for (var m in schools) {
+        if (schools[m].center) {
+          var marker = new customMarker(
+            schools[m].center,
+            {id: schools[m].id}
+          ).addTo(_map);
+          marker.bindPopup(schools[m].html);
+          _layers.push(marker);
+        }
+      }
+    };
+
     if (_center) {
       var _map = L.map('map', args).
         setView(_center, _zoom);
@@ -23,18 +36,11 @@ $(function() {
       });
 
       var _layers = [];
-      for (var m in _markers) {
-        if (_markers[m].center) {
-          var marker = new customMarker(
-            _markers[m].center,
-            {id: _markers[m].id}
-          ).addTo(_map);
-          marker.bindPopup(_markers[m].html);
-          _layers.push(marker);
-        }
-      }
+      _addMarkersToMap(_markers);
     }
+
     return {
+      addMarkersToMap: _addMarkersToMap,
       layers: _layers
     }
   };

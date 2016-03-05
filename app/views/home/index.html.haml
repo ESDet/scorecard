@@ -9,6 +9,8 @@
       %h3 Try a text search
       = text_field_tag :loc, params[:loc], :placeholder => '(optional) Address, zip code, or school name'
       = hidden_field_tag :grade, nil
+      = hidden_field_tag :offset, 0
+      = hidden_field_tag :ecs_offset, 0
       %div and / or
       .grades
         %span I am looking for
