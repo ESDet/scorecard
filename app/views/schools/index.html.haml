@@ -21,7 +21,7 @@
                     = render 'filter_panel',
                       title: 'SCHOOL TYPE',
                       list: @school_type_filters
-              %li#grade-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              %li#grade-filter(class="#{@grade.blank? || @grade == 'ec'  || @grade == 'hs'? 'hide' : '' }")
                 .filter-row
                   = render 'filter_panel',
                     title: 'Grades',

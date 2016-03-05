@@ -444,12 +444,15 @@ class SchoolsController < ApplicationController
       { name: 'K8 and HS', id: 'k8-hs' },
     ]
 
-    @grade_filters = [
-      { name: 'All', id: 0, type: 'checkbox' },
-      { name: 'Elementary (K-5)', id: 'K,1,2,3,4,5', type: 'checkbox' },
-      { name: 'Middle (6-8)', id: '6,7,8', type: 'checkbox' },
-      { name: 'High (9-12)', id: '9,10,11,12', type: 'checkbox' }
-    ]
+    @grade_filters = [ { name: 'All', id: 0, type: 'checkbox' } ]
+    if params[:grade] == 'k8'
+      @grade_filters << { name: 'Elementary (K-5)', id: 'K,1,2,3,4,5', type: 'checkbox' }
+      @grade_filters << { name: 'Middle (6-8)', id: '6,7,8', type: 'checkbox' }
+    else
+      @grade_filters << { name: 'Elementary (K-5)', id: 'K,1,2,3,4,5', type: 'checkbox' }
+      @grade_filters << { name: 'Middle (6-8)', id: '6,7,8', type: 'checkbox' }
+      @grade_filters << { name: 'High (9-12)', id: '9,10,11,12', type: 'checkbox' }
+    end
 
     @age_group_filters = [
       { name: 'All', id: 0, type: 'checkbox'},

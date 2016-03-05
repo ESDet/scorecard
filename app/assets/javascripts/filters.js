@@ -1,15 +1,5 @@
 $(function() {
-  $('.filter-row').click(function() {
-    $(this).find('.filter-link').click();
-    return false;
-  });
-
-  $('.panel').click(function() {
-    $(this).find('.panel-heading').click();
-    return false;
-  });
-
-  $('.panel-heading').click(function() {
+  var displayFilters = function() {
     var panel = $($(this).find('a').attr('href'));
     if (panel.hasClass('in')) {
       $(panel).collapse('hide');
@@ -17,14 +7,13 @@ $(function() {
       $(panel).collapse('show');
     }
     return false;
-  });
+  }
 
-  $('.panel-body li').click(function() {
-    $(this).find('> .radio input').click();
-    return false;
-  });
+  $('.panel-heading').click(displayFilters);
+  $('.filter-row').click(displayFilters);
+  $('.panel').click(displayFilters);
 
-  $('.panel-body .radio input').click(function() {
+  var filterResults = function() {
     if (this.name == 'school_type') {
       if (this.value == '0') {
         $('#operator-filter').addClass('hide');
@@ -88,7 +77,10 @@ $(function() {
       return fields;
     });
 
-    var gradeFilter = $('#school-type-filter .radio input:checked')[0].value;
+    var gradeFilter = $('#school-type-filter .radio input:checked')[0];
+    if (gradeFilter) {
+      gradeFilter = gradeFilter.value;
+    }
 
     if (gradeFilter == '0') {
       $('.school').removeClass('hide');
@@ -170,5 +162,12 @@ $(function() {
     }
 
     return false;
+  };
+
+  $('.panel-body li').click(function() {
+    $(this).find('.radio input').click();
+    return false;
   });
+
+  $('.panel-body .radio input').click(filterResults);
 });
