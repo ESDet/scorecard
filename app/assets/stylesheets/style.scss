@@ -382,6 +382,7 @@ a.btn.external, a.btn.external:visited {
 }
 
 .home-index #nav,
+.home-resources #nav,
 .schools-index #nav,
 .schools-compare #nav {
   border-bottom: 1px solid $gainsboro;
@@ -390,6 +391,9 @@ a.btn.external, a.btn.external:visited {
 .home-index #nav a.btn,
 .home-index #nav a.brand,
 .home-index #nav a,
+.home-resources #nav a.btn,
+.home-resources #nav a.brand,
+.home-resources #nav a,
 .schools-compare #nav a.btn,
 .schools-compare #nav a.brand,
 .schools-compare #nav a,
