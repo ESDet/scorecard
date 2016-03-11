@@ -14,8 +14,11 @@
   .info
     %a{href: school_path(school.id)}
       - grades = school.grades_served || school.age_groups
-      - if grades.present? && grades.size > 1
-        - grades = "#{grades.first} - #{grades.last}"
+      - if grades.present?
+        - if grades.size > 1
+          - grades = "#{grades.first} - #{grades.last}"
+        - else
+          - grades = grades.first
 
       .grades
         - if school.grades_served.present?
