@@ -3,9 +3,9 @@
     .middle
       = render layout: 'ec_overall_rating', locals: { title: 'STAFF', medal: school.teacher_survey_rating, year: school.staff_survey_rating_year } do
         .text Teachers and staff were asked to complete a survey about their program. They answered questions on a five-point scale. Those answers were averaged to create the numbers below.
-        - if school.teacher_score_mean.present?
+        - if school.staff_survey_rating_year != '2015'
           = render 'staff_rating', school: school, score: school.teacher_score_mean, state: 3.64
-      - if school.teacher_score_mean.blank?
+      - if school.staff_survey_rating_year == '2015'
         .columns.four
           .column
             = render 'ec_rating_box',

@@ -98,6 +98,17 @@ module EarlyChildhood
     field_address.andand.phone_number
   end
 
+  def state_rating
+    case ec_state_ratings.andand.state_points
+    when '2'
+      'Bronze'
+    when '4'
+      'Silver'
+    when '6'
+      'Gold'
+    end
+  end
+
   def published_rating
     ec_state_ratings.andand.PublishedRating
   end
