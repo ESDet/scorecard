@@ -10,80 +10,81 @@
       = hidden_field_tag :grade, nil
       = hidden_field_tag :offset, 0
       = hidden_field_tag :ecs_offset, 0
-      //%div and / or
-      //.grades
-      //  %span I am looking for
-      //  %a.grade.btn(href="" name="grade" value="ec") Pre-K Centers
-      //  %a.grade.btn(href="" name="grade" value="k8") K-8 Schools
-      //  %a.grade.btn(href="" name="grade" value="hs") High Schools
-      //  %a.grade.active.btn(href="" value="") All Schools
-      //.filters
-      //  #ec-filters.grade-filters.hide
-      //    %div with
-      //    %br
-      //    .filter
-      //      %a.trigger(data-value="free_reduced" href="#")
-      //        %span.title free or reduced cost
-      //    .filter
-      //      %a.trigger(data-value="transportation" href="#")
-      //        %span.title transportation provided
-      //    .filter
-      //      %a.trigger(data-value="special_needs" href="#")
-      //        %span.title special needs experience
-      //    .filter
-      //      %a.trigger(data-value="meals" href="#")
-      //        %span.title meals provided
-      //    .filter
-      //      %a.trigger(data-value="home_based" href="#")
-      //        %span.title home-based
-      //    .filter
-      //      %a.trigger(data-value="center_based" href="#")
-      //        %span.title center-based
-      //    /.filter
-      //    /  %a.trigger(data-value="high_rating" href="#")
-      //    /    %span.title high rating from Excellent Schools Detroit
-      //  #k8-filters.grade-filters.hide
-      //    %div with
-      //    %br
-      //    .filter
-      //      %a.trigger(data-value="special_education" href="#")
-      //        %span.title special education experience
-      //    .filter
-      //      %a.trigger(data-value="arts" href="#")
-      //        %span.title arts
-      //    .filter
-      //      %a.trigger(data-value="sports" href="#")
-      //        %span.title sports
-      //    .filter
-      //      %a.trigger(data-value="transportation" href="#")
-      //        %span.title transportation provided
-      //    .filter
-      //      %a.trigger(data-value="before_after_care" href="#")
-      //        %span.title before/after care
-      //    /.filter
-      //    /  %a.trigger(data-value="high_rating" href="#")
-      //    /    %span.title high rating from Excellent Schools Detroit
-      //  #hs-filters.grade-filters.hide
-      //    %div with
-      //    %br
-      //    .filter
-      //      %a.trigger(data-value="special_education" href="#")
-      //        %span.title special education experience
-      //    .filter
-      //      %a.trigger(data-value="arts" href="#")
-      //        %span.title arts
-      //    .filter
-      //      %a.trigger(data-value="sports" href="#")
-      //        %span.title sports
-      //    .filter
-      //      %a.trigger(data-value="transportation" href="#")
-      //        %span.title transportation
-      //    .filter
-      //      %a.trigger(data-value="college_readiness" href="#")
-      //        %span.title college readiness focus
-      //    /.filter
-      //    /  %a.trigger(data-value="high_rating" href="#")
-      //    /    %span.title high rating from Excellent Schools Detroit
+      - if params[:advanced] == "true"
+        %div and / or
+        .grades
+          %span I am looking for
+          %a.grade.btn(href="" name="grade" value="ec") Pre-K Centers
+          %a.grade.btn(href="" name="grade" value="k8") K-8 Schools
+          %a.grade.btn(href="" name="grade" value="hs") High Schools
+          %a.grade.active.btn(href="" value="") All Schools
+        .filters
+          #ec-filters.grade-filters.hide
+            %div with
+            %br
+            .filter
+              %a.trigger(data-value="free_reduced" href="#")
+                %span.title free or reduced cost
+            .filter
+              %a.trigger(data-value="transportation" href="#")
+                %span.title transportation provided
+            .filter
+              %a.trigger(data-value="special_needs" href="#")
+                %span.title special needs experience
+            .filter
+              %a.trigger(data-value="meals" href="#")
+                %span.title meals provided
+            .filter
+              %a.trigger(data-value="home_based" href="#")
+                %span.title home-based
+            .filter
+              %a.trigger(data-value="center_based" href="#")
+                %span.title center-based
+            /.filter
+            /  %a.trigger(data-value="high_rating" href="#")
+            /    %span.title high rating from Excellent Schools Detroit
+          #k8-filters.grade-filters.hide
+            %div with
+            %br
+            .filter
+              %a.trigger(data-value="special_education" href="#")
+                %span.title special education experience
+            .filter
+              %a.trigger(data-value="arts" href="#")
+                %span.title arts
+            .filter
+              %a.trigger(data-value="sports" href="#")
+                %span.title sports
+            .filter
+              %a.trigger(data-value="transportation" href="#")
+                %span.title transportation provided
+            .filter
+              %a.trigger(data-value="before_after_care" href="#")
+                %span.title before/after care
+            /.filter
+            /  %a.trigger(data-value="high_rating" href="#")
+            /    %span.title high rating from Excellent Schools Detroit
+          #hs-filters.grade-filters.hide
+            %div with
+            %br
+            .filter
+              %a.trigger(data-value="special_education" href="#")
+                %span.title special education experience
+            .filter
+              %a.trigger(data-value="arts" href="#")
+                %span.title arts
+            .filter
+              %a.trigger(data-value="sports" href="#")
+                %span.title sports
+            .filter
+              %a.trigger(data-value="transportation" href="#")
+                %span.title transportation
+            .filter
+              %a.trigger(data-value="college_readiness" href="#")
+                %span.title college readiness focus
+            /.filter
+            /  %a.trigger(data-value="high_rating" href="#")
+            /    %span.title high rating from Excellent Schools Detroit
       %a#search-btn.btn.search{:href => '#'} Search
 
 .home.middle

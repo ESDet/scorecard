@@ -1,5 +1,5 @@
-$(function() {
-  var displayFilterPanels = function(radio) {
+Filters = function() {
+  var _displayFilterPanels = function(radio) {
     if (radio.name == 'school_type' && radio.value == '0') {
       $('#operator-filter').addClass('hide');
       $('#governance-filter').addClass('hide');
@@ -18,9 +18,9 @@ $(function() {
     }
   }
 
-  var filterResults = function() {
+  var _filterResults = function() {
     if (this.name == 'school_type') {
-      displayFilterPanels(this);
+      _displayFilterPanels(this);
     }
 
     var schools = $('.school');
@@ -128,7 +128,13 @@ $(function() {
     }
   };
 
-  $('.radio input').change(filterResults);
+  return {
+    filterResults: _filterResults
+  }
+}();
+
+$(function() {
+  $('.radio input').change(Filters.filterResults);
 
   $('.dropdown .trigger').click(function() {
     $(this).parent().toggleClass('open');
