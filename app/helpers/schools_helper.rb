@@ -39,9 +39,11 @@ module SchoolsHelper
         self.send "ec_rank_#{field.to_s}", [0...2, 2...4, 4...6, 6..8], value
       elsif max_points == 6
         self.send "ec_rank_#{field.to_s}", [0.0...1.5, 1.5...3.0, 3.0...4.5, 4.5..6.0], value
+
       end
     when :staff
-      self.send "ec_rank_#{field.to_s}", [0.0...3.5, 3.5...3.7, 3.7...3.9, 3.9..5.0], value
+      self.send "ec_rank_#{field.to_s}", [0.0...3.75, 3.75...4.25, 4.25...4.75, 4.75..5.0], value
+
     end
   end
 
