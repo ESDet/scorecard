@@ -6,7 +6,6 @@
 
   #search
     = form_tag '/schools', { :method => :get, :autocomplete => 'off', :id => 'school-search-form' } do
-      %h3 Try a text search
       = text_field_tag :loc, params[:loc], :placeholder => '(optional) Address, zip code, or school name'
       = hidden_field_tag :grade, nil
       = hidden_field_tag :offset, 0
@@ -85,7 +84,7 @@
       //    /.filter
       //    /  %a.trigger(data-value="high_rating" href="#")
       //    /    %span.title high rating from Excellent Schools Detroit
-      //  %a#search-btn.btn.search{:href => '#'} Search
+      %a#search-btn.btn.search{:href => '#'} Search
 
 .home.middle
   .video
