@@ -71,6 +71,10 @@ module School
     school_profiles.andand.field_photos
   end
 
+  def dress_code
+    school_profiles.andand.field_dress_code.label
+  end
+
   def dress_code?
     school_profiles.andand.field_dress_code.
       andand.machine_name.present?
@@ -164,6 +168,15 @@ module School
     list_labels school_profiles.andand.field_special_ed_programs
   end
 
+  def wheelchar_accessible
+    school_profiles.andand.field_wheelchair_accessible.label
+  end
+
+  def wheelchair_accessible?
+    school_profiles.andand.field_wheelchair_accessible.
+      andand.machine_name.present?
+  end
+
   def has_ell?
     ell_level.present? || ell_languages.present?
   end
@@ -237,6 +250,10 @@ module School
 
   def student_clubs_other
     list_labels school_profiles.andand.field_student_clubs_other
+  end
+
+  def application_process
+    school_profiles.andand.field_application_process
   end
 
   def application_process?

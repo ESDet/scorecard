@@ -66,3 +66,38 @@
       .hours
         = school.hours
     .general-info
+      - if school.before_after_care.present?
+        .banner-icon.before-after-care-icon
+          .hover-state.hide
+            .text.title Before After Care
+            - school.before_after_care.each do |i|
+              .text= i
+      - if school.dress_code?
+        .banner-icon.uniforms-icon
+          .hover-state.hide
+            .text.title School Dress Code
+            .text= school.dress_code
+      - if school.transportation_options.present?
+        .banner-icon.transportation-icon
+          .hover-state.hide
+            .text.title Transportation Options
+            - school.transportation_options.each do |i|
+              .text= i
+      - if school.wheelchair_accessible?
+        .banner-icon.wheelchair-icon
+          .hover-state.hide
+            .text.title Wheelchair Accessible
+              .text= school.wheelchair_accessible
+      - if school.application_process?
+        .banner-icon.special-program-icon
+          .hover-state.hide
+            .text.title Application Process
+            .text Yes
+            - if school.application_fee_amount.present?
+              .text Application Fee: #{school.application_fee_amount}
+      - if school.special_ed_programs.present?
+        .banner-icon.special-education-icon
+          .hover-state.hide
+            .text.title Special Ed Programs
+            - school.special_ed_programs.each do |i|
+              .text= i

@@ -1,60 +1,26 @@
 $(function() {
-  var displayFilters = function() {
-    var panel = $($(this).find('a').attr('href'));
-    if (panel.hasClass('in')) {
-      $(panel).collapse('hide');
+  var displayFilterPanels = function(radio) {
+    if (radio.name == 'school_type' && radio.value == '0') {
+      $('#operator-filter').addClass('hide');
+      $('#governance-filter').addClass('hide');
+      $('#grade-filter').addClass('hide');
+      $('#age-group-filter').addClass('hide');
+    } else if (radio.value == 'ecs') {
+      $('#operator-filter').addClass('hide');
+      $('#governance-filter').addClass('hide');
+      $('#grade-filter').addClass('hide');
+      $('#age-group-filter').removeClass('hide');
     } else {
-      $(panel).collapse('show');
+      $('#operator-filter').removeClass('hide');
+      $('#governance-filter').removeClass('hide');
+      $('#grade-filter').removeClass('hide');
+      $('#age-group-filter').addClass('hide');
     }
-    return false;
   }
-
-  $('.panel-heading').click(displayFilters);
-  $('.filter-row').click(displayFilters);
-  $('.panel').click(displayFilters);
 
   var filterResults = function() {
     if (this.name == 'school_type') {
-      if (this.value == '0') {
-        $('#operator-filter').addClass('hide');
-        $('#governance-filter').addClass('hide');
-        $('#grade-filter').addClass('hide');
-        $('#age-group-filter').addClass('hide');
-      } else if (this.value == 'ecs') {
-        $('#operator-filter').addClass('hide');
-        $('#governance-filter').addClass('hide');
-        $('#grade-filter').addClass('hide');
-        $('#age-group-filter').removeClass('hide');
-      } else {
-        $('#operator-filter').removeClass('hide');
-        $('#governance-filter').removeClass('hide');
-        $('#grade-filter').removeClass('hide');
-        $('#age-group-filter').addClass('hide');
-      }
-    }
-
-    if (this.type == 'radio') {
-      $(this).parent().parent().parent().
-        find('.radio input').
-        removeAttr('checked');
-      $(this).attr('checked', true)
-      $(this).prop('checked', true);
-    } else {
-      if (this.value == '0') {
-        $(this).parent().parent().parent().
-          find('.radio input').
-          removeAttr('checked');
-      } else {
-        $(this).parent().parent().parent().
-          find('.radio input[value="0"]').
-          removeAttr('checked');
-      }
-      if ($(this).attr('checked') != undefined) {
-        $(this).removeAttr('checked')
-      } else {
-        $(this).attr('checked', true)
-        $(this).prop('checked', true);
-      }
+      displayFilterPanels(this);
     }
 
     var schools = $('.school');
@@ -86,7 +52,7 @@ $(function() {
       $('.school').removeClass('hide');
     } else {
       if (gradeFilter == 'ecs') {
-        var grades = $('#age-group-filter .radio input[checked=checked]');
+        var grades = $('#age-group-filter .radio input:checked');
         if (grades.length > 0) {
           grades = grades.map(function(i, n) {
             return n.value;
@@ -117,7 +83,7 @@ $(function() {
         }
       } else {
         var grades = [];
-        $('#grade-filter .radio input[checked=checked]').each(function(i, n) {
+        $('#grade-filter .radio input:checked').each(function(i, n) {
           grades = grades.concat(n.value.split(","));
         });
 
@@ -160,14 +126,15 @@ $(function() {
         });
       }
     }
-
-    return false;
   };
 
-  $('.panel-body li').click(function() {
-    $(this).find('.radio input').click();
-    return false;
+  $('.radio input').change(filterResults);
+
+  $('.dropdown .trigger').click(function() {
+    $(this).parent().toggleClass('open');
   });
 
-  $('.panel-body .radio input').click(filterResults);
+  $('.panel-heading').click(function() {
+    $(this).parent().find('.panel-collapse').toggleClass('collapse');
+  });
 });

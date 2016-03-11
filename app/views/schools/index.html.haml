@@ -11,40 +11,40 @@
             .star &#9734;
         .float-right.filter-dropdown
           .dropdown
-            %a.trigger(data-group="filter" data-title="Filter" data-toggle="dropdown" href="#")
+            %a.trigger(data-group="filter" data-title="Filter" href="#")
               %span.title Filter
               %span.caret
             %ul.dropdown-menu
               - if @grade.blank?
-                %li#school-type-filter
+                %li#school-type-filter.filter-panel
                   .filter-row
                     = render 'filter_panel',
                       title: 'SCHOOL TYPE',
                       list: @school_type_filters
-              %li#grade-filter(class="#{@grade.blank? || @grade == 'ec'  || @grade == 'hs'? 'hide' : '' }")
+              %li#grade-filter.filter-panel(class="#{@grade.blank? || @grade == 'ec'  || @grade == 'hs'? 'hide' : '' }")
                 .filter-row
                   = render 'filter_panel',
                     title: 'Grades',
                     list: @grade_filters
-              %li#age-group-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+              %li#age-group-filter.filter-panel(class="#{@grade == 'ec' ? '' : 'hide' }")
                 .filter-row
                   = render 'filter_panel',
                     title: 'Age Groups',
                     list: @age_group_filters
-              //%li#special-ed-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              //%li#special-ed-filter.filter-panel(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
               //  = render 'filter_panel',
               //    title: 'SPECIAL EDUCATION PROGRAMS',
               //    list: @special_ed_filters
-              //%li#transportation-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              //%li#transportation-filter.filter-panel(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
               //  = render 'filter_panel',
               //    title: 'TRANSPORTATION OPTIONS',
               //    list: @special_ed_filters
-              %li#governance-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              %li#governance-filter.filter-panel(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
                 .filter-row
                   = render 'filter_panel',
                     title: 'GOVERNANCE',
                     list: @governance_filters
-              %li#operator-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              %li#operator-filter.filter-panel(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
                 .filter-row
                   = render 'filter_panel',
                     title: 'OPERATOR',

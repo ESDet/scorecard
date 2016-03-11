@@ -1,7 +1,7 @@
 #state.ratings
   .section
     .middle
-      = render layout: 'ec_overall_rating', locals: { title: 'STATE', medal: 'SILVER', year: '2015' } do
+      = render layout: 'ec_overall_rating', locals: { title: 'STATE', medal: school.early_childhood_rating, year: '2015' } do
         .text The following star ratings are from Great Start to Quality's 5-Star Quality Rating and Improvement System (QRIS), which is a state-run program. The points in each category are from the program's self-assessment.
         .stars
           = render 'stars', :n => [school.published_rating.to_i, 0].max

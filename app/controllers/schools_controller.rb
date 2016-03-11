@@ -444,7 +444,7 @@ class SchoolsController < ApplicationController
       { name: 'K8 and HS', id: 'k8-hs' },
     ]
 
-    @grade_filters = [ { name: 'All', id: 0, type: 'checkbox' } ]
+    @grade_filters = []
     if params[:grade] == 'k8'
       @grade_filters << { name: 'Elementary (K-5)', id: 'K,1,2,3,4,5', type: 'checkbox' }
       @grade_filters << { name: 'Middle (6-8)', id: '6,7,8', type: 'checkbox' }
@@ -455,7 +455,6 @@ class SchoolsController < ApplicationController
     end
 
     @age_group_filters = [
-      { name: 'All', id: 0, type: 'checkbox'},
       { name: 'Infant', id: 'Infant', type: 'checkbox' },
       { name: 'Toddler', id: 'Toddler', type: 'checkbox' },
       { name: 'Preschool', id: 'Preschool', type: 'checkbox' },

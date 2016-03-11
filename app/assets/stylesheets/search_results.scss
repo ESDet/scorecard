@@ -23,6 +23,7 @@
 }
 
 .search-results .compare-select {
+  margin-top: 50px;
   padding: 20px 5px;
   .do-compare.btn {
     margin: 0 auto;
@@ -103,7 +104,6 @@
   ul {
     width: 100%;
     padding: 0;
-    margin-top: 25px;
   }
   li {
     width: 100%;
@@ -111,11 +111,13 @@
     text-align: right;
     padding: 0 10px;
     border: none;
+    cursor: pointer;
   }
   .name {
     text-align: left;
     float: left;
     width: 90%;
+    label { display: block; }
   }
   .radio {
     float: right;
@@ -124,6 +126,8 @@
 }
 
 .search-results .results .filter .filter-row .panel-heading {
+  display: inline-block;
+  width: 100%;
   background-color: #fff;
   padding: 0;
 }

@@ -6,6 +6,7 @@
 //= require bootstrap/collapse
 //= require leaflet
 //= require map
+//= require banner
 //= require search_results
 //= require favorites
 //= require filters

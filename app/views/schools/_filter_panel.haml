@@ -6,7 +6,7 @@
   .panel.panel-default
     .panel-heading{id: heading_id, role: "tab"}
       %h4.panel-title
-        %a.filter-link.collapsed{"aria-controls" => panel_id, "aria-expanded" => "false", "data-parent" => accordion_id, "data-toggle" => "collapse", href: "##{panel_id}", :role => "button"}
+        %a.filter-link.collapsed{"aria-controls" => panel_id, "aria-expanded" => "false", "data-parent" => accordion_id, :role => "button"}
           = title
           %span.caret
     .panel-collapse.collapse{id: panel_id, "aria-labelledby" => heading_id, :role => "tabpanel"}
@@ -16,6 +16,6 @@
             - list.each_with_index do |l, i|
               %li
                 .name
-                  = l[:name]
+                  %label(for='#{label}_#{l[:id]}')= l[:name]
                 .radio
-                  %input(type='#{l[:type] || 'radio'}' name='#{label}' value='#{l[:id]}'){ checked: l[:id] == 0 }
+                  %input(id='#{label}_#{l[:id]}' type='#{l[:type] || 'radio'}' name='#{label}' value='#{l[:id]}'){ checked: (label == 'grades' || label == 'age_groups' || l[:id] == 0) }
