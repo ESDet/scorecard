@@ -305,7 +305,7 @@ class SchoolsController < ApplicationController
 
   def address_search_params
     lat_lon = Portal.new.fetch("geocoder/google.json?data=#{@loc}+Detroit+MI")['coordinates'].reverse.join(",")
-    "&near_latlon=#{lat_lon}&near_miles=1"
+    "&near_latlon=#{lat_lon}&near_miles=2"
   end
 
   def school_search_params
