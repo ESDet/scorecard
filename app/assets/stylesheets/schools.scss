@@ -7,6 +7,11 @@
 .average     { color: $rank_yellow; }
 .strong      { color: $rank_green; }
 .very-strong { color: $rank_light_green; }
+.very-weak-bg   { background-color: $rank_red; }
+.weak-bg        { background-color: $rank_orange; }
+.average-bg     { background-color: $rank_yellow; }
+.strong-bg      { background-color: $rank_green; }
+.very-strong-bg { background-color: $rank_light_green; }
 
 .suffix {
   position: absolute;

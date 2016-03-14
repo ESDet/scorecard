@@ -54,7 +54,7 @@ class SchoolsController < ApplicationController
       @grade = "hs" if @grade == "high"
 
       url = "schools.json?limit=#{@limit}&offset=#{@offset}&flatten_fields=true" <<
-        "&includes=school_profile,esd_#{@grade}_2015" <<
+        "&includes=school_profile,esd_#{@grade}_2016" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
@@ -88,8 +88,8 @@ class SchoolsController < ApplicationController
     else
       schools_url = "schools.json?limit=#{@limit}&offset=#{@offset}" <<
         "&flatten_fields=true" <<
-        "&includes=school_profile,esd_k8_2015," <<
-        "esd_hs_2015&filter[field_scorecard_display]=1" <<
+        "&includes=school_profile,esd_k8_2016," <<
+        "esd_hs_2016&filter[field_scorecard_display]=1" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC"
 
@@ -177,13 +177,13 @@ class SchoolsController < ApplicationController
             if s.ec?
               s.ec_state_ratings.total_points.to_f
             elsif s.k8?
-              if s.esd_k8_2015s.total_pts.to_f < 1
-                s.esd_k8_2015s.total_pts.to_f * 100
+              if s.esd_k8_2016s.total_pts.to_f < 1
+                s.esd_k8_2016s.total_pts.to_f * 100
               else
-                s.esd_k8_2015s.total_pts.to_f
+                s.esd_k8_2016s.total_pts.to_f
               end
             else
-              s.esd_hs_2015s.total_pts.to_f
+              s.esd_hs_2016s.total_pts.to_f
             end
           end.reverse!
         else
@@ -320,7 +320,7 @@ class SchoolsController < ApplicationController
     else
       url = "schools"
       includes = "school_profile,meap_2014," <<
-        "fiveessentials_2015,esd_#{school_type}_2015," <<
+        "fiveessentials_2015,esd_#{school_type}_2016," <<
         "k12_supplemental_2015"
     end
 
@@ -356,7 +356,7 @@ class SchoolsController < ApplicationController
   def fetch_detroit_and_state_data(school_type)
     url = "schools.json?flatten_fields=true" <<
       "&include_option_labels=true" <<
-      "&includes=school_profile,esd_#{school_type}_2015" <<
+      "&includes=school_profile,esd_#{school_type}_2016" <<
       "&filter[field_bcode]=88888,99999" <<
       "&filter_op[field_bcode]=IN"
 
@@ -418,21 +418,21 @@ class SchoolsController < ApplicationController
           includes["id"] == school["links"]["most_recent_ec_state_rating"]["linkage"]["id"]
         end
       end
-    elsif includes["type"] == "esd_k8_2015s"
-      if school["links"]["esd_k8_2015"]
-        includes["id"] == school["links"]["esd_k8_2015"]["linkage"]["id"]
+    elsif includes["type"] == "esd_k8_2016s"
+      if school["links"]["esd_k8_2016"]
+        includes["id"] == school["links"]["esd_k8_2016"]["linkage"]["id"]
       end
-    elsif includes["type"] == "esd_hs_2015s"
-      if school["links"]["esd_hs_2015"]
-        includes["id"] == school["links"]["esd_hs_2015"]["linkage"]["id"]
+    elsif includes["type"] == "esd_hs_2016s"
+      if school["links"]["esd_hs_2016"]
+        includes["id"] == school["links"]["esd_hs_2016"]["linkage"]["id"]
       end
-    elsif includes["type"] == "esd_el_2015s"
-      if school["links"]["esd_el_2015"]
-        includes["id"] == school["links"]["esd_el_2015"]["linkage"]["id"]
+    elsif includes["type"] == "esd_el_2016s"
+      if school["links"]["esd_el_2016"]
+        includes["id"] == school["links"]["esd_el_2016"]["linkage"]["id"]
       end
-    elsif includes["type"] == "k12_supplemental_2015s"
-      if school["links"]["k12_supplemental_2015"]
-        includes["id"] == school["links"]["k12_supplemental_2015"]["linkage"]["id"]
+    elsif includes["type"] == "k12_supplemental_2016s"
+      if school["links"]["k12_supplemental_2016"]
+        includes["id"] == school["links"]["k12_supplemental_2016"]["linkage"]["id"]
       end
     end
   end

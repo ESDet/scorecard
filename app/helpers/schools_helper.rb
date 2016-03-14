@@ -85,7 +85,7 @@ module SchoolsHelper
         "<span class='very-strong'>VERY STRONG</span>"
       end.html_safe
     else
-      'Data Missing'
+      'No data available'
     end
   end
 
@@ -136,8 +136,19 @@ module SchoolsHelper
         end
       end
     else
-      'Data Missing'
+      'No data available'
     end
+  end
+
+  def strip_phone(ph)
+    number = ph.gsub /[\.\s\(\-\)]/, ''
+    number = number[1..-1] if number.starts_with?("1")
+    number
+  end
+
+  def format_phone(ph)
+    number = strip_phone(ph)
+    "(#{number[0..2]}) #{number[3..5]}-#{number[6..9]}"
   end
 end
 

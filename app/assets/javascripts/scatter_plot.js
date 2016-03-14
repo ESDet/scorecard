@@ -2,28 +2,21 @@ $(function() {
   $('.scatter-plot-graph .graph-points').each(function(i, n) {
     var el = $(n);
 
-    var school = el.find('.school');
-    var detroit = el.find('.detroit');
+    var school = el.find('.graph-point.school');
+    var detroit = el.find('.graph-point.detroit');
 
-    var schoolProficiency = parseFloat(school.data('proficiency'));
-    var schoolGrowth = parseFloat(school.data('growth'));
+    var schoolProficiency = parseFloat(school.data('proficiency-location'));
+    var schoolGrowth = parseFloat(school.data('growth-location'));
 
-    var detroitProficiency =  -4 || parseFloat(detroit.data('proficiency'));
-    var detroitGrowth = -4 || parseFloat(detroit.data('growth'));
+    var detroitProficiency =  parseFloat(detroit.data('proficiency-location'));
+    var detroitGrowth = parseFloat(detroit.data('growth-location'));
 
-    var setPointPosition = function(el, axis, data) {
-      if (data < 0) {
-        el.css(axis, 50 + ((data * -1) / 5.0) + '%');
-      } else {
-        el.css(axis, 50 - (data / 5.0) + '%');
-      }
-    };
+    var scatterPlotGraph = $('.scatter-plot-graph');
+    school.css('left', schoolProficiency - (scatterPlotGraph.width() / school.width() / 1.3) + '%');
+    school.css('top', schoolGrowth - (scatterPlotGraph.height() / school.height() / 1.9) + '%');
 
-    setPointPosition(school, 'top', schoolProficiency);
-    setPointPosition(school, 'right', schoolGrowth);
-
-    setPointPosition(detroit, 'top', detroitProficiency);
-    setPointPosition(detroit, 'right', detroitGrowth);
+    detroit.css('left', detroitProficiency - (scatterPlotGraph.width() / detroit.width() / 5) + '%');
+    detroit.css('top', detroitGrowth - (scatterPlotGraph.height() / school.height() / 3) + '%');
   });
 
   $('.scatter-plot-nav .subject').click(function() {

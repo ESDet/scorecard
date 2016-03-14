@@ -3,39 +3,50 @@ module HighSchool
     super
     ['english', 'math', 'reading', 'science'].each do |s|
       o["#{s}_college_ready".to_sym] = if s == 'science'
-        int_value(o, :esd_hs_2015s, "ct#{s}cr")
+        int_value(o, :esd_hs_2016s, "ct#{s}cr")
       else
-        int_value(o, :esd_hs_2015s, "act#{s}cr")
+        int_value(o, :esd_hs_2016s, "act#{s}cr")
       end
 
       ['eng', 'math', 'read', 'sci'].each do |t|
         if s =~ /#{t}/
-          o["#{s}_college_ready_points".to_sym] = float_value(o, :esd_hs_2015s, "#{t}_cr_pts")
+          o["#{s}_college_ready_points".to_sym] = float_value(o, :esd_hs_2016s, "#{t}_cr_pts")
         end
       end
 
-      o["#{s}_growth".to_sym] = float_value(o, :esd_hs_2015s, "adj_act#{s}")
+      o["#{s}_growth".to_sym] = float_value(o, :esd_hs_2016s, "adj_act#{s}")
+
+      scatter_sub = case s
+      when 'reading'
+        'read'
+      when 'science'
+        'sci'
+      when 'english'
+        'eng'
+      end
+      o["#{s}_scatter_prof".to_sym] = float_value(o, :esd_hs_2016s, "scatter_#{scatter_sub}cr")
+      o["#{s}_scatter_growth".to_sym] = float_value(o, :esd_hs_2016s, "scatter_#{scatter_sub}growth")
     end
   end
 
   def graduate_in_four_years
-    HighSchool.int_value(self, :esd_hs_2015s, :cepi_pct_grad4)
+    HighSchool.int_value(self, :esd_hs_2016s, :cepi_pct_grad4)
   end
 
   def graduate_in_five_years
-    HighSchool.int_value(self, :esd_hs_2015s, :cepi_pct_grad5)
+    HighSchool.int_value(self, :esd_hs_2016s, :cepi_pct_grad5)
   end
 
   def enroll_in_college
-    HighSchool.int_value(self, :esd_hs_2015s, :col_enr_pct)
+    HighSchool.int_value(self, :esd_hs_2016s, :col_enr_pct)
   end
 
   def stay_in_college
-    HighSchool.int_value(self, :esd_hs_2015s, :col_persist_pct)
+    HighSchool.int_value(self, :esd_hs_2016s, :col_persist_pct)
   end
 
   def current_stats
-    self.andand.esd_hs_2015s
+    self.andand.esd_hs_2016s
   end
 
   def college_readiness_ranking
@@ -68,7 +79,7 @@ module HighSchool
 
   def self.float_value(o, set, value)
     if v = o[set].andand.send(value)
-      v.to_f
+      v.to_f.round
     end
   end
 end

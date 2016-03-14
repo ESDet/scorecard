@@ -1,4 +1,4 @@
-.graph-point.school(data-proficiency="#{school_proficiency}" data-growth="#{school_growth}")
+.graph-point.school(data-proficiency="#{school_proficiency}" data-proficiency-location="#{school_proficiency_location}" data-growth="#{school_growth}" data-growth-location="#{school_growth_location}")
   .point-popup.hide
     .row
       .name= school_name
@@ -28,7 +28,7 @@
           ACT growth points compared to state
         - else
           Growth percentile compared to state
-.graph-point.detroit(data-proficiency="#{detroit_proficiency}" data-growth="#{detroit_growth}")
+.graph-point.detroit(data-proficiency="#{detroit_proficiency}" data-proficiency-location="#{detroit_proficiency_location}" data-growth="#{detroit_growth}" data-growth-location="#{detroit_growth_location}")
   .point-popup.hide
     .row
       .name Detroit
@@ -40,3 +40,6 @@
         %span COLLEGE READY
       - else
         %span PROFICIENT
+    .row.detroit-growth
+      %span.big #{detroit_growth}%
+      %span GROWTH

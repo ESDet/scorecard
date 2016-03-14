@@ -31,7 +31,7 @@
       - if school.school_url.present?
         %a.link(href="#{school.school_url}" target="_blank") Website
       - if school.phone.present?
-        %a.link(href="tel:#{school.phone}")= school.phone
+        %a.link(href="tel:#{strip_phone(school.phone)}")= format_phone(school.phone)
 
   .float-right
     .compare-link

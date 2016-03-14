@@ -197,11 +197,13 @@
   border-bottom: 0;
 }
 
-.scatter-plot-graph .point-popup .row.detroit-prof {
+.scatter-plot-graph .point-popup .row.detroit-prof,
+.scatter-plot-graph .point-popup .row.detroit-growth {
   line-height: 27px;
 }
 
-.scatter-plot-graph .point-popup .row.detroit-prof span {
+.scatter-plot-graph .point-popup .row.detroit-prof span,
+.scatter-plot-graph .point-popup .row.detroit-growth span {
   vertical-align: middle;
 }
 

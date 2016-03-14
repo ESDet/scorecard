@@ -5,25 +5,25 @@
       %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
       .content.four
         = render 'bar_graph', title: 'Math',
-          school_average: @school.math_prepared,
-          school_average_points: @school.math_prepared_points,
-          detroit_average: @detroit.math_prepared,
-          state_average: @state.math_prepared
+          school_average: @school.math_mstep_prepared,
+          school_average_points: @school.math_mstep_prepared_points,
+          detroit_average: @detroit.math_mstep_prepared,
+          state_average: @state.math_mstep_prepared
         = render 'bar_graph', title: 'Reading and Writing',
-          school_average: @school.ela_prepared,
-          school_average_points: @school.ela_prepared_points,
-          detroit_average: @detroit.ela_prepared,
-          state_average: @state.ela_prepared
+          school_average: @school.ela_mstep_prepared,
+          school_average_points: @school.ela_mstep_prepared_points,
+          detroit_average: @detroit.ela_mstep_prepared,
+          state_average: @state.ela_mstep_prepared
         = render 'bar_graph', title: 'Science',
-          school_average: @school.science_prepared,
-          school_average_points: @school.science_prepared_points,
-          detroit_average: @detroit.science_prepared,
-          state_average: @state.science_prepared
+          school_average: @school.science_mstep_prepared,
+          school_average_points: @school.science_mstep_prepared_points,
+          detroit_average: @detroit.science_mstep_prepared,
+          state_average: @state.science_mstep_prepared
         = render 'bar_graph', title: 'Social Studies',
-          school_average: @school.socstud_prepared,
-          school_average_points: @school.socstud_prepared_points,
-          detroit_average: @detroit.socstud_prepared,
-          state_average: @state.socstud_prepared
+          school_average: @school.socstud_mstep_prepared,
+          school_average_points: @school.socstud_mstep_prepared_points,
+          detroit_average: @detroit.socstud_mstep_prepared,
+          state_average: @state.socstud_mstep_prepared
         //.what-this-means
         //  .question-mark
         //  WHAT THIS MEANS
@@ -44,29 +44,39 @@
               hs: @school.hs?,
               school_name: @school.display_name,
               subject: 'math',
-              school_proficiency: @school.math_prepared,
+              school_proficiency: @school.math_meap_prepared,
+              school_proficiency_points: @school.math_meap_prepared_points,
+              school_proficiency_location: @school.math_scatter_prof,
               school_growth: @school.math_growth,
-              school_proficiency_points: @school.math_prepared_points,
               school_growth_points: @school.math_growth_points,
-              detroit_proficiency: @detroit.math_prepared,
+              school_growth_location: @school.math_scatter_growth,
+              detroit_proficiency: @detroit.math_meap_prepared,
+              detroit_proficiency_points: @detroit.math_meap_prepared_points,
+              detroit_proficiency_location: @detroit.math_scatter_prof,
               detroit_growth: @detroit.math_growth,
-              detroit_proficiency_points: @detroit.math_prepared_points,
               detroit_growth_points: @detroit.math_growth_points,
-              state_proficiency: @state.math_prepared
+              detroit_growth_location: @detroit.math_scatter_growth,
+              state_proficiency: @state.math_meap_prepared,
+              state_growth: @state.math_growth
           .graph-points.reading.hide
             = render 'scatter_subject_points',
               hs: @school.hs?,
               school_name: @school.display_name,
               subject: 'reading',
-              school_proficiency: @school.reading_prepared,
+              school_proficiency: @school.reading_meap_prepared,
+              school_proficiency_points: @school.reading_meap_prepared_points,
+              school_proficiency_location: @school.ela_scatter_prof,
               school_growth: @school.reading_growth,
-              school_proficiency_points: @school.reading_prepared_points,
               school_growth_points: @school.reading_growth_points,
-              detroit_proficiency: @detroit.reading_prepared,
+              school_growth_location: @school.ela_scatter_growth,
+              detroit_proficiency: @detroit.reading_meap_prepared,
+              detroit_proficiency_points: @detroit.reading_meap_prepared_points,
+              detroit_proficiency_location: @detroit.ela_scatter_prof,
               detroit_growth: @detroit.reading_growth,
-              detroit_proficiency_points: @detroit.reading_prepared_points,
               detroit_growth_points: @detroit.reading_growth_points,
-              state_proficiency: @state.reading_prepared
+              detroit_growth_location: @detroit.ela_scatter_growth,
+              state_proficiency: @state.reading_meap_prepared,
+              state_growth: @state.reading_growth
         = render 'scatter_plot'
         //.what-this-means
         //  .question-mark

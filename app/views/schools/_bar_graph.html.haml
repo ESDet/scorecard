@@ -3,11 +3,11 @@
     .info-box__title= title
     .info-box__content
       .text.description
-        = school_average_points ? rank_text(school_average_points) : "Data Missing"
+        = school_average_points ? rank_text(school_average_points) : "No data available"
       .text.percentage(class="#{rank_text_color(school_average_points || 0)}")
         = "#{school_average}%" if school_average
   .bar-graph
-    .fill(data-num="#{school_average}")
+    .fill(class="#{rank_text_color(school_average_points) if school_average_points}-bg" data-num="#{school_average}")
     .left-bounds 0%
     .line-marker(data-num="#{detroit_average}")
     .line-marker-text.detroit(data-num="#{detroit_average}")

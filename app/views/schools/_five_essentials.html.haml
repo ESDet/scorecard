@@ -3,26 +3,45 @@
     .info-box__title= title
     .info-box__content.fivee-overall-rating(data-rating="#{overall_rating || 0}")
       .fivee-rating-text
-      .bottom-text
-        .square
-        Did not participate
+      - if report_id
+        - url = "https://detroit.5-essentials.org/2015/s/#{report_id}"
+        .bottom-text
+          %a(href="#{url}" target="_blank")
+            See full results
+            .link-icon
 
 .visual
   .fivee-graph
     .circle
       .outer
-      .inner.fivee-category(data-num="#{ambitious_instruction}")
-        .text.left Ambitious Instruction
-    .row
-      .box.fivee-category(data-num="#{effective_leaders}")
-        .text.left Effective Leaders
-      .box.fivee-category(data-num="#{collaborative_teachers}")
-        .text.right Collaborative Teachers
-    .row
-      .box.fivee-category(data-num="#{supportive_environment}")
-        .text.bottom.left Supportive Environment
-      .box.fivee-category(data-num="#{involved_families}")
-        .text.bottom.right Involved Families
+      - if report_id
+        %a.inner.fivee-category(href="#{url}/essentials/instruction" target="_blank" data-num="#{ambitious_instruction}")
+          .text.left Ambitious Instruction
+      - else
+        .inner.fivee-category(data-num="#{ambitious_instruction}")
+          .text.left Ambitious Instruction
+    - if report_id
+      .row
+        %a.box.fivee-category(href="#{url}/essentials/leaders" target="_blank" data-num="#{effective_leaders}")
+          .text.left Effective Leaders
+        %a.box.fivee-category(href="#{url}/essentials/teachers" target="_blank" data-num="#{collaborative_teachers}")
+          .text.right Collaborative Teachers
+      .row
+        %a.box.fivee-category(href="#{url}/essentials/environment" target="_blank" data-num="#{supportive_environment}")
+          .text.bottom.left Supportive Environment
+        %a.box.fivee-category(href="#{url}/essentials/families" target="_blank" data-num="#{involved_families}")
+          .text.bottom.right Involved Families
+    - else
+      .row
+        .box.fivee-category(data-num="#{effective_leaders}")
+          .text.left Effective Leaders
+        .box.fivee-category(data-num="#{collaborative_teachers}")
+          .text.right Collaborative Teachers
+      .row
+        .box.fivee-category(data-num="#{supportive_environment}")
+          .text.bottom.left Supportive Environment
+        .box.fivee-category(data-num="#{involved_families}")
+          .text.bottom.right Involved Families
   .legend
     .key
       .box.green
@@ -39,10 +58,6 @@
     .key
       .box.red
       .label Not Yet Organized
-
-- if report_id
-  .section
-    .link
-      %a(href="https://detroit.5-essentials.org/2015/s/#{report_id}" target="_blank")
-        See more results
-        .link-icon
+  .participate-legend
+    .square
+    Did not participate

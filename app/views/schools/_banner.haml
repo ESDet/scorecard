@@ -12,19 +12,21 @@
     .overall-performance
       .section
         .columns
-          .column
-            .info-box.info-box--small
-              .info-box__title Overall Grade
-              .info-box__content.info-box__content--overview
-                .text
-                  = school.excellent_schools_grade
-          .column
-            .info-box.info-box--small
-              .info-box__title State
-              .info-box__content.info-box__content--overview
-                .text.percentile
-                  = school.michigan_percentile
-                  .suffix= percentile_suffix(school.michigan_percentile)
+          - if school.excellent_schools_grade.present?
+            .column
+              .info-box.info-box--small
+                .info-box__title Overall Grade
+                .info-box__content.info-box__content--overview
+                  .text
+                    = school.excellent_schools_grade
+          - if school.michigan_percentile.present?
+            .column
+              .info-box.info-box--small
+                .info-box__title State
+                .info-box__content.info-box__content--overview
+                  .text.percentile
+                    = school.michigan_percentile
+                    .suffix= percentile_suffix(school.michigan_percentile)
       .more-rankings
         See more rankings:
         .ranking-link
@@ -49,7 +51,7 @@
       .info= school.street
       - if school.phone.present? || school.fax.present?
         .info
-          Phone: #{school.phone} &nbsp;&nbsp;&nbsp;
+          Phone: #{format_phone(school.phone)} &nbsp;&nbsp;&nbsp;
           - if school.fax.present?
             | &nbsp;&nbsp;&nbsp;Fax: #{school.fax}
     .website-info
