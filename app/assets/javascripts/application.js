@@ -4,6 +4,7 @@
 //= require d3
 //= require bootstrap/dropdown
 //= require bootstrap/collapse
+//= require bootstrap/modal
 //= require leaflet
 //= require map
 //= require banner
@@ -18,6 +19,7 @@
 //= require compare
 //= require scatter_plot
 //= require spin
+//= require froogaloop
 
 $(function() {
   var menu = $('.menu').first();

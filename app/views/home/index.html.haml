@@ -1,104 +1,110 @@
-.home.middle
-  - if flash[:notice]
-    %div.notice= flash[:notice]
+.home
+  .middle.search
+    - if flash[:notice]
+      %div.notice= flash[:notice]
 
-  %h1 Find the best Detroit schools for your family.
+    %h1 Find the best Detroit schools for your family.
 
-  #search
-    = form_tag '/schools', { :method => :get, :autocomplete => 'off', :id => 'school-search-form' } do
-      = text_field_tag :loc, params[:loc], :placeholder => '(optional) Address, zip code, or school name'
-      = hidden_field_tag :grade, nil
-      = hidden_field_tag :offset, 0
-      = hidden_field_tag :ecs_offset, 0
-      - if params[:advanced] == "true"
-        %div and / or
+    #search
+      = form_tag '/schools', { :method => :get, :autocomplete => 'off', :id => 'school-search-form' } do
+        = text_field_tag :loc, params[:loc], :placeholder => '(optional) Address, zip code, or school name'
+        = hidden_field_tag :grade, nil
+        = hidden_field_tag :offset, 0
+        = hidden_field_tag :ecs_offset, 0
+        .andor and/or I am looking for
         .grades
-          %span I am looking for
           %a.grade.btn(href="" name="grade" value="ec") Pre-K Centers
           %a.grade.btn(href="" name="grade" value="k8") K-8 Schools
           %a.grade.btn(href="" name="grade" value="hs") High Schools
           %a.grade.active.btn(href="" value="") All Schools
-        .filters
-          #ec-filters.grade-filters.hide
-            %div with
-            %br
-            .filter
-              %a.trigger(data-value="free_reduced" href="#")
-                %span.title free or reduced cost
-            .filter
-              %a.trigger(data-value="transportation" href="#")
-                %span.title transportation provided
-            .filter
-              %a.trigger(data-value="special_needs" href="#")
-                %span.title special needs experience
-            .filter
-              %a.trigger(data-value="meals" href="#")
-                %span.title meals provided
-            .filter
-              %a.trigger(data-value="home_based" href="#")
-                %span.title home-based
-            .filter
-              %a.trigger(data-value="center_based" href="#")
-                %span.title center-based
-            /.filter
-            /  %a.trigger(data-value="high_rating" href="#")
-            /    %span.title high rating from Excellent Schools Detroit
-          #k8-filters.grade-filters.hide
-            %div with
-            %br
-            .filter
-              %a.trigger(data-value="special_education" href="#")
-                %span.title special education experience
-            .filter
-              %a.trigger(data-value="arts" href="#")
-                %span.title arts
-            .filter
-              %a.trigger(data-value="sports" href="#")
-                %span.title sports
-            .filter
-              %a.trigger(data-value="transportation" href="#")
-                %span.title transportation provided
-            .filter
-              %a.trigger(data-value="before_after_care" href="#")
-                %span.title before/after care
-            /.filter
-            /  %a.trigger(data-value="high_rating" href="#")
-            /    %span.title high rating from Excellent Schools Detroit
-          #hs-filters.grade-filters.hide
-            %div with
-            %br
-            .filter
-              %a.trigger(data-value="special_education" href="#")
-                %span.title special education experience
-            .filter
-              %a.trigger(data-value="arts" href="#")
-                %span.title arts
-            .filter
-              %a.trigger(data-value="sports" href="#")
-                %span.title sports
-            .filter
-              %a.trigger(data-value="transportation" href="#")
-                %span.title transportation
-            .filter
-              %a.trigger(data-value="college_readiness" href="#")
-                %span.title college readiness focus
-            /.filter
-            /  %a.trigger(data-value="high_rating" href="#")
-            /    %span.title high rating from Excellent Schools Detroit
-      %a#search-btn.btn.search{:href => '#'} Search
+        - if params[:advanced] == "true"
+          .filters
+            #ec-filters.grade-filters.hide
+              %div with
+              %br
+              .filter
+                %a.trigger(data-value="free_reduced" href="#")
+                  %span.title free or reduced cost
+              .filter
+                %a.trigger(data-value="transportation" href="#")
+                  %span.title transportation provided
+              .filter
+                %a.trigger(data-value="special_needs" href="#")
+                  %span.title special needs experience
+              .filter
+                %a.trigger(data-value="meals" href="#")
+                  %span.title meals provided
+              .filter
+                %a.trigger(data-value="home_based" href="#")
+                  %span.title home-based
+              .filter
+                %a.trigger(data-value="center_based" href="#")
+                  %span.title center-based
+              /.filter
+              /  %a.trigger(data-value="high_rating" href="#")
+              /    %span.title high rating from Excellent Schools Detroit
+            #k8-filters.grade-filters.hide
+              %div with
+              %br
+              .filter
+                %a.trigger(data-value="special_education" href="#")
+                  %span.title special education experience
+              .filter
+                %a.trigger(data-value="arts" href="#")
+                  %span.title arts
+              .filter
+                %a.trigger(data-value="sports" href="#")
+                  %span.title sports
+              .filter
+                %a.trigger(data-value="transportation" href="#")
+                  %span.title transportation provided
+              .filter
+                %a.trigger(data-value="before_after_care" href="#")
+                  %span.title before/after care
+              /.filter
+              /  %a.trigger(data-value="high_rating" href="#")
+              /    %span.title high rating from Excellent Schools Detroit
+            #hs-filters.grade-filters.hide
+              %div with
+              %br
+              .filter
+                %a.trigger(data-value="special_education" href="#")
+                  %span.title special education experience
+              .filter
+                %a.trigger(data-value="arts" href="#")
+                  %span.title arts
+              .filter
+                %a.trigger(data-value="sports" href="#")
+                  %span.title sports
+              .filter
+                %a.trigger(data-value="transportation" href="#")
+                  %span.title transportation
+              .filter
+                %a.trigger(data-value="college_readiness" href="#")
+                  %span.title college readiness focus
+              /.filter
+              /  %a.trigger(data-value="high_rating" href="#")
+              /    %span.title high rating from Excellent Schools Detroit
+        %a#search-btn.btn.search{:href => '#'} GO!
 
-.home.middle
-  .video
-    %iframe(src="https://player.vimeo.com/video/131640996?color=ffffff"
-      width="100%"
-      height="100%"
-      frameborder="0"
-      webkitallowfullscreen
-      mozallowfullscreen
-      allowfullscreen
-      )
-
-= render 'shared/resources'
+  .middle.video
+    %button.video-btn(type="button" data-toggle="modal" data-target="#video-modal") GET TO KNOW THE SCORECARD
+    #video-modal.modal.fade{:role => "dialog", :tabindex => "-1"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+          .modal-body
+            .video-frame
+              %iframe#video(src="https://player.vimeo.com/video/131640996?api=1&color=ffffff"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                webkitallowfullscreen
+                mozallowfullscreen
+                allowfullscreen
+                )
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
 
 :javascript
   $(function() {
@@ -143,5 +149,9 @@
         enableGradeFilter(el);
       }
       return false;
+    });
+
+    $('#video-modal').on('hide.bs.modal', function() {
+      $f('#video').api('pause');
     });
   });

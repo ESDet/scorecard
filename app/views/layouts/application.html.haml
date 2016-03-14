@@ -1,9 +1,10 @@
 !!!
-%html
+%html{ class: controller_name == 'home' && action_name == 'index' ? 'background-image' : '' }
   = render 'layouts/head'
   - home = current_page?(root_path)
-  %body{:class => "#{params[:controller]}-#{params[:action]}"}
-    .container
+  %body{:class => "#{controller_name}-#{action_name}"}
+    %div{class: controller_name == 'home' && action_name == 'index' ? 'tinted' : ''}
+    .container{ class: controller_name == 'home' && action_name == 'index' ? 'relative' : ''}
       %header#nav
         .left
           = link_to 'Scorecard', root_path, class: 'brand'
