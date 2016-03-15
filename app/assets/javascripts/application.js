@@ -19,7 +19,6 @@
 //= require compare
 //= require scatter_plot
 //= require spin
-//= require froogaloop
 
 $(function() {
   var menu = $('.menu').first();
