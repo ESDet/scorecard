@@ -118,3 +118,17 @@
 .home-index .container {
   z-index: 10;
 }
+
+.home-resources .home {
+  text-align: left;
+  padding-top: 7%;
+}
+
+.home-resources h3 {
+  color: $navy;
+}
+
+.home-resources .home .video-frame {
+  margin: 0 auto;
+  width: 70%;
+}
