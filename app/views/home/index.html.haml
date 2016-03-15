@@ -152,6 +152,6 @@
     });
 
     $('#video-modal').on('hide.bs.modal', function() {
-      $f('#video').api('pause');
+      $('#video')[0].contentWindow.postMessage({method: "pause", "value": "true"}, "*");
     });
   });
