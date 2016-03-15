@@ -293,3 +293,12 @@
   vertical-align: middle;
   padding: 10px;
 }
+
+@media screen and (max-width: 960px) {
+  .search-results .schools-map-wrapper {
+    display: none;
+  }
+  .search-results .results {
+    width: 100%;
+  }
+}

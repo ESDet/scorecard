@@ -1,0 +1,99 @@
+#nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 10px 20px;
+  color: white;
+}
+
+#nav  .left { float: left; }
+#nav .right {
+  margin-top: 20px;
+  float: right;
+}
+
+#nav a.brand { color: white; }
+#nav a span {
+  color: white;
+  font-family: 'Aleo Regular';
+  font-size: 25px;
+}
+
+#nav #hamburger {
+  margin-top: -10px;
+  position: relative;
+  float: right;
+  display: block;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 1px 5px;
+  width: 40px;
+}
+
+#nav #hamburger div {
+  background-color: white;
+  border-bottom: 0.2em solid white;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;
+  margin-top: 6px;
+}
+
+.home-resources #nav #hamburger div {
+  background-color: $navy;
+  border-bottom: 0.2em solid $navy;
+}
+
+#nav #hamburger div:first-of-type {
+  margin-top: 8px;
+}
+
+#nav a.btn {
+  color: white;
+  font-family: 'Aleo Regular';
+  font-size: 20px;
+  background-color: transparent;
+}
+
+#nav .menu {
+  float: right;
+  text-align: left;
+}
+
+#nav .menu.active {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 79px;
+  width: 201px;
+  background-color: transparent;
+  a {
+    color: white;
+    width: 100%;
+    text-align: right;
+  }
+  a:first-child {
+    margin-top: 10px;
+  }
+  a:last-child {
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 849px) {
+  #nav .menu {
+    position: absolute;
+    width: 100%;
+    margin-left: -20px;
+    z-index: 1000;
+    text-align: right;
+    float: right;
+    display: none;
+    text-align: left;
+    background-color: white;
+  }
+}
+
+@media only screen and (min-width: 850px) {
+  #nav #hamburger { display: none; }
+}
