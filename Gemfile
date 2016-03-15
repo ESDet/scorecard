@@ -16,6 +16,7 @@ gem 'jquery-rails'
 gem 'json'
 gem 'js_cookie_rails'
 gem 'newrelic_rpm'
+gem 'mapbox-rails'
 gem 'puma'
 gem 'psych', '1.3.4'
 gem 'rack-mini-profiler', require: false

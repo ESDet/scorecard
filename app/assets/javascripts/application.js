@@ -5,7 +5,7 @@
 //= require bootstrap/dropdown
 //= require bootstrap/collapse
 //= require bootstrap/modal
-//= require leaflet
+//= require mapbox.js
 //= require map
 //= require banner
 //= require search_results
