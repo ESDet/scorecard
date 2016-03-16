@@ -60,6 +60,7 @@
   position: absolute;
   font-size: 21px;
   font-family: 'Aleo Bold';
+  z-index: 100;
 }
 
 .scatter-plot-graph .label.top-left { color: $rank_orange; }
@@ -157,6 +158,18 @@
   -moz-border-radius: 20px;
   -webkitborder-radius: 20px;
   border-radius: 20px;
+  z-index: 100;
+}
+
+.scatter-plot-graph .graph-point.school.other {
+  border: 1px solid #999;
+  background-color: $grey;
+  width: 20px;
+  height: 20px;
+  -moz-border-radius: 10px;
+  -webkitborder-radius: 10px;
+  border-radius: 10px;
+  z-index: 99;
 }
 
 .scatter-plot-graph .graph-point.detroit {
@@ -166,14 +179,15 @@
   -moz-border-radius: 10px;
   -webkitborder-radius: 10px;
   border-radius: 10px;
+  z-index: 100;
 }
 
 .scatter-plot-graph .point-popup {
   background-color: white;
   margin-right: 50%;
-  z-index: 1000;
   width: 280px;
   border: 3px solid $grey;
+  z-index: 102;
 }
 
 .scatter-plot-graph .graph-point.detroit .point-popup {

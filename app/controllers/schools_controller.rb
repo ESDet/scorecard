@@ -227,6 +227,9 @@ class SchoolsController < ApplicationController
 
     if school_type != "ecs"
       @detroit, @state = fetch_detroit_and_state_data(school_type)
+      response = fetch_schools_for_scatter_plot(school_type)
+      @scatter_plot_schools = gather_included_fields(response).
+        map { |s| SchoolData.new s }
     end
 
     if school_data.first =~ /does not exist/
@@ -392,6 +395,31 @@ class SchoolsController < ApplicationController
       end
     end
     [detroit_data, state_data]
+  end
+
+  def fetch_schools_for_scatter_plot(school_type)
+    url = "schools.json?flatten_fields=true&includes=esd_#{school_type}_2016"
+    retries = 2
+    begin
+      school_data = Portal.new.fetch(url)
+    rescue EOFError => e
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+      flash[:notice] = "There was an error " <<
+        "retrieving school data and we are looking " <<
+        "into the issue now. Please try again later."
+      redirect_to root_path and return
+    rescue Net::ReadTimeout, Net::OpenTimeout => e
+      ExceptionNotifier.notify_exception(e)
+      retries -= 1
+      retry if retries > 0
+      flash[:notice] = "There was an error " <<
+        "retrieving school data and we are looking " <<
+        "into the issue now. Please try again later."
+      redirect_to root_path and return
+    end
+    school_data
   end
 
   def gather_included_fields(response)

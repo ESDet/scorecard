@@ -1,22 +1,28 @@
 $(function() {
-  $('.scatter-plot-graph .graph-points').each(function(i, n) {
+  $('.scatter-plot-graph .graph-point').each(function(i, n) {
     var el = $(n);
 
-    var school = el.find('.graph-point.school');
-    var detroit = el.find('.graph-point.detroit');
+    var scatterWidth = $(document).width() * $('.middle').width() / 100;
+    var scatterHeight = $('.scatter-plot-graph').height();
 
-    var schoolProficiency = parseFloat(school.data('proficiency-location'));
-    var schoolGrowth = parseFloat(school.data('growth-location'));
+    var proficiency = parseFloat(el.data('proficiency-location'));
+    var growth = parseFloat(el.data('growth-location'));
 
-    var detroitProficiency =  parseFloat(detroit.data('proficiency-location'));
-    var detroitGrowth = parseFloat(detroit.data('growth-location'));
+    if (proficiency != 0) {
+      proficiency = proficiency - (proficiency / scatterWidth * 100);
+      if (proficiency < 0) {
+        proficiency = 0;
+      }
+    }
 
-    var scatterPlotGraph = $('.scatter-plot-graph');
-    school.css('left', schoolProficiency - (scatterPlotGraph.width() / school.width() / 1.3) + '%');
-    school.css('top', schoolGrowth - (scatterPlotGraph.height() / school.height() / 1.9) + '%');
+    if (growth != 100) {
+      growth = growth - (el.height() / scatterHeight * 100);
+    } else {
+      growth = 100 - (el.height() / scatterHeight * 100);
+    }
 
-    detroit.css('left', detroitProficiency - (scatterPlotGraph.width() / detroit.width() / 5) + '%');
-    detroit.css('top', detroitGrowth - (scatterPlotGraph.height() / school.height() / 3) + '%');
+    el.css('left', proficiency + '%');
+    el.css('top', growth + '%');
   });
 
   $('.scatter-plot-nav .subject').click(function() {
