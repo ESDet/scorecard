@@ -190,6 +190,14 @@ class SchoolData < OpenStruct
     end
   end
 
+  def special_ed_ids
+    if k8? || hs?
+      school_profiles.andand.field_special_ed_programs.andand.
+        map { |s| s['machine_name'] }.join(",")
+    end
+  end
+
+
   private
 
   def transliterate(str)

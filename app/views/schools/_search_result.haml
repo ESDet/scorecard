@@ -1,4 +1,4 @@
-.school(data-tid="#{school.tid}" data-school_type="#{school.school_type}" data-governance="#{school.try(:field_governance).try(:tid)}" data-operator="#{school.try(:field_operator).try(:tid)}" data-age_groups="#{school.age_groups.andand.join(",")}" data-grades_served="#{school.grades_served.andand.join(",")}")
+.school(data-tid="#{school.tid}" data-school_type="#{school.school_type}" data-governance="#{school.try(:field_governance).try(:tid)}" data-operator="#{school.try(:field_operator).try(:tid)}" data-age_groups="#{school.age_groups.andand.join(",")}" data-grades_served="#{school.grades_served.andand.join(",")}" data-special_ed="#{school.try(:special_ed_ids)}")
   .rating
     %a.icon{href: school_path(school.id)}
       - if school.ec?

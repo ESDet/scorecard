@@ -461,19 +461,19 @@ class SchoolsController < ApplicationController
       { name: 'School-age', id: 'School-age', type: 'checkbox' }
     ]
 
-    #@special_ed_filters = [
-    #  { name: 'Autism', id: 0},
-    #  { name: 'Visual Impairments', id: 0},
-    #  { name: 'Hearing Impairments', id: 0},
-    #  { name: 'Emotional Behavioral Disabilities', id: 0},
-    #  { name: 'Speech and Language Impairments', id: 0},
-    #  { name: 'Specific Learning Disabilities', id: 0},
-    #  { name: 'Significant Developmental Delay', id: 0},
-    #  { name: 'Orthopedic Impairments', id: 0},
-    #  { name: 'Multiple Disabilities', id: 0},
-    #  { name: 'Cognitive Disability', id: 0},
-    #  { name: 'Other Health Impairments', id: 0}
-    #]
+    @special_ed_filters = [
+      { name: 'Autism', id: 'autism', type: 'checkbox' },
+      { name: 'Cognitive Disability', id: 'cognitive', type: 'checkbox' },
+      { name: 'Visual Impairments', id: 'blindness', type: 'checkbox' },
+      { name: 'Emotional Behavioral Disabilities', id: 'emotional', type: 'checkbox' },
+      { name: 'Hearing Impairments', id: 'deafness', type: 'checkbox' },
+      { name: 'Orthopedic Impairments', id: 'orthopedic', type: 'checkbox' },
+      { name: 'Significant Developmental Delay', id: 'developmental_delay', type: 'checkbox' },
+      { name: 'Specific Learning Disabilities', id: 'ld', type: 'checkbox' },
+      { name: 'Speech and Language Impairments', id: 'speech', type: 'checkbox' },
+      { name: 'Multiple Disabilities', id: 'multiple', type: 'checkbox' },
+      { name: 'Other Health Impairments', id: 'other', type: 'checkbox' }
+    ]
 
     #@transportation_filters = [
     #]
