@@ -197,15 +197,36 @@
       %h2 What do students and teachers think about this school?
       %h3 Rating on 5Essentials Student and Teacher Survey, 2015
       .content.two.fivee
-        = render 'five_essentials',
-          title: 'Overall Rating',
-          overall_rating: @school.five_e_overall_rating,
-          effective_leaders: @school.five_e_effective_leaders,
-          collaborative_teachers: @school.five_e_collaborative_teachers,
-          involved_families: @school.five_e_involved_families,
-          supportive_environment: @school.five_e_supportive_environment,
-          ambitious_instruction: @school.five_e_ambitious_instruction,
-          report_id: @school.five_e_report_id
+        - if @school.tid == "5268"
+          = render 'five_essentials',
+            title: 'Overall Rating',
+            overall_rating: 2,
+            effective_leaders: 4,
+            collaborative_teachers: 29,
+            involved_families: 37,
+            supportive_environment: 55,
+            ambitious_instruction: 69,
+            report_id: 42559
+        - elsif @school.tid == "5267"
+          = render 'five_essentials',
+            title: 'Overall Rating',
+            overall_rating: 3,
+            effective_leaders: 26,
+            collaborative_teachers: 36,
+            involved_families: 49,
+            supportive_environment: 69,
+            ambitious_instruction: 71,
+            report_id: 42566
+        - else
+          = render 'five_essentials',
+            title: 'Overall Rating',
+            overall_rating: @school.five_e_overall_rating,
+            effective_leaders: @school.five_e_effective_leaders,
+            collaborative_teachers: @school.five_e_collaborative_teachers,
+            involved_families: @school.five_e_involved_families,
+            supportive_environment: @school.five_e_supportive_environment,
+            ambitious_instruction: @school.five_e_ambitious_instruction,
+            report_id: @school.five_e_report_id
 
       //.what-this-means
       //  .question-mark
