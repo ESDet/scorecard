@@ -12,6 +12,7 @@ $(function() {
       $('#load-more-results').removeClass('hide');
       spinner.stop();
       Filters.filterResults();
+      Compare.bindCompareEvent();
     }
   });
 });

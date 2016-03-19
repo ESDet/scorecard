@@ -72,6 +72,37 @@
     var searching = false;
     var schoolIds = #{(@school_ids || []).split(",").to_json};
 
+    Compare = function() {
+      var _compareCount = function() {
+        var checkbox = $(this).find('.checkbox-icon');
+        if (checkbox.prop('checked')) {
+          checkbox.prop('checked', false);
+        } else {
+          checkbox.prop('checked', true);
+        }
+
+        var count = $('input.compare-check:checked').length;
+        if (count > 0) {
+          $('.compare-select').removeClass('hide');
+          if (count > 4) {
+            checkbox.removeAttr('checked');
+          }
+        } else {
+          $('.compare-select').addClass('hide');
+        }
+        return true;
+      };
+
+      var _bindCompareEvent = function() {
+        $('.school > .compare').on('click', _compareCount);
+      };
+
+      return {
+        compareCount: _compareCount,
+        bindCompareEvent: _bindCompareEvent
+      }
+    }();
+
     $(function(e) {
       schoolsMap = Map({
         center: [42.36, -83.09],
@@ -105,33 +136,8 @@
         $('#' + id).attr('checked', 'checked');
       });
 
-      var selectedSchools = function() {
-        return $('input.compare-check:checked');
-      };
-
-      var compareCount = function() {
-        var checkbox = $(this).find('.checkbox-icon');
-        if (checkbox.prop('checked')) {
-          checkbox.prop('checked', false);
-        } else {
-          checkbox.prop('checked', true);
-        }
-
-        var count = selectedSchools().length;
-        if (count > 0) {
-          $('.compare-select').removeClass('hide');
-          if (count > 4) {
-            checkbox.removeAttr('checked');
-          }
-        } else {
-          $('.compare-select').addClass('hide');
-        }
-        return true;
-      };
-
-      $('.school > .float-right').on('click', compareCount);
-
-      compareCount();
+      Compare.bindCompareEvent();
+      Compare.compareCount();
 
       $('a.do-compare').click(function(e) {
         ids = [];
