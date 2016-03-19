@@ -9,24 +9,28 @@
         | #{school.authorizer}
       - elsif school.operator.present?
         | #{school.operator}
+    .grades-served
+      - school.grades_served.each do |g|
+        %span= g
     .overall-performance
-      .section
-        .columns
-          - if school.excellent_schools_grade.present?
-            .column
-              .info-box.info-box--small
-                .info-box__title Overall Grade
-                .info-box__content.info-box__content--overview
-                  .text
-                    = school.excellent_schools_grade
-          - if school.michigan_percentile.present?
-            .column
-              .info-box.info-box--small
-                .info-box__title State
-                .info-box__content.info-box__content--overview
-                  .text.percentile
-                    = school.michigan_percentile
-                    .suffix= percentile_suffix(school.michigan_percentile)
+      - if school.excellent_schools_grade.present? || school.michigan_percentile.present?
+        .section
+          .columns
+            - if school.excellent_schools_grade.present?
+              .column
+                .info-box.info-box--small
+                  .info-box__title Overall Grade
+                  .info-box__content.info-box__content--overview
+                    .text
+                      = school.excellent_schools_grade
+            - if school.michigan_percentile.present?
+              .column
+                .info-box.info-box--small
+                  .info-box__title State
+                  .info-box__content.info-box__content--overview
+                    .text.percentile
+                      = school.michigan_percentile
+                      .suffix= percentile_suffix(school.michigan_percentile)
       .more-rankings
         See more rankings:
         .ranking-link
@@ -60,10 +64,10 @@
           %span.visit-icon
           VISIT WEBSITE
       .info
-        %a(id="print" title="Print" target="_blank" href="/schools/#{school.id}.pdf?disposition=inline")
-          %span.print-icon
-        %a(id="download" title="Download" href="/schools/#{school.id}.pdf")
-          %span.download-icon
+        //%a(id="print" title="Print" target="_blank" href="/schools/#{school.id}.pdf?disposition=inline")
+        //  %span.print-icon
+        //%a(id="download" title="Download" href="/schools/#{school.id}.pdf")
+        //  %span.download-icon
     - if school.hours
       .hours
         = school.hours
