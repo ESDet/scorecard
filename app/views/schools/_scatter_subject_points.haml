@@ -41,5 +41,11 @@
       - else
         %span PROFICIENT
     .row.detroit-growth
-      %span.big #{detroit_growth}%
-      %span GROWTH
+      .text-left
+        %span.big #{detroit_growth}
+      .text-right
+        %span
+          - if hs
+            ACT growth points compared to state
+          - else
+            Growth percentile compared to state

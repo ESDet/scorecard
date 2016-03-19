@@ -211,9 +211,24 @@
   border-bottom: 0;
 }
 
-.scatter-plot-graph .point-popup .row.detroit-prof,
-.scatter-plot-graph .point-popup .row.detroit-growth {
+.scatter-plot-graph .point-popup .row.detroit-prof {
   line-height: 27px;
+}
+
+.scatter-plot-graph .point-popup .row.detroit-growth {
+  height: 70px;
+  line-height: 37px;
+}
+
+.scatter-plot-graph .point-popup .row.detroit-growth .text-left {
+  float: left;
+  width: 25%;
+  text-align: center;
+}
+.scatter-plot-graph .point-popup .row.detroit-growth .text-right {
+  float: right;
+  width: 74%;
+  line-height: 19px;
 }
 
 .scatter-plot-graph .point-popup .row.detroit-prof span,
