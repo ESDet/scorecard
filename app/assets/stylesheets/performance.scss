@@ -30,3 +30,12 @@
   font-size: 55px;
   line-height: 60px;
 }
+
+#new-school-performance {
+  background-color: white;
+}
+
+#new-school-performance .info-box__content {
+  color: $grey-1;
+  text-align: left;
+}

@@ -28,7 +28,9 @@
     %h2 SCHOOL PERFORMANCE
   .info-region.background-grey
     #performance.hide
-      - if @school.hs?
+      - if @school.status == 'New'
+        = render "new_school_performance", school: @school
+      - elsif @school.hs?
         = render "high_school_academics"
       - else
         = render "k_8_academics"

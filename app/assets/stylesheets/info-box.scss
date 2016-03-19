@@ -118,3 +118,6 @@
   width: 25%;
 }
 
+.info-box + .info-box .info-box__title {
+  border-top: 0;
+}
