@@ -26,7 +26,7 @@ class SchoolsController < ApplicationController
     when "ec"
       url = "ecs.json?limit=#{@limit}&offset=#{@ecs_offset}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
-        "&sort_by_special=ec_state_ratings.ec_total_points" <<
+        "&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
@@ -96,7 +96,7 @@ class SchoolsController < ApplicationController
       ecs_url = "ecs.json?limit=#{@limit}&offset=#{@ecs_offset}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
         "&filter[field_scorecard_display]=1" <<
-        "&sort_by_special=ec_state_ratings.ec_total_points" <<
+        "&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC"
 
       if is_zip_search?
@@ -137,6 +137,7 @@ class SchoolsController < ApplicationController
         response = Portal.new.fetch(url)
         if response != ["request error"] && response["data"]
           @schools = gather_included_fields(response).
+            select { |s| !s["field_geo"].nil? }.
             map { |s| SchoolData.new(s) }
         else
           flash[:notice] = "No results found"
@@ -154,21 +155,7 @@ class SchoolsController < ApplicationController
         if ecs_response != ["request error"] && ecs_response["data"]
           ecs_data = gather_included_fields(ecs_response).
             select { |s| !s["field_geo"].nil? }.
-            map do |s|
-              school = SchoolData.new(s)
-              pts = if school.ec_state_ratings
-                pts = school.ec_state_ratings.ec_total_points.to_f
-                school.ec_state_ratings.ec_total_points = pts * (100 / 15.0)
-              else
-                def school.ec_state_ratings
-                  o = Object.new
-                  def o.ec_total_points; 0 end
-                  def o.overall_rating; 'Incomplete' end
-                  o
-                end
-              end
-              school
-            end
+            map { |s| SchoolData.new(s) }
         end
         @schools = schools_data || []
         @schools.sort_by! do |s|
@@ -183,11 +170,7 @@ class SchoolsController < ApplicationController
           end
         end.reverse!
 
-        @schools += if ecs_data
-          ecs_data.sort_by do |s|
-            s.ec_state_ratings.ec_total_points.to_f
-          end
-        end
+        @schools += ecs_data if ecs_data
 
         if @schools.blank?
           flash[:notice] = "No results found"
