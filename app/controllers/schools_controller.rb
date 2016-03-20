@@ -96,7 +96,7 @@ class SchoolsController < ApplicationController
       ecs_url = "ecs.json?limit=#{@limit}&offset=#{@ecs_offset}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
         "&filter[field_scorecard_display]=1" <<
-        "&sort_by_special=ec_state_ratings.total_points" <<
+        "&sort_by_special=ec_state_ratings.ec_total_points" <<
         "&sort_order_special=DESC"
 
       if is_zip_search?
