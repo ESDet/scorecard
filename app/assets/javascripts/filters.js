@@ -46,7 +46,9 @@ Filters = function() {
     }
 
     if (gradeFilter == '0' || gradeFilter == undefined) {
-      $('.school').removeClass('hide');
+      var schools = $('.school');
+      schools.removeClass('hide');
+      schoolsMap.showMarkers(schools.map(function(i, n) { return $(n).data('tid') }).toArray());
     } else {
       if (gradeFilter == 'ecs') {
         var grades = $('#age-group-filter .radio input:checked');
@@ -73,12 +75,17 @@ Filters = function() {
             return null;
           });
 
+          mapSchools = [];
           schoolData.each(function(i, n) {
             $('.school[data-tid=' + n.tid + ']').removeClass('hide');
+            mapSchools.push(n.tid);
           });
+          schoolsMap.showMarkers(mapSchools);
 
         } else {
-          $('.school[data-school_type=ecs]').removeClass('hide');
+          var schools = $('.school[data-school_type=ecs]')
+          schools.removeClass('hide');
+          schoolsMap.showMarkers(schools.map(function(i, n) { return $(n).data('tid') }).toArray());
         }
       } else {
         var grades = [];
@@ -138,11 +145,15 @@ Filters = function() {
             (governances[0] == "0" && operator == "0")
         };
 
+        mapSchools = [];
         schoolData.each(function(i, n) {
           if (filterMatch(n)) {
             $('.school[data-tid=' + n.tid + ']').removeClass('hide');
+            mapSchools.push(n.tid);
           }
         });
+
+        schoolsMap.showMarkers(mapSchools);
       }
     }
   };
