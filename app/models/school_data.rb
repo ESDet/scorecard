@@ -30,6 +30,10 @@ class SchoolData < OpenStruct
     end
   end
 
+  def apply?
+    field_ed_participant
+  end
+
   def school_type
     if field_school_type
       field_school_type.andand.name.andand.downcase

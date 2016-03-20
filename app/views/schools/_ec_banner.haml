@@ -37,3 +37,6 @@
       .column
         - unless @school.age_groups.blank?
           .info AGE GROUPS: #{school.age_groups.join(",")}
+    - if @school.apply?
+      .apply
+        = link_to 'APPLY', 'http://enrolldetroit.org/?utm_source=apply-button&utm_medium=scorecard&utm_campaign=Scorecard%20Traffic', target: '_blank'
