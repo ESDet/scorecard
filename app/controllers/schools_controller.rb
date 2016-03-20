@@ -157,12 +157,12 @@ class SchoolsController < ApplicationController
             map do |s|
               school = SchoolData.new(s)
               pts = if school.ec_state_ratings
-                pts = school.ec_state_ratings.total_points.to_f
-                school.ec_state_ratings.total_points = pts * (100 / 15.0)
+                pts = school.ec_state_ratings.ec_total_points.to_f
+                school.ec_state_ratings.ec_total_points = pts * (100 / 15.0)
               else
                 def school.ec_state_ratings
                   o = Object.new
-                  def o.total_points; 0 end
+                  def o.ec_total_points; 0 end
                   def o.overall_rating; 'Incomplete' end
                   o
                 end
@@ -171,22 +171,25 @@ class SchoolsController < ApplicationController
             end
         end
         @schools = schools_data || []
-        @schools += ecs_data if ecs_data
-        if @schools.present?
-          @schools.sort_by! do |s|
-            if s.ec?
-              s.ec_state_ratings.total_points.to_f
-            elsif s.k8?
-              if s.esd_k8_2016s.total_pts.to_f < 1
-                s.esd_k8_2016s.total_pts.to_f * 100
-              else
-                s.esd_k8_2016s.total_pts.to_f
-              end
+        @schools.sort_by! do |s|
+          if s.k8?
+            if s.esd_k8_2016s.total_pts.to_f < 1
+              s.esd_k8_2016s.total_pts.to_f * 100
             else
-              s.esd_hs_2016s.total_pts.to_f
+              s.esd_k8_2016s.total_pts.to_f
             end
-          end.reverse!
-        else
+          else
+            s.esd_hs_2016s.total_pts.to_f
+          end
+        end.reverse!
+
+        @schools += if ecs_data
+          ecs_data.sort_by do |s|
+            s.ec_state_ratings.ec_total_points.to_f
+          end
+        end
+
+        if @schools.blank?
           flash[:notice] = "No results found"
           redirect_to root_path and return
         end
