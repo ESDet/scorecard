@@ -29,84 +29,85 @@
         //  WHAT THIS MEANS
         //  .text.hide
         //    This graph uses 2013-2014 MEAP data to compare the percentage of proficient or higher students at this school to the percentage of proficient or higher students in Detroit and in Michigan.
-#growth.section
-  .middle
-    .stat-region
-      %h2 Is this school's performance showing growth?
-      //%h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
-      .content
-        = content_for :scatter_plot_nav do
-          %a.subject.active(data-target="math") Math
-          %a.subject(data-target="reading") Reading
-        = content_for :scatter_plot_points do
-          - if @school.math_scatter_prof.present? && @school.math_scatter_growth.present?
-            .graph-points.math
-              = render 'scatter_subject_points',
-                hs: @school.hs?,
-                school_name: @school.display_name,
-                subject: 'math',
-                school_proficiency: @school.math_meap_prepared,
-                school_proficiency_points: @school.math_meap_prepared_points,
-                school_proficiency_location: @school.math_scatter_prof,
-                school_growth: @school.math_growth,
-                school_growth_points: @school.math_growth_points,
-                school_growth_location: @school.math_scatter_growth,
-                detroit_proficiency: @detroit.math_meap_prepared,
-                detroit_proficiency_points: @detroit.math_meap_prepared_points,
-                detroit_proficiency_location: @detroit.math_scatter_prof,
-                detroit_growth: @detroit.math_growth,
-                detroit_growth_points: @detroit.math_growth_points,
-                detroit_growth_location: @detroit.math_scatter_growth,
-                state_proficiency: @state.math_meap_prepared,
-                state_growth: @state.math_growth
-          - if @school.ela_scatter_prof.present? && @school.ela_scatter_growth.present?
-            .graph-points.reading.hide
-              = render 'scatter_subject_points',
-                hs: @school.hs?,
-                school_name: @school.display_name,
-                subject: 'reading',
-                school_proficiency: @school.ela_meap_prepared,
-                school_proficiency_points: @school.ela_meap_prepared_points,
-                school_proficiency_location: @school.ela_scatter_prof,
-                school_growth: @school.reading_growth,
-                school_growth_points: @school.reading_growth_points,
-                school_growth_location: @school.ela_scatter_growth,
-                detroit_proficiency: @detroit.ela_meap_prepared,
-                detroit_proficiency_points: @detroit.ela_meap_prepared_points,
-                detroit_proficiency_location: @detroit.ela_scatter_prof,
-                detroit_growth: @detroit.reading_growth,
-                detroit_growth_points: @detroit.reading_growth_points,
-                detroit_growth_location: @detroit.ela_scatter_growth,
-                state_proficiency: @state.ela_meap_prepared,
-                state_growth: @state.reading_growth
-          - @scatter_plot_schools.each do |s|
-            - if d = s.esd_k8_2016s
-              - math_prof = d.scatter_mathprof
-              - math_growth = d.scatter_mathgrowth
-              - if math_prof.present? && math_growth.present?
-                .graph-points.math
-                  .graph-point.school.other(data-proficiency-location="#{math_prof}" data-growth-location="#{math_growth}")
-              - read_prof = d.scatter_elaprof
-              - read_growth = d.scatter_elagrowth
-              - if read_prof.present? && read_growth.present?
-                .graph-points.reading.hide
-                  .graph-point.school.other(data-proficiency-location="#{read_prof}" data-growth-location="#{read_growth}")
-        = render 'scatter_plot'
-        //.what-this-means
-        //  .question-mark
-        //  WHAT THIS MEANS
-        //  .text.hide
-        //    This graph provides information about whether students at a school are growing at a faster or slower pace relative to their academic peers across the state in Math and Reading. The graph shows the school's average growth compared to the average growth of other schools in Detroit and in Michigan.
-        //    %h4
-        //      %b How it's calculated
-        //    %b STEP #1:
-        //    %p In 2012, Student A (let’s call him Will) scored a 397 on the 4th grade MEAP reading test.<br/>
-        //    %b STEP #2:
-        //    %p Will is then matched with all other 4th graders across Michigan who also scored roughly 397 on the MEAP reading exam in 2012. We’ll call them Will’s Academic Peers.<br/>
-        //    %b STEP #3:
-        //    %p One year later, in 2013, Will and his Academic Peers take the 5th grade MEAP reading test. Will scored 522, while his Academic Peers scored 509 on average. Compared to his peers, Will has grown further. This difference in growth is Will’s growth measure, and in Will’s case, its positive.<br/>
-        //    %b STEP #4
-        //    %p To find the growth of an entire Detroit school, we calculated each individual student’s growth using this method and averaged them altogether.
+- if @school.status != 'New'
+  #growth.section
+    .middle
+      .stat-region
+        %h2 Is this school's performance showing growth?
+        //%h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
+        .content
+          = content_for :scatter_plot_nav do
+            %a.subject.active(data-target="math") Math
+            %a.subject(data-target="reading") Reading
+          = content_for :scatter_plot_points do
+            - if @school.math_scatter_prof.present? && @school.math_scatter_growth.present?
+              .graph-points.math
+                = render 'scatter_subject_points',
+                  hs: @school.hs?,
+                  school_name: @school.display_name,
+                  subject: 'math',
+                  school_proficiency: @school.math_meap_prepared,
+                  school_proficiency_points: @school.math_meap_prepared_points,
+                  school_proficiency_location: @school.math_scatter_prof,
+                  school_growth: @school.math_growth,
+                  school_growth_points: @school.math_growth_points,
+                  school_growth_location: @school.math_scatter_growth,
+                  detroit_proficiency: @detroit.math_meap_prepared,
+                  detroit_proficiency_points: @detroit.math_meap_prepared_points,
+                  detroit_proficiency_location: @detroit.math_scatter_prof,
+                  detroit_growth: @detroit.math_growth,
+                  detroit_growth_points: @detroit.math_growth_points,
+                  detroit_growth_location: @detroit.math_scatter_growth,
+                  state_proficiency: @state.math_meap_prepared,
+                  state_growth: @state.math_growth
+            - if @school.ela_scatter_prof.present? && @school.ela_scatter_growth.present?
+              .graph-points.reading.hide
+                = render 'scatter_subject_points',
+                  hs: @school.hs?,
+                  school_name: @school.display_name,
+                  subject: 'reading',
+                  school_proficiency: @school.ela_meap_prepared,
+                  school_proficiency_points: @school.ela_meap_prepared_points,
+                  school_proficiency_location: @school.ela_scatter_prof,
+                  school_growth: @school.reading_growth,
+                  school_growth_points: @school.reading_growth_points,
+                  school_growth_location: @school.ela_scatter_growth,
+                  detroit_proficiency: @detroit.ela_meap_prepared,
+                  detroit_proficiency_points: @detroit.ela_meap_prepared_points,
+                  detroit_proficiency_location: @detroit.ela_scatter_prof,
+                  detroit_growth: @detroit.reading_growth,
+                  detroit_growth_points: @detroit.reading_growth_points,
+                  detroit_growth_location: @detroit.ela_scatter_growth,
+                  state_proficiency: @state.ela_meap_prepared,
+                  state_growth: @state.reading_growth
+            - @scatter_plot_schools.each do |s|
+              - if d = s.esd_k8_2016s
+                - math_prof = d.scatter_mathprof
+                - math_growth = d.scatter_mathgrowth
+                - if math_prof.present? && math_growth.present?
+                  .graph-points.math
+                    .graph-point.school.other(data-proficiency-location="#{math_prof}" data-growth-location="#{math_growth}")
+                - read_prof = d.scatter_elaprof
+                - read_growth = d.scatter_elagrowth
+                - if read_prof.present? && read_growth.present?
+                  .graph-points.reading.hide
+                    .graph-point.school.other(data-proficiency-location="#{read_prof}" data-growth-location="#{read_growth}")
+          = render 'scatter_plot'
+          //.what-this-means
+          //  .question-mark
+          //  WHAT THIS MEANS
+          //  .text.hide
+          //    This graph provides information about whether students at a school are growing at a faster or slower pace relative to their academic peers across the state in Math and Reading. The graph shows the school's average growth compared to the average growth of other schools in Detroit and in Michigan.
+          //    %h4
+          //      %b How it's calculated
+          //    %b STEP #1:
+          //    %p In 2012, Student A (let’s call him Will) scored a 397 on the 4th grade MEAP reading test.<br/>
+          //    %b STEP #2:
+          //    %p Will is then matched with all other 4th graders across Michigan who also scored roughly 397 on the MEAP reading exam in 2012. We’ll call them Will’s Academic Peers.<br/>
+          //    %b STEP #3:
+          //    %p One year later, in 2013, Will and his Academic Peers take the 5th grade MEAP reading test. Will scored 522, while his Academic Peers scored 509 on average. Compared to his peers, Will has grown further. This difference in growth is Will’s growth measure, and in Will’s case, its positive.<br/>
+          //    %b STEP #4
+          //    %p To find the growth of an entire Detroit school, we calculated each individual student’s growth using this method and averaged them altogether.
 .section
   .middle
     .stat-region

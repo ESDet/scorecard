@@ -18,19 +18,20 @@
   .closed.region-title(data-target="rankings")
     %h2 HOW IS THIS SCHOOL RANKED?
   .info-region
-    #rankings
-      - if @school.hs?
-        = render 'hs_rankings', school: @school
-      - else
-        = render 'k8_rankings', school: @school
-      = render 'demographics', school: @school
+    - if @school.status == 'New'
+      = render "new_school_performance", school: @school
+    - else
+      #rankings
+        - if @school.hs?
+          = render 'hs_rankings', school: @school
+        - else
+          = render 'k8_rankings', school: @school
+        = render 'demographics', school: @school
   .closed.region-title(data-target="performance")
     %h2 SCHOOL PERFORMANCE
   .info-region.background-grey
     #performance.hide
-      - if @school.status == 'New'
-        = render "new_school_performance", school: @school
-      - elsif @school.hs?
+      - if @school.hs?
         = render "high_school_academics"
       - else
         = render "k_8_academics"

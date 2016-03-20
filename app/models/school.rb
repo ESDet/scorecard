@@ -19,6 +19,10 @@ module School
     end
   end
 
+  def recommended?
+    field_2016_recommended
+  end
+
   def status
     field_school_scorecard_status.name
   end
@@ -169,12 +173,11 @@ module School
   end
 
   def wheelchar_accessible
-    school_profiles.andand.field_wheelchair_accessible.label
+    school_profiles.andand.field_wheelchair_accessible
   end
 
   def wheelchair_accessible?
-    school_profiles.andand.field_wheelchair_accessible.
-      andand.machine_name.present?
+    school_profiles.andand.field_wheelchair_accessible
   end
 
   def has_ell?

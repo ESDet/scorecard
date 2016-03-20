@@ -29,132 +29,133 @@
       //  WHAT THIS MEANS
       //  .text.hide
       //    This graph shows the percentage of students at this school who scored at the "College-Ready" level or higher on the ACT in 2013-2014. It compares this school's students to students in Detroit and in Michigan who also scored at the "College-Ready" level or higher on the ACT in 2013-2014.
-#growth.section
-  .middle
-    .stat-region
-      %h2 Is this school's performance showing growth?
-      //%h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
-      .content
-        = content_for :scatter_plot_nav do
-          %a.subject.active(data-target="english") English
-          %a.subject(data-target="math") Math
-          %a.subject(data-target="reading") Reading
-          %a.subject(data-target="science") Science
-        = content_for :scatter_plot_points do
-          - if @school.english_scatter_prof.present? && @school.english_scatter_growth.present?
-            .graph-points.english
-              = render 'scatter_subject_points',
-                hs: @school.hs?,
-                school_name: @school.display_name,
-                subject: 'english',
-                school_proficiency: @school.english_college_ready,
-                school_proficiency_points: @school.english_college_ready_points,
-                school_proficiency_location: @school.english_scatter_prof,
-                school_growth: @school.english_growth,
-                school_growth_points: @school.english_growth_points,
-                school_growth_location: @school.english_scatter_growth,
-                detroit_proficiency: @detroit.english_college_ready,
-                detroit_proficiency_points: @detroit.english_college_ready_points,
-                detroit_proficiency_location: @detroit.english_scatter_prof,
-                detroit_growth: @detroit.english_growth,
-                detroit_growth_points: @detroit.english_growth_points,
-                detroit_growth_location: @detroit.english_scatter_growth,
-                state_proficiency: @state.english_college_ready
-          - if @school.math_scatter_prof.present? && @school.math_scatter_growth.present?
-            .graph-points.math.hide
-              = render 'scatter_subject_points',
-                hs: @school.hs?,
-                school_name: @school.display_name,
-                subject: 'math',
-                school_proficiency: @school.math_college_ready,
-                school_proficiency_points: @school.math_college_ready_points,
-                school_proficiency_location: @school.math_scatter_prof,
-                school_growth: @school.math_growth,
-                school_growth_points: @school.math_growth_points,
-                school_growth_location: @school.math_scatter_growth,
-                detroit_proficiency: @detroit.math_college_ready,
-                detroit_proficiency_points: @detroit.math_college_ready_points,
-                detroit_proficiency_location: @detroit.math_scatter_prof,
-                detroit_growth: @detroit.math_growth,
-                detroit_growth_points: @detroit.math_growth_points,
-                detroit_growth_location: @detroit.math_scatter_growth,
-                state_proficiency: @state.math_college_ready
-          - if @school.reading_scatter_prof.present? && @school.reading_scatter_growth.present?
-            .graph-points.reading.hide
-              = render 'scatter_subject_points',
-                hs: @school.hs?,
-                school_name: @school.display_name,
-                subject: 'reading',
-                school_proficiency: @school.reading_college_ready,
-                school_proficiency_points: @school.reading_college_ready_points,
-                school_proficiency_location: @school.reading_scatter_prof,
-                school_growth: @school.reading_growth,
-                school_growth_points: @school.reading_growth_points,
-                school_growth_location: @school.reading_scatter_growth,
-                detroit_proficiency: @detroit.reading_college_ready,
-                detroit_proficiency_points: @detroit.reading_college_ready_points,
-                detroit_proficiency_location: @detroit.reading_scatter_prof,
-                detroit_growth: @detroit.reading_growth,
-                detroit_growth_points: @detroit.reading_growth_points,
-                detroit_growth_location: @detroit.reading_scatter_growth,
-                state_proficiency: @state.reading_college_ready
-          - if @school.science_scatter_prof.present? && @school.science_scatter_growth.present?
-            .graph-points.science.hide
-              = render 'scatter_subject_points',
-                hs: @school.hs?,
-                school_name: @school.display_name,
-                subject: 'science',
-                school_proficiency: @school.science_college_ready,
-                school_proficiency_points: @school.science_college_ready_points,
-                school_proficiency_location: @school.science_scatter_prof,
-                school_growth: @school.science_growth,
-                school_growth_points: @school.science_growth_points,
-                school_growth_location: @school.science_scatter_growth,
-                detroit_proficiency: @detroit.science_college_ready,
-                detroit_proficiency_points: @detroit.science_college_ready_points,
-                detroit_proficiency_location: @detroit.science_scatter_prof,
-                detroit_growth: @detroit.science_growth,
-                detroit_growth_points: @detroit.science_growth_points,
-                detroit_growth_location: @detroit.science_scatter_growth,
-                state_proficiency: @state.science_college_ready
-          - @scatter_plot_schools.each do |s|
-            - if d = s.esd_hs_2016s
-              - eng_prof = d.scatter_engcr
-              - eng_growth = d.scatter_enggrowth
-              - if eng_prof.present? && eng_growth.present?
-                .graph-points.english
-                  .graph-point.school.other(data-proficiency-location="#{eng_prof}" data-growth-location="#{eng_growth}")
-              - math_prof = d.scatter_mathcr
-              - math_growth = d.scatter_mathgrowth
-              - if math_prof.present? && math_growth.present?
-                .graph-points.math.hide
-                  .graph-point.school.other(data-proficiency-location="#{math_prof}" data-growth-location="#{math_growth}")
-              - read_prof = d.scatter_readcr
-              - read_growth = d.scatter_readgrowth
-              - if read_prof.present? && read_growth.present?
-                .graph-points.reading.hide
-                  .graph-point.school.other(data-proficiency-location="#{read_prof}" data-growth-location="#{read_growth}")
-              - sci_prof = d.scatter_scicr
-              - sci_growth = d.scatter_scigrowth
-              - if sci_prof.present? && sci_growth.present?
-                .graph-points.science.hide
-                  .graph-point.school.other(data-proficiency-location="#{sci_prof}" data-growth-location="#{sci_growth}")
-        = render 'scatter_plot'
-      //.what-this-means
-      //  .question-mark
-      //  WHAT THIS MEANS
-      //  .text.hide
-      //    This graph provides information about whether students at a school are moving toward college readiness at a faster or slower pace relative to their academic peers across the state. The graph shows the difference between a school's average student actual ACT score and predicted ACT score. The predicted ACT score is based on a peer group of Michigan students who scored within a similar range on the 7th and 8th grade MEAP tests.
-      //    %h4
-      //      %b How it's calculated
-      //    %b STEP #1:
-      //    %p In 2008-2009, Student B (let’s call her Alicia) is a 9th grader at her high school. We know that Alicia scored a 715 on the 7th grade MEAP reading test and a 802 on the 8th grade MEAP reading test.<br/><br/>
-      //    %b STEP #2:
-      //    %p Alicia is then matched with all other 9th graders across Michigan who also scored roughly the same on the 7th and 8th grade MEAP reading exams. We’ll call them Alicia’s Academic Peers.<br/><br/>
-      //    %b STEP #3:
-      //    %p Three years later, Alicia is in the 11th grade. Her Academic Peers take the ACT and score a 22, on average. This is Alicia’s predicted ACT score. When Alicia takes the ACT that same year, she scores 18. Alicia has fallen behind. This difference in Alicia’s predicted versus actual growth is her growth score. In Alicia’s case, it’s negative.<br/><br/>
-      //    %b STEP #4:
-      //    %p To find the growth of an entire Detroit school, we calculate each individual student’s growth using this method and averaged them altogether.
+- if @school.status != 'New'
+  #growth.section
+    .middle
+      .stat-region
+        %h2 Is this school's performance showing growth?
+        //%h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
+        .content
+          = content_for :scatter_plot_nav do
+            %a.subject.active(data-target="english") English
+            %a.subject(data-target="math") Math
+            %a.subject(data-target="reading") Reading
+            %a.subject(data-target="science") Science
+          = content_for :scatter_plot_points do
+            - if @school.english_scatter_prof.present? && @school.english_scatter_growth.present?
+              .graph-points.english
+                = render 'scatter_subject_points',
+                  hs: @school.hs?,
+                  school_name: @school.display_name,
+                  subject: 'english',
+                  school_proficiency: @school.english_college_ready,
+                  school_proficiency_points: @school.english_college_ready_points,
+                  school_proficiency_location: @school.english_scatter_prof,
+                  school_growth: @school.english_growth,
+                  school_growth_points: @school.english_growth_points,
+                  school_growth_location: @school.english_scatter_growth,
+                  detroit_proficiency: @detroit.english_college_ready,
+                  detroit_proficiency_points: @detroit.english_college_ready_points,
+                  detroit_proficiency_location: @detroit.english_scatter_prof,
+                  detroit_growth: @detroit.english_growth,
+                  detroit_growth_points: @detroit.english_growth_points,
+                  detroit_growth_location: @detroit.english_scatter_growth,
+                  state_proficiency: @state.english_college_ready
+            - if @school.math_scatter_prof.present? && @school.math_scatter_growth.present?
+              .graph-points.math.hide
+                = render 'scatter_subject_points',
+                  hs: @school.hs?,
+                  school_name: @school.display_name,
+                  subject: 'math',
+                  school_proficiency: @school.math_college_ready,
+                  school_proficiency_points: @school.math_college_ready_points,
+                  school_proficiency_location: @school.math_scatter_prof,
+                  school_growth: @school.math_growth,
+                  school_growth_points: @school.math_growth_points,
+                  school_growth_location: @school.math_scatter_growth,
+                  detroit_proficiency: @detroit.math_college_ready,
+                  detroit_proficiency_points: @detroit.math_college_ready_points,
+                  detroit_proficiency_location: @detroit.math_scatter_prof,
+                  detroit_growth: @detroit.math_growth,
+                  detroit_growth_points: @detroit.math_growth_points,
+                  detroit_growth_location: @detroit.math_scatter_growth,
+                  state_proficiency: @state.math_college_ready
+            - if @school.reading_scatter_prof.present? && @school.reading_scatter_growth.present?
+              .graph-points.reading.hide
+                = render 'scatter_subject_points',
+                  hs: @school.hs?,
+                  school_name: @school.display_name,
+                  subject: 'reading',
+                  school_proficiency: @school.reading_college_ready,
+                  school_proficiency_points: @school.reading_college_ready_points,
+                  school_proficiency_location: @school.reading_scatter_prof,
+                  school_growth: @school.reading_growth,
+                  school_growth_points: @school.reading_growth_points,
+                  school_growth_location: @school.reading_scatter_growth,
+                  detroit_proficiency: @detroit.reading_college_ready,
+                  detroit_proficiency_points: @detroit.reading_college_ready_points,
+                  detroit_proficiency_location: @detroit.reading_scatter_prof,
+                  detroit_growth: @detroit.reading_growth,
+                  detroit_growth_points: @detroit.reading_growth_points,
+                  detroit_growth_location: @detroit.reading_scatter_growth,
+                  state_proficiency: @state.reading_college_ready
+            - if @school.science_scatter_prof.present? && @school.science_scatter_growth.present?
+              .graph-points.science.hide
+                = render 'scatter_subject_points',
+                  hs: @school.hs?,
+                  school_name: @school.display_name,
+                  subject: 'science',
+                  school_proficiency: @school.science_college_ready,
+                  school_proficiency_points: @school.science_college_ready_points,
+                  school_proficiency_location: @school.science_scatter_prof,
+                  school_growth: @school.science_growth,
+                  school_growth_points: @school.science_growth_points,
+                  school_growth_location: @school.science_scatter_growth,
+                  detroit_proficiency: @detroit.science_college_ready,
+                  detroit_proficiency_points: @detroit.science_college_ready_points,
+                  detroit_proficiency_location: @detroit.science_scatter_prof,
+                  detroit_growth: @detroit.science_growth,
+                  detroit_growth_points: @detroit.science_growth_points,
+                  detroit_growth_location: @detroit.science_scatter_growth,
+                  state_proficiency: @state.science_college_ready
+            - @scatter_plot_schools.each do |s|
+              - if d = s.esd_hs_2016s
+                - eng_prof = d.scatter_engcr
+                - eng_growth = d.scatter_enggrowth
+                - if eng_prof.present? && eng_growth.present?
+                  .graph-points.english
+                    .graph-point.school.other(data-proficiency-location="#{eng_prof}" data-growth-location="#{eng_growth}")
+                - math_prof = d.scatter_mathcr
+                - math_growth = d.scatter_mathgrowth
+                - if math_prof.present? && math_growth.present?
+                  .graph-points.math.hide
+                    .graph-point.school.other(data-proficiency-location="#{math_prof}" data-growth-location="#{math_growth}")
+                - read_prof = d.scatter_readcr
+                - read_growth = d.scatter_readgrowth
+                - if read_prof.present? && read_growth.present?
+                  .graph-points.reading.hide
+                    .graph-point.school.other(data-proficiency-location="#{read_prof}" data-growth-location="#{read_growth}")
+                - sci_prof = d.scatter_scicr
+                - sci_growth = d.scatter_scigrowth
+                - if sci_prof.present? && sci_growth.present?
+                  .graph-points.science.hide
+                    .graph-point.school.other(data-proficiency-location="#{sci_prof}" data-growth-location="#{sci_growth}")
+          = render 'scatter_plot'
+        //.what-this-means
+        //  .question-mark
+        //  WHAT THIS MEANS
+        //  .text.hide
+        //    This graph provides information about whether students at a school are moving toward college readiness at a faster or slower pace relative to their academic peers across the state. The graph shows the difference between a school's average student actual ACT score and predicted ACT score. The predicted ACT score is based on a peer group of Michigan students who scored within a similar range on the 7th and 8th grade MEAP tests.
+        //    %h4
+        //      %b How it's calculated
+        //    %b STEP #1:
+        //    %p In 2008-2009, Student B (let’s call her Alicia) is a 9th grader at her high school. We know that Alicia scored a 715 on the 7th grade MEAP reading test and a 802 on the 8th grade MEAP reading test.<br/><br/>
+        //    %b STEP #2:
+        //    %p Alicia is then matched with all other 9th graders across Michigan who also scored roughly the same on the 7th and 8th grade MEAP reading exams. We’ll call them Alicia’s Academic Peers.<br/><br/>
+        //    %b STEP #3:
+        //    %p Three years later, Alicia is in the 11th grade. Her Academic Peers take the ACT and score a 22, on average. This is Alicia’s predicted ACT score. When Alicia takes the ACT that same year, she scores 18. Alicia has fallen behind. This difference in Alicia’s predicted versus actual growth is her growth score. In Alicia’s case, it’s negative.<br/><br/>
+        //    %b STEP #4:
+        //    %p To find the growth of an entire Detroit school, we calculate each individual student’s growth using this method and averaged them altogether.
 #graduation-rates.section
   .middle
     .stat-region

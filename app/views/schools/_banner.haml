@@ -13,7 +13,7 @@
       - school.grades_served.each do |g|
         %span= g
     .overall-performance
-      - if school.excellent_schools_grade.present? || school.michigan_percentile.present?
+      - if school.excellent_schools_grade.present? || school.michigan_percentile.present? || school.recommended?
         .section
           .columns
             - if school.excellent_schools_grade.present?
@@ -23,6 +23,9 @@
                   .info-box__content.info-box__content--overview
                     .text
                       = school.excellent_schools_grade
+            - if school.recommended?
+              .column.recommended-school
+                = image_tag 'recommended_school'
             - if school.michigan_percentile.present?
               .column
                 .info-box.info-box--small
