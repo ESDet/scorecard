@@ -45,7 +45,7 @@ Filters = function() {
       gradeFilter = gradeFilter.value;
     }
 
-    if (gradeFilter == '0') {
+    if (gradeFilter == '0' || gradeFilter == undefined) {
       $('.school').removeClass('hide');
     } else {
       if (gradeFilter == 'ecs') {
