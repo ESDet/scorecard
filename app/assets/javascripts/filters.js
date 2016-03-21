@@ -14,6 +14,20 @@ Filters = function() {
     }
   }
 
+  var arraysEqual = function(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    a.sort();
+    b.sort();
+
+    for (var i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+
   var _filterResults = function() {
     if (this.name == 'school_type') {
       _displayFilterPanels(this);
@@ -59,11 +73,16 @@ Filters = function() {
 
       schoolData = $(schoolData).map(function(i, n) {
         var isEcs = n.school_type == 'ecs';
-        var gradesMatch, specialMatch, specialtyMatch;
+        var gradesMatch = false,
+          specialMatch = false,
+          specialtyMatch = false;
         if (isEcs) {
           if (grades.length > 0) {
-            gradesMatch = grades.filter(function(g) {
-              return n.age_groups.indexOf(g) != -1;
+            $(grades).each(function(i, g) {
+              if (n.age_groups.indexOf(g) != -1) {
+                gradesMatch = true;
+                return;
+              }
             });
           }
           if (specialNeeds.length > 0) {
@@ -76,9 +95,9 @@ Filters = function() {
               return n.specialty.indexOf(g) != -1;
             });
           }
-          if (grades.length > 0 && gradesMatch.length > 0 &&
-              (specialNeeds.length == 0 || specialMatch.length > 0) &&
-              (specialty.length == 0 || specialtyMatch.length > 0)) {
+          if (grades.length > 0 && gradesMatch &&
+              (specialNeeds.length == 0 || arraysEqual(specialMatch, specialNeeds)) &&
+              (specialty.length == 0 || arraysEqual(specialtyMatch, specialty))) {
             return n;
           }
         }
