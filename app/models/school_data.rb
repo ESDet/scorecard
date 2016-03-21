@@ -194,6 +194,16 @@ class SchoolData < OpenStruct
     end
   end
 
+  def special_ids
+    ec_profiles.andand.field_ec_special.andand.
+      map { |s| s['tid'] }
+  end
+
+  def specialty_ids
+    ec_profiles.andand.field_ec_specialty.andand.
+      map { |s| s['tid'] }
+  end
+
   def special_ed_ids
     if k8? || hs?
       school_profiles.andand.field_special_ed_programs.andand.

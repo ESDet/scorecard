@@ -26,11 +26,6 @@
                   = render 'filter_panel',
                     title: 'Grades',
                     list: @grade_filters
-              %li#age-group-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
-                .filter-row
-                  = render 'filter_panel',
-                    title: 'Age Groups',
-                    list: @age_group_filters
               %li#special-ed-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
                 .filter-row
                   = render 'filter_panel',
@@ -50,6 +45,21 @@
                   = render 'filter_panel',
                     title: 'OPERATOR',
                     list: @operator_filters
+              %li#ec-age-group-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+                .filter-row
+                  = render 'filter_panel',
+                    title: 'Age Groups',
+                    list: @age_group_filters
+              %li#ec-special-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+                .filter-row
+                  = render 'filter_panel',
+                    title: 'Special Needs Experience',
+                    list: @ec_special_filters
+              %li#ec-specialty-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+                .filter-row
+                  = render 'filter_panel',
+                    title: 'Program Type',
+                    list: @ec_specialty_filters
 
       .compare-select.hide
         %a.do-compare.btn{:href => '/'} Compare Selected Schools

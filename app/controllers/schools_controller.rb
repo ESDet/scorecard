@@ -489,8 +489,36 @@ class SchoolsController < ApplicationController
       { name: 'Other Health Impairments', id: 'other', type: 'checkbox' }
     ]
 
-    #@transportation_filters = [
-    #]
+    @ec_special_filters = [
+      { name: 'ADD/ADHD', id: 5123, type: 'checkbox' },
+      { name: 'Allergies', id: 5124, type: 'checkbox' },
+      { name: 'Asthma', id: 5125, type: 'checkbox' },
+      { name: 'Cerebral Palsy', id: 5138, type: 'checkbox' },
+      { name: 'Cognitively Impaired', id: 5127, type: 'checkbox' },
+      { name: 'Cystic Fibrosis', id: 5142, type: 'checkbox' },
+      { name: 'Developmental Delay', id: 5134, type: 'checkbox' },
+      { name: 'Down Syndrome', id: 5135, type: 'checkbox' },
+      { name: 'Emotionally Impaired', id: 5129, type: 'checkbox' },
+      { name: 'Epilepsy', id: 5143, type: 'checkbox' },
+      { name: 'Feeding Tube', id: 5130, type: 'checkbox' },
+      { name: 'Hearing Impaired', id: 5131, type: 'checkbox' },
+      { name: 'Learning Disability', id: 5132, type: 'checkbox' },
+      { name: 'Physical Impairment', id: 5144, type: 'checkbox' },
+      { name: 'Seizure Disorder', id: 5139, type: 'checkbox' },
+      { name: 'Speech Impairment', id: 5133, type: 'checkbox' },
+      { name: 'Spina Bifida', id: 5152, type: 'checkbox' },
+      { name: 'Visually Impaired', id: 5149, type: 'checkbox' }
+    ]
+
+    @ec_specialty_filters = [
+      { name: 'Early Head Start', id: 5158, type: 'checkbox' },
+      { name: 'Head Start', id: 5155, type: 'checkbox' },
+      { name: 'Great Start Readiness Program', id: 5154, type: 'checkbox' },
+      { name: 'Preschool', id: 5153, type: 'checkbox' },
+      { name: 'Faith-based', id: 5157, type: 'checkbox' },
+      { name: 'Montessori', id: 5257, type: 'checkbox' },
+      { name: 'Reggio Inspired', id: 5156, type: 'checkbox' }
+    ]
 
     @governance_filters = [
       { name: 'All', id: 0 },
