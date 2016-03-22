@@ -118,6 +118,8 @@ GEM
       haml (>= 4.0.6, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
+    heroku-deflater (0.6.2)
+      rack (>= 1.4.5)
     html2haml (2.0.0)
       erubis (~> 2.7.0)
       haml (~> 4.0.0)
@@ -282,6 +284,7 @@ DEPENDENCIES
   google-webfonts-rails
   google_drive
   haml-rails
+  heroku-deflater
   httparty
   jquery-rails
   js_cookie_rails
@@ -307,4 +310,4 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 BUNDLED WITH
-   1.10.3
+   1.11.2

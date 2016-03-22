@@ -28,6 +28,7 @@ gem 'uglifier'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'rails_12factor', group: :production
+gem 'heroku-deflater', :group => :production
 
 group :development do
   gem 'pry-byebug', '=1.3.3'
