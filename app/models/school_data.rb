@@ -56,9 +56,9 @@ class SchoolData < OpenStruct
 
   def excellent_schools_grade
     if k8?
-      esd_k8_2016s.andand.total_ltrgrade
+      esd_k8_2016s.andand.total_ltrgrade ? esd_k8_2016s.andand.total_ltrgrade : 'N/A'
     elsif hs?
-      esd_hs_2016s.andand.total_ltrgrade
+      esd_hs_2016s.andand.total_ltrgrade ? esd_hs_2016s.andand.total_ltrgrade : 'N/A'
     end
   end
 
