@@ -211,8 +211,40 @@ class SchoolData < OpenStruct
     end
   end
 
+  # Calculates the school weight for sorting in the search list
+  #
+  # @return [Float] the school's sort weight
+  def sort_weight
+    if !ec? && excellent_schools_grade.blank? && field_2016_recommended
+      # Put Recommended schools that don't have a grade, between C+ and C schools
+      49.5
+    else
+      school_type_weight
+    end
+  end
 
   private
+
+  # Calculates the school weight based on school type
+  #
+  # @return [Float] the school's sort weight
+  def school_type_weight
+    case school_type
+      when 'k8'
+        esd_k8_2016s.total_pts.to_f * 100
+      when 'hs'
+        esd_hs_2016s.total_pts.to_f * 100
+      when 'ecs'
+        if early_childhood_rating == 'Below Bronze'
+          # Give Pre-K schools without a medal a score penalty
+          ec_state_ratings.total_points.to_f / 15 * 100 / 2
+        else
+          ec_state_ratings.total_points.to_f / 15 * 100
+        end
+      else
+        0
+    end
+  end
 
   def transliterate(str)
     return nil if str.nil?

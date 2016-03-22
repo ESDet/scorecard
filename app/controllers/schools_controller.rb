@@ -158,19 +158,8 @@ class SchoolsController < ApplicationController
             map { |s| SchoolData.new(s) }
         end
         @schools = schools_data || []
-        @schools.sort_by! do |s|
-          if s.k8?
-            if s.esd_k8_2016s.total_pts.to_f < 1
-              s.esd_k8_2016s.total_pts.to_f * 100
-            else
-              s.esd_k8_2016s.total_pts.to_f
-            end
-          else
-            s.esd_hs_2016s.total_pts.to_f
-          end
-        end.reverse!
-
         @schools += ecs_data if ecs_data
+        @schools.sort_by!(&:sort_weight).reverse!
 
         if @schools.blank?
           flash[:notice] = "No results found"
