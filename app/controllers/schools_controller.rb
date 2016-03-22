@@ -24,7 +24,7 @@ class SchoolsController < ApplicationController
     license_types = []
     case @grade
     when "ec"
-      url = "ecs.json?limit=#{@limit}&offset=#{@ecs_offset}&flatten_fields=true" <<
+      url = "ecs.json?offset=#{@ecs_offset}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
         "&sort_by_special=ec_total_pts" <<
         "&sort_order_special=DESC" <<
@@ -53,7 +53,7 @@ class SchoolsController < ApplicationController
     when "k8", "hs", "high"
       @grade = "hs" if @grade == "high"
 
-      url = "schools.json?limit=#{@limit}&offset=#{@offset}&flatten_fields=true" <<
+      url = "schools.json?offset=#{@offset}&flatten_fields=true" <<
         "&includes=school_profile,esd_#{@grade}_2016" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC" <<
@@ -86,14 +86,14 @@ class SchoolsController < ApplicationController
         end
       end
     else
-      schools_url = "schools.json?limit=#{@limit}&offset=#{@offset}" <<
+      schools_url = "schools.json?offset=#{@offset}" <<
         "&flatten_fields=true" <<
         "&includes=school_profile,esd_k8_2016," <<
         "esd_hs_2016&filter[field_scorecard_display]=1" <<
         "&sort_by_special=school_combined_total_pts" <<
         "&sort_order_special=DESC"
 
-      ecs_url = "ecs.json?limit=#{@limit}&offset=#{@ecs_offset}&flatten_fields=true" <<
+      ecs_url = "ecs.json?offset=#{@ecs_offset}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
         "&filter[field_scorecard_display]=1" <<
         "&sort_by_special=ec_total_pts" <<

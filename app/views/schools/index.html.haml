@@ -69,7 +69,7 @@
         - @schools.each do |s|
           = render 'search_result', school: s
 
-        .more-results
+        -#.more-results
           = link_to 'Load more results',
             request.url.gsub(/offset=\d+/, 'offset=' + (@offset.to_i + 25).to_s),
             remote: true,
