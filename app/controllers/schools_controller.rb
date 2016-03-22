@@ -159,13 +159,15 @@ class SchoolsController < ApplicationController
         end
         @schools = schools_data || []
         @schools += ecs_data if ecs_data
-        @schools.sort_by!(&:sort_weight).reverse!
 
         if @schools.blank?
           flash[:notice] = "No results found"
           redirect_to root_path and return
         end
       end
+
+      @schools.sort_by!(&:sort_weight).reverse!
+
       respond_to do |format|
         format.html
         format.js
