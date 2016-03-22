@@ -17,32 +17,35 @@
           .grade
             = school.excellent_schools_grade
     %a.favorite(href='' data-id="#{school.tid}") &#9734;
-  .name
-    %a{href: school_path(school.id)}
-      %h3= school.display_name
-  .info
-    %a{href: school_path(school.id)}
-      - grades = school.grades_served || school.age_groups
-      - if grades.present?
-        - if grades.size > 1
-          - grades = "#{grades.first} - #{grades.last}"
-        - else
-          - grades = grades.first
+  .content
+    .name
+      %a{href: school_path(school.id)}
+        %h3= school.display_name
+    .info
+      %a{href: school_path(school.id)}
+        - grades = school.grades_served || school.age_groups
+        - if grades.present?
+          - if grades.size > 1
+            - grades = "#{grades.first} - #{grades.last}"
+          - else
+            - grades = grades.first
 
-      .grades
-        - if school.grades_served.present?
-          = "Grades: #{grades}"
-        - elsif school.age_groups.present?
-          = "Age Groups: #{grades}"
-    .links
-      - if school.street.present?
-        %a.link(href="#{school.gmaps_url}" target="_blank")= school.street
-      - if school.school_url.present?
-        %a.link(href="#{school.school_url}" target="_blank") Website
-      - if school.phone.present?
-        %a.link(href="tel:#{strip_phone(school.phone)}")= format_phone(school.phone)
+        .grades
+          - if school.grades_served.present?
+            = "Grades: #{grades}"
+          - elsif school.age_groups.present?
+            = "Age Groups: #{grades}"
+      .links
+        - if school.street.present?
+          %a.link(href="#{school.gmaps_url}" target="_blank")= school.street
+        - if school.school_url.present?
+          %a.link(href="#{school.school_url}" target="_blank") Website
+        - if school.phone.present?
+          %a.link(href="tel:#{strip_phone(school.phone)}")= format_phone(school.phone)
 
   .compare.float-right
+    -if school.field_2016_recommended
+      =image_tag 'rcmd_small.png', class: 'search-results__recommended'
     .compare-link
       %input(type='checkbox' name='school_ids' id='#{school.short_id}' value='#{school.short_id}' class='compare-check checkbox-icon')
       %label

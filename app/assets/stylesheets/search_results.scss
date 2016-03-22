@@ -173,6 +173,7 @@
   overflow: hidden;
   border-bottom: 1px solid #bcbcbc;
   cursor: auto;
+  position: relative;
 }
 
 .search-results .school-list .school.hide {
@@ -196,18 +197,19 @@
   margin-top: 54px;
 }
 
+.search-results .school-list .content {
+  float: left;
+  width: 70%;
+  margin-left: 10px;
+}
+
 .search-results .school-list .school .info {
   float: left;
-  margin-left: 10px;
-  width: 70%;
   color: $onyx;
   font-family: 'Aleo Regular';
 }
 
 .search-results .school-list .school .name {
-  width: 80%;
-  float: left;
-  margin-left: 10px;
 }
 
 .search-results .school-list .school .name h3 {
@@ -254,8 +256,18 @@
   display: none;
 }
 
+.search-results .school-list .school .compare {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+
 .search-results .school-list .school .compare-link {
-  margin-top: 55px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 20px 10px;
 }
 
 .search-results .school-list .school .compare-link input.checkbox-icon[type="checkbox"] + label {
@@ -280,6 +292,14 @@
   color: white;
   font-size: 14px;
   padding-left: 2px;
+}
+
+.search-results__recommended {
+  width: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px 10px;
 }
 
 .more-results {
