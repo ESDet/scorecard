@@ -215,7 +215,7 @@ class SchoolData < OpenStruct
   #
   # @return [Float] the school's sort weight
   def sort_weight
-    if !ec? && excellent_schools_grade.blank? && field_2016_recommended
+    if !ec? && excellent_schools_grade == 'N/A' && field_2016_recommended
       # Put Recommended schools that don't have a grade, between C+ and C schools
       49.5
     else
