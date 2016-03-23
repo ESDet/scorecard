@@ -187,6 +187,12 @@
   margin-top: 30px;
 }
 
+@media screen and (max-width: 650px) {
+  .school-banner .ranking-link {
+    display: block;
+  }
+}
+
 @media screen and (max-width: 450px) {
   .school-banner .grades-served {
     span {
