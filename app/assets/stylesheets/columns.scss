@@ -6,8 +6,9 @@
 }
 
 .columns .column {
-  float: left;
+  vertical-align: top;
   width: 31%;
+  display: inline-block;
 }
 
 .columns .column .title {
@@ -132,4 +133,10 @@
 
 .columns.three .column {
   width: 31%;
+}
+
+@media screen and (max-width: 790px) {
+  .columns .column {
+    display: block;
+  }
 }

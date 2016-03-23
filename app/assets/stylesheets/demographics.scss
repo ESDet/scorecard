@@ -9,7 +9,7 @@
 }
 
 #demographics .column {
-  width: 30%;
+  width: 29%;
 }
 
 #demographics .info-box__content {
@@ -46,10 +46,18 @@
 .enrollment-percentage {
   width: 26%;
   float: left;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .enrollment-label {
   width: 74%;
   float: right;
+}
+
+@media screen and (max-width: 790px) {
+  #demographics .column {
+    width: 60%;
+    min-width: 240px;
+    margin: 0 auto 8px;
+  }
 }

@@ -23,12 +23,17 @@
 #rankings .section { text-align: center; }
 
 #rankings .columns {
-  display: inline-block;
   width: 85%;
 }
 
 #rankings .column {
-  display: inline-block;
   margin: 0 15px;
   width: 17%;
+}
+
+@media screen and (max-width: 790px) {
+  #rankings .column {
+    min-width: 190px;
+    margin: 0 auto 8px;
+  }
 }
