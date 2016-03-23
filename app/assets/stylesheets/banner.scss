@@ -186,3 +186,12 @@
 .ec .school-banner .apply {
   margin-top: 30px;
 }
+
+@media screen and (max-width: 450px) {
+  .school-banner .grades-served {
+    span {
+      font-size: 18px;
+      margin-left: 5px;
+    }
+  }
+}

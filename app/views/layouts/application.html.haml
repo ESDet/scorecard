@@ -7,19 +7,6 @@
       .background-image
         .tinted
     .container
-      %header#nav
-        .left
-          = link_to 'Scorecard', root_path, class: 'brand'
-        .right
-          %a#hamburger{:href => '#'}
-            %div
-            %div
-            %div
-        .right.menu
-          = link_to 'Home', root_path, :class => 'btn'
-          = link_to 'Resources', '/resources', :class => 'btn'
-          = yield :compare
-
       = yield
 
       = render 'layouts/footer'

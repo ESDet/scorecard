@@ -80,7 +80,18 @@
   }
 }
 
+.home {
+  #nav {
+    padding-bottom: 120px;
+  }
+}
+
 @media only screen and (max-width: 849px) {
+  #nav {
+    position: static;
+    overflow: hidden;
+  }
+
   #nav .menu {
     position: absolute;
     width: 100%;
