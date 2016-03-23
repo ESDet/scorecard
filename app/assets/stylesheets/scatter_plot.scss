@@ -61,6 +61,7 @@
   font-size: 21px;
   font-family: 'Aleo Bold';
   z-index: 100;
+  width: 43%;
 }
 
 .scatter-plot-graph .label.top-left { color: $rank_orange; }
@@ -83,12 +84,12 @@
 
 .scatter-plot-graph .label.top-left,
 .scatter-plot-graph .label.bottom-left {
-  left: 7%;
+  left: 3%;
 }
 
 .scatter-plot-graph .label.top-right,
 .scatter-plot-graph .label.bottom-right {
-  right: 7%;
+  right: 3%;
 }
 
 .scatter-plot-graph .axis {
@@ -300,4 +301,10 @@
 .scatter-plot-graph .point-popup .row.no-padding.big {
   height: 80px;
   padding: 2px 0 0;
+}
+
+@media screen and (max-width: 790px) {
+  .scatter-plot-graph .label {
+    font-size: 17px;
+  }
 }
