@@ -92,6 +92,13 @@
     text-align: left;
     background-color: white;
   }
+
+  .schools-index {
+    #nav #hamburger div {
+      background-color: $navy;
+      border-bottom-color: $navy;
+    }
+  }
 }
 
 @media only screen and (min-width: 850px) {
