@@ -1,52 +1,51 @@
-- cache(@school.cache_key, condition: @school.can_cache?) do
-  .ec
-    = render 'ec_banner', school: @school
-    .region-title(data-target="overview")
-      %h2 ABOUT THIS SCHOOL
-    .info-region
-      = render 'ec_overview', school: @school
-    .region-title(data-target="programs")
-      %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
-    .info-region
-      = render 'ec_programs_and_activities', school: @school
-    .region-title(data-target="community")
-      %h2 WHAT DOES THE COMMUNITY THINK?
-    .info-region
-      = render 'ec_community', school: @school
-    .region-title(data-target="state")
-      %h2 WHAT DOES THE STATE THINK?
-    .info-region
-      = render 'ec_state', school: @school
-    .region-title(data-target="staff")
-      %h2 WHAT DOES THE STAFF THINK?
-    .info-region
-      = render 'ec_staff', school: @school
+.ec
+  = render 'ec_banner', school: @school
+  .region-title(data-target="overview")
+    %h2 ABOUT THIS SCHOOL
+  .info-region
+    = render 'ec_overview', school: @school
+  .region-title(data-target="programs")
+    %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
+  .info-region
+    = render 'ec_programs_and_activities', school: @school
+  .region-title(data-target="community")
+    %h2 WHAT DOES THE COMMUNITY THINK?
+  .info-region
+    = render 'ec_community', school: @school
+  .region-title(data-target="state")
+    %h2 WHAT DOES THE STATE THINK?
+  .info-region
+    = render 'ec_state', school: @school
+  .region-title(data-target="staff")
+    %h2 WHAT DOES THE STAFF THINK?
+  .info-region
+    = render 'ec_staff', school: @school
 
-  :javascript
-    $(document).ready(function(e) {
-      //Map({
-      //  center: #{@school.center.to_json},
-      //  markers: #{[@school.marker].to_json},
-      //  zoom: 15,
-      //  zoomControl: false,
-      //  dragging: false,
-      //  touchZoom: false,
-      //  scrollWheelZoom: false,
-      //  doubleClickZoom: false,
-      //  boxZoom: false,
-      //  tap: false,
-      //  keyboard: false
-      //});
+:javascript
+  $(document).ready(function(e) {
+    //Map({
+    //  center: #{@school.center.to_json},
+    //  markers: #{[@school.marker].to_json},
+    //  zoom: 15,
+    //  zoomControl: false,
+    //  dragging: false,
+    //  touchZoom: false,
+    //  scrollWheelZoom: false,
+    //  doubleClickZoom: false,
+    //  boxZoom: false,
+    //  tap: false,
+    //  keyboard: false
+    //});
 
-      $('.region-title').click(function() {
-        var me = $(this);
-        var target = $('#' + me.data('target'));
-        if (target.hasClass('hide')) {
-          me.removeClass('closed');
-          target.removeClass('hide');
-        } else {
-          me.addClass('closed');
-          target.addClass('hide');
-        }
-      });
+    $('.region-title').click(function() {
+      var me = $(this);
+      var target = $('#' + me.data('target'));
+      if (target.hasClass('hide')) {
+        me.removeClass('closed');
+        target.removeClass('hide');
+      } else {
+        me.addClass('closed');
+        target.addClass('hide');
+      }
     });
+  });

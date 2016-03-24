@@ -13,228 +13,227 @@
 /  .container_12.clear-floats.region-title(data-target="overview")
 /    %h2 OVERVIEW
 
-- cache(@school.cache_key, condition: @school.can_cache?) do
-  = render 'banner', school: @school
-  .closed.region-title(data-target="rankings")
-    %h2 HOW IS THIS SCHOOL RANKED?
-  .info-region
-    - if @school.status == 'New'
-      = render "new_school_performance", school: @school
-    - else
-      #rankings
-        - if @school.hs?
-          = render 'hs_rankings', school: @school
-        - else
-          = render 'k8_rankings', school: @school
-        = render 'demographics', school: @school
-  .closed.region-title(data-target="performance")
-    %h2 SCHOOL PERFORMANCE
-  .info-region.background-grey
-    #performance.hide
+= render 'banner', school: @school
+.closed.region-title(data-target="rankings")
+  %h2 HOW IS THIS SCHOOL RANKED?
+.info-region
+  - if @school.status == 'New'
+    = render "new_school_performance", school: @school
+  - else
+    #rankings
       - if @school.hs?
-        = render "high_school_academics"
+        = render 'hs_rankings', school: @school
       - else
-        = render "k_8_academics"
-  .closed.region-title(data-target="programs")
-    %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
-  .info-region
-    = render 'programs_and_activities', school: @school
+        = render 'k8_rankings', school: @school
+      = render 'demographics', school: @school
+.closed.region-title(data-target="performance")
+  %h2 SCHOOL PERFORMANCE
+.info-region.background-grey
+  #performance.hide
+    - if @school.hs?
+      = render "high_school_academics"
+    - else
+      = render "k_8_academics"
+.closed.region-title(data-target="programs")
+  %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
+.info-region
+  = render 'programs_and_activities', school: @school
 
-  :javascript
-    var w = $(window);
-    $(document).ready(function(e) {
-      //Map({
-      //  center: #{@school.center.to_json},
-      //  markers: #{[@school.marker].to_json},
-      //  zoom: 15,
-      //  zoomControl: false,
-      //  dragging: false,
-      //  touchZoom: false,
-      //  scrollWheelZoom: false,
-      //  doubleClickZoom: false,
-      //  boxZoom: false,
-      //  tap: false,
-      //  keyboard: false
-      //});
+:javascript
+  var w = $(window);
+  $(document).ready(function(e) {
+    //Map({
+    //  center: #{@school.center.to_json},
+    //  markers: #{[@school.marker].to_json},
+    //  zoom: 15,
+    //  zoomControl: false,
+    //  dragging: false,
+    //  touchZoom: false,
+    //  scrollWheelZoom: false,
+    //  doubleClickZoom: false,
+    //  boxZoom: false,
+    //  tap: false,
+    //  keyboard: false
+    //});
 
-      var lastPage = document.referrer;
-      var lastSearch = localStorage.getItem('lastSearch');
-      if (lastPage.match(/schools/)) {
-        $('.back-arrow-icon').attr('href', lastPage);
-        var schoolId = "#{@school.short_id}";
-        if (lastPage.match(/&school_ids/)) {
-          if (lastPage.indexOf(schoolId) != -1) {
-            $('.compare-icon').attr('href', lastSearch);
-          } else {
-            $('.compare-icon').attr('href', lastSearch + "," + schoolId);
-          }
+    var lastPage = document.referrer;
+    var lastSearch = localStorage.getItem('lastSearch');
+    if (lastPage.match(/schools/)) {
+      $('.back-arrow-icon').attr('href', lastPage);
+      var schoolId = "#{@school.short_id}";
+      if (lastPage.match(/&school_ids/)) {
+        if (lastPage.indexOf(schoolId) != -1) {
+          $('.compare-icon').attr('href', lastSearch);
         } else {
-          $('.compare-icon').attr('href', lastPage + "&school_ids=" + schoolId);
+          $('.compare-icon').attr('href', lastSearch + "," + schoolId);
         }
-      } else if (lastPage.match(/compare/)) {
-        $('.back-arrow-icon').attr('href', lastPage);
-        $('.compare-icon').attr('href', lastPage);
       } else {
-        $('.back-arrow-icon').attr('href', "/");
-        $('.compare-icon').remove();
+        $('.compare-icon').attr('href', lastPage + "&school_ids=" + schoolId);
       }
+    } else if (lastPage.match(/compare/)) {
+      $('.back-arrow-icon').attr('href', lastPage);
+      $('.compare-icon').attr('href', lastPage);
+    } else {
+      $('.back-arrow-icon').attr('href', "/");
+      $('.compare-icon').remove();
+    }
 
-      if (!$('.overview-text').first().text().trim()) {
-        $('#overview .fields')
-          .css('float', 'none')
-          .css('width', '100%')
-          .css('margin-left', '0');
+    if (!$('.overview-text').first().text().trim()) {
+      $('#overview .fields')
+        .css('float', 'none')
+        .css('width', '100%')
+        .css('margin-left', '0');
+    }
+
+    if (w.width() > 600) {
+      $('.region-title').removeClass('closed');
+      $('.info-region > div').removeClass('hide');
+    }
+
+    $('.region-title').click(function() {
+      var me = $(this);
+      var target = $('#' + me.data('target'));
+      if (target.hasClass('hide')) {
+        me.removeClass('closed');
+        target.removeClass('hide');
+      } else {
+        me.addClass('closed');
+        target.addClass('hide');
       }
+    });
 
-      if (w.width() > 600) {
+    var subjects = $('.subject')
+    subjects.click(function() {
+      var me = $(this);
+      var target = $('#' + me.data('target'));
+      var otherSubjects = me.siblings();
+      var otherTargets = target.siblings();
+      if (target.hasClass('hide')) {
+        me.addClass('active');
+        target.removeClass('hide');
+        otherTargets.addClass('hide');
+        otherSubjects.removeClass('active');
+      } else {
+        if (otherSubjects.hasClass('active').size > 1) {
+          me.removeClass('active');
+          target.addClass('hide');
+        }
+      }
+    });
+
+    var adjustGraphs = function() {
+      if (w.width() < 791) {
+        $('.content.four.bar').
+          removeClass('four').
+          addClass('two');
+      } else {
+        $('.content.two.bar').
+          removeClass('two').
+          addClass('four');
+      }
+    };
+    adjustGraphs();
+    w.resize(function() { adjustGraphs(); });
+
+    var moveText = function() {
+      var overview = $('#overview > .middle > .section:nth-of-type(4)'),
+        policies = overview.
+          find('> .columns > .column:nth-of-type(3)').
+          first(),
+        barGraph = $('.content.bar.two').first(),
+        fourBar = $('.content.bar.four').first(),
+        growthGraphs = $('.content.growth.two'),
+        fivee = $('.content.two.fivee');
+      if (w.width() > 790 && w.width() < 991) {
+        var fourLabels = fourBar.find('> .labels').
+          clone();
+        var newLabels = fourBar.
+          find('> .visual:nth-of-type(4) > .labels').
+          first();
+        if (newLabels.length == 0) {
+          fourLabels.clone().prependTo(fourBar.
+            find('> .visual:nth-of-type(4)').first()
+          );
+        }
+      }
+      if (w.width() < 791) {
+        var header = $('<div class="header"></div>').
+          insertBefore(policies);
+        overview.find('> .header > .right-header').
+          first().appendTo(header);
+        var barLabels = barGraph.find('> .labels').clone();
+        var newLabels = barGraph.
+          find('> .visual:nth-of-type(3) > .labels').
+          first();
+        if (newLabels.length == 0) {
+          barLabels.prependTo(barGraph.
+            find('> .visual:nth-of-type(3)').first()
+          );
+          barLabels.clone().prependTo(barGraph.
+            find('> .visual:nth-of-type(4)').first()
+          );
+          barLabels.clone().prependTo(barGraph.
+            find('> .visual:nth-of-type(5)').first()
+          );
+          growthGraphs.each(function(i, n) {
+            var graph = $(n);
+            var growthLabels = graph.
+              find('> .labels').clone();
+            growthLabels.prependTo(graph.
+              find('> .visual:nth-of-type(3)').first()
+            );
+          });
+          fivee.find('> .visual').first().
+            find('.square').appendTo(fivee);
+        }
+      }
+      if (w.width() > 790) {
+        overview.
+          find('> .columns > .header > .right-header').
+          first().appendTo(
+            overview.find('> .header').first()
+          );
+          barGraph.
+            find('> .visual:nth-of-type(3) > .labels').
+            first().remove();
+          barGraph.
+            find('> .visual:nth-of-type(4) > .labels').
+            first().remove();
+          barGraph.
+            find('> .visual:nth-of-type(5) > .labels').
+            first().remove();
+          fourBar.
+            find('> .visual:nth-of-type(4) > .labels').
+            first().remove();
+      }
+    }
+    moveText();
+    w.resize(function() { moveText(); });
+
+    var nav = $("#actions");
+    var pos = nav.offset();
+    //w.scroll(function() {
+    //  var windowpos = w.scrollTop();
+    //  if (windowpos >= pos.top) {
+    //    nav.addClass("stick");
+    //  } else {
+    //    nav.removeClass("stick");
+    //  }
+    //});
+
+    $('.rounded-square > a').click(function() {
+      var buffer;
+      if (w.scrollTop() >= pos.top) {
+        buffer = 55;
+      } else {
+        buffer = 100;
+      }
+      if (w.width() < 601) {
         $('.region-title').removeClass('closed');
         $('.info-region > div').removeClass('hide');
       }
-
-      $('.region-title').click(function() {
-        var me = $(this);
-        var target = $('#' + me.data('target'));
-        if (target.hasClass('hide')) {
-          me.removeClass('closed');
-          target.removeClass('hide');
-        } else {
-          me.addClass('closed');
-          target.addClass('hide');
-        }
-      });
-
-      var subjects = $('.subject')
-      subjects.click(function() {
-        var me = $(this);
-        var target = $('#' + me.data('target'));
-        var otherSubjects = me.siblings();
-        var otherTargets = target.siblings();
-        if (target.hasClass('hide')) {
-          me.addClass('active');
-          target.removeClass('hide');
-          otherTargets.addClass('hide');
-          otherSubjects.removeClass('active');
-        } else {
-          if (otherSubjects.hasClass('active').size > 1) {
-            me.removeClass('active');
-            target.addClass('hide');
-          }
-        }
-      });
-
-      var adjustGraphs = function() {
-        if (w.width() < 791) {
-          $('.content.four.bar').
-            removeClass('four').
-            addClass('two');
-        } else {
-          $('.content.two.bar').
-            removeClass('two').
-            addClass('four');
-        }
-      };
-      adjustGraphs();
-      w.resize(function() { adjustGraphs(); });
-
-      var moveText = function() {
-        var overview = $('#overview > .middle > .section:nth-of-type(4)'),
-          policies = overview.
-            find('> .columns > .column:nth-of-type(3)').
-            first(),
-          barGraph = $('.content.bar.two').first(),
-          fourBar = $('.content.bar.four').first(),
-          growthGraphs = $('.content.growth.two'),
-          fivee = $('.content.two.fivee');
-        if (w.width() > 790 && w.width() < 991) {
-          var fourLabels = fourBar.find('> .labels').
-            clone();
-          var newLabels = fourBar.
-            find('> .visual:nth-of-type(4) > .labels').
-            first();
-          if (newLabels.length == 0) {
-            fourLabels.clone().prependTo(fourBar.
-              find('> .visual:nth-of-type(4)').first()
-            );
-          }
-        }
-        if (w.width() < 791) {
-          var header = $('<div class="header"></div>').
-            insertBefore(policies);
-          overview.find('> .header > .right-header').
-            first().appendTo(header);
-          var barLabels = barGraph.find('> .labels').clone();
-          var newLabels = barGraph.
-            find('> .visual:nth-of-type(3) > .labels').
-            first();
-          if (newLabels.length == 0) {
-            barLabels.prependTo(barGraph.
-              find('> .visual:nth-of-type(3)').first()
-            );
-            barLabels.clone().prependTo(barGraph.
-              find('> .visual:nth-of-type(4)').first()
-            );
-            barLabels.clone().prependTo(barGraph.
-              find('> .visual:nth-of-type(5)').first()
-            );
-            growthGraphs.each(function(i, n) {
-              var graph = $(n);
-              var growthLabels = graph.
-                find('> .labels').clone();
-              growthLabels.prependTo(graph.
-                find('> .visual:nth-of-type(3)').first()
-              );
-            });
-            fivee.find('> .visual').first().
-              find('.square').appendTo(fivee);
-          }
-        }
-        if (w.width() > 790) {
-          overview.
-            find('> .columns > .header > .right-header').
-            first().appendTo(
-              overview.find('> .header').first()
-            );
-            barGraph.
-              find('> .visual:nth-of-type(3) > .labels').
-              first().remove();
-            barGraph.
-              find('> .visual:nth-of-type(4) > .labels').
-              first().remove();
-            barGraph.
-              find('> .visual:nth-of-type(5) > .labels').
-              first().remove();
-            fourBar.
-              find('> .visual:nth-of-type(4) > .labels').
-              first().remove();
-        }
-      }
-      moveText();
-      w.resize(function() { moveText(); });
-
-      var nav = $("#actions");
-      var pos = nav.offset();
-      //w.scroll(function() {
-      //  var windowpos = w.scrollTop();
-      //  if (windowpos >= pos.top) {
-      //    nav.addClass("stick");
-      //  } else {
-      //    nav.removeClass("stick");
-      //  }
-      //});
-
-      $('.rounded-square > a').click(function() {
-        var buffer;
-        if (w.scrollTop() >= pos.top) {
-          buffer = 55;
-        } else {
-          buffer = 100;
-        }
-        if (w.width() < 601) {
-          $('.region-title').removeClass('closed');
-          $('.info-region > div').removeClass('hide');
-        }
-        $('body').animate({
-          scrollTop: $('.region-title[data-target="performance"]').offset().top - buffer
-        }, 1000);
-      });
+      $('body').animate({
+        scrollTop: $('.region-title[data-target="performance"]').offset().top - buffer
+      }, 1000);
     });
+  });

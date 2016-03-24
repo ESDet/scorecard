@@ -1,16 +1,15 @@
-- cache('header') do
-  %head
-    %title #{defined?(@subtitle) ? "#{@subtitle} -" : ''} Excellent Schools Detroit Scorecard #{Rails.env != 'production' ? "(#{Rails.env})" : ""}
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=#{android? ? 'yes' : 'no'}"}/
-    %link{:rel => "icon", :href => "/assets/scorecard_favicon.png", :type => 'image/x-icon'}
-    %link{:rel => "apple-touch-icon", :href => "/assets/scorecard_favicon.png"}
-    %meta{:name => 'keywords', :content => meta_keywords}/
+%head
+  %title #{defined?(@subtitle) ? "#{@subtitle} -" : ''} Excellent Schools Detroit Scorecard #{Rails.env != 'production' ? "(#{Rails.env})" : ""}
+  %meta{:charset => "utf-8"}/
+  %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+  %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=#{android? ? 'yes' : 'no'}"}/
+  %link{:rel => "icon", :href => "/assets/scorecard_favicon.png", :type => 'image/x-icon'}
+  %link{:rel => "apple-touch-icon", :href => "/assets/scorecard_favicon.png"}
+  %meta{:name => 'keywords', :content => meta_keywords}/
 
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application'
-    = csrf_meta_tag
-    :erb
-      <!--[if lte IE 8]><link rel="stylesheet" href="/leaflet/leaflet.ie.css" /><![endif]-->
-      <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/javascripts/excanvas.js"></script><![endif]-->
+  = stylesheet_link_tag 'application', media: 'all'
+  = javascript_include_tag 'application'
+  = csrf_meta_tag
+  :erb
+    <!--[if lte IE 8]><link rel="stylesheet" href="/leaflet/leaflet.ie.css" /><![endif]-->
+    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/javascripts/excanvas.js"></script><![endif]-->

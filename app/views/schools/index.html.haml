@@ -1,172 +1,171 @@
 = render 'shared/header'
-- cache(schools_cache_key) do
-  .search-results
-    .schools-map-wrapper
-      #map
+.search-results
+  .schools-map-wrapper
+    #map
 
-    .results
-      .filter
-        .float-left
-          #favorites-link.filter-link(href='')
-            .text FAVORITES
-            .star &#9734;
-        .float-right.filter-dropdown
-          .dropdown
-            %a.trigger(data-group="filter" data-title="Filter" href="#")
-              %span.title Filter
-              %span.caret
-            %ul.dropdown-menu
-              - if @grade.blank?
-                %li#school-type-filter.filter-panel
-                  .filter-row
-                    = render 'filter_panel',
-                      title: 'SCHOOL TYPE',
-                      list: @school_type_filters
-              %li#grade-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec'  || @grade == 'hs'? 'hide' : '' }")
+  .results
+    .filter
+      .float-left
+        #favorites-link.filter-link(href='')
+          .text FAVORITES
+          .star &#9734;
+      .float-right.filter-dropdown
+        .dropdown
+          %a.trigger(data-group="filter" data-title="Filter" href="#")
+            %span.title Filter
+            %span.caret
+          %ul.dropdown-menu
+            - if @grade.blank?
+              %li#school-type-filter.filter-panel
                 .filter-row
                   = render 'filter_panel',
-                    title: 'Grades',
-                    list: @grade_filters
-              %li#special-ed-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
-                .filter-row
-                  = render 'filter_panel',
-                    title: 'Special Ed Programs',
-                    list: @special_ed_filters
-              //%li#transportation-filter.filter-panel(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
-              //  = render 'filter_panel',
-              //    title: 'TRANSPORTATION OPTIONS',
-              //    list: @special_ed_filters
-              %li#governance-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
-                .filter-row
-                  = render 'filter_panel',
-                    title: 'GOVERNANCE',
-                    list: @governance_filters
-              %li#operator-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
-                .filter-row
-                  = render 'filter_panel',
-                    title: 'OPERATOR',
-                    list: @operator_filters
-              %li#ec-age-group-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
-                .filter-row
-                  = render 'filter_panel',
-                    title: 'Age Groups',
-                    list: @age_group_filters
-              %li#ec-special-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
-                .filter-row
-                  = render 'filter_panel',
-                    title: 'Special Needs Experience',
-                    list: @ec_special_filters
-              %li#ec-specialty-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
-                .filter-row
-                  = render 'filter_panel',
-                    title: 'Program Type',
-                    list: @ec_specialty_filters
+                    title: 'SCHOOL TYPE',
+                    list: @school_type_filters
+            %li#grade-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec'  || @grade == 'hs'? 'hide' : '' }")
+              .filter-row
+                = render 'filter_panel',
+                  title: 'Grades',
+                  list: @grade_filters
+            %li#special-ed-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              .filter-row
+                = render 'filter_panel',
+                  title: 'Special Ed Programs',
+                  list: @special_ed_filters
+            //%li#transportation-filter.filter-panel(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+            //  = render 'filter_panel',
+            //    title: 'TRANSPORTATION OPTIONS',
+            //    list: @special_ed_filters
+            %li#governance-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              .filter-row
+                = render 'filter_panel',
+                  title: 'GOVERNANCE',
+                  list: @governance_filters
+            %li#operator-filter.filter-panel.school-filter(class="#{@grade.blank? || @grade == 'ec' ? 'hide' : '' }")
+              .filter-row
+                = render 'filter_panel',
+                  title: 'OPERATOR',
+                  list: @operator_filters
+            %li#ec-age-group-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+              .filter-row
+                = render 'filter_panel',
+                  title: 'Age Groups',
+                  list: @age_group_filters
+            %li#ec-special-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+              .filter-row
+                = render 'filter_panel',
+                  title: 'Special Needs Experience',
+                  list: @ec_special_filters
+            %li#ec-specialty-filter.filter-panel.ec-filter(class="#{@grade == 'ec' ? '' : 'hide' }")
+              .filter-row
+                = render 'filter_panel',
+                  title: 'Program Type',
+                  list: @ec_specialty_filters
 
-      .compare-select.hide
-        %a.do-compare.btn{:href => '/'} Compare Selected Schools
-      .school-list
-        - if @schools.empty?
-          %h3 There are no schools that fit your selection(s) right now.
-        - @schools.each do |s|
-          = render 'search_result', school: s
+    .compare-select.hide
+      %a.do-compare.btn{:href => '/'} Compare Selected Schools
+    .school-list
+      - if @schools.empty?
+        %h3 There are no schools that fit your selection(s) right now.
+      - @schools.each do |s|
+        = render 'search_result', school: s
 
-        -#.more-results
-          = link_to 'Load more results',
-            request.url.gsub(/offset=\d+/, 'offset=' + (@offset.to_i + 25).to_s),
-            remote: true,
-            id: 'load-more-results',
-            class: 'btn'
+      -#.more-results
+        = link_to 'Load more results',
+          request.url.gsub(/offset=\d+/, 'offset=' + (@offset.to_i + 25).to_s),
+          remote: true,
+          id: 'load-more-results',
+          class: 'btn'
 
-  :javascript
-    var ajax = false;
-    var listSpinner = null;
-    var searching = false;
-    var schoolIds = #{(@school_ids || []).split(",").to_json};
+:javascript
+  var ajax = false;
+  var listSpinner = null;
+  var searching = false;
+  var schoolIds = #{(@school_ids || []).split(",").to_json};
 
-    Compare = function() {
-      var _compareCount = function() {
-        var checkbox = $(this).find('.checkbox-icon');
-        if (checkbox.prop('checked')) {
-          checkbox.prop('checked', false);
-        } else {
-          checkbox.prop('checked', true);
+  Compare = function() {
+    var _compareCount = function() {
+      var checkbox = $(this).find('.checkbox-icon');
+      if (checkbox.prop('checked')) {
+        checkbox.prop('checked', false);
+      } else {
+        checkbox.prop('checked', true);
+      }
+
+      var count = $('input.compare-check:checked').length;
+      if (count > 0) {
+        $('.compare-select').removeClass('hide');
+        if (count > 4) {
+          checkbox.removeAttr('checked');
         }
+      } else {
+        $('.compare-select').addClass('hide');
+      }
+      return true;
+    };
 
-        var count = $('input.compare-check:checked').length;
-        if (count > 0) {
-          $('.compare-select').removeClass('hide');
-          if (count > 4) {
-            checkbox.removeAttr('checked');
+    var _bindCompareEvent = function() {
+      $('.school > .compare').on('click', _compareCount);
+    };
+
+    return {
+      compareCount: _compareCount,
+      bindCompareEvent: _bindCompareEvent
+    }
+  }();
+
+  $(function(e) {
+    schoolsMap = Map({
+      center: [42.36, -83.09],
+      markers: #{@schools.map(&:marker).to_json},
+      zoom: 11
+    });
+
+    setMarkerHover = function(elements) {
+      elements.mouseover(function(e) {
+        var tid = $(this).data('tid');
+        for(var i in schoolsMap.layers) {
+          if(tid == schoolsMap.layers[i].options.id) {
+            schoolsMap.layers[i].openPopup();
           }
-        } else {
-          $('.compare-select').addClass('hide');
         }
         return true;
-      };
+      });
+    };
 
-      var _bindCompareEvent = function() {
-        $('.school > .compare').on('click', _compareCount);
-      };
+    setMarkerHover($('.school-list .school'));
 
-      return {
-        compareCount: _compareCount,
-        bindCompareEvent: _bindCompareEvent
+    $('.rounded-square.small .grade').each(function(i, n) {
+      var grade = $(n);
+      if (grade.text().trim() == 'NEW') {
+        grade.css('font-size', '19px').
+          css('padding-top', '13px');
       }
-    }();
-
-    $(function(e) {
-      schoolsMap = Map({
-        center: [42.36, -83.09],
-        markers: #{@schools.map(&:marker).to_json},
-        zoom: 11
-      });
-
-      setMarkerHover = function(elements) {
-        elements.mouseover(function(e) {
-          var tid = $(this).data('tid');
-          for(var i in schoolsMap.layers) {
-            if(tid == schoolsMap.layers[i].options.id) {
-              schoolsMap.layers[i].openPopup();
-            }
-          }
-          return true;
-        });
-      };
-
-      setMarkerHover($('.school-list .school'));
-
-      $('.rounded-square.small .grade').each(function(i, n) {
-        var grade = $(n);
-        if (grade.text().trim() == 'NEW') {
-          grade.css('font-size', '19px').
-            css('padding-top', '13px');
-        }
-      });
-
-      $(schoolIds).each(function(i, id) {
-        $('#' + id).attr('checked', 'checked');
-      });
-
-      Compare.bindCompareEvent();
-      Compare.compareCount();
-
-      $('a.do-compare').click(function(e) {
-        ids = [];
-        $('input.compare-check:checked').each(function(idx, el) {
-          ids.push($(el).val());
-        });
-        var schoolIdParams = "school_ids=" + ids.join(',');
-        var lastSearch;
-        if (location.href.match(/&school_ids/)) {
-          lastSearch = location.href.replace(
-            /school_ids.*/,
-            "school_ids=" + ids.join(',')
-          );
-        } else {
-          lastSearch = location.href + "&" + schoolIdParams
-        }
-        localStorage.setItem('lastSearch', lastSearch);
-        window.location = "/compare?" + schoolIdParams;
-        return false;
-      });
     });
+
+    $(schoolIds).each(function(i, id) {
+      $('#' + id).attr('checked', 'checked');
+    });
+
+    Compare.bindCompareEvent();
+    Compare.compareCount();
+
+    $('a.do-compare').click(function(e) {
+      ids = [];
+      $('input.compare-check:checked').each(function(idx, el) {
+        ids.push($(el).val());
+      });
+      var schoolIdParams = "school_ids=" + ids.join(',');
+      var lastSearch;
+      if (location.href.match(/&school_ids/)) {
+        lastSearch = location.href.replace(
+          /school_ids.*/,
+          "school_ids=" + ids.join(',')
+        );
+      } else {
+        lastSearch = location.href + "&" + schoolIdParams
+      }
+      localStorage.setItem('lastSearch', lastSearch);
+      window.location = "/compare?" + schoolIdParams;
+      return false;
+    });
+  });
