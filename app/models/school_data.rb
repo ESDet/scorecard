@@ -231,9 +231,9 @@ class SchoolData < OpenStruct
   def school_type_weight
     case school_type
       when 'k8'
-        esd_k8_2016s.total_pts.to_f * 100
+        esd_k8_2016s ? esd_k8_2016s.total_pts.to_f * 100 : 0
       when 'hs'
-        esd_hs_2016s.total_pts.to_f * 100
+        esd_hs_2016s ? esd_hs_2016s.total_pts.to_f * 100 : 0
       when 'ecs'
         if early_childhood_rating == 'Below Bronze'
           # Give Pre-K schools without a medal a score penalty
