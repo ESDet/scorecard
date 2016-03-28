@@ -36,6 +36,8 @@
         - unless @school.phone.blank?
           .info Phone: #{school.phone}
       .column
+        - unless @school.specialty.blank?
+          .info PROGRAM TYPE: #{school.specialty.join(", ")}
         - unless @school.age_groups.blank?
           .info AGE GROUPS: #{school.age_groups.join(",")}
     - if @school.apply?
