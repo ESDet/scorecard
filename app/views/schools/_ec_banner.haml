@@ -21,6 +21,13 @@
           %span.print-icon
         -#%a(id="download" title="Download" href="/schools/#{school.id}.pdf")
           %span.download-icon
+    .general-info
+      - if school.schedule.present?
+        .banner-icon.hours-icon
+          .hover-state.hide
+            .text.title Schedule Type
+            - school.schedule.each do |i|
+              .text= i
     .hours
       .column
         - days = []
