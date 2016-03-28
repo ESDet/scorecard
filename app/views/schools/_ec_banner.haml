@@ -8,7 +8,7 @@
       =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank', class: 'info'}
       - if school.phone.present? || school.fax.present?
         .info
-          Phone: #{school.phone} &nbsp;&nbsp;&nbsp;
+          Phone: #{format_phone(school.phone)} &nbsp;&nbsp;&nbsp;
           - if school.fax.present?
             | &nbsp;&nbsp;&nbsp;Fax: #{school.fax}
     .website-info
@@ -34,7 +34,7 @@
         - unless @school.email.blank?
           .info Email: #{school.email}
         - unless @school.phone.blank?
-          .info Phone: #{school.phone}
+          .info Phone: #{format_phone(school.phone)}
       .column
         - unless @school.specialty.blank?
           .info PROGRAM TYPE: #{school.specialty.join(", ")}
