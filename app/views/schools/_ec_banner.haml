@@ -28,6 +28,10 @@
             .text.title Schedule Type
             - school.schedule.each do |i|
               .text= i
+      .banner-icon.pencil-icon
+        .hover-state.hide
+          .text.title Does this school require a signed contract between parent and school?
+          .text= school.contract
     .hours
       .column
         - days = []
