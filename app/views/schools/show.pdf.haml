@@ -24,7 +24,7 @@
             .icons
               .icon-text
                 .address-icon
-                = @school.street
+                =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank'}
                 = @school.council_district
               .icon-text
                 .phone-icon

@@ -5,7 +5,7 @@
     .school-name
       %h1= school.display_name
     .contact-info
-      .info= school.street
+      =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank', class: 'info'}
       - if school.phone.present? || school.fax.present?
         .info
           Phone: #{school.phone} &nbsp;&nbsp;&nbsp;

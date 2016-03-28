@@ -105,7 +105,7 @@
           .title
             .icon-text
               .address-icon
-              = school.street
+              =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank', class: 'info'}
           .content.no-padding
             .school-map-wrapper
               #map
