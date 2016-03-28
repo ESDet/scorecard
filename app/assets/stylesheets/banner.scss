@@ -34,6 +34,7 @@
 }
 
 .school-banner .school-image,
+.school-banner .school-medal,
 .school-banner .school-name,
 .school-banner .school-type,
 .school-banner .grades-served,
@@ -62,6 +63,16 @@
   border: 4px white solid;
   background-position: center center;
   background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.school-banner .school-medal {
+  overflow: hidden;
+  width: 128px;
+  height: 100px;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .school-banner .school-name h1 {

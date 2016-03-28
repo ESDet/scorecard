@@ -1,7 +1,7 @@
 .school-banner
   = render 'shared/header'
   .overview
-    .school-image(style="background-image:url(#{school.early_childhood_image(:community, school.early_childhood_rating)})")
+    .school-medal(style="background-image:url(#{school.early_childhood_image(:community, school.early_childhood_rating)})")
     .school-name
       %h1= school.display_name
     .contact-info

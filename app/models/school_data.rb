@@ -71,32 +71,21 @@ class SchoolData < OpenStruct
   def early_childhood_image(category, medal, year = nil)
     school_medal = medal || early_childhood_rating
     return '/assets/el_icons/Overview.png' if category == :overview
-    return '/assets/el_icons/EL_Award_NoRating.png' if ![:community, :state, :staff].include?(category) and school_medal.andand.downcase.andand.include?('not rated')
-    cat = {
-      :overall    => 'Award',
-      :mini       => 'Mobile',
-      :community  => 'Sub_Comm',
-      :state      => 'Sub_State',
-      :staff      => 'Sub_Staff',
-    }[category]
+    return '/assets/el_icons/EL_NoRating.png' if ![:community, :state, :staff].include?(category) and school_medal.andand.downcase.andand.include?('not rated')
 
     valid_metals = {
-      'Below Bronze'  => 'BelowBronze',
+      'Below Bronze'  => 'CommunityReviewed',
       'Bronze'        => 'Bronze',
-      'Below Bronze - Rating in progress' => 'BelowBronze',
+      'Below Bronze - Rating in progress' => 'CommunityReviewed',
       'Bronze - Rating in progres' => 'Bronze',
       'Bronze - Rating in progress' => 'Bronze',
       'Silver'        => 'Silver',
       'Silver - Rating in progress' => 'Silver',
       'Gold'          => 'Gold',
-      'Incomplete'    => 'NoRating'
+      'Incomplete'    => 'BelowBronze'
     }
-    metal = valid_metals[school_medal].andand.gsub(' ', '') || 'None'
-    if year && category != :mini
-      "/assets/el_icons/EL_#{cat}_#{metal}_#{year}.png"
-    else
-      "/assets/el_icons/EL_#{cat}_#{metal}.png"
-    end
+    metal = valid_metals[school_medal].andand.gsub(' ', '') || 'BelowBronze'
+    "/assets/el_icons/EL_#{metal}.png"
   end
 
   def gmaps_url

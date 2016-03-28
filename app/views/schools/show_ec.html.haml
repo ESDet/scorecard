@@ -20,6 +20,7 @@
     %h2 WHAT DOES THE STAFF THINK?
   .info-region
     = render 'ec_staff', school: @school
+  = render 'legend', school: @school, :tab => :state
 
 :javascript
   $(document).ready(function(e) {
