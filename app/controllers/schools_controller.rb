@@ -299,7 +299,7 @@ class SchoolsController < ApplicationController
         "most_recent_ec_state_rating"
     else
       url = "schools"
-      includes = "school_profile,meap_2014," <<
+      includes = "school_profile,count_2016," <<
         "fiveessentials_2015,esd_#{school_type}_2016," <<
         "k12_supplemental_2015"
     end

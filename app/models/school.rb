@@ -19,6 +19,10 @@ module School
     end
   end
 
+  def demographics
+    count_2016s
+  end
+
   def recommended?
     field_2016_recommended
   end
@@ -28,11 +32,11 @@ module School
   end
 
   def district_code
-    meap_2014s.andand.DistrictCode
+    demographics.andand.DistrictCode
   end
 
   def building_code
-    meap_2014s.andand.BuildingCode
+    demographics.andand.BuildingCode
   end
 
   def governance
@@ -317,65 +321,65 @@ module School
   end
 
   def total_enrollment
-    meap_2014s.andand.TOTAL_ENROLLMENT.andand.to_i
+    demographics.andand.TOTAL_ENROLLMENT.andand.to_i
   end
 
   def african_american_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.AFRICAN_AMERICAN_ENROLLMENT
+      demographics.andand.AFRICAN_AMERICAN_ENROLLMENT
     )
   end
 
   def asian_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.ASIAN_ENROLLMENT
+      demographics.andand.ASIAN_ENROLLMENT
     )
   end
 
   def hispanic_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.HISPANIC_ENROLLMENT
+      demographics.andand.HISPANIC_ENROLLMENT
     )
   end
 
   def white_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.WHITE_ENROLLMENT
+      demographics.andand.WHITE_ENROLLMENT
     )
   end
 
   def other_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.HAWAIIAN_ENROLLMENT.to_i +
-        meap_2014s.andand.TWO_OR_MORE_RACES_ENROLLMENT.to_i +
-        meap_2014s.andand.AMERICAN_INDIAN_ENROLLMENT.to_i
+      demographics.andand.HAWAIIAN_ENROLLMENT.to_i +
+        demographics.andand.TWO_OR_MORE_RACES_ENROLLMENT.to_i +
+        demographics.andand.AMERICAN_INDIAN_ENROLLMENT.to_i
     )
   end
 
   def male_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.MALE_ENROLLMENT
+      demographics.andand.MALE_ENROLLMENT
     )
   end
 
   def female_enrollment
     percentage_of_total_enrollment(
-      meap_2014s.andand.FEMALE_ENROLLMENT
+      demographics.andand.FEMALE_ENROLLMENT
     )
   end
 
   def free_reduced_lunch
-    n = meap_2014s.andand.ECONOMIC_DISADVANTAGED_ENROLLMENT
+    n = demographics.andand.ECONOMIC_DISADVANTAGED_ENROLLMENT
     percentage_of_total_enrollment(n) if n && n != 9
   end
 
   def english_learner
-    n = meap_2014s.andand.ENGLISH_LANGUAGE_LEARNERS_ENROLLMENT
+    n = demographics.andand.ENGLISH_LANGUAGE_LEARNERS_ENROLLMENT
     percentage_of_total_enrollment(n) if n && n != 9
   end
 
   def special_education
-    n = meap_2014s.andand.SPECIAL_EDUCATION_ENROLLMENT
+    n = demographics.andand.SPECIAL_EDUCATION_ENROLLMENT
     percentage_of_total_enrollment(n) if n && n != 9
   end
 
