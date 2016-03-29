@@ -22,7 +22,7 @@
           %span DETROIT
     .row.no-padding
       .left
-        .growth #{school_growth}
+        .growth #{school_growth.round(1)}
       .right.growth-desc
         - if hs
           ACT growth points compared to state
@@ -42,7 +42,7 @@
         %span PROFICIENT
     .row.detroit-growth
       .text-left
-        %span.big #{detroit_growth}
+        %span.big #{detroit_growth.round(1)}
       .text-right
         %span
           - if hs
