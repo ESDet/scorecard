@@ -34,12 +34,11 @@
       .name Detroit
     .row
       .subject= subject.upcase
-    .row.detroit-prof
-      %span.big #{detroit_proficiency}%
-      - if hs
-        %span COLLEGE READY
-      - else
-        %span PROFICIENT
+    .row.no-padding
+      .left
+        .growth #{detroit_proficiency.round(1)}
+      .right.growth-desc
+        ACT growth points compared to state
     .row.detroit-growth
       .text-left
         %span.big #{detroit_growth.round(1)}
