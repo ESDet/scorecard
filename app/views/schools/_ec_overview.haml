@@ -1,29 +1,22 @@
 #overview
-  .middle.overview
-    .section
+  .overview
+    .section.section--blue
       %h2 Message to families
       %h3= school.message
       .columns
         .column
-          .info-box
-            .info-box__title FINANCIAL ASSISTANCE
+          .info-box.info-box--blue
+            .info-box__title LICENSED CAPACITY
             .info-box__content
-              .text= school.subsidy.join(", ")
-          .info-box
+              .text= school.capacity
+        .column
+          .info-box.info-box--blue
             .info-box__title LANGUAGES SPOKEN
             .info-box__content
               .text= school.language.join(", ")
         .column
-          .info-box
-            .info-box__title LICENSED CAPACITY
-            .info-box__content
-              .text= school.capacity
-          .info-box
-            .info-box__title PROGRAM ELIGIBILITY CRITERIA
-            .info-box__content
-              .text= school.eligibility
-          .info-box
-            .info-box__title PARTNERSHIP
+          .info-box.info-box--blue
+            .info-box__title PARTNERSHIPS
             .info-box__content
               .text
                 = school.partner_one

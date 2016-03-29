@@ -7,11 +7,12 @@
           .text
             = rank_text(school.college_readiness_ranking)
     .column
-      .info-box
-        .info-box__title Growth
-        .info-box__content.info-box__content--rank
-          .text
-            = rank_text(school.growth_ranking)
+      %a{href: '#growth'}
+        .info-box
+          .info-box__title Growth
+          .info-box__content.info-box__content--rank
+            .text
+              = rank_text(school.growth_ranking)
     .column
       .info-box
         .info-box__title Graduation
