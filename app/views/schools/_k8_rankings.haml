@@ -1,17 +1,19 @@
 .section
   .columns
     .column
-      .info-box
-        .info-box__title Proficiency
-        .info-box__content.info-box__content--rank
-          .text
-            = rank_text(school.proficiency_ranking)
+      %a{href: '#proficiency'}
+        .info-box
+          .info-box__title Proficiency
+          .info-box__content.info-box__content--rank
+            .text
+              = rank_text(school.proficiency_ranking)
     .column
-      .info-box
-        .info-box__title Growth
-        .info-box__content.info-box__content--rank
-          .text
-            = rank_text(school.growth_ranking)
+      %a{href: '#growth'}
+        .info-box
+          .info-box__title Growth
+          .info-box__content.info-box__content--rank
+            .text
+              = rank_text(school.growth_ranking)
     .column
       .info-box
         .info-box__title School Climate
