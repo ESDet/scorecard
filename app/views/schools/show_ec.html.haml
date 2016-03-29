@@ -1,5 +1,10 @@
 .ec
   = render 'ec_banner', school: @school
+  .region-title(data-target="rankings")
+    %h2 HOW IS THIS SCHOOL RANKED?
+  .info-region
+    #rankings
+      = render 'ec_rankings', school: @school
   .region-title(data-target="overview")
     %h2 ABOUT THIS SCHOOL
   .info-region

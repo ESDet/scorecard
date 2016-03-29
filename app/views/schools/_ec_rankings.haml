@@ -1,0 +1,11 @@
+.section
+  .columns
+    .column
+      %a{href: '#community'}
+        = render 'ec_overall_rating', { title: 'COMMUNITY', medal: school.site_visit_rating, year: school.site_visit_rating_year }
+    .column
+      %a{href: '#state'}
+        = render 'ec_overall_rating', { title: 'STATE', medal: school.state_rating, year: Date.today.year }
+    .column
+      %a{href: '#staff'}
+        = render 'ec_overall_rating', { title: 'STAFF', medal: school.teacher_survey_rating, year: school.staff_survey_rating_year }
