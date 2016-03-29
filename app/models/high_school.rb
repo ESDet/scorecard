@@ -23,6 +23,8 @@ module HighSchool
         'sci'
       when 'english'
         'eng'
+      when 'math'
+        'math'
       end
       o["#{s}_scatter_prof".to_sym] = float_value(o, :esd_hs_2016s, "scatter_#{scatter_sub}cr")
       o["#{s}_scatter_growth".to_sym] = float_value(o, :esd_hs_2016s, "scatter_#{scatter_sub}growth")
