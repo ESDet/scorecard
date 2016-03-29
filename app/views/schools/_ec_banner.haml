@@ -32,6 +32,11 @@
         .hover-state.hide
           .text.title Does this school require a signed contract between parent and school?
           .text= school.contract
+      - if school.fees.any?
+        .banner-icon.money-icon
+          .hover-state.hide
+            - school.fees.each do |fee, cost|
+              .text #{fee}: #{number_to_currency(cost)}
     .hours
       .column
         - days = []

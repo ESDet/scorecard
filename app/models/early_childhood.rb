@@ -70,8 +70,24 @@ module EarlyChildhood
     ec_profiles.andand.field_ec_payschedule
   end
 
-  def fee
+  def fees
+    {
+      'Application fee': application_fee,
+      'Weekly cost of infant/toddler care': infant_toddler_care_weekly_cost,
+      'Weekly cost of preschool': preschool_weekly_cost
+    }.select { |k, v| v > 0 }
+  end
+
+  def application_fee
     ec_profiles.andand.field_ec_fee.to_f
+  end
+
+  def infant_toddler_care_weekly_cost
+    ec_profiles.andand.field_ec_cost_b4.to_f
+  end
+
+  def preschool_weekly_cost
+    ec_profiles.andand.field_ec_cost_prek.to_f
   end
 
   def transportation
