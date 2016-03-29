@@ -260,8 +260,9 @@ module School
   end
 
   def application_process?
-    school_profiles.andand.field_application_process.
-      andand.machine_name.present?
+    school_profiles.andand.field_application_process &&
+      school_profiles.andand.field_application_process.
+      andand.machine_name.downcase == 'yes'
   end
 
   def admissions_url
