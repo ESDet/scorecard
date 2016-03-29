@@ -3,20 +3,28 @@ $(function() {
     var w = 115,
       h = 115,
       radius = w / 2,
+      sliceradius = radius - 1,
       color = d3.scale.category20(),
       pie = d3.scale.linear().
         domain([0, 50]).
         range([0, 2 * Math.PI]),
       arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(radius)
+        .outerRadius(sliceradius)
         .startAngle(function(d) { return pie(d.start); })
         .endAngle(function(d) { return pie(d.end); });
 
-    var vis = d3.select(element)
+    var svg = d3.select(element)
       .append("svg:svg")
       .attr("width", w)
       .attr("height", h);
+
+    var bg = svg.append("circle")
+      .attr("r", radius)
+      .attr("transform", "translate(" + radius + "," + radius + ")")
+      .attr("fill", "white");
+
+    var vis = svg.append("g");
 
     var arcs = vis.selectAll("path")
       .data(data)
