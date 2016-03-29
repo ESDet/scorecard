@@ -101,8 +101,7 @@
       - if school.application_process?
         .banner-icon.special-program-icon
           .hover-state.hide
-            .text.title Application Process
-            .text Yes
+            .text.title This an application/magnet school that may require a selective application process, exam, or audition.
             - if school.application_fee_amount.present?
               .text Application Fee: #{school.application_fee_amount}
       - if school.special_ed_programs.present?
