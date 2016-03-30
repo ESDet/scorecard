@@ -79,10 +79,12 @@ Filters = function() {
         if (isEcs) {
           if (grades.length > 0) {
             $(grades).each(function(i, g) {
-              if (n.age_groups.indexOf(g) != -1) {
-                gradesMatch = true;
-                return;
-              }
+              $(n.age_groups).each(function(j, h) {
+                if (h.indexOf(g) != -1) {
+                  gradesMatch = true;
+                  return;
+                }
+              });
             });
           }
           if (specialNeeds.length > 0) {
