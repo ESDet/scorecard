@@ -284,7 +284,7 @@ class SchoolsController < ApplicationController
   end
 
   def address_search_params
-    response = HTTParty.get "https://api.mapbox.com/geocoding/v5/mapbox.places/#{@loc}+Detroit+MI.json?access_token=pk.eyJ1IjoiZXNkIiwiYSI6InBab1ZlUWsifQ.Gwmbd8beRpVIc2kw3xs_QA"
+    response = HTTParty.get "https://api.mapbox.com/geocoding/v5/mapbox.places/#{@loc}+Detroit+MI.json?access_token=#{ENV['MAPBOX_ACCESS_TOKEN']}"
     data = JSON.parse response
     if data['features'].present?
       lat_lon = data['features'].first['geometry']['coordinates'].reverse.join(',')
