@@ -56,6 +56,8 @@ module SchoolsHelper
       "<span class='strong'>STRONG</span>"
     elsif value.in?(ranges[3])
       "<span class='very-strong'>VERY STRONG</span>"
+    else
+      "<span>UNRANKED</span>"
     end.html_safe
   end
 
