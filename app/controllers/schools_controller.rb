@@ -284,8 +284,12 @@ class SchoolsController < ApplicationController
   end
 
   def address_search_params
-    lat_lon = Portal.new.fetch("geocoder/google.json?data=#{@loc}+Detroit+MI")['coordinates'].reverse.join(",")
-    "&near_latlon=#{lat_lon}&near_miles=2"
+    response = HTTParty.get "https://api.mapbox.com/geocoding/v5/mapbox.places/#{@loc}+Detroit+MI.json?access_token=pk.eyJ1IjoiZXNkIiwiYSI6InBab1ZlUWsifQ.Gwmbd8beRpVIc2kw3xs_QA"
+    data = JSON.parse response
+    if data['features'].present?
+      lat_lon = data['features'].first['geometry']['coordinates'].reverse.join(',')
+      "&near_latlon=#{lat_lon}&near_miles=2"
+    end
   end
 
   def school_search_params
