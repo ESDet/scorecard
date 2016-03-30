@@ -266,7 +266,11 @@ module EarlyChildhood
   end
 
   def teacher_survey_rating
-    esd_el_2015s.andand.teacher_survey_rating
+    if esd_el_2015s.andand.teacher_survey_rating == "Not rated - Missing data"
+      "Did not participate"
+    else
+      esd_el_2015s.andand.teacher_survey_rating
+    end
   end
 
   def staff_survey_rating_year
