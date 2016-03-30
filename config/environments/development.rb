@@ -24,5 +24,10 @@ ESD::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   config.eager_load = false
+
+  # Debug mode disables concatenation and preprocessing of assets.
+  # This option may cause significant delays in view rendering with a large
+  # number of complex assets.
+  config.assets.debug = true
 end
 
