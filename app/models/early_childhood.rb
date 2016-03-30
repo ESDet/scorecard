@@ -116,6 +116,8 @@ module EarlyChildhood
 
   def state_rating
     case ec_state_ratings.andand.state_points
+    when '0'
+      'Below Bronze'
     when '2'
       'Bronze'
     when '4'
