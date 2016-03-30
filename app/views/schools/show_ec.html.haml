@@ -7,10 +7,6 @@
       = render 'ec_rankings', school: @school
   .info-region
     = render 'ec_overview', school: @school
-  .region-title(data-target="programs")
-    %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
-  .info-region
-    = render 'ec_programs_and_activities', school: @school
   .region-title(data-target="community")
     %h2 WHAT DOES THE COMMUNITY THINK?
   .info-region
@@ -23,6 +19,10 @@
     %h2 WHAT DOES THE STAFF THINK?
   .info-region
     = render 'ec_staff', school: @school
+  .region-title(data-target="programs")
+    %h2 ACADEMIC PROGRAMS AND EXTRACURRICULAR ACTIVITIES
+  .info-region
+    = render 'ec_programs_and_activities', school: @school
   = render 'legend', school: @school, :tab => :state
 
 :javascript
