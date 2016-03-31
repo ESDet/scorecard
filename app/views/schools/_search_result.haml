@@ -11,7 +11,7 @@
   .rating
     %a.icon{href: school_path(school.id)}
       - if school.ec?
-        %img(src="#{school.early_childhood_image(:mini, nil)}")
+        %img(src="#{school.early_childhood_image(:mini, nil, mobile: true)}")
       - else
         .rounded-square.green-background.small
           .grade

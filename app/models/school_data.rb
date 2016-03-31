@@ -68,7 +68,7 @@ class SchoolData < OpenStruct
     end
   end
 
-  def early_childhood_image(category, medal, year = nil)
+  def early_childhood_image(category, medal, mobile = false)
     school_medal = medal || early_childhood_rating
     return '/assets/el_icons/Overview.png' if category == :overview
     return '/assets/el_icons/EL_NoRating.png' if ![:community, :state, :staff].include?(category) and school_medal.andand.downcase.andand.include?('not rated')
@@ -85,6 +85,7 @@ class SchoolData < OpenStruct
       'Incomplete'    => 'BelowBronze'
     }
     metal = valid_metals[school_medal].andand.gsub(' ', '') || 'BelowBronze'
+    metal = 'Mobile_' + metal if mobile
     "/assets/el_icons/EL_#{metal}.png"
   end
 
