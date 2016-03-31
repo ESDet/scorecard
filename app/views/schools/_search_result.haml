@@ -34,11 +34,11 @@
 
         .grades
           - if school.grades_served.present?
-            %span>= "Grades: #{grades}"
+            %div= "Grades: #{grades}"
           - elsif school.age_groups.present?
-            %span>= "Age Groups: #{grades}"
-          - if school.field_school_scorecard_status.name == 'Turnaround'
-            %span , This school is a Turnaround school
+            %div= "Age Groups: #{grades}"
+          - if !school.field_school_scorecard_status.nil? && school.field_school_scorecard_status.name == 'Turnaround'
+            .turnaround *This school is a Turnaround school
       .links
         - if school.street.present?
           %a.link(href="#{school.gmaps_url}" target="_blank")= school.street
