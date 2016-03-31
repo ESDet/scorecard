@@ -38,9 +38,10 @@
             - school.fees.each do |fee, cost|
               .text #{fee}: #{number_to_currency(cost)}
       - if school.special.any?
-        .banner-icon.special-education-icon
-          .hover-state.hide
-            .text Has special education experience, see full list below
+        %a{href: '#programs'}
+          .banner-icon.special-education-icon
+            .hover-state.hide
+              .text Has special education experience, see full list below
     .hours
       .column
         - days = []
