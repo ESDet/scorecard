@@ -110,6 +110,9 @@
             .text.title Special Ed Programs
             - school.special_ed_programs.each do |i|
               .text= i
+    - if school.status == 'Turnaround'
+      .overview__description
+        = school.description.html_safe
     - if school.apply?
       .apply
         = link_to 'APPLY', 'http://enrolldetroit.org/?utm_source=apply-button&utm_medium=scorecard&utm_campaign=Scorecard%20Traffic', target: '_blank'
