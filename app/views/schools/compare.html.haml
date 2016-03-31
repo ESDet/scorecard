@@ -30,7 +30,7 @@
           .line
             - if s.ec?
               .rating-image
-                = image_tag s.early_childhood_image(:overall, nil, mobile: true), class: 'el-icon overall'
+                = image_tag s.early_childhood_image(:overall, nil), class: 'el-icon overall'
             - else
               .rounded-square.green-background.big
                 .grade
