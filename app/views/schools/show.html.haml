@@ -17,7 +17,7 @@
 .closed.region-title(data-target="rankings")
   %h2 HOW IS THIS SCHOOL RANKED?
 .info-region
-  - if @school.status == 'New'
+  - if %w(New Specialty Independent).include? @school.status
     = render "new_school_performance", school: @school
   - else
     #rankings

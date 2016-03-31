@@ -1,35 +1,36 @@
-#proficiency.section
-  .middle
-    .stat-region
-      %h2 Are students on track and academically prepared?
-      %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
-      .content.four
-        = render 'bar_graph', title: 'Math',
-          school_average: @school.math_mstep_prepared,
-          school_average_points: @school.math_mstep_prepared_points,
-          detroit_average: @detroit.math_mstep_prepared,
-          state_average: @state.math_mstep_prepared
-        = render 'bar_graph', title: 'Reading and Writing',
-          school_average: @school.ela_mstep_prepared,
-          school_average_points: @school.ela_mstep_prepared_points,
-          detroit_average: @detroit.ela_mstep_prepared,
-          state_average: @state.ela_mstep_prepared
-        = render 'bar_graph', title: 'Science',
-          school_average: @school.science_mstep_prepared,
-          school_average_points: @school.science_mstep_prepared_points,
-          detroit_average: @detroit.science_mstep_prepared,
-          state_average: @state.science_mstep_prepared
-        = render 'bar_graph', title: 'Social Studies',
-          school_average: @school.socstud_mstep_prepared,
-          school_average_points: @school.socstud_mstep_prepared_points,
-          detroit_average: @detroit.socstud_mstep_prepared,
-          state_average: @state.socstud_mstep_prepared
-        //.what-this-means
-        //  .question-mark
-        //  WHAT THIS MEANS
-        //  .text.hide
-        //    This graph uses 2013-2014 MEAP data to compare the percentage of proficient or higher students at this school to the percentage of proficient or higher students in Detroit and in Michigan.
-- if @school.status != 'New'
+- if @school.status != 'Turnaround'
+  #proficiency.section
+    .middle
+      .stat-region
+        %h2 Are students on track and academically prepared?
+        %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
+        .content.four
+          = render 'bar_graph', title: 'Math',
+            school_average: @school.math_mstep_prepared,
+            school_average_points: @school.math_mstep_prepared_points,
+            detroit_average: @detroit.math_mstep_prepared,
+            state_average: @state.math_mstep_prepared
+          = render 'bar_graph', title: 'Reading and Writing',
+            school_average: @school.ela_mstep_prepared,
+            school_average_points: @school.ela_mstep_prepared_points,
+            detroit_average: @detroit.ela_mstep_prepared,
+            state_average: @state.ela_mstep_prepared
+          = render 'bar_graph', title: 'Science',
+            school_average: @school.science_mstep_prepared,
+            school_average_points: @school.science_mstep_prepared_points,
+            detroit_average: @detroit.science_mstep_prepared,
+            state_average: @state.science_mstep_prepared
+          = render 'bar_graph', title: 'Social Studies',
+            school_average: @school.socstud_mstep_prepared,
+            school_average_points: @school.socstud_mstep_prepared_points,
+            detroit_average: @detroit.socstud_mstep_prepared,
+            state_average: @state.socstud_mstep_prepared
+          //.what-this-means
+          //  .question-mark
+          //  WHAT THIS MEANS
+          //  .text.hide
+          //    This graph uses 2013-2014 MEAP data to compare the percentage of proficient or higher students at this school to the percentage of proficient or higher students in Detroit and in Michigan.
+- if !%w(New Specialty Independent).include? @school.status
   #growth.section
     .middle
       .stat-region
