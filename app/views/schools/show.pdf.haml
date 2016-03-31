@@ -287,20 +287,6 @@
                 - if @school.special_education.present?
                   .text
                     Special Education: #{@school.special_education}%
-            .school-policies
-              %h2 School Policies
-              .float-left.margin-right-30
-                - if @school.application_process?
-                  .heading Application Required
-                  = render 'yes_no.html.haml', value: @school.application_process?
-              .float-left.margin-right-30
-                - if @school.dress_code?
-                  .heading Dress Code
-                  = render 'yes_no.html.haml', value: @school.dress_code?
-              .float-left.margin-right-30
-                - if @school.bullying_policy?
-                  .heading Bullying Policy
-                  = render 'yes_no.html.haml', value: @school.bullying_policy?
         .section.two-thirds
           - if @school.has_academic_programs?
             .header.margin-top-10
