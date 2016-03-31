@@ -23,7 +23,9 @@
                   .info-box__title Overall Grade
                   .info-box__content.info-box__content--overview
                     .text
-                      = school.excellent_schools_grade
+                      %span>= school.excellent_schools_grade
+                      - if school.status == 'Turnaround'
+                        %span *
             - if school.recommended?
               .column.recommended-school
                 = image_tag 'recommended_school'
@@ -112,6 +114,7 @@
               .text= i
     - if school.status == 'Turnaround'
       .overview__description
+        %span> *
         = school.description.html_safe
     - if school.apply?
       .apply
