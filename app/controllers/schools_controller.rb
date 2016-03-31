@@ -26,8 +26,6 @@ class SchoolsController < ApplicationController
     when "ec"
       url = "ecs.json?offset=#{@ecs_offset}&flatten_fields=true&limit=#{@limit}" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
-        "&sort_by_special=ec_total_pts" <<
-        "&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
       special_filters << "has_esd_el_2015"
@@ -55,8 +53,6 @@ class SchoolsController < ApplicationController
 
       url = "schools.json?offset=#{@offset}&flatten_fields=true&limit=#{@limit}" <<
         "&includes=school_profile,esd_#{@grade}_2016" <<
-        "&sort_by_special=school_combined_total_pts" <<
-        "&sort_order_special=DESC" <<
         "&filter[field_scorecard_display]=1"
 
       if @grade == "k8"
@@ -89,15 +85,11 @@ class SchoolsController < ApplicationController
       schools_url = "schools.json?offset=#{@offset}&limit=#{@limit}" <<
         "&flatten_fields=true" <<
         "&includes=school_profile,esd_k8_2016," <<
-        "esd_hs_2016&filter[field_scorecard_display]=1" <<
-        "&sort_by_special=school_combined_total_pts" <<
-        "&sort_order_special=DESC"
+        "esd_hs_2016&filter[field_scorecard_display]=1"
 
       ecs_url = "ecs.json?offset=#{@ecs_offset}&limit=#{@limit}&flatten_fields=true" <<
         "&includes=most_recent_ec_state_rating,ec_profile,esd_el_2015" <<
-        "&filter[field_scorecard_display]=1" <<
-        "&sort_by_special=ec_total_pts" <<
-        "&sort_order_special=DESC"
+        "&filter[field_scorecard_display]=1"
 
       if is_zip_search?
         schools_url << zip_search_params
