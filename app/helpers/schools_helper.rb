@@ -152,5 +152,19 @@ module SchoolsHelper
     number = strip_phone(ph)
     "(#{number[0..2]}) #{number[3..5]}-#{number[6..9]}"
   end
+
+  def rate_text(rate)
+    if rate >= 9
+      'VERY STRONG'
+    elsif rate >= 7
+      'STRONG'
+    elsif rate >= 4
+      'AVERAGE'
+    elsif rate > 2
+      'WEAK'
+    else
+      'VERY WEAK'
+    end
+  end
 end
 

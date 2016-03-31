@@ -35,6 +35,10 @@ module HighSchool
     HighSchool.int_value(self, :esd_hs_2016s, :cepi_pct_grad4)
   end
 
+  def graduate_in_four_years_strength
+    HighSchool.int_value(self, :esd_hs_2016s, :cepi_pct_grad4)
+  end
+
   def graduate_in_five_years
     HighSchool.int_value(self, :esd_hs_2016s, :cepi_pct_grad5)
   end

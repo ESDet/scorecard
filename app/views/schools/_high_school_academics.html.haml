@@ -169,24 +169,28 @@
               = render 'info_box_circle',
                 title: 'Graduate in 4 Years',
                 rate: @school.graduate_in_four_years,
+                rate_strength: rate_text(@school.graduate_in_four_years_strength),
                 detroit_rate: @detroit.graduate_in_four_years,
                 state_rate: @state.graduate_in_four_years
             .column
               = render 'info_box_circle',
                 title: 'Graduate in 5 Years',
                 rate: @school.graduate_in_five_years,
+                rate_strength: rate_text(@school.graduate_in_four_years_strength),
                 detroit_rate: @detroit.graduate_in_five_years,
                 state_rate: @state.graduate_in_five_years
             .column
               = render 'info_box_circle',
                 title: 'Enroll in College',
                 rate: @school.enroll_in_college,
+                rate_strength: rate_text(@school.graduate_in_four_years_strength),
                 detroit_rate: @detroit.enroll_in_college,
                 state_rate: @state.enroll_in_college
             .column
               = render 'info_box_circle',
                 title: 'Stay in College',
                 rate: @school.stay_in_college,
+                rate_strength: rate_text(@school.graduate_in_four_years_strength),
                 detroit_rate: @detroit.stay_in_college,
                 state_rate: @state.stay_in_college
         //.what-this-means
