@@ -1,4 +1,4 @@
-- if @school.status != 'Turnaround'
+- if !%w(Turnaround Specialty Independent).include? @school.status
   #proficiency.section
     .middle
       .stat-region
