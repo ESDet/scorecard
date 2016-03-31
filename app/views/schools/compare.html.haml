@@ -141,13 +141,13 @@
           - if s.ec?
             .line
               .float-left Community Rating
-              .float-right= image_tag s.early_childhood_image(:mini, s.site_visit_rating), class: 'mini-el-icon'
+              .float-right= image_tag s.early_childhood_image(:mini, s.site_visit_rating, mobile: true, compare: true), class: 'mini-el-icon'
             .line.clear-floats
               .float-left State Rating
-              .float-right= image_tag s.early_childhood_image(:mini, s.sas_score_rating), class: 'mini-el-icon'
+              .float-right= image_tag s.early_childhood_image(:mini, s.sas_score_rating, mobile: true, compare: true), class: 'mini-el-icon'
             .line.clear-floats
               .float-left Staff Rating
-              .float-right= image_tag s.early_childhood_image(:mini, s.teacher_survey_rating), class: 'mini-el-icon'
+              .float-right= image_tag s.early_childhood_image(:mini, s.teacher_survey_rating, mobile: true, compare: true), class: 'mini-el-icon'
           - else
             - if s.k8?
               %h3 Proficiency
