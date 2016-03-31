@@ -15,7 +15,9 @@
       - else
         .rounded-square.green-background.small
           .grade
-            = school.excellent_schools_grade
+            %span>= school.excellent_schools_grade
+            - if school.field_school_scorecard_status.name == 'Turnaround'
+              %span *
     %a.favorite(href='' data-id="#{school.tid}") &#9734;
   .content
     .name
