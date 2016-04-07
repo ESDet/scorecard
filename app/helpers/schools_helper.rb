@@ -20,10 +20,14 @@ module SchoolsHelper
   end
 
   def ec_medal_text(medal)
-    capitalized_medal = medal.gsub(/.*/, &:upcase)
-    color_class = medal.downcase.gsub(/\s/, "-")
-    size_class = capitalized_medal.split(" ").size > 1 ? 'medium' : 'big'
-    content_tag(:div, capitalized_medal, class: "#{size_class} #{color_class}").html_safe
+    if medal.present?
+      capitalized_medal = medal.gsub(/.*/, &:upcase)
+      color_class = medal.downcase.gsub(/\s/, "-")
+      size_class = capitalized_medal.split(" ").size > 1 ? 'medium' : 'big'
+      content_tag(:div, capitalized_medal, class: "#{size_class} #{color_class}").html_safe
+    else
+      content_tag(:div, "No data available", class: "medium").html_safe
+    end
   end
 
   def ec_rank_html(field, rating_type, max_points, value)
