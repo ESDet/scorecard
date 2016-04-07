@@ -48,7 +48,8 @@
         - ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].each do |d|
           - if (s = school.send("#{d}_open".to_sym)).present?
             - days << { day: d, open: s, close: school.send("#{d}_close".to_sym) }
-        .info HOURS: #{days.first[:day].capitalize} - #{days.last[:day].capitalize}: #{days.first[:open]} - #{days.last[:close]}
+        - if days.present?
+          .info HOURS: #{days.first[:day].capitalize} - #{days.last[:day].capitalize}: #{days.first[:open]} - #{days.last[:close]}
       .column
         - unless @school.contact.blank?
           .info Contact Person: #{school.contact}
