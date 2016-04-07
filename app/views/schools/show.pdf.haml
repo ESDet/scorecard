@@ -1,414 +1,414 @@
-<!doctype html>
-%html
-  %head
-    %meta(charset='utf-8')
-    = wicked_pdf_stylesheet_link_tag 'print'
-    = wicked_pdf_javascript_include_tag 'application'
-    = csrf_meta_tag
-  %body
-    .container
-      .info-region
-        .school-header
-          .left
-            .school-title
-              %h1= @school.display_name
-              - if @school.status != 'Mature' && @school.status != 'Suburban'
-                = @school.status
-                - if @school.status == 'New'
-                  .text.small
-                    New Schools are schools that have been open for less than three years OR have less than 70% of data available to adequately assess performance.
-                - elsif @school.status == 'Turnaround'
-                  .text.small
-                    Turnaround Schools are schools that experienced a restart within the past two years due to failing academic performance. A school is in turnaround if it has changed at least two out of the three:  governance, management, and board.
-            .grades-served= "Grades Served: #{@school.grades_served.first} - #{@school.grades_served.last}"
-            .icons
-              .icon-text
-                .address-icon
-                =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank'}
-                = @school.council_district
-              .icon-text
-                .phone-icon
-                = @school.phone
-              .icon-text
-                .website-icon
-                = @school.school_url
-          .right
-            .section
-              .header How is this school ranked?
-              .columns
-                .column
-                  .title Excellent Schools Detroit
-                  .content
-                    - if @school.excellent_schools_grade.present?
-                      .rounded-square.green-background.auto-margin
-                        .grade
-                          = @school.excellent_schools_grade
-                        .small OVERALL GRADE
-                .column
-                  .title State
-                  .content
-                    - if @school.michigan_percentile.present?
-                      .rounded-square.light-cyan-background.auto-margin
-                        .big
-                          = @school.michigan_percentile
-                          - if @school.michigan_percentile.to_i < 11 || @school.michigan_percentile.to_i > 20
-                            - if @school.michigan_percentile =~ /1$/
-                              .suffix st
-                            - elsif @school.michigan_percentile =~ /2$/
-                              .suffix nd
-                            - elsif @school.michigan_percentile =~ /3$/
-                              .suffix rd
-                            - else
-                              .suffix th
-                          - else
-                            .suffix th
-                        .small PERCENTILE OUT OF 100
-              .governance
-                - if @school.governance.present?
-                  .header
-                    %span.key Governance:
-                    = @school.governance
-                - if @school.authorizer.present?
-                  %span Authorizer:
-                  = @school.authorizer
-                  %br
-                - if @school.operator.present?
-                  %span Operator:
-                  = @school.operator
-      .info-region
-        #performance
-          .middle
-            - if @school.hs?
-              .section.border-bottom
-                .stat-region
-                  %h2 Are students at this school ready for college?
-                  %h3 Average percent of students scoring at the college-ready level on ACT, 2013-14
-                  .content.four
-                    = render 'bar_graph.html.haml', title: 'English',
-                      school_average: @school.english_college_ready,
-                      detroit_average: @detroit.english_college_ready,
-                      state_average: @state.english_college_ready
-                    = render 'bar_graph.html.haml', title: 'Math',
-                      school_average: @school.math_college_ready,
-                      detroit_average: @detroit.math_college_ready,
-                      state_average: @state.math_college_ready
-                    = render 'bar_graph.html.haml', title: 'Reading',
-                      school_average: @school.reading_college_ready,
-                      detroit_average: @detroit.reading_college_ready,
-                      state_average: @state.reading_college_ready
-                    = render 'bar_graph.html.haml', title: 'Science',
-                      school_average: @school.science_college_ready,
-                      detroit_average: @detroit.science_college_ready,
-                      state_average: @state.science_college_ready
-              .section.border-bottom
-                .stat-region
-                  %h2 Did students at this school grow academically?
-                  %h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
-                  .content.growth.two
-                    .labels
-                      .label SCHOOL
-                      .label DETROIT
-                    = render 'two_bar_graph.html.haml', title: 'English Growth',
-                      subject: 'english', scale: 10,
-                      school_growth: @school.english_growth,
-                      detroit_growth: @detroit.english_growth,
-                      zero_bar: 'PREDICTED SCORE'
-                    = render 'two_bar_graph.html.haml', title: 'Math Growth',
-                      subject: 'math', scale: 10,
-                      school_growth: @school.math_growth,
-                      detroit_growth: @detroit.math_growth,
-                      zero_bar: 'PREDICTED SCORE'
-                  .content.growth.two
-                    .labels
-                      .label SCHOOL
-                      .label DETROIT
-                    = render 'two_bar_graph.html.haml', title: 'Reading Growth',
-                      subject: 'reading', scale: 10,
-                      school_growth: @school.reading_growth,
-                      detroit_growth: @detroit.reading_growth,
-                      zero_bar: 'PREDICTED SCORE'
-                    = render 'two_bar_graph.html.haml', title: 'Science Growth',
-                      subject: 'science', scale: 10,
-                      school_growth: @school.science_growth,
-                      detroit_growth: @detroit.science_growth,
-                      zero_bar: 'PREDICTED SCORE'
-              .section
-                .stat-region
-                  %h2 Do students at this school graduate high school, enroll in college and stay in college?
-                  %h3 Average percent of 9th graders who graduate in 4 and 5 years from high school, percent of graduates that enroll in college, and percent of enrollees that persist into a second year of college. Based on graduating classes 2011-14.
-                  .content.four.bar
-                    .labels
-                      .label SCHOOL
-                      .label DETROIT
-                      .label STATE
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Graduate in 4 Years',
-                      school_average: @school.graduate_in_four_years,
-                      detroit_average: @detroit.graduate_in_four_years,
-                      state_average: @state.graduate_in_four_years
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Graduate in 5 Years',
-                      school_average: @school.graduate_in_five_years,
-                      detroit_average: @detroit.graduate_in_five_years,
-                      state_average: @state.graduate_in_five_years
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Enroll in College',
-                      school_average: @school.enroll_in_college,
-                      detroit_average: @detroit.enroll_in_college,
-                      state_average: @state.enroll_in_college
-                    = render 'three_bar_graph.html.haml',
-                      title: 'Stay in College',
-                      school_average: @school.stay_in_college,
-                      detroit_average: @detroit.stay_in_college,
-                      state_average: @state.stay_in_college
-            - else
-              .section.border-bottom
-                .stat-region.k8
-                  %h2 Are students on track and academically prepared?
-                  %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
-                  .content.four
-                    = render 'bar_graph.html.haml', title: 'Math',
-                      school_average: @school.math_prepared,
-                      detroit_average: @detroit.math_prepared,
-                      state_average: @state.math_prepared
-                    = render 'bar_graph.html.haml', title: 'Reading and Writing',
-                      school_average: @school.ela_prepared,
-                      detroit_average: @detroit.ela_prepared,
-                      state_average: @state.ela_prepared
-                    = render 'bar_graph.html.haml', title: 'Science',
-                      school_average: @school.science_prepared,
-                      detroit_average: @detroit.science_prepared,
-                      state_average: @state.science_prepared
-                    = render 'bar_graph.html.haml', title: 'Social Studies',
-                      school_average: @school.socstud_prepared,
-                      detroit_average: @detroit.socstud_prepared,
-                      state_average: @state.socstud_prepared
-              .section.border-bottom
-                .stat-region.k8
-                  %h2 Did students at this school grow academically?
-                  %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
-                  .content.growth.two
-                    .labels
-                      .label SCHOOL
-                      .label DETROIT
-                    = render 'two_bar_graph.html.haml', title: 'Math Growth',
-                      subject: 'math', scale: 20,
-                      school_growth: @school.math_growth,
-                      detroit_growth: @detroit.math_growth,
-                      zero_bar: 'STATE'
-                    = render 'two_bar_graph.html.haml', title: 'Reading Growth',
-                      subject: 'reading', scale: 20,
-                      school_growth: @school.reading_growth,
-                      detroit_growth: @detroit.reading_growth,
-                      zero_bar: 'STATE'
-              .section
-                .stat-region.k8
-                  %h2 What do students and teachers think about this school?
-                  %h3 Rating on 5Essentials Student and Teacher Survey, 2015
-                  .content.two.fivee
-                    .visual
-                      .title Overall Rating
-                      .graph(data-rating="#{@school.five_e_overall_rating}")
-                        .text
-                      .square
-                        .text Did not participate
-                    .visual
-                      .wrapper
-                        .graph
-                          .circle
-                            .outer
-                            .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
-                              Ambitious Instruction
-                          .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
-                            Effective Leaders
-                          .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
-                            Collaborative Teachers
-                          .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
-                            Supportive Environment
-                          .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
-                            Involved Families
-                        .legend
-                          Very Strong
-                          .key.green
-                          .key.light-green
-                          .key.yellow
-                          .key.orange
-                          .key.red
-                          Very Weak
-      .info-region
-        .secondary-school-header
-          .heading= @school.display_name
-          .school-info-wrapper
-            .school-info
-              %h2 School Information
-              .float-left
-                - if @school.hours.present?
-                  .heading Hours
-                  %span.margin-left-20.margin-bottom-10= @school.hours
-                .text.inline.margin-right-10
-                  .wrapper
-                    - if @school.before_after_care.include?("Before school care")
-                      .checked
-                    - else
-                      .unchecked
-                    Before school care
-                .text.inline
-                  .wrapper
-                    - if @school.before_after_care.include?("After school care")
-                      .checked
-                    - else
-                      .unchecked
-                    After school care
-              .float-right
-                - if @school.transportation.present?
-                  .float-left
-                    .heading Transportation
-                    = render 'field_list.html.haml',
-                      list: @school.transportation[0..5]
-                .float-left
-                  %span.key Average Distance Traveled:
-                  = "#{@school.average_commute} miles"
-              - if @school.schedule.present?
-                .float-left.margin-top-20.clear-floats
-                  .heading Class Schedule
-                  = render 'field_list.html.haml', list: @school.schedule[0..5]
-            .demographics
-              %h2 Demographics
-              .heading Number of Students
-              %span.margin-left-20= @school.total_enrollment
-              = render 'pie.html.haml', school: @school
-              .other-stats
-                - if @school.free_reduced_lunch.present?
-                  .text
-                    Free and reduced-price lunch: #{@school.free_reduced_lunch}%
-                - if @school.english_learner.present?
-                  .text
-                    English language learner: #{@school.english_learner}%
-                - if @school.special_education.present?
-                  .text
-                    Special Education: #{@school.special_education}%
-        .section.two-thirds
-          - if @school.has_academic_programs?
-            .header.margin-top-10
-              .icon-text
-                .star-icon
-                Academic Programs
-          .columns.two
-            - if @school.academic_focus.present?
-              .column
-                .title Academic Focus
-                .content
-                  = render 'field_list.html.haml',
-                    list: @school.academic_focus[0..5]
-            - if @school.instructional_model.present?
-              .column
-                .title Personalized Learning Options
-                .content
-                  = render 'field_list.html.haml',
-                    list: @school.instructional_model[0..5]
-            - if @school.has_ell?
-              .column
-                .title English Language Learners
-                .content
-                  - if @school.ell_level.present?
-                    %span.key Level:
-                    = @school.ell_level
-                    <br/>
-                    <br/>
-                  - if @school.ell_languages.present?
-                    %span.key Languages
-                    = render 'field_list.html.haml',
-                      list: @school.ell_languages[0..5]
-            - if @school.parent_involvement.present?
-              .column
-                .title Parent Involvement
-                .content
-                  = render 'field_list.html.haml',
-                    list: @school.parent_involvement[0..5]
-            - if @school.special_ed_level.present? || @school.special_ed_programs.present?
-              .column
-                .title Special Education
-                .content
-                  - if @school.special_ed_level.present?
-                    %span.key Level:
-                    = @school.special_ed_level
-                    <br/>
-                    <br/>
-                  - if @school.special_ed_programs.present?
-                    %span.key Programs
-                    = render 'field_list.html.haml',
-                      list: @school.special_ed_programs[0..5]
-          - if @school.hs?
-            - if @school.has_sports? || @school.has_clubs?
-              .header.margin-top-10
-                .icon-text
-                  .star-icon
-                  .inline.float-left Extracurricular Activities
-                  .clubs-icon.inline.float-right.margin-left-10
-              - if @school.has_sports?
-                .columns.two
-                  .column
-                    .title Sports
-                    .content
-                      To see list, go to scorecard.excellentschoolsdetroit.org
-                  .column
-                    .title Clubs
-                    .content
-                      To see list, go to scorecard.excellentschoolsdetroit.org
-          - else
-            - if @school.has_clubs?
-              .columns.one
-                .header.margin-top-10
-                  .icon-text
-                    .clubs-icon
-                    Clubs
-                .column
-                  .title Student Clubs
-                  .content
-                    = render 'field_list.html.haml',
-                      list: @school.student_clubs
-        .section.one-third
-          - if @school.hs?
-            .stat-region
-              %h2 What do students and teachers think about this school?
-              %h3 Rating on 5Essentials Student and Teacher Survey, 2015
-              .content.fivee
-                .visual
-                  .title Overall Rating
-                  .graph(data-rating="#{@school.five_e_overall_rating || 0}")
-                    .text
-                .visual
-                  .wrapper
-                    .graph
-                      .circle
-                        .outer
-                        .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
-                          Ambitious Instruction
-                      .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
-                        Effective Leaders
-                      .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
-                        Collaborative Teachers
-                      .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
-                        Supportive Environment
-                      .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
-                        Involved Families
-                  .square
-                    .text Did not participate
-          - else
-            - if @school.has_sports?
-              .header.margin-top-10
-                .icon-text
-                  .sports-icon
-                  Sports
-              .columns.one
-                .column
-                  .title Boy Sports
-                  .content
-                    = render 'field_list.html.haml',
-                      list: @school.boys_sports[0..5]
-              .columns.one
-                .column
-                  .title Girls Sports
-                  .content
-                    = render 'field_list.html.haml',
-                      list: @school.girls_sports[0..5]
+//<!doctype html>
+//%html
+//  %head
+//    %meta(charset='utf-8')
+//    = wicked_pdf_stylesheet_link_tag 'print'
+//    = wicked_pdf_javascript_include_tag 'application'
+//    = csrf_meta_tag
+//  %body
+//    .container
+//      .info-region
+//        .school-header
+//          .left
+//            .school-title
+//              %h1= @school.display_name
+//              - if @school.status != 'Mature' && @school.status != 'Suburban'
+//                = @school.status
+//                - if @school.status == 'New'
+//                  .text.small
+//                    New Schools are schools that have been open for less than three years OR have less than 70% of data available to adequately assess performance.
+//                - elsif @school.status == 'Turnaround'
+//                  .text.small
+//                    Turnaround Schools are schools that experienced a restart within the past two years due to failing academic performance. A school is in turnaround if it has changed at least two out of the three:  governance, management, and board.
+//            .grades-served= "Grades Served: #{@school.grades_served.first} - #{@school.grades_served.last}"
+//            .icons
+//              .icon-text
+//                .address-icon
+//                =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank'}
+//                = @school.council_district
+//              .icon-text
+//                .phone-icon
+//                = @school.phone
+//              .icon-text
+//                .website-icon
+//                = @school.school_url
+//          .right
+//            .section
+//              .header How is this school ranked?
+//              .columns
+//                .column
+//                  .title Excellent Schools Detroit
+//                  .content
+//                    - if @school.excellent_schools_grade.present?
+//                      .rounded-square.green-background.auto-margin
+//                        .grade
+//                          = @school.excellent_schools_grade
+//                        .small OVERALL GRADE
+//                .column
+//                  .title State
+//                  .content
+//                    - if @school.michigan_percentile.present?
+//                      .rounded-square.light-cyan-background.auto-margin
+//                        .big
+//                          = @school.michigan_percentile
+//                          - if @school.michigan_percentile.to_i < 11 || @school.michigan_percentile.to_i > 20
+//                            - if @school.michigan_percentile =~ /1$/
+//                              .suffix st
+//                            - elsif @school.michigan_percentile =~ /2$/
+//                              .suffix nd
+//                            - elsif @school.michigan_percentile =~ /3$/
+//                              .suffix rd
+//                            - else
+//                              .suffix th
+//                          - else
+//                            .suffix th
+//                        .small PERCENTILE OUT OF 100
+//              .governance
+//                - if @school.governance.present?
+//                  .header
+//                    %span.key Governance:
+//                    = @school.governance
+//                - if @school.authorizer.present?
+//                  %span Authorizer:
+//                  = @school.authorizer
+//                  %br
+//                - if @school.operator.present?
+//                  %span Operator:
+//                  = @school.operator
+//      .info-region
+//        #performance
+//          .middle
+//            - if @school.hs?
+//              .section.border-bottom
+//                .stat-region
+//                  %h2 Are students at this school ready for college?
+//                  %h3 Average percent of students scoring at the college-ready level on ACT, 2013-14
+//                  .content.four
+//                    = render 'bar_graph.html.haml', title: 'English',
+//                      school_average: @school.english_college_ready,
+//                      detroit_average: @detroit.english_college_ready,
+//                      state_average: @state.english_college_ready
+//                    = render 'bar_graph.html.haml', title: 'Math',
+//                      school_average: @school.math_college_ready,
+//                      detroit_average: @detroit.math_college_ready,
+//                      state_average: @state.math_college_ready
+//                    = render 'bar_graph.html.haml', title: 'Reading',
+//                      school_average: @school.reading_college_ready,
+//                      detroit_average: @detroit.reading_college_ready,
+//                      state_average: @state.reading_college_ready
+//                    = render 'bar_graph.html.haml', title: 'Science',
+//                      school_average: @school.science_college_ready,
+//                      detroit_average: @detroit.science_college_ready,
+//                      state_average: @state.science_college_ready
+//              .section.border-bottom
+//                .stat-region
+//                  %h2 Did students at this school grow academically?
+//                  %h3 Average difference in the performance of 11th grade students on the ACT compared to their predicted performance based on their 7th and 8th grade state test results. Based on 2012-14 ACT results.
+//                  .content.growth.two
+//                    .labels
+//                      .label SCHOOL
+//                      .label DETROIT
+//                    = render 'two_bar_graph.html.haml', title: 'English Growth',
+//                      subject: 'english', scale: 10,
+//                      school_growth: @school.english_growth,
+//                      detroit_growth: @detroit.english_growth,
+//                      zero_bar: 'PREDICTED SCORE'
+//                    = render 'two_bar_graph.html.haml', title: 'Math Growth',
+//                      subject: 'math', scale: 10,
+//                      school_growth: @school.math_growth,
+//                      detroit_growth: @detroit.math_growth,
+//                      zero_bar: 'PREDICTED SCORE'
+//                  .content.growth.two
+//                    .labels
+//                      .label SCHOOL
+//                      .label DETROIT
+//                    = render 'two_bar_graph.html.haml', title: 'Reading Growth',
+//                      subject: 'reading', scale: 10,
+//                      school_growth: @school.reading_growth,
+//                      detroit_growth: @detroit.reading_growth,
+//                      zero_bar: 'PREDICTED SCORE'
+//                    = render 'two_bar_graph.html.haml', title: 'Science Growth',
+//                      subject: 'science', scale: 10,
+//                      school_growth: @school.science_growth,
+//                      detroit_growth: @detroit.science_growth,
+//                      zero_bar: 'PREDICTED SCORE'
+//              .section
+//                .stat-region
+//                  %h2 Do students at this school graduate high school, enroll in college and stay in college?
+//                  %h3 Average percent of 9th graders who graduate in 4 and 5 years from high school, percent of graduates that enroll in college, and percent of enrollees that persist into a second year of college. Based on graduating classes 2011-14.
+//                  .content.four.bar
+//                    .labels
+//                      .label SCHOOL
+//                      .label DETROIT
+//                      .label STATE
+//                    = render 'three_bar_graph.html.haml',
+//                      title: 'Graduate in 4 Years',
+//                      school_average: @school.graduate_in_four_years,
+//                      detroit_average: @detroit.graduate_in_four_years,
+//                      state_average: @state.graduate_in_four_years
+//                    = render 'three_bar_graph.html.haml',
+//                      title: 'Graduate in 5 Years',
+//                      school_average: @school.graduate_in_five_years,
+//                      detroit_average: @detroit.graduate_in_five_years,
+//                      state_average: @state.graduate_in_five_years
+//                    = render 'three_bar_graph.html.haml',
+//                      title: 'Enroll in College',
+//                      school_average: @school.enroll_in_college,
+//                      detroit_average: @detroit.enroll_in_college,
+//                      state_average: @state.enroll_in_college
+//                    = render 'three_bar_graph.html.haml',
+//                      title: 'Stay in College',
+//                      school_average: @school.stay_in_college,
+//                      detroit_average: @detroit.stay_in_college,
+//                      state_average: @state.stay_in_college
+//            - else
+//              .section.border-bottom
+//                .stat-region.k8
+//                  %h2 Are students on track and academically prepared?
+//                  %h3 Percentage of students scoring proficient or higher on the state test, 2013-2014
+//                  .content.four
+//                    = render 'bar_graph.html.haml', title: 'Math',
+//                      school_average: @school.math_prepared,
+//                      detroit_average: @detroit.math_prepared,
+//                      state_average: @state.math_prepared
+//                    = render 'bar_graph.html.haml', title: 'Reading and Writing',
+//                      school_average: @school.ela_prepared,
+//                      detroit_average: @detroit.ela_prepared,
+//                      state_average: @state.ela_prepared
+//                    = render 'bar_graph.html.haml', title: 'Science',
+//                      school_average: @school.science_prepared,
+//                      detroit_average: @detroit.science_prepared,
+//                      state_average: @state.science_prepared
+//                    = render 'bar_graph.html.haml', title: 'Social Studies',
+//                      school_average: @school.socstud_prepared,
+//                      detroit_average: @detroit.socstud_prepared,
+//                      state_average: @state.socstud_prepared
+//              .section.border-bottom
+//                .stat-region.k8
+//                  %h2 Did students at this school grow academically?
+//                  %h3 Growth rate of students compared to their academic peers (students who performed at similar levels in the past year), 2012-2014
+//                  .content.growth.two
+//                    .labels
+//                      .label SCHOOL
+//                      .label DETROIT
+//                    = render 'two_bar_graph.html.haml', title: 'Math Growth',
+//                      subject: 'math', scale: 20,
+//                      school_growth: @school.math_growth,
+//                      detroit_growth: @detroit.math_growth,
+//                      zero_bar: 'STATE'
+//                    = render 'two_bar_graph.html.haml', title: 'Reading Growth',
+//                      subject: 'reading', scale: 20,
+//                      school_growth: @school.reading_growth,
+//                      detroit_growth: @detroit.reading_growth,
+//                      zero_bar: 'STATE'
+//              .section
+//                .stat-region.k8
+//                  %h2 What do students and teachers think about this school?
+//                  %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+//                  .content.two.fivee
+//                    .visual
+//                      .title Overall Rating
+//                      .graph(data-rating="#{@school.five_e_overall_rating}")
+//                        .text
+//                      .square
+//                        .text Did not participate
+//                    .visual
+//                      .wrapper
+//                        .graph
+//                          .circle
+//                            .outer
+//                            .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
+//                              Ambitious Instruction
+//                          .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
+//                            Effective Leaders
+//                          .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
+//                            Collaborative Teachers
+//                          .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
+//                            Supportive Environment
+//                          .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
+//                            Involved Families
+//                        .legend
+//                          Very Strong
+//                          .key.green
+//                          .key.light-green
+//                          .key.yellow
+//                          .key.orange
+//                          .key.red
+//                          Very Weak
+//      .info-region
+//        .secondary-school-header
+//          .heading= @school.display_name
+//          .school-info-wrapper
+//            .school-info
+//              %h2 School Information
+//              .float-left
+//                - if @school.hours.present?
+//                  .heading Hours
+//                  %span.margin-left-20.margin-bottom-10= @school.hours
+//                .text.inline.margin-right-10
+//                  .wrapper
+//                    - if @school.before_after_care.include?("Before school care")
+//                      .checked
+//                    - else
+//                      .unchecked
+//                    Before school care
+//                .text.inline
+//                  .wrapper
+//                    - if @school.before_after_care.include?("After school care")
+//                      .checked
+//                    - else
+//                      .unchecked
+//                    After school care
+//              .float-right
+//                - if @school.transportation.present?
+//                  .float-left
+//                    .heading Transportation
+//                    = render 'field_list.html.haml',
+//                      list: @school.transportation[0..5]
+//                .float-left
+//                  %span.key Average Distance Traveled:
+//                  = "#{@school.average_commute} miles"
+//              - if @school.schedule.present?
+//                .float-left.margin-top-20.clear-floats
+//                  .heading Class Schedule
+//                  = render 'field_list.html.haml', list: @school.schedule[0..5]
+//            .demographics
+//              %h2 Demographics
+//              .heading Number of Students
+//              %span.margin-left-20= @school.total_enrollment
+//              = render 'pie.html.haml', school: @school
+//              .other-stats
+//                - if @school.free_reduced_lunch.present?
+//                  .text
+//                    Free and reduced-price lunch: #{@school.free_reduced_lunch}%
+//                - if @school.english_learner.present?
+//                  .text
+//                    English language learner: #{@school.english_learner}%
+//                - if @school.special_education.present?
+//                  .text
+//                    Special Education: #{@school.special_education}%
+//        .section.two-thirds
+//          - if @school.has_academic_programs?
+//            .header.margin-top-10
+//              .icon-text
+//                .star-icon
+//                Academic Programs
+//          .columns.two
+//            - if @school.academic_focus.present?
+//              .column
+//                .title Academic Focus
+//                .content
+//                  = render 'field_list.html.haml',
+//                    list: @school.academic_focus[0..5]
+//            - if @school.instructional_model.present?
+//              .column
+//                .title Personalized Learning Options
+//                .content
+//                  = render 'field_list.html.haml',
+//                    list: @school.instructional_model[0..5]
+//            - if @school.has_ell?
+//              .column
+//                .title English Language Learners
+//                .content
+//                  - if @school.ell_level.present?
+//                    %span.key Level:
+//                    = @school.ell_level
+//                    <br/>
+//                    <br/>
+//                  - if @school.ell_languages.present?
+//                    %span.key Languages
+//                    = render 'field_list.html.haml',
+//                      list: @school.ell_languages[0..5]
+//            - if @school.parent_involvement.present?
+//              .column
+//                .title Parent Involvement
+//                .content
+//                  = render 'field_list.html.haml',
+//                    list: @school.parent_involvement[0..5]
+//            - if @school.special_ed_level.present? || @school.special_ed_programs.present?
+//              .column
+//                .title Special Education
+//                .content
+//                  - if @school.special_ed_level.present?
+//                    %span.key Level:
+//                    = @school.special_ed_level
+//                    <br/>
+//                    <br/>
+//                  - if @school.special_ed_programs.present?
+//                    %span.key Programs
+//                    = render 'field_list.html.haml',
+//                      list: @school.special_ed_programs[0..5]
+//          - if @school.hs?
+//            - if @school.has_sports? || @school.has_clubs?
+//              .header.margin-top-10
+//                .icon-text
+//                  .star-icon
+//                  .inline.float-left Extracurricular Activities
+//                  .clubs-icon.inline.float-right.margin-left-10
+//              - if @school.has_sports?
+//                .columns.two
+//                  .column
+//                    .title Sports
+//                    .content
+//                      To see list, go to scorecard.excellentschoolsdetroit.org
+//                  .column
+//                    .title Clubs
+//                    .content
+//                      To see list, go to scorecard.excellentschoolsdetroit.org
+//          - else
+//            - if @school.has_clubs?
+//              .columns.one
+//                .header.margin-top-10
+//                  .icon-text
+//                    .clubs-icon
+//                    Clubs
+//                .column
+//                  .title Student Clubs
+//                  .content
+//                    = render 'field_list.html.haml',
+//                      list: @school.student_clubs
+//        .section.one-third
+//          - if @school.hs?
+//            .stat-region
+//              %h2 What do students and teachers think about this school?
+//              %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+//              .content.fivee
+//                .visual
+//                  .title Overall Rating
+//                  .graph(data-rating="#{@school.five_e_overall_rating || 0}")
+//                    .text
+//                .visual
+//                  .wrapper
+//                    .graph
+//                      .circle
+//                        .outer
+//                        .inner.fivee-category(data-num="#{@school.five_e_ambitious_instruction}")
+//                          Ambitious Instruction
+//                      .top-left.fivee-category(data-num="#{@school.five_e_effective_leaders}")
+//                        Effective Leaders
+//                      .top-right.fivee-category(data-num="#{@school.five_e_collaborative_teachers}")
+//                        Collaborative Teachers
+//                      .bottom-left.fivee-category(data-num="#{@school.five_e_supportive_environment}")
+//                        Supportive Environment
+//                      .bottom-right.fivee-category(data-num="#{@school.five_e_involved_families}")
+//                        Involved Families
+//                  .square
+//                    .text Did not participate
+//          - else
+//            - if @school.has_sports?
+//              .header.margin-top-10
+//                .icon-text
+//                  .sports-icon
+//                  Sports
+//              .columns.one
+//                .column
+//                  .title Boy Sports
+//                  .content
+//                    = render 'field_list.html.haml',
+//                      list: @school.boys_sports[0..5]
+//              .columns.one
+//                .column
+//                  .title Girls Sports
+//                  .content
+//                    = render 'field_list.html.haml',
+//                      list: @school.girls_sports[0..5]

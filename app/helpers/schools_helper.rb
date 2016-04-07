@@ -154,6 +154,7 @@ module SchoolsHelper
   end
 
   def rate_text(rate)
+    return 'No data available' unless rate
     if rate >= 9
       'VERY STRONG'
     elsif rate >= 7

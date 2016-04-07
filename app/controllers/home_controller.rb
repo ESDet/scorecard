@@ -1,6 +1,9 @@
 class HomeController < ApplicationController
   def index
     @school_names = []
+    if request.format != Mime::HTML
+      redirect_to root_path and return
+    end
   end
 
   def resources
