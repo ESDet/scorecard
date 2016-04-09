@@ -2,4 +2,4 @@
   .section
     .middle
       .columns.three
-        = school.description.html_safe
+        = school.description.try(:html_safe)
