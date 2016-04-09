@@ -130,7 +130,9 @@ class SchoolsController < ApplicationController
     retries = 2
     begin
       if @grade.present?
-        response = Portal.new.fetch(url)
+        response = Rails.cache.fetch(cache_key(@grade == 'ec' ? 'ec' : 'school')) do
+          Portal.new.fetch(url)
+        end
         if response != ["request error"] && response["data"]
           @schools = gather_included_fields(response).
             select { |s| !s["field_geo"].nil? }.
@@ -140,14 +142,18 @@ class SchoolsController < ApplicationController
           redirect_to root_path and return
         end
       else
-        schools_response = Portal.new.fetch(schools_url)
+        schools_response = Rails.cache.fetch(cache_key('school')) do
+          Portal.new.fetch(schools_url)
+        end
         if schools_response != ["request error"] && schools_response["data"]
           schools_data = gather_included_fields(schools_response).
             select { |s| !s["field_geo"].nil? }.
             map { |s| SchoolData.new(s) }
         end
 
-        ecs_response = Portal.new.fetch(ecs_url)
+        ecs_response = Rails.cache.fetch(cache_key('ec')) do
+          Portal.new.fetch(ecs_url)
+        end
         if ecs_response != ["request error"] && ecs_response["data"]
           ecs_data = gather_included_fields(ecs_response).
             select { |s| !s["field_geo"].nil? }.
@@ -290,6 +296,18 @@ class SchoolsController < ApplicationController
 
   def school_search_params
     "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
+  end
+
+  def cache_key(cache_type)
+    key = Portal.new.fetch("most_recent_#{cache_type}_timestamp.json")["most_recent_#{cache_type}_timestamp"]
+    key = "index/#{cache_type}/#{key}"
+    if @loc.present?
+      key << "/#{@loc.gsub(/\s/, '_')}"
+    end
+    if @filters.present?
+      @filters.sort.each { |f| key << "/#{f}" }
+    end
+    key
   end
 
   def fetch_school_data(id, school_type)
