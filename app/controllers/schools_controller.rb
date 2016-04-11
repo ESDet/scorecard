@@ -299,8 +299,8 @@ class SchoolsController < ApplicationController
   end
 
   def cache_key(cache_type)
-    key = Portal.new.fetch("most_recent_#{cache_type}_timestamp.json")["most_recent_#{cache_type}_timestamp"]
-    key = "index/#{cache_type}/#{key}"
+    timestamp = Portal.new.fetch("most_recent_#{cache_type}_timestamp.json")["most_recent_#{cache_type}_timestamp"]
+    key = "index/#{@grade || 'all'}/#{cache_type}/#{timestamp}"
     if @loc.present?
       key << "/#{@loc.gsub(/\s/, '_')}"
     end
