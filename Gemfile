@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.2'
+ruby '2.3.0'
 
 gem 'rake'
 gem 'rails'
@@ -22,7 +22,6 @@ gem 'psych', '1.3.4'
 gem 'rack-mini-profiler', require: false
 gem 'sass-rails'
 gem 'stackprof'
-gem 'therubyracer'
 gem 'bootstrap-sass'
 gem 'uglifier'
 gem 'wicked_pdf'
