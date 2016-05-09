@@ -29,14 +29,14 @@
             - if school.recommended?
               .column.recommended-school
                 = image_tag 'recommended_school'
-            - if school.michigan_percentile.present?
-              .column
-                .info-box.info-box--small
-                  .info-box__title State
-                  .info-box__content.info-box__content--overview
-                    .text.percentile
-                      = school.michigan_percentile
-                      .suffix= percentile_suffix(school.michigan_percentile)
+            //- if school.michigan_percentile.present?
+            //  .column
+            //    .info-box.info-box--small
+            //      .info-box__title State
+            //      .info-box__content.info-box__content--overview
+            //        .text.percentile
+            //          = school.michigan_percentile
+            //          .suffix= percentile_suffix(school.michigan_percentile)
       .more-rankings
         See more rankings:
         .ranking-link
