@@ -13,7 +13,7 @@
       - if school.ec?
         %img(src="#{school.early_childhood_image(:mini, nil, mobile: true)}")
       - else
-        .rounded-square.green-background.small
+        .rounded-square.blue-border.small
           .grade
             %span>= school.excellent_schools_grade
             - if school.field_school_scorecard_status.name == 'Turnaround'
