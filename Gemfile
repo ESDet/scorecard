@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.3.1'
 
 gem 'rake'
 gem 'rails'
@@ -30,7 +30,7 @@ gem 'rails_12factor', group: :production
 gem 'heroku-deflater', :group => :production
 
 group :development do
-  gem 'pry-byebug', '=1.3.3'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'pry-remote'
   gem 'flamegraph'
