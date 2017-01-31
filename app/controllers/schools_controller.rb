@@ -54,7 +54,7 @@ class SchoolsController < ApplicationController
       @grade = "hs" if @grade == "high"
 
       url = "schools.json?offset=#{@offset}&flatten_fields=true&limit=#{@limit}" <<
-        "&includes=school_profile,esd_#{@grade}_2016" <<
+        "&includes=school_profile,esd_#{@grade}_2016,esd_#{@grade}_2017" <<
         "&filter[field_scorecard_display]=1"
 
       if @grade == "k8"
@@ -86,7 +86,7 @@ class SchoolsController < ApplicationController
     else
       schools_url = "schools.json?offset=#{@offset}&limit=#{@limit}" <<
         "&flatten_fields=true" <<
-        "&includes=school_profile,esd_k8_2016," <<
+        "&includes=school_profile,esd_k8_2016,esd_k8_2017," <<
         "esd_hs_2016&filter[field_scorecard_display]=1"
 
       ecs_url = "ecs.json?offset=#{@ecs_offset}&limit=#{@limit}&flatten_fields=true" <<
@@ -318,7 +318,10 @@ class SchoolsController < ApplicationController
     else
       url = "schools"
       includes = "school_profile,count_2016," <<
-        "fiveessentials_2015,fiveessentials_2016,esd_#{school_type}_2016," <<
+        "fiveessentials_2015," <<
+        "fiveessentials_2016," <<
+        "esd_#{school_type}_2016," <<
+        "esd_#{school_type}_2017," <<
         "k12_supplemental_2015"
     end
 
@@ -354,7 +357,7 @@ class SchoolsController < ApplicationController
   def fetch_detroit_and_state_data(school_type)
     url = "schools.json?flatten_fields=true" <<
       "&include_option_labels=true" <<
-      "&includes=school_profile,esd_#{school_type}_2016" <<
+      "&includes=school_profile,esd_#{school_type}_2016,esd_#{school_type}_2017" <<
       "&filter[field_bcode]=88888,99999" <<
       "&filter_op[field_bcode]=IN"
 
@@ -393,7 +396,7 @@ class SchoolsController < ApplicationController
   end
 
   def fetch_schools_for_scatter_plot(school_type)
-    url = "schools.json?flatten_fields=true&includes=esd_#{school_type}_2016"
+    url = "schools.json?flatten_fields=true&includes=esd_#{school_type}_2016,esd_#{school_type}_2017"
     retries = 2
     begin
       school_data = Portal.new.fetch(url)
@@ -444,6 +447,10 @@ class SchoolsController < ApplicationController
     elsif includes["type"] == "esd_k8_2016s"
       if school["links"]["esd_k8_2016"]
         includes["id"] == school["links"]["esd_k8_2016"]["linkage"]["id"]
+      end
+    elsif includes["type"] == "esd_k8_2017s"
+      if school["links"]["esd_k8_2017"]
+        includes["id"] == school["links"]["esd_k8_2017"]["linkage"]["id"]
       end
     elsif includes["type"] == "esd_hs_2016s"
       if school["links"]["esd_hs_2016"]
