@@ -9,16 +9,20 @@ $(function() {
     var growth = parseFloat(el.data('growth-location'));
 
     if (proficiency != 0) {
-      proficiency = proficiency - (proficiency / scatterWidth * 100);
+      proficiency = proficiency - (el.width() / scatterWidth * 50);
       if (proficiency < 0) {
         proficiency = 0;
       }
     }
 
     if (growth != 100) {
-      growth = growth - (el.height() / scatterHeight * 100);
+      growth = growth - (el.height() / scatterHeight * 50);
     } else {
-      growth = 100 - (el.height() / scatterHeight * 100);
+      growth = 100 - (el.height() / scatterHeight * 50);
+    }
+
+    if (growth > 95) {
+      growth = 95;
     }
 
     el.css('left', proficiency + '%');
