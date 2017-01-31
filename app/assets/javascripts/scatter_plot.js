@@ -9,7 +9,7 @@ $(function() {
     var growth = parseFloat(el.data('growth-location'));
 
     if (proficiency != 0) {
-      proficiency = proficiency - (el.width() / scatterWidth * 50);
+      proficiency = proficiency - (el.width() / scatterWidth * 50) + 0.1;
       if (proficiency < 0) {
         proficiency = 0;
       }
@@ -20,6 +20,8 @@ $(function() {
     } else {
       growth = 100 - (el.height() / scatterHeight * 50);
     }
+
+    growth = growth + 0.1;
 
     if (growth > 95) {
       growth = 95;
