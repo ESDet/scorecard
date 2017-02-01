@@ -318,7 +318,7 @@ class SchoolsController < ApplicationController
     else
       url = "schools"
       includes = "school_profile,count_2016," <<
-        "fiveessentials_2015,esd_#{school_type}_2016," <<
+        "fiveessentials_2015,fiveessentials_2016,esd_#{school_type}_2016," <<
         "k12_supplemental_2015"
     end
 

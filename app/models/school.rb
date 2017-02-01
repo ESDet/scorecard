@@ -8,13 +8,14 @@ module School
       'E_Fam' => 'involved_families',
       'E_Env' => 'supportive_environment',
       'E_Ins' => 'ambitious_instruction',
-      'Report_School_Id' => 'report_id'
+      'Report_School_Id' => 'report_id',
+      'Year' => 'year'
     }
     five_essentials.each do |k, v|
       o["five_e_#{v}".to_sym] = if k == 'Category5E'
-        o.fiveessentials_2015s.andand.send(k)
+        o.fiveessentials_2016s.andand.send(k)
       else
-        o.fiveessentials_2015s.andand.send(k).to_i
+        o.fiveessentials_2016s.andand.send(k).to_i
       end
     end
   end
