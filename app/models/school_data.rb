@@ -59,9 +59,11 @@ class SchoolData < OpenStruct
       'New'
     else
       if k8?
-        esd_k8_2016s.andand.total_ltrgrade ? esd_k8_2016s.andand.total_ltrgrade : 'N/A'
+        grade = esd_k8_2016s.andand.total_ltrgrade
+        grade.present? ? grade : 'N/A'
       elsif hs?
-        esd_hs_2016s.andand.total_ltrgrade ? esd_hs_2016s.andand.total_ltrgrade : 'N/A'
+        grade = esd_hs_2016s.andand.total_ltrgrade
+        grade.present? ? grade : 'N/A'
       end
     end
   end

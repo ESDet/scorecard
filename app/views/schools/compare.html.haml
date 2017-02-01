@@ -2,16 +2,12 @@
   .middle
     .float-left
       %a.btn(id="add-schools" href="#") Add schools
-    .page.next
-      %span &nbsp;
-      %a(href="")
-        .right-arrow-icon
-        .text Next
-    .page.prev
-      %span &nbsp;
-      %a(href="")
-        .left-arrow-icon
-        .text Prev
+    %a.page.next(href="#")
+      .right-arrow-icon
+      .text Next
+    %a.page.prev(href="#")
+      .left-arrow-icon
+      .text Prev
 .middle
   #map
 
@@ -32,8 +28,8 @@
               .rating-image
                 = image_tag s.early_childhood_image(:overall, nil), class: 'el-icon overall'
             - else
-              .rounded-square.green-background.big
-                .grade
+              .rounded-square.blue-border.big
+                .grade{style: ("font-size: 2em; padding-top: 16px;" if s.excellent_schools_grade.include?("N"))}
                   = s.excellent_schools_grade
         .region-title(data-target="overview")
           %h2 Overview
@@ -313,8 +309,9 @@
       });
 
       var lastPage = document.referrer;
-      if (localStorage.getItem('lastSearch').length != 0) {
-        $('#add-schools').attr('href', localStorage.getItem('lastSearch'));
+      var lastSearch = localStorage.getItem('lastSearch');
+      if (lastSearch != null && lastSearch.length != 0) {
+        $('#add-schools').attr('href', lastSearch);
       } else if (lastPage.match(/schools/)) {
         $('#add-schools').attr('href', lastPage);
       } else {
@@ -349,8 +346,8 @@
         compare.showSchool('prev');
         return false;
       }
-      $('.page.next').click(showNext);
-      $('.page.prev').click(showPrev);
+      $('.page.next').on('click touchend', showNext);
+      $('.page.prev').on('click touchend', showPrev);
 
       compare.setHidden();
       if (windowWidth > 1271) {

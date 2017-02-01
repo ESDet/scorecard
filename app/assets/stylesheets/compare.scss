@@ -8,7 +8,6 @@
   display: inline-block;
   width: 100%;
   background-color: white;
-  margin-top: 90px;
 }
 
 .schools-compare .compare-nav {
@@ -24,6 +23,8 @@
 }
 
 .schools-compare .compare-nav .middle .name {
+  clear: both;
+  padding-top: 1px;
   h2 {
     margin: 10px 0 0 0;
   }
@@ -63,9 +64,21 @@
   }
 }
 
-.schools-compare .page.next .right-arrow-icon {
-  text-align: left;
+.schools-compare .page {
+  border: 1px solid #4c6c9d;
+  padding: 0 5px;
+  text-align: center;
 }
+
+.schools-compare .text {
+  margin-top: -7px;
+  padding-bottom: 4px;
+}
+
+.schools-compare .page.prev {
+  margin-right: 5px;
+}
+
 .schools-compare .page.next .right-arrow-icon:before {
   font-size: 31px;
   content: "\003E";

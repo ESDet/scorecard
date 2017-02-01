@@ -4,21 +4,21 @@ var Compare = function(w) {
   var _navPos = _nav.offset();
 
   var _updateNavName = function(windowpos, navPos) {
-    if (w.width() < 541 && windowpos >= navPos.top) {
+    if (w.width() < 541 && windowpos > navPos.top) {
       var currentSchool = $('.compare > .school').
         not('.hide').first();
       var schoolNameLine = currentSchool.
         find('.group:nth-of-type(1) .line:nth-of-type(1)');
       var newName = schoolNameLine.find('.name');
-      var oldName = $('.nav .middle .name');
+      var oldName = $('.compare-nav .middle .name');
       if (oldName.length == 0) {
-        newName.clone().appendTo('.nav .middle');
+        newName.clone().appendTo('.compare-nav .middle');
       } else if (newName != oldName) {
         oldName.remove();
-        newName.clone().appendTo('.nav .middle');
+        newName.clone().appendTo('.compare-nav .middle');
       }
     } else {
-      $('.nav .middle .name').remove();
+      $('.compare-nav .middle .name').remove();
     }
   };
 
@@ -135,7 +135,7 @@ var Compare = function(w) {
 
   var _setStickyNav = function() {
     var windowpos = _w.scrollTop();
-    if (windowpos >= _navPos.top) {
+    if (windowpos > _navPos.top) {
       _nav.addClass("stick");
     } else {
       _nav.removeClass("stick");

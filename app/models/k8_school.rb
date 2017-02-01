@@ -33,10 +33,6 @@ module K8School
     self.andand.esd_k8_2016s
   end
 
-  def excellent_schools_grade
-    current_stats.andand.total_ltrgrade
-  end
-
   def proficiency_ranking
     current_stats.andand.prof_cat_points.andand.to_f
   end
