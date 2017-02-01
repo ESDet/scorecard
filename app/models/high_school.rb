@@ -11,6 +11,7 @@ module HighSchool
       ['eng', 'math', 'read', 'sci'].each do |t|
         if s =~ /#{t}/
           o["#{s}_college_ready_points".to_sym] = float_value(o, :esd_hs_2016s, "#{t}_cr_pts")
+          o["#{s}_growth_points".to_sym] = float_value(o, :esd_hs_2016s, "adj_#{t}_pts")
         end
       end
 

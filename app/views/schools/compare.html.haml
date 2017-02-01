@@ -149,23 +149,23 @@
               %h3 Proficiency
               .line.clear-floats
                 .float-left Math
-                .float-right= "#{s.math_prepared}%" if s.math_prepared.present?
+                .float-right= rank_text(s.math_meap_prepared_points)
               .line.clear-floats
                 .float-left Reading and Writing
-                .float-right= "#{s.ela_prepared}%" if s.ela_prepared.present?
+                .float-right= rank_text(s.ela_meap_prepared_points)
               .line.clear-floats
                 .float-left Science
-                .float-right= "#{s.science_prepared}%" if s.science_prepared.present?
+                .float-right= rank_text(s.science_meap_prepared_points)
               .line.clear-floats
                 .float-left Social Studies
-                .float-right= "#{s.socstud_prepared}%" if s.socstud_prepared.present?
+                .float-right= rank_text(s.socstud_meap_prepared_points)
               %h3 Growth
               .line.clear-floats
                 .float-left Math Growth
-                .float-right= s.math_growth
+                .float-right= rank_text(s.math_growth_points)
               .line.clear-floats
                 .float-left Reading Growth
-                .float-right= s.reading_growth
+                .float-right= rank_text(s.reading_growth_points)
               .line.fivee.clear-floats
                 = render 'five_essentials',
                   title: '5Essentials Rating',
@@ -180,29 +180,29 @@
               %h3 Proficiency
               .line.clear-floats
                 .float-left English
-                .float-right= "#{s.english_college_ready}%" if s.english_college_ready.present?
+                .float-right= rank_text(s.english_college_ready_points)
               .line.clear-floats
                 .float-left Math
-                .float-right= "#{s.math_college_ready}%" if s.math_college_ready.present?
+                .float-right= rank_text(s.math_college_ready_points)
               .line.clear-floats
                 .float-left Reading
-                .float-right= "#{s.reading_college_ready}%" if s.reading_college_ready.present?
+                .float-right= rank_text(s.reading_college_ready_points)
               .line.clear-floats
                 .float-left Science
-                .float-right= "#{s.science_college_ready}%" if s.science_college_ready.present?
+                .float-right= rank_text(s.science_college_ready_points)
               %h3 Growth
               .line.clear-floats
-                .float-left English Growth
-                .float-right= s.english_growth
+                .float-left English
+                .float-right= rank_text(s.english_growth_points)
               .line.clear-floats
                 .float-left Math
-                .float-right= s.math_growth
+                .float-right= rank_text(s.math_growth_points)
               .line.clear-floats
                 .float-left Reading
-                .float-right= s.reading_growth
+                .float-right= rank_text(s.reading_growth_points)
               .line.clear-floats
                 .float-left Science
-                .float-right= s.science_growth
+                .float-right= rank_text(s.science_growth_points)
               %h3 College
               .line.clear-floats
                 .float-left 4-Year Grad
