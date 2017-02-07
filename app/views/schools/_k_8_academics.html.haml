@@ -49,6 +49,7 @@
                   - detroit_math_prof = @detroit.try("math_meap_prepared_#{year}")
                   - detroit_math_prof_pts = @detroit.try("math_meap_prepared_points_#{year}")
                   - state_math_prof = @state.try("math_meap_prepared_#{year}")
+
                   - school_ela_prof = @school.try("ela_meap_prepared_#{year}")
                   - school_ela_prof_pts = @school.try("ela_meap_prepared_points_#{year}")
                   - detroit_ela_prof = @detroit.try("ela_meap_prepared_#{year}")
@@ -60,11 +61,13 @@
                   - detroit_math_prof = @detroit.try("math_mstep_prepared_#{year}")
                   - detroit_math_prof_pts = @detroit.try("math_mstep_prepared_points_#{year}")
                   - state_math_prof = @state.try("math_mstep_prepared_#{year}")
+
                   - school_ela_prof = @school.try("ela_mstep_prepared_#{year}")
                   - school_ela_prof_pts = @school.try("ela_mstep_prepared_points_#{year}")
                   - detroit_ela_prof = @detroit.try("ela_mstep_prepared_#{year}")
                   - detroit_ela_prof_pts = @detroit.try("ela_mstep_prepared_points_#{year}")
                   - state_ela_prof = @state.try("ela_mstep_prepared_#{year}")
+
                 .graph-points.math(class="#{year} #{"hide" if year == "2016"}")
                   = render 'scatter_subject_points',
                     hs: @school.hs?,
@@ -90,19 +93,19 @@
                     hs: @school.hs?,
                     school_name: @school.display_name,
                     subject: 'reading',
-                    school_proficiency: school_math_prof,
-                    school_proficiency_points: school_math_prof_pts,
+                    school_proficiency: school_ela_prof,
+                    school_proficiency_points: school_ela_prof_pts,
                     school_proficiency_location: @school.try("ela_scatter_prof_#{year}"),
                     school_growth: @school.try("reading_growth_#{year}"),
                     school_growth_points: @school.try("reading_growth_points_#{year}"),
                     school_growth_location: @school.try("ela_scatter_growth_#{year}"),
-                    detroit_proficiency: detroit_math_prof,
-                    detroit_proficiency_points: detroit_math_prof_pts,
+                    detroit_proficiency: detroit_ela_prof,
+                    detroit_proficiency_points: detroit_ela_prof_pts,
                     detroit_proficiency_location: @detroit.try("ela_scatter_prof_#{year}"),
                     detroit_growth: @detroit.try("reading_growth_#{year}"),
                     detroit_growth_points: @detroit.try("reading_growth_points_#{year}"),
                     detroit_growth_location: @detroit.try("ela_scatter_growth_#{year}"),
-                    state_proficiency: state_math_prof,
+                    state_proficiency: state_ela_prof,
                     state_growth: @state.try("reading_growth_#{year}")
               - @scatter_plot_schools.each do |s|
                 - if d = s.try("esd_k8_#{year}s")
