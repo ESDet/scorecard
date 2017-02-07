@@ -3,7 +3,8 @@
   width: 100%;
 }
 
-.scatter-plot-nav .subject {
+.scatter-plot-nav .subject,
+.scatter-plot-graph .years .year {
   position: relative;
   display: inline-block;
   margin: 0;
@@ -17,6 +18,22 @@
   cursor: pointer;
 }
 
+.scatter-plot-graph .years .year {
+  font-size: 17px;
+  width: auto;
+  border: 1px solid $grey;
+}
+
+.scatter-plot-graph .years .year.active {
+  background-color: white;
+}
+
+.scatter-plot-graph .years a.year,
+.scatter-plot-graph .years a.year:visited,
+.scatter-plot-graph .years a.year:active,
+.scatter-plot-graph .years a.year:hover,
+.scatter-plot-graph .years a.year.external,
+.scatter-plot-graph .years a.year.external:visited,
 .scatter-plot-nav a.subject,
 .scatter-plot-nav a.subject:visited,
 .scatter-plot-nav a.subject:active,
@@ -54,6 +71,11 @@
   width: 100%;
   border: 4px solid $grey;
   margin-top: 25px;
+}
+
+.scatter-plot-graph .years {
+  float: right;
+  vertical-align: top;
 }
 
 .scatter-plot-graph .label {

@@ -11,31 +11,36 @@ module K8School
         [s, s]
       end
 
-      ["2016", "2017"].each do |year|
-        o["#{s}_mstep_prepared_#{year}".to_sym] = int_value(o, "esd_k8_#{year}s", "mstep_#{mstep_sub}prof")
-        o["#{s}_mstep_prepared_points_#{year}".to_sym] = float_value(o, "esd_k8_#{year}s", "mstep_#{mstep_sub}pts")
+      o["#{s}_mstep_prepared_2016".to_sym] = int_value(o, :esd_k8_2016s, "mstep_#{mstep_sub}prof")
+      o["#{s}_mstep_prepared_points_2016".to_sym] = float_value(o, :esd_k8_2016s, "mstep_#{mstep_sub}pts")
 
-        if year == "2016"
-          o["#{s}_meap_prepared_2016".to_sym] = int_value(o, :esd_k8_2016s, "frac_prof#{s}")
-          o["#{s}_meap_prepared_points_2016".to_sym] = float_value(o, :esd_k8_2016s, "pr2_#{meap_sub}_pts")
-        end
+      o["#{s}_mstep_prepared_2017".to_sym] = int_value(o, :esd_k8_2017s, "mstep_#{mstep_sub}prof")
+      o["#{s}_mstep_prepared_points_2017".to_sym] = float_value(o, :esd_k8_2017s, "mstep_#{mstep_sub}pts")
 
-        o["#{s}_growth_#{year}".to_sym] = float_value(o, "esd_k8_#{year}s", "mean_pctl_#{s}")
+      o["#{s}_meap_prepared_2016".to_sym] = int_value(o, :esd_k8_2016s, "frac_prof#{s}")
+      o["#{s}_meap_prepared_points_2016".to_sym] = float_value(o, :esd_k8_2016s, "pr2_#{meap_sub}_pts")
 
-        o["#{s}_scatter_prof_#{2016}".to_sym] = float_value(o, "esd_k8_#{year}s", "scatter_#{s}prof")
-        o["#{s}_scatter_growth_#{2016}".to_sym] = float_value(o, "esd_k8_#{year}s", "scatter_#{s}growth")
-      end
+      o["#{s}_growth_2016".to_sym] = float_value(o, :esd_k8_2016s, "mean_pctl_#{s}")
+      o["#{s}_growth_2017".to_sym] = float_value(o, :esd_k8_2017s, "mean_pctl_#{s}")
+
+      o["#{s}_scatter_prof_2016".to_sym] = float_value(o, :esd_k8_2016s, "scatter_#{s}prof")
+      o["#{s}_scatter_growth_2016".to_sym] = float_value(o, :esd_k8_2016s, "scatter_#{s}growth")
+
+      o["#{s}_scatter_prof_2017".to_sym] = float_value(o, :esd_k8_2017s, "scatter_#{s}prof")
+      o["#{s}_scatter_growth_2017".to_sym] = float_value(o, :esd_k8_2017s, "scatter_#{s}growth")
     end
 
-    ["2016", "2017"].each do |year|
-      o["reading_growth_#{year}".to_sym] = float_value(o, "esd_k8_#{year}s", "mean_pctl_reading")
-      o["reading_growth_points_#{year}".to_sym] = float_value(o, "esd_k8_#{year}s", :pts_progress_read)
-      o["math_growth_points_#{year}".to_sym] = float_value(o, "esd_k8_#{year}s", :pts_progress_math)
-    end
+    o[:reading_growth_2016] = float_value(o, :esd_k8_2016s, "mean_pctl_reading")
+    o[:reading_growth_points_2016] = float_value(o, :esd_k8_2016s, :pts_progress_read)
+    o[:math_growth_points_2016] = float_value(o, :esd_k8_2016s, :pts_progress_math)
+
+    o[:reading_growth_2017] = float_value(o, :esd_k8_2017s, "mean_pctl_reading")
+    o[:reading_growth_points_2017] = float_value(o, :esd_k8_2017s, :pts_progress_read)
+    o[:math_growth_points_2017] = float_value(o, :esd_k8_2017s, :pts_progress_math)
   end
 
   def current_stats
-    self.try(:esd_k8_2017s)
+    self.andand.esd_k8_2016s
   end
 
   def proficiency_ranking
@@ -53,13 +58,13 @@ module K8School
   private
 
   def self.int_value(o, set, value)
-    if v = o[set].try(:send, value)
+    if v = o[set].andand.send(value)
       (v.to_f * 100).to_i
     end
   end
 
   def self.float_value(o, set, value)
-    if v = o[set].try(:send, value)
+    if v = o[set].andand.send(value)
       v.to_f.round
     end
   end

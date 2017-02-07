@@ -7,24 +7,24 @@
         .content.four
           = render 'bar_graph', title: 'Math',
             school_average: @school.math_mstep_prepared_2017,
-            school_average_points: @school.math_mstep_prepared_points,
-            detroit_average: @detroit.math_mstep_prepared,
-            state_average: @state.math_mstep_prepared
+            school_average_points: @school.math_mstep_prepared_points_2017,
+            detroit_average: @detroit.math_mstep_prepared_2017,
+            state_average: @state.math_mstep_prepared_2017
           = render 'bar_graph', title: 'Reading and Writing',
-            school_average: @school.ela_mstep_prepared,
-            school_average_points: @school.ela_mstep_prepared_points,
-            detroit_average: @detroit.ela_mstep_prepared,
-            state_average: @state.ela_mstep_prepared
+            school_average: @school.ela_mstep_prepared_2017,
+            school_average_points: @school.ela_mstep_prepared_points_2017,
+            detroit_average: @detroit.ela_mstep_prepared_2017,
+            state_average: @state.ela_mstep_prepared_2017
           = render 'bar_graph', title: 'Science',
-            school_average: @school.science_mstep_prepared,
-            school_average_points: @school.science_mstep_prepared_points,
-            detroit_average: @detroit.science_mstep_prepared,
-            state_average: @state.science_mstep_prepared
+            school_average: @school.science_mstep_prepared_2017,
+            school_average_points: @school.science_mstep_prepared_points_2017,
+            detroit_average: @detroit.science_mstep_prepared_2017,
+            state_average: @state.science_mstep_prepared_2017
           = render 'bar_graph', title: 'Social Studies',
-            school_average: @school.socstud_mstep_prepared,
-            school_average_points: @school.socstud_mstep_prepared_points,
-            detroit_average: @detroit.socstud_mstep_prepared,
-            state_average: @state.socstud_mstep_prepared
+            school_average: @school.socstud_mstep_prepared_2017,
+            school_average_points: @school.socstud_mstep_prepared_points_2017,
+            detroit_average: @detroit.socstud_mstep_prepared_2017,
+            state_average: @state.socstud_mstep_prepared_2017
           //.what-this-means
           //  .question-mark
           //  WHAT THIS MEANS
@@ -41,58 +41,81 @@
             %a.subject.active(data-target="math") Math
             %a.subject(data-target="reading") Reading
           = content_for :scatter_plot_points do
-            - if @school.math_scatter_prof.present? && @school.math_scatter_growth.present?
-              .graph-points.math
-                = render 'scatter_subject_points',
-                  hs: @school.hs?,
-                  school_name: @school.display_name,
-                  subject: 'math',
-                  school_proficiency: @school.math_meap_prepared,
-                  school_proficiency_points: @school.math_meap_prepared_points,
-                  school_proficiency_location: @school.math_scatter_prof,
-                  school_growth: @school.math_growth,
-                  school_growth_points: @school.math_growth_points,
-                  school_growth_location: @school.math_scatter_growth,
-                  detroit_proficiency: @detroit.math_meap_prepared,
-                  detroit_proficiency_points: @detroit.math_meap_prepared_points,
-                  detroit_proficiency_location: @detroit.math_scatter_prof,
-                  detroit_growth: @detroit.math_growth,
-                  detroit_growth_points: @detroit.math_growth_points,
-                  detroit_growth_location: @detroit.math_scatter_growth,
-                  state_proficiency: @state.math_meap_prepared,
-                  state_growth: @state.math_growth
-            - if @school.ela_scatter_prof.present? && @school.ela_scatter_growth.present?
-              .graph-points.reading.hide
-                = render 'scatter_subject_points',
-                  hs: @school.hs?,
-                  school_name: @school.display_name,
-                  subject: 'reading',
-                  school_proficiency: @school.ela_meap_prepared,
-                  school_proficiency_points: @school.ela_meap_prepared_points,
-                  school_proficiency_location: @school.ela_scatter_prof,
-                  school_growth: @school.reading_growth,
-                  school_growth_points: @school.reading_growth_points,
-                  school_growth_location: @school.ela_scatter_growth,
-                  detroit_proficiency: @detroit.ela_meap_prepared,
-                  detroit_proficiency_points: @detroit.ela_meap_prepared_points,
-                  detroit_proficiency_location: @detroit.ela_scatter_prof,
-                  detroit_growth: @detroit.reading_growth,
-                  detroit_growth_points: @detroit.reading_growth_points,
-                  detroit_growth_location: @detroit.ela_scatter_growth,
-                  state_proficiency: @state.ela_meap_prepared,
-                  state_growth: @state.reading_growth
-            - @scatter_plot_schools.each do |s|
-              - if d = s.esd_k8_2016s
-                - math_prof = d.scatter_mathprof
-                - math_growth = d.scatter_mathgrowth
-                - if math_prof.present? && math_growth.present?
-                  .graph-points.math
-                    .graph-point.school.other(data-proficiency-location="#{math_prof}" data-growth-location="#{math_growth}")
-                - read_prof = d.scatter_elaprof
-                - read_growth = d.scatter_elagrowth
-                - if read_prof.present? && read_growth.present?
-                  .graph-points.reading.hide
-                    .graph-point.school.other(data-proficiency-location="#{read_prof}" data-growth-location="#{read_growth}")
+            - ["2016", "2017"].each do |year|
+              - if @school.try("math_scatter_prof_#{year}").present? && @school.try("math_scatter_growth_#{year}").present?
+                - if year == "2016"
+                  - school_math_prof = @school.try("math_meap_prepared_#{year}")
+                  - school_path_prof_pts = @school.try("math_meap_prepared_points_#{year}")
+                  - detroit_math_prof = @detroit.try("math_meap_prepared_#{year}")
+                  - detroit_math_prof_pts = @detroit.try("math_meap_prepared_points_#{year}")
+                  - state_math_prof = @state.try("math_meap_prepared_#{year}")
+                  - school_ela_prof = @school.try("ela_meap_prepared_#{year}")
+                  - school_ela_prof_pts = @school.try("ela_meap_prepared_points_#{year}")
+                  - detroit_ela_prof = @detroit.try("ela_meap_prepared_#{year}")
+                  - detroit_ela_prof_pts = @detroit.try("ela_meap_prepared_points_#{year}")
+                  - state_ela_prof = @state.try("ela_meap_prepared_#{year}")
+                - else
+                  - school_math_prof = @school.try("math_mstep_prepared_#{year}")
+                  - school_math_prof_pts = @school.try("math_mstep_prepared_points_#{year}")
+                  - detroit_math_prof = @detroit.try("math_mstep_prepared_#{year}")
+                  - detroit_math_prof_pts = @detroit.try("math_mstep_prepared_points_#{year}")
+                  - state_math_prof = @state.try("math_mstep_prepared_#{year}")
+                  - school_ela_prof = @school.try("ela_mstep_prepared_#{year}")
+                  - school_ela_prof_pts = @school.try("ela_mstep_prepared_points_#{year}")
+                  - detroit_ela_prof = @detroit.try("ela_mstep_prepared_#{year}")
+                  - detroit_ela_prof_pts = @detroit.try("ela_mstep_prepared_points_#{year}")
+                  - state_ela_prof = @state.try("ela_mstep_prepared_#{year}")
+                .graph-points.math(class="#{year} #{"hide" if year == "2016"}")
+                  = render 'scatter_subject_points',
+                    hs: @school.hs?,
+                    school_name: @school.display_name,
+                    subject: 'math',
+                    school_proficiency: school_math_prof,
+                    school_proficiency_points: school_math_prof_pts,
+                    school_proficiency_location: @school.try("math_scatter_prof_#{year}"),
+                    school_growth: @school.try("math_growth_#{year}"),
+                    school_growth_points: @school.try("math_growth_points_#{year}"),
+                    school_growth_location: @school.try("math_scatter_growth_#{year}"),
+                    detroit_proficiency: detroit_math_prof,
+                    detroit_proficiency_points: detroit_math_prof_pts,
+                    detroit_proficiency_location: @detroit.try("math_scatter_prof_#{year}"),
+                    detroit_growth: @detroit.try("math_growth_#{year}"),
+                    detroit_growth_points: @detroit.try("math_growth_points_#{year}"),
+                    detroit_growth_location: @detroit.try("math_scatter_growth_#{year}"),
+                    state_proficiency: state_math_prof,
+                    state_growth: @state.try("math_growth_#{year}")
+              - if @school.try("ela_scatter_prof_#{year}").present? && @school.try("ela_scatter_growth_#{year}").present?
+                .graph-points.reading.hide(class="#{year}")
+                  = render 'scatter_subject_points',
+                    hs: @school.hs?,
+                    school_name: @school.display_name,
+                    subject: 'reading',
+                    school_proficiency: school_math_prof,
+                    school_proficiency_points: school_math_prof_pts,
+                    school_proficiency_location: @school.try("ela_scatter_prof_#{year}"),
+                    school_growth: @school.try("reading_growth_#{year}"),
+                    school_growth_points: @school.try("reading_growth_points_#{year}"),
+                    school_growth_location: @school.try("ela_scatter_growth_#{year}"),
+                    detroit_proficiency: detroit_math_prof,
+                    detroit_proficiency_points: detroit_math_prof_pts,
+                    detroit_proficiency_location: @detroit.try("ela_scatter_prof_#{year}"),
+                    detroit_growth: @detroit.try("reading_growth_#{year}"),
+                    detroit_growth_points: @detroit.try("reading_growth_points_#{year}"),
+                    detroit_growth_location: @detroit.try("ela_scatter_growth_#{year}"),
+                    state_proficiency: state_math_prof,
+                    state_growth: @state.try("reading_growth_#{year}")
+              - @scatter_plot_schools.each do |s|
+                - if d = s.try("esd_k8_#{year}s")
+                  - math_prof = d.scatter_mathprof
+                  - math_growth = d.scatter_mathgrowth
+                  - if math_prof.present? && math_growth.present?
+                    .graph-points.math(class="#{year} #{"hide" if year == "2016"}")
+                      .graph-point.school.other(data-proficiency-location="#{math_prof}" data-growth-location="#{math_growth}")
+                  - read_prof = d.scatter_elaprof
+                  - read_growth = d.scatter_elagrowth
+                  - if read_prof.present? && read_growth.present?
+                    .graph-points.reading.hide(class="#{year}")
+                      .graph-point.school.other(data-proficiency-location="#{read_prof}" data-growth-location="#{read_growth}")
           = render 'scatter_plot'
           //.what-this-means
           //  .question-mark

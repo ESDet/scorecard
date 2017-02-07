@@ -21,7 +21,7 @@ module School
   end
 
   def demographics
-    count_2016s
+    count_2017s
   end
 
   def recommended?
@@ -95,7 +95,7 @@ module School
   end
 
   def attendance
-    k12_supplemental_2015s.andand.attendance_all
+    k12_supplemental_2017s.andand.attendance_all
   end
 
   def parent_involvement
@@ -287,7 +287,7 @@ module School
   end
 
   def michigan_percentile
-    k12_supplemental_2015s.andand.michigan_ttb
+    k12_supplemental_2017s.andand.michigan_ttb
   end
 
   def street
@@ -318,7 +318,7 @@ module School
   end
 
   def average_commute
-    k12_supplemental_2015s.andand.avg_commute
+    k12_supplemental_2017s.andand.avg_commute
   end
 
   def total_enrollment

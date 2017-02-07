@@ -318,11 +318,11 @@ class SchoolsController < ApplicationController
     else
       url = "schools"
       includes = "school_profile,count_2016," <<
-        "fiveessentials_2015," <<
+        "count_2017," <<
         "fiveessentials_2016," <<
         "esd_#{school_type}_2016," <<
         "esd_#{school_type}_2017," <<
-        "k12_supplemental_2015"
+        "k12_supplemental_2017"
     end
 
     url << "/#{id}.json?flatten_fields=true&includes=#{includes}"
@@ -460,9 +460,9 @@ class SchoolsController < ApplicationController
       if school["links"]["esd_el_2016"]
         includes["id"] == school["links"]["esd_el_2016"]["linkage"]["id"]
       end
-    elsif includes["type"] == "k12_supplemental_2016s"
-      if school["links"]["k12_supplemental_2016"]
-        includes["id"] == school["links"]["k12_supplemental_2016"]["linkage"]["id"]
+    elsif includes["type"] == "k12_supplemental_2017s"
+      if school["links"]["k12_supplemental_2017"]
+        includes["id"] == school["links"]["k12_supplemental_2017"]["linkage"]["id"]
       end
     end
   end

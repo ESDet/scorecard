@@ -33,10 +33,22 @@ $(function() {
 
   $('.scatter-plot-nav .subject').click(function() {
     var el = $(this);
+    var year = $(".scatter-plot-graph .years .year.active").data("target");
+
     $('.scatter-plot-nav .subject').removeClass('active');
     el.addClass('active');
     $('.graph-points').addClass('hide');
-    $('.graph-points.' + el.data('target')).removeClass('hide');
+    $('.graph-points.' + el.data('target') + '.' + year).removeClass('hide');
+  });
+
+  $('.scatter-plot-graph .years .year').click(function() {
+    var el = $(this);
+    var subject = $('.scatter-plot-nav .subject.active').data("target");
+
+    $('.scatter-plot-graph .years .year').removeClass('active');
+    el.addClass('active');
+    $('.graph-points').addClass('hide');
+    $('.graph-points.' + el.data('target') + '.' + subject).removeClass('hide');
   });
 
   $('.graph-point').hover(function() {
