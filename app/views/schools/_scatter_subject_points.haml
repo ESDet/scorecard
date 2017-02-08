@@ -36,9 +36,15 @@
       .subject= subject.upcase
     .row.no-padding
       .left
-        .growth #{detroit_proficiency.round(1)}
+        - if hs
+          .growth #{detroit_proficiency.round(0)}%
+        - else
+          .growth #{detroit_proficiency.round(1)}
       .right.growth-desc
-        ACT growth points compared to state
+        - if hs
+          Percent college ready
+        - else
+          ACT growth points compared to state
     .row.detroit-growth
       .text-left
         %span.big #{detroit_growth.round(1)}
