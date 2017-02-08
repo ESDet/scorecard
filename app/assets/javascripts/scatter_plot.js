@@ -38,7 +38,11 @@ $(function() {
     $('.scatter-plot-nav .subject').removeClass('active');
     el.addClass('active');
     $('.graph-points').addClass('hide');
-    $('.graph-points.' + el.data('target') + '.' + year).removeClass('hide');
+    if (year != undefined) {
+      $('.graph-points.' + el.data('target') + '.' + year).removeClass('hide');
+    } else {
+      $('.graph-points.' + el.data('target')).removeClass('hide');
+    }
   });
 
   $('.scatter-plot-graph .years .year').click(function() {
