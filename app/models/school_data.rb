@@ -59,7 +59,7 @@ class SchoolData < OpenStruct
       'New'
     else
       if k8?
-        grade = esd_k8_2016s.andand.total_ltrgrade
+        grade = esd_k8_2017s.andand.total_ltrgrade
         grade.present? ? grade : 'N/A'
       elsif hs?
         grade = esd_hs_2016s.andand.total_ltrgrade
@@ -228,7 +228,7 @@ class SchoolData < OpenStruct
   def school_type_weight
     case school_type
       when 'k8'
-        esd_k8_2016s ? esd_k8_2016s.total_pts.to_f * 100 : 0
+        esd_k8_2017s ? esd_k8_2017s.total_pts.to_f * 100 : 0
       when 'hs'
         esd_hs_2016s ? esd_hs_2016s.total_pts.to_f * 100 : 0
       when 'ecs'

@@ -4,7 +4,14 @@
     .info-box__content.fivee-overall-rating(data-rating="#{overall_rating || 0}")
       .fivee-rating-text
       - if report_id
-        - url = "https://detroit.5-essentials.org/2015/s/#{report_id}"
+        - url = "https://detroit.5-essentials.org/"
+        - if grade == "k8"
+          - if year == 2015
+            - url << "#{year}/s/#{report_id}"
+          - else
+            - url << "#{year}/s/#{"0" * (5 - report_id.to_s.length)}#{report_id}"
+        - elsif grade == "hs"
+          - url << "2015/s/#{report_id}"
         .bottom-text
           %a(href="#{url}" target="_blank")
             See full results

@@ -40,7 +40,7 @@ module K8School
   end
 
   def current_stats
-    self.andand.esd_k8_2016s
+    self.andand.esd_k8_2017s
   end
 
   def proficiency_ranking

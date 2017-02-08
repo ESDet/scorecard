@@ -207,6 +207,7 @@
         - if @school.tid == "5268"
           = render 'five_essentials',
             title: "Overall Rating - #{@school.five_e_year}",
+            grade: "hs",
             overall_rating: 2,
             effective_leaders: 4,
             collaborative_teachers: 29,
@@ -217,6 +218,7 @@
         - elsif @school.tid == "5267"
           = render 'five_essentials',
             title: "Overall Rating - #{@school.five_e_year}",
+            grade: "hs",
             overall_rating: 3,
             effective_leaders: 26,
             collaborative_teachers: 36,
@@ -227,6 +229,7 @@
         - else
           = render 'five_essentials',
             title: "Overall Rating - #{@school.five_e_year}",
+            grade: "hs",
             overall_rating: @school.five_e_overall_rating,
             effective_leaders: @school.five_e_effective_leaders,
             collaborative_teachers: @school.five_e_collaborative_teachers,

@@ -139,11 +139,13 @@
   .middle
     .stat-region
       %h2 What do students and teachers think about this school?
-      %h3 Rating on 5Essentials Student and Teacher Survey, 2015
+      %h3 Rating on 5Essentials Student and Teacher Survey, the higher rating from either 2015 or 2016
       .content.two.fivee
         - if @school.tid == "2111"
           = render 'five_essentials',
             title: "Overall Rating - #{@school.five_e_year}",
+            grade: "k8",
+            year: @school.five_e_year,
             overall_rating: 3,
             effective_leaders: 33,
             collaborative_teachers: 35,
@@ -154,6 +156,8 @@
         - elsif @school.tid == "2022"
           = render 'five_essentials',
             title: "Overall Rating - #{@school.five_e_year}",
+            grade: "k8",
+            year: @school.five_e_year,
             overall_rating: 2,
             effective_leaders: 32,
             collaborative_teachers: 33,
@@ -164,6 +168,8 @@
         - else
           = render 'five_essentials',
             title: "Overall Rating - #{@school.five_e_year}",
+            grade: "k8",
+            year: @school.five_e_year,
             overall_rating: @school.five_e_overall_rating,
             effective_leaders: @school.five_e_effective_leaders,
             collaborative_teachers: @school.five_e_collaborative_teachers,
