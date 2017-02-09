@@ -61,10 +61,10 @@
           %a(href="http://www.bridgemi.com/special-reports/2014-academic-state-champs" target="_blank")
             Bridge (2014)
             .visit-icon.reverse
-        //.ranking-link
-        //  %a(href="https://www.mackinac.org/depts/epi/performance.aspx" target="_blank")
-        //    Michigan Top-To-Bottom
-        //    .visit-icon.reverse
+        .ranking-link
+          %a(href="http://www.michigan.gov/mde/0,4615,7-140-22709_56562---,00.html" target="_blank")
+            Michigan Top-To-Bottom
+            .visit-icon.reverse
     .contact-info
       =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank', class: 'info'}
       - if school.phone.present? || school.fax.present?
