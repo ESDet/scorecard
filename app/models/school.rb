@@ -399,5 +399,4 @@ module School
       sprintf("%.1f", num.to_f / total_enrollment * 100)
     end
   end
-
 end

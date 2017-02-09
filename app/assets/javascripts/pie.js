@@ -6,7 +6,7 @@ $(function() {
       sliceradius = radius - 1,
       color = d3.scale.category20(),
       pie = d3.scale.linear().
-        domain([0, 50]).
+        domain([0, 100]).
         range([0, 2 * Math.PI]),
       arc = d3.svg.arc()
         .innerRadius(0)
