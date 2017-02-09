@@ -50,13 +50,21 @@
               .visit-icon.reverse
         - else
           .ranking-link
-            %a(href="https://www.mackinac.org/depts/epi/performance.aspx" target="_blank")
+            - if school.k8?
+              - link = "https://www.mackinac.org/depts/epi/performance.aspx?report=3"
+            - elsif school.hs?
+              - link = "https://www.mackinac.org/depts/epi/performance.aspx"
+            %a(href="#{link}" target="_blank")
               Mackinac
               .visit-icon.reverse
         .ranking-link
-          %a(href="http://bridgemi.com/2015/02/asc-resultspage/?Dbcode=#{school.district_code}-#{school.building_code}" target="_blank")
-            Bridge
+          %a(href="http://www.bridgemi.com/special-reports/2014-academic-state-champs" target="_blank")
+            Bridge (2014)
             .visit-icon.reverse
+        //.ranking-link
+        //  %a(href="https://www.mackinac.org/depts/epi/performance.aspx" target="_blank")
+        //    Michigan Top-To-Bottom
+        //    .visit-icon.reverse
     .contact-info
       =link_to_if school.street.present?, school.street, school.gmaps_url, {target: '_blank', class: 'info'}
       - if school.phone.present? || school.fax.present?
