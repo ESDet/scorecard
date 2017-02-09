@@ -48,8 +48,8 @@
           %a.link(href="tel:#{strip_phone(school.phone)}")= format_phone(school.phone)
 
   .compare.float-right
-    -if school.field_2016_recommended
-      =image_tag 'rcmd_small.png', class: 'search-results__recommended'
+    - if school.recommended?
+      = image_tag 'rcmd_small.png', class: 'search-results__recommended'
     .compare-link
       %input(type='checkbox' name='school_ids' id='#{school.short_id}' value='#{school.short_id}' class='compare-check checkbox-icon')
       %label

@@ -28,7 +28,10 @@
                         %span *
             - if school.recommended?
               .column.recommended-school
-                = image_tag 'recommended_school'
+                - if school.k8?
+                  = image_tag 'recommended_school_2016_2017'
+                - else
+                  = image_tag 'recommended_school'
             //- if school.michigan_percentile.present?
             //  .column
             //    .info-box.info-box--small

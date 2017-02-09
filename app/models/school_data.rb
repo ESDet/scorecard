@@ -54,6 +54,14 @@ class SchoolData < OpenStruct
     school_type == 'k8'
   end
 
+  def recommended?
+    if k8?
+      field_2017_recommended
+    elsif hs?
+      field_2016_recommended
+    end
+  end
+
   def excellent_schools_grade
     if field_school_scorecard_status.name == 'New'
       'New'
@@ -212,7 +220,7 @@ class SchoolData < OpenStruct
   #
   # @return [Float] the school's sort weight
   def sort_weight
-    if !ec? && (excellent_schools_grade == 'N/A' || excellent_schools_grade == 'New') && field_2016_recommended
+    if !ec? && (excellent_schools_grade == 'N/A' || excellent_schools_grade == 'New') && recommended?
       # Put Recommended schools that don't have a grade, between C+ and C schools
       49.5
     else

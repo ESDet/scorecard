@@ -24,10 +24,6 @@ module School
     count_2017s
   end
 
-  def recommended?
-    field_2016_recommended
-  end
-
   def status
     field_school_scorecard_status.name
   end
