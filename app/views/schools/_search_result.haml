@@ -16,7 +16,7 @@
         .rounded-square.blue-border.small
           .grade
             %span>= school.excellent_schools_grade
-            - if school.field_school_scorecard_status.name == 'Turnaround'
+            - if school.field_school_scorecard_status.try(:name) == 'Turnaround'
               %span *
     %a.favorite(href='' data-id="#{school.tid}") &#9734;
   .content
@@ -37,7 +37,7 @@
             %div= "Grades: #{grades}"
           - elsif school.age_groups.present?
             %div= "Age Groups: #{grades}"
-          - if !school.field_school_scorecard_status.nil? && school.field_school_scorecard_status.name == 'Turnaround'
+          - if school.field_school_scorecard_status.try(:name) == 'Turnaround'
             .turnaround *This school is a Turnaround school
       .links
         - if school.street.present?

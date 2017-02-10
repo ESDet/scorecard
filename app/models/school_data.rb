@@ -63,7 +63,7 @@ class SchoolData < OpenStruct
   end
 
   def excellent_schools_grade
-    if field_school_scorecard_status.name == 'New'
+    if field_school_scorecard_status.try(:name) == 'New'
       'New'
     else
       if k8?

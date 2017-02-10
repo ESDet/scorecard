@@ -25,7 +25,7 @@ module School
   end
 
   def status
-    field_school_scorecard_status.name
+    field_school_scorecard_status.try(:name)
   end
 
   def district_code
