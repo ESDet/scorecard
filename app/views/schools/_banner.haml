@@ -7,9 +7,9 @@
     .school-type
       = school.governance
       - if school.authorizer.present?
-        | #{school.authorizer}
+        | Authorized by: #{school.authorizer}
       - elsif school.operator.present?
-        | #{school.operator}
+        | Operated by: #{school.operator}
     .grades-served
       - school.grades_served.each do |g|
         %span= g
