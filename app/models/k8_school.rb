@@ -59,7 +59,7 @@ module K8School
 
   def self.int_value(o, set, value)
     if v = o[set].andand.send(value)
-      (v.to_f * 100).to_i
+      (v.to_f * 100).round.to_i
     end
   end
 
