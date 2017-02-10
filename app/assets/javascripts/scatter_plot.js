@@ -58,8 +58,8 @@ $(function() {
   $('.graph-point').hover(function() {
     var el = $(this);
     var popup = el.find('.point-popup');
-    popup.css('margin-left', el.width() + 'px');
-    popup.css('margin-top', '-' + el.height() + 'px');
+    popup.css('margin-left', '-' + ((popup.width() / 2) - 11) + 'px');
+    popup.css('margin-top', el.height() + 'px');
     popup.removeClass('hide');
     popup.css('display', 'inline-block');
   }, function() {

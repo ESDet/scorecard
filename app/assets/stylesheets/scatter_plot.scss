@@ -222,6 +222,14 @@
   font-family: 'Aleo Bold';
 }
 
+.scatter-plot-graph .point-popup.k8 .row.proficient .left .big {
+  margin-top: 5px;
+}
+
+.scatter-plot-graph .point-popup.k8 .row.growth {
+  height: 80px;
+}
+
 .scatter-plot-graph .point-popup .row.no-padding {
   padding: 0;
 }
@@ -244,9 +252,9 @@
   width: 25%;
   text-align: center;
 }
-.scatter-plot-graph .point-popup .row.detroit-growth .text-right {
+.scatter-plot-graph .point-popup.k8 .row.detroit-growth .text-right {
   float: right;
-  width: 70%;
+  width: 60%;
   line-height: 19px;
 }
 
@@ -301,6 +309,12 @@
   line-height: 22px;
   padding: 5px;
 }
+
+.scatter-plot-graph .point-popup.k8 .row.growth .right .state,
+.scatter-plot-graph .point-popup.k8 .row.growth .right .detroit {
+  line-height: 30px;
+}
+
 .scatter-plot-graph .point-popup .right .state {
   border-bottom: 1px solid $grey;
 }
