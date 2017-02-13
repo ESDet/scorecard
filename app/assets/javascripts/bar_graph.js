@@ -27,15 +27,15 @@ $(function() {
       var el = $(n);
       var num = el.data('num');
       if (el.hasClass('detroit')) {
-        el.css('left', (num - 10)+ '%');
+        el.css('margin-left', (num - 10) + '%');
       } else {
-        el.css('left', (num - 6)+ '%');
+        el.css('margin-left', (num - 6) + '%');
       }
     });
     var markerOne = $(markerText[0]);
     var markerTwo = $(markerText[1]);
-    var marginOne = parseInt(markerOne.css('left').replace('%', ''));
-    var marginTwo = parseInt(markerTwo.css('left').replace('%', ''));
+    var marginOne = parseInt(markerOne.css('margin-left').replace('%', ''));
+    var marginTwo = parseInt(markerTwo.css('margin-left').replace('%', ''));
 
     var left, right, diff;
     if (marginTwo > marginOne) {
@@ -58,7 +58,7 @@ $(function() {
       }
     }
 
-    markerOne.css('left', left + '%');
-    markerTwo.css('left', right + '%');
+    markerOne.css('margin-left', left + '%');
+    markerTwo.css('margin-left', right + '%');
   });
 });
