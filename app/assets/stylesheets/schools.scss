@@ -24,12 +24,22 @@
 
 #rankings .columns {
   width: 85%;
+  margin-bottom: 40px;
+}
+
+#rankings .columns:last-child {
+  margin-bottom: 0px;
 }
 
 #rankings .column {
   margin: 0 15px;
   width: 17%;
   min-width: 156px;
+}
+
+#rankings .columns.three .column {
+  width: 31%;
+  .text { color: #666 }
 }
 
 @media screen and (max-width: 790px) {

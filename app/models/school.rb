@@ -48,8 +48,9 @@ module School
     field_operator.andand.name
   end
 
-  def overview_text
-    school_profiles.andand.field_message.andand.value
+  def message_to_families
+    school_profiles.try(:field_message).try(:safe_value).
+      try(:html_safe)
   end
 
   def email

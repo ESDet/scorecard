@@ -35,15 +35,15 @@ class SchoolData < OpenStruct
   end
 
   def school_type
-    if field_school_type
-      field_school_type.andand.name.andand.downcase
+    if field_school_type.present?
+      field_school_type.try(:name)
     else
       type
-    end
+    end.try(:downcase)
   end
 
   def ec?
-    type == 'ecs'
+    school_type == 'ecs'
   end
 
   def hs?

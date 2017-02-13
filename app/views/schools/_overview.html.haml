@@ -17,8 +17,8 @@
                 .text.small
                   Turnaround Schools are schools that experienced a restart within the past two years due to failing academic performance. A school is in turnaround if it has changed at least two out of the three:  governance, management, and board.
           .grades-served= "Grades Served: #{school.grades_served.first} - #{school.grades_served.last}"
-      .overview-text
-        =raw simple_format(school.overview_text)
+      //.overview-text
+      //  = simple_format(school.overview_text)
       .info-bar
         .item
           %a.contact(href="mailto:#{school.email}")

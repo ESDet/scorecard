@@ -1,5 +1,14 @@
 #new-school-performance
   .section
     .middle
-      .columns.three
-        = school.description.try(:html_safe)
+      - if @school.description.present?
+        .columns.three
+          = school.description.try(:html_safe)
+      - if @school.message_to_families.present?
+        .columns.three
+          .column
+            .info-box
+              .info-box__title Message to Families
+              .info-box__content
+                .text
+                  = @school.message_to_families
