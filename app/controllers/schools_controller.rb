@@ -205,10 +205,16 @@ class SchoolsController < ApplicationController
     school_data = fetch_school_data(id, school_type)
 
     if school_type != "ecs"
-      @detroit, @state = fetch_detroit_and_state_data(school_type)
-      response = fetch_schools_for_scatter_plot(school_type)
-      @scatter_plot_schools = gather_included_fields(response).
-        map { |s| SchoolData.new s }
+      timestamp = api_timestamp
+
+      @detroit, @state = Rails.cache.fetch("#{school_type}_detroit_state_data_#{timestamp}") do
+        fetch_detroit_and_state_data(school_type)
+      end
+
+      @scatter_plot_schools = Rails.cache.fetch("#{school_type}_scatter_plot_schools_#{timestamp}") do
+        response = fetch_schools_for_scatter_plot(school_type)
+        gather_included_fields(response).map { |s| SchoolData.new s }
+      end
     end
 
     if school_data.first =~ /does not exist/
@@ -298,9 +304,13 @@ class SchoolsController < ApplicationController
     "&filter[name]=%25#{@loc}%25&filter_op[name]=LIKE"
   end
 
+
+  def api_timestamp
+    Portal.new.fetch("most_recent_school_timestamp.json")["most_recent_school_timestamp"]
+  end
+
   def cache_key(cache_type)
-    timestamp = Portal.new.fetch("most_recent_#{cache_type}_timestamp.json")["most_recent_#{cache_type}_timestamp"]
-    key = "index/#{@grade || 'all'}/#{cache_type}/#{timestamp}"
+    key = "index/#{@grade || 'all'}/#{cache_type}/#{api_timestamp}"
     if @loc.present?
       key << "/#{@loc.gsub(/\s/, '_')}"
     end
@@ -396,7 +406,8 @@ class SchoolsController < ApplicationController
   end
 
   def fetch_schools_for_scatter_plot(school_type)
-    url = "schools.json?flatten_fields=true&includes=esd_#{school_type}_2016,esd_#{school_type}_2017"
+    url = "schools.json?flatten_fields=true&limit=500&" <<
+      "includes=esd_#{school_type}_2016,esd_#{school_type}_2017"
     retries = 2
     begin
       school_data = Portal.new.fetch(url)
@@ -430,41 +441,25 @@ class SchoolsController < ApplicationController
   end
 
   def valid_includes?(includes, school)
-    if includes["type"] == "school_profiles"
-      if school["links"]["school_profile"]
-        includes["id"] == school["links"]["school_profile"]["linkage"]["id"]
-      end
-    elsif includes["type"] == "ec_profiles"
-      if school["links"]["ec_profile"]
-        includes["id"] == school["links"]["ec_profile"]["linkage"]["id"]
-      end
-    elsif includes["type"] == "ec_state_ratings"
-      if school["links"]["most_recent_ec_state_rating"]
-        if school["links"]["most_recent_ec_state_rating"].present?
-          includes["id"] == school["links"]["most_recent_ec_state_rating"]["linkage"]["id"]
-        end
-      end
-    elsif includes["type"] == "esd_k8_2016s"
-      if school["links"]["esd_k8_2016"]
-        includes["id"] == school["links"]["esd_k8_2016"]["linkage"]["id"]
-      end
-    elsif includes["type"] == "esd_k8_2017s"
-      if school["links"]["esd_k8_2017"]
-        includes["id"] == school["links"]["esd_k8_2017"]["linkage"]["id"]
-      end
-    elsif includes["type"] == "esd_hs_2016s"
-      if school["links"]["esd_hs_2016"]
-        includes["id"] == school["links"]["esd_hs_2016"]["linkage"]["id"]
-      end
-    elsif includes["type"] == "esd_el_2016s"
-      if school["links"]["esd_el_2016"]
-        includes["id"] == school["links"]["esd_el_2016"]["linkage"]["id"]
-      end
-    elsif includes["type"] == "k12_supplemental_2017s"
-      if school["links"]["k12_supplemental_2017"]
-        includes["id"] == school["links"]["k12_supplemental_2017"]["linkage"]["id"]
-      end
+    valid_include?(includes, school, "school_profile") ||
+    valid_include?(includes, school, "ec_profile") ||
+    valid_include?(includes, school, "ec_state_rating", "most_recent_ec_state_rating") ||
+    valid_include?(includes, school, "esd_k8_2016") ||
+    valid_include?(includes, school, "esd_k8_2017") ||
+    valid_include?(includes, school, "esd_hs_2016") ||
+    valid_include?(includes, school, "esd_el_2016") ||
+    valid_include?(includes, school, "k12_supplemental_2017")
+  end
+
+  def valid_include?(includes, school, include_key, secondary_include_key = nil)
+    include_link = if secondary_include_key.present?
+      secondary_include_key
+    else
+      include_key
     end
+    includes["type"] == "#{include_key}s" &&
+    school.try(:[], "links").try(:[], include_link).present? &&
+    includes["id"] == school["links"][include_link]["linkage"]["id"]
   end
 
   def set_filters
