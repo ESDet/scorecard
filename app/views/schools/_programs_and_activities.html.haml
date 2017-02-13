@@ -16,13 +16,14 @@
             .star-icon
             Academic Programs
         .columns.two
-          .column
-            = render 'column_content',
-              title: 'Academic Focus',
-              list: school.academic_focus
-            = render 'column_content',
-              title: 'Personalized Learning Options',
-              list: school.instructional_model
+          - if school.academic_focus.present? || school.instructional_model.present?
+            .column
+              = render 'column_content',
+                title: 'Academic Focus',
+                list: school.academic_focus
+              = render 'column_content',
+                title: 'Personalized Learning Options',
+                list: school.instructional_model
           .column
             - if school.has_ell?
               .info-box
