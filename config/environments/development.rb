@@ -8,6 +8,7 @@ ESD::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   config.eager_load = false
   config.assets.debug = true
+  config.cache_store = :null_store
 
   #
   # uncomment to test caching in development mode
