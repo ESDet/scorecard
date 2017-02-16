@@ -3,7 +3,9 @@
     .middle
       .stat-region
         %h2 Are students on track and academically prepared?
-        %h3 Percentage of students scoring proficient or higher on the state M-STEP test in 2015
+        %h3
+          Percentage of students scoring proficient or higher on the state M-STEP test,
+          2 year average of all grades 3-8, 2014-15, 2015-16
         .content.four
           = render 'bar_graph', title: 'Math',
             school_average: @school.math_mstep_prepared_2017,
