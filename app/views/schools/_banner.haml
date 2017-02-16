@@ -8,7 +8,7 @@
       = school.governance
       - if school.authorizer.present?
         | Authorized by: #{school.authorizer}
-      - elsif school.operator.present?
+      - if school.operator.present?
         | Operated by: #{school.operator}
     .grades-served
       - school.grades_served.each do |g|
