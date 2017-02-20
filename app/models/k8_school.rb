@@ -40,7 +40,11 @@ module K8School
   end
 
   def current_stats
-    self.andand.esd_k8_2017s
+    self.try(:esd_k8_2017s)
+  end
+
+  def fivee_year
+    current_stats.try("5E_year".to_sym)
   end
 
   def proficiency_ranking

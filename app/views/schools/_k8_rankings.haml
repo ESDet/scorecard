@@ -20,6 +20,7 @@
         .info-box__content.info-box__content--rank
           .text
             = climate_text(school.climate_ranking, :k8)
+            .small= school.fivee_year
   - if @school.message_to_families.present?
     .columns.three
       .column

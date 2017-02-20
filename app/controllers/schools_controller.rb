@@ -306,7 +306,9 @@ class SchoolsController < ApplicationController
 
 
   def api_timestamp
-    Portal.new.fetch("most_recent_school_timestamp.json")["most_recent_school_timestamp"]
+    if Rails.env.production?
+      Portal.new.fetch("most_recent_school_timestamp.json")["most_recent_school_timestamp"]
+    end
   end
 
   def cache_key(cache_type)
@@ -406,7 +408,7 @@ class SchoolsController < ApplicationController
   end
 
   def fetch_schools_for_scatter_plot(school_type)
-    fetch_limit = Rails.env.production? ? 500 : 50
+    fetch_limit = Rails.env.production? ? 500 : 10
     url = "schools.json?flatten_fields=true&limit=#{fetch_limit}&" <<
       "includes=esd_#{school_type}_2016,esd_#{school_type}_2017"
     retries = 2
