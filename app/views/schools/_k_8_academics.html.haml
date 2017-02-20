@@ -141,7 +141,11 @@
   .middle
     .stat-region
       %h2 What do students and teachers think about this school?
-      %h3 Rating on 5Essentials Student and Teacher Survey, the higher rating from either 2015 or 2016
+      %h3 Most recent rating on 5Essentials Student and Teacher Survey
+      %h4
+        the overall grade is calculated using the higher rating from either 2015 or 2016
+        and may be different than what is displayed below
+
       .content.two.fivee
         - if @school.tid == "2111"
           = render 'five_essentials',
