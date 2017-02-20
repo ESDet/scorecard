@@ -147,42 +147,17 @@
         and may be different than what is displayed below
 
       .content.two.fivee
-        - if @school.tid == "2111"
-          = render 'five_essentials',
-            title: "Overall Rating - #{@school.five_e_year}",
-            grade: "k8",
-            year: @school.five_e_year,
-            overall_rating: 3,
-            effective_leaders: 33,
-            collaborative_teachers: 35,
-            involved_families: 48,
-            supportive_environment: 78,
-            ambitious_instruction: 88,
-            report_id: 42558
-        - elsif @school.tid == "2022"
-          = render 'five_essentials',
-            title: "Overall Rating - #{@school.five_e_year}",
-            grade: "k8",
-            year: @school.five_e_year,
-            overall_rating: 2,
-            effective_leaders: 32,
-            collaborative_teachers: 33,
-            involved_families: 41,
-            supportive_environment: 49,
-            ambitious_instruction: 78,
-            report_id: 42565
-        - else
-          = render 'five_essentials',
-            title: "Overall Rating - #{@school.five_e_year}",
-            grade: "k8",
-            year: @school.five_e_year,
-            overall_rating: @school.five_e_overall_rating,
-            effective_leaders: @school.five_e_effective_leaders,
-            collaborative_teachers: @school.five_e_collaborative_teachers,
-            involved_families: @school.five_e_involved_families,
-            supportive_environment: @school.five_e_supportive_environment,
-            ambitious_instruction: @school.five_e_ambitious_instruction,
-            report_id: @school.five_e_report_id
+        = render 'five_essentials',
+          title: "Overall Rating - #{@school.five_e_year}",
+          grade: "k8",
+          year: @school.five_e_year,
+          overall_rating: @school.five_e_overall_rating,
+          effective_leaders: @school.five_e_effective_leaders,
+          collaborative_teachers: @school.five_e_collaborative_teachers,
+          involved_families: @school.five_e_involved_families,
+          supportive_environment: @school.five_e_supportive_environment,
+          ambitious_instruction: @school.five_e_ambitious_instruction,
+          report_id: @school.five_e_report_id
 
       //.what-this-means
       //  .question-mark
