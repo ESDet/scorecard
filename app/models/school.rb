@@ -9,6 +9,7 @@ module School
       'E_Env' => 'supportive_environment',
       'E_Ins' => 'ambitious_instruction',
       'Report_School_Id' => 'report_id',
+      'State_Schl_Id' => 'report_id_2016',
       'Year' => 'year'
     }
     five_essentials.each do |k, v|

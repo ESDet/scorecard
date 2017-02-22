@@ -9,7 +9,7 @@
           - if year == 2015
             - url << "#{year}/s/#{report_id}"
           - else
-            - url << "#{year}/s/#{"0" * (5 - report_id.to_s.length)}#{report_id}"
+            - url << "#{year}/s/#{"0" * (5 - report_id_2016.to_s.length)}#{report_id_2016}"
         - elsif grade == "hs"
           - url << "2015/s/#{report_id}"
         .bottom-text
