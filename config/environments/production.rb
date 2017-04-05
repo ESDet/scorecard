@@ -10,13 +10,15 @@ ESD::Application.configure do
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
 
-  config.cache_store = :dalli_store, (ENV['MEMCACHE_HOST'] || '127.0.0.1'), {
-    :namespace => ENV['MEMCACHE_NAMESPACE'],
-    :username => ENV['MEMCACHE_USER'],
-    :password => ENV['MEMCACHE_PASS'],
-    :expires_in => 3600,
-    :compress => true
-  }
+  config.cache_store = :dalli_store,
+    (ENV["MEMCACHIER_SERVERS"] || "").split(","),
+    {:username => ENV["MEMCACHIER_USERNAME"],
+     :password => ENV["MEMCACHIER_PASSWORD"],
+     :failover => true,
+     :socket_timeout => 1.5,
+     :socket_failure_delay => 0.2,
+     :pool_size => (ENV["MAX_THREADS"] || 3)
+    }
 
   ActionMailer::Base.delivery_method = :smtp
 
